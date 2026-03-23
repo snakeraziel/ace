@@ -1,0 +1,4804 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PROVÃO ACE - KALLEL</title>
+    <style>
+/*rolada*/
+/* TRAVA DE ROLAGEM: SÓ VERTICAL, NADA DE HORIZONTAL */
+
+html, body {
+    /* Impede qualquer movimento para os lados */
+    overflow-x: hidden !important; 
+    
+    /* Garante que a rolagem vertical esteja sempre disponível */
+    overflow-y: auto !important;
+    
+    /* Evita que o navegador tente 'adivinhar' e crie espaços */
+    width: 100% !important;
+    position: relative;
+}
+
+/* Aplica a mesma trava no container principal por segurança */
+.container, .main-content, .area-restrita, #area-apoiador {
+    overflow-x: hidden !important;
+    overflow-y: visible !important; /* Deixa o conteúdo fluir para baixo */
+}
+
+/* Remove qualquer elemento que possa estar 'vazando' 1px pra fora */
+* {
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+}
+
+
+.estado {
+  transition: all 0.4s ease;
+  font-size: 28px;
+  cursor: pointer;
+  display: inline-block;
+  /* Remove qualquer cor ou filtro daqui para o Troféu brilhar normal */
+}
+
+.estado.lock {
+  /* Mantemos vazio ou apenas com um brilho bem sutil para não ficar cinza */
+  filter: none; 
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.2); 
+}
+
+.estado.open {
+  filter: drop-shadow(0 0 10px #ffd700) drop-shadow(0 0 20px #ffd700);
+}
+
+.estado.error {
+  filter: drop-shadow(0 0 10px #ff0000) drop-shadow(0 0 20px #ff0000);
+}
+
+/* Container Principal */
+.area-stats-vip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #111;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #333;
+    gap: 10px;
+}
+
+/* Engrenagem Giratória */
+.giro-vip {
+    cursor: pointer;
+    font-size: 1.6rem; /* Aumentei o tamanho */
+    animation: rodar 4s linear infinite; /* Gira infinitamente */
+    display: inline-block;
+}
+
+/* Coração Pulsante */
+.heart-vip {
+    cursor: pointer;
+    font-size: 1.6rem; /* Aumentei o tamanho */
+    animation: pulsar 1.5s ease-in-out infinite; /* Pulsa suave */
+    display: inline-block;
+}
+
+/* Animação de Rotação */
+@keyframes rodar {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Animação de Pulso */
+@keyframes pulsar {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); filter: drop-shadow(0 0 8px #ff3b3b); }
+    100% { transform: scale(1); }
+}
+
+/* Efeito ao passar o mouse para dar feedback */
+.giro-vip:hover, .heart-vip:hover {
+    filter: brightness(1.5);
+}
+
+/* Efeito de aumento e diminuição do emoji */
+.zoom-music {
+  display: inline-block;
+  animation: zoom-music 2s infinite ease-in-out;
+}
+
+@keyframes zoom-music {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1); }
+}
+
+/* Efeito de ondas saindo por trás */
+.radar-music {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar-music::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid gold;
+  pointer-events: none;
+  animation: radar-music 2s infinite;
+}
+
+@keyframes radar-music {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes bounce {
+  0% { transform:translateY(0); }
+  50% { transform:translateY(-18px); }
+  100% { transform:translateY(0); }
+}
+.bounce {
+  animation:bounce 1s infinite;
+  text-shadow:0 0 15px #39FF14;
+}
+
+
+/* Estilo do Player  */
+.audioteca-slide {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: none; /* só abre quando autorizado */
+  align-items: center;
+  justify-content: center;
+  z-index: 9000;
+}
+
+.audioteca-slide.active {
+  display: flex;
+}
+.audioteca-card {
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  background: #020617;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.lista-audios {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+.audio-item {
+  background: rgba(255,255,255,0.05);
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #000;
+  color: #fff;
+}
+
+/* CAPA */
+#capa {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  background: #020617;
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  width: 90%;
+  max-width: 420px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* SLIDE SENHA */
+#slideSenha {
+    display: none; /* Começa escondido */
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, #1e3a8a, #020617);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 20000; /* Fica na frente de tudo */
+    text-align: center;
+    padding: 20px;
+}
+
+.senha-gerada {
+    font-size: 4em;
+    font-weight: 900;
+    color: #fde047; /* Amarelo */
+    text-shadow: 0 0 20px rgba(253, 224, 71, 0.5);
+    margin: 20px 0;
+    letter-spacing: 10px;
+}
+
+/* CAMPO SENHA - AJUSTADO PARA NÃO SOBREPOR */
+#campoSenha {
+  display: none; /* Só aparece via JS */
+  width: 100%;
+  max-width: 380px;
+  background: rgba(15, 23, 42, 0.95); /* Um pouco mais claro que o fundo */
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--yellow); /* Borda amarela para dar destaque */
+  margin-top: 15px; /* Cria espaço entre os botões e o input */
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
+        :root{
+--bg:#000;
+--accent:#3b82f6;
+--yellow:#fde047;
+--success:#00ff41;
+--fire:#ff0000; 
+--limon: #39FF14;
+}
+
+        *{box-sizing:border-box}
+       body{ margin:0; background:var(--bg); font-family:'Inter', sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh; color:#fff; overflow:hidden; }
+        
+#container { 
+    width: 800px; 
+    height: auto; /* 1. De fixo para automático para crescer com o texto */
+    max-height: 90vh; /* 2. Garante que não ultrapasse a altura da tela do celular */
+    background: #020617; 
+    border-radius: 18px; 
+    padding: 25px; 
+    position: relative; 
+    border: 2px solid rgba(255,255,255,.1); 
+    box-shadow: 0 20px 50px rgba(0,0,0,.5); 
+    overflow-y: auto; /* 3. Ativa a rolagem vertical quando o conteúdo for longo */
+    display: flex; 
+    flex-direction: column; 
+}
+
+.screen {
+    display: none;
+    /* 4. Removido o flex:1 para as assertivas não serem 'puxadas' para baixo */
+    flex-direction: column;
+}
+
+
+.active{
+  display:flex;
+}
+.center{
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+
+/* FIX CIRÚRGICO */
+#container > .screen {
+  display: none;
+}
+#container > .screen.active {
+  display: flex;
+}
+        
+        .menu-btn{ width:380px; padding:18px; margin:10px; background:#020617; border:2px solid var(--accent); color:#fff; border-radius:14px; font-size:1.2em; cursor:pointer; font-weight:900; transition:.25s; }
+        .menu-btn:hover{ background:var(--accent); transform:scale(1.03); }
+        .btn-restrito-acao { width:100%; padding:15px; background:rgba(255,255,255,0.05); border:1px solid var(--success); color:var(--success); border-radius:10px; cursor:pointer; font-weight:800; margin-bottom:0px;}
+
+        .quiz-header{ color:var(--yellow); font-weight:900; font-size:1.1em; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; }
+
+       /* << RELÓGIO */
+        #timer { color: var(--accent); font-family: monospace; font-size: 1.2em; background: rgba(59,130,246,0.1); padding: 2px 10px; border-radius: 5px; border: 1px solid var(--accent); }
+
+        .question{ margin:10px 0; font-size:0.95em; line-height:1.5; height: 130px; border-left: 4px solid var(--accent); padding-left:15px; text-align: justify; overflow-y: auto; }
+        
+/* Força a área das opções a não se esticar */
+#opts {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important; /* Alinha no topo da div, não espalha */
+    align-items: stretch !important;
+    gap: 10px !important; /* Espaço fixo e pequeno entre elas */
+    height: auto !important; /* Diz para a div: 'tenha a altura do seu conteúdo' */
+    margin-top: 15px !important;
+    flex-grow: 0 !important; /* Impede que ela cresça para ocupar sobra de tela */
+}
+
+/* Garante que o texto da pergunta também não roube espaço */
+#qt {
+    height: auto !important;
+    margin-bottom: 15px !important;
+    flex-grow: 0 !important;
+}
+
+/* Estilo Base (Para Assertivas: SEM BORDA) */
+.opt {
+    width: 100%;
+    background: #020617;
+    border: none !important; /* Limpo para assertivas */
+    padding: 12px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 600;
+    color: #cbd5e1;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Estilo Especial (Para V/F: COM BORDA e LADO A LADO) */
+#opts:has(.opt:nth-child(2):last-child) {
+    flex-direction: row !important;
+    gap: 15px !important;
+}
+
+/* 4. MANTÉM seu V/F intacto e centralizado como você gosta */
+#opts:has(.opt:nth-child(2):last-child) .opt {
+    display: flex !important;
+    flex: 1 !important;
+    border: 2px solid #334155 !important;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Ajuste específico para quando for ASSERTIVA (A, B, C...) */
+#opts:has(.opt:nth-child(3)) .opt {
+    display: block !important; /* Aqui matamos o "feioso" nas assertivas */
+    line-height: 1.5;
+    text-align: left;
+}
+
+/* Isso obriga os pontos críticos a serem PRETOS apenas no botão que você clicou */
+.opt.correct span, .opt.wrong span { 
+    color: #000000 !important; 
+}
+
+/* Mantém as cores originais dos botões clicados como branco */
+.opt.correct { background: var(--success) !important; color: #ffffff !important; }
+.opt.wrong { background: var(--fire) !important; color: #ffffff !important; }
+
+/* Garante que os spans herdem a cor preta quando o JS mandar */
+.opt span {
+    display: inline !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: none !important;
+}
+
+
+        /* FLASHES DE TELA INTEIRA - ACERTO/ERRO */
+        @keyframes flashVerde3x { 0%, 33%, 66%, 100% { background: #020617; } 15%, 48%, 81% { background: rgba(0,255,65,0.2); } }
+        @keyframes flashVermelho3x { 0%, 33%, 66%, 100% { background: #b50707; } 15%, 48%, 81% { background: rgba(139,0,0,0.4); } }
+        .acertou-flash { animation: flashVerde3x 0.6s step-end; }
+        .errou-flash { animation: flashVermelho3x 0.6s step-end; }
+
+        /* EFEITO BOMBA EXPLODINDO) */
+        @keyframes bloodFlash { 0% { background: rgba(139, 0, 0, 0.9); } 50% { background: rgba(255, 0, 0, 0.7); } 100% { background: rgba(139, 0, 0, 0.9); } }
+        @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 50% { transform: translate(-1px, -2px) rotate(-1deg); } 20% { transform: translate(-5px, 0px) rotate(1deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
+        .tremendo { animation: shake 0.1s infinite; }
+        .blood-alert-overlay { display: flex !important; animation: bloodFlash 0.3s infinite !important; background: rgba(139, 0, 0, 0.9); position: absolute; inset: 0; z-index: 6000; justify-content: center; align-items: center; flex-direction: column; }
+
+        /* BOMBA PULSANTE */
+        @keyframes pulseBomba { 0% { transform: scale(1); filter: drop-shadow(0 0 2px red); } 50% { transform: scale(1.3); filter: drop-shadow(0 0 15px red); } 100% { transform: scale(1); filter: drop-shadow(0 0 2px red); } }
+        .bomba-pulsa { display: inline-block; animation: pulseBomba 0.6s infinite; font-size: 1.8em; }
+
+        /* MISERICÓRDIA - CORAÇÕES GIGANTES */
+     .heart-misericordia { position: absolute; z-index: 9999; pointer-events: none; animation: flyPopUp 4s forwards; }
+        @keyframes flyPopUp { 0% { transform: translateY(300px) scale(0); opacity: 1; } 20% { transform: translateY(100px) scale(2.5); } 100% { transform: translateY(-600px) scale(1.5); opacity: 0; } } 
+
+        /* BLOQUEIO ÁREA RESTRITA */
+        @keyframes intenseScarlet { 0%, 100% { background: #600; } 50% { background: #f00; } }
+        .denied-screen { display: flex !important; animation: intenseScarlet 0.1s infinite; position: absolute; inset: 0; z-index: 7000; align-items: center; justify-content: center; font-weight: 900; flex-direction: column; }
+
+        .footer-nav { margin-top:auto; display:flex; justify-content:space-between; gap: 10px; }
+        .btn-nav { flex:1; background: #1e293b; border: none; color: white; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 800; visibility: hidden; }
+        .btn-nav.visible { visibility: visible; }
+
+/* Animação do Emoji - SANGUE NO OLHO */
+@keyframes pulseEmoji {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255,215,0,0.3)); }
+    50% { transform: scale(1.15); filter: drop-shadow(0 0 15px rgba(255,215,0,0.6)); }
+}
+
+.emoji-motivacional {
+    font-size: 2.5em; /* Tamanho médio para não quebrar o slide */
+    cursor: pointer;
+    display: inline-block;
+    animation: pulseEmoji 2s infinite ease-in-out;
+    margin-bottom: 5px;
+    user-select: none;
+}
+
+/* Overlay da Mensagem Bíblica */
+.biblia-overlay {
+    position: absolute; /* Fixa dentro do container do app */
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    text-align: center;
+    border-radius: 18px;
+}
+
+/* Animação do emoji de parceria */
+@keyframes pulseShake {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); filter: drop-shadow(0 0 10px var(--accent)); }
+}
+
+.emoji-parceria {
+    font-size: 2.5em;
+    cursor: pointer;
+    display: inline-block;
+    animation: pulseShake 2s infinite ease-in-out;
+    margin-bottom: 10px;
+    user-select: none;
+}
+
+/* Overlay do Manifesto */
+.manifesto-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.98);
+    z-index: 11000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    text-align: center;
+    border-radius: 18px;
+    border: 2px solid var(--accent);
+}
+
+@keyframes vitoria-brilho {
+    0% { box-shadow: 0 0 20px #39FF14; }
+    50% { box-shadow: 0 0 50px #39FF14, inset 0 0 30px #39FF14; }
+    100% { box-shadow: 0 0 20px #39FF14; }
+}
+
+.slide-vitoria {
+    background: #000 !important;
+    border: 5px solid #39FF14 !important;
+    animation: vitoria-brilho 2s infinite;
+}
+
+/* Tela trincando / rasgando */
+@keyframes crackScreen {
+  0%   { background: rgba(255,0,0,0.8); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  25%  { clip-path: polygon(0 0, 90% 10%, 100% 100%, 10% 90%); }
+  50%  { clip-path: polygon(10% 0, 100% 10%, 90% 100%, 0 90%); }
+  75%  { clip-path: polygon(0 10%, 100% 0, 90% 90%, 10% 100%); }
+  100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+}
+
+/* Tremor violento */
+@keyframes shakeScreen {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(-15px, 5px) rotate(-2deg); }
+  40% { transform: translate(15px, -5px) rotate(2deg); }
+  60% { transform: translate(-10px, 10px) rotate(-1deg); }
+  80% { transform: translate(10px, -10px) rotate(1deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* Explosão / flash */
+@keyframes explosionFlash {
+  0%   { background-color: rgba(255,0,0,1); }
+  50%  { background-color: rgba(255,255,255,1); }
+  100% { background-color: transparent; }
+}
+
+.drama {
+  animation: crackScreen 0.8s ease-in-out,
+             shakeScreen 0.6s ease-in-out,
+             explosionFlash 0.4s ease-in-out;
+}
+
+
+
+/* GARANTE FLUXO CORRETO DA ÁREA RESTRITA */
+#area-restrita {
+  justify-content: flex-start !important; 
+  padding-top: 10px !important; /* Padding positivo pequeno */
+}
+
+/* Sobe o conteúdo em relação ao topo da tela */
+#area-restrita > div:first-child {
+  margin-top: -30px !important; /* Aqui sim o margin sobe o título */
+}
+
+/* AJUSTE DOS BOTÕES (MAIS PRÓXIMOS) */
+#botoes-estudo-container {
+  gap: 4px !important; /* Cola um botão no outro */
+  margin-top: -30px !important; /* Puxa os botões para cima */
+}
+
+/* TOPBAR CORRIGIDA (PARA 4 ÍCONES) */
+.topbar {
+  display: flex !important; /* Mudamos de grid para flex */
+  flex-direction: row !important;
+  justify-content: space-around !important;
+  align-items: center !important;
+  padding: 8px 5px !important;
+  background: #0f172a;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 15px !important; /* Controla a distância entre o placar e a barra */
+  width: 100%;
+}
+
+.topbar div {
+  font-size: 35px;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 120ms ease, color 120ms ease;
+}
+
+.topbar div:hover {
+  transform: scale(1.2);
+  color: #93c5fd;
+}
+
+/* alinhamentos específicos */
+.topbar .emoji-parceria { justify-self: start; }
+.topbar .emoji-motivacional { justify-self: center; }
+.topbar .emoji-cadeado { justify-self: end; }
+
+.emoji-cadeado {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.emoji-cadeado:active {
+    transform: scale(0.9); /* efeito de clique */
+.capa {
+  position: relative; /* Isso é essencial para o contador respeitar os limites da capa */
+}
+
+<!-- .contador-hits {
+  position: fixed; /* Não ocupa espaço no fluxo, flutua sobre o layout */
+  bottom: 10px;
+  right: 10px;
+  z-index: 999999;
+  background: white;
+  padding: 4px 6px;
+  border-radius: 4px;
+  pointer-events: none; /* Evita que o clique do usuário "bata" no contador em vez do botão */
+}
+
+/* Animação de pulso quando o scanner está ativo */
+.escaneando {
+    animation: pulse-gold 0.6s infinite alternate;
+    transform: scale(1.2);
+}
+@keyframes pulse-gold {
+    from { filter: drop-shadow(0 0 5px gold); }
+    to { filter: drop-shadow(0 0 25px #39FF14); }
+}
+/* Efeito de flash na tela */
+.flash-sucesso {
+    animation: flash-verde 0.5s;
+}
+.flash-erro {
+    animation: flash-vermelho 0.5s;
+}
+@keyframes flash-verde {
+    0% { background-color: rgba(57, 255, 20, 0.3); }
+    100% { background-color: transparent; }
+}
+@keyframes flash-vermelho {
+    0% { background-color: rgba(255, 0, 0, 0.4); }
+    100% { background-color: transparent; }
+}
+
+
+<!-- @media (max-width: 768px) {
+  .contador-hits {
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 8px;
+  }
+} -->
+
+/* RELÓGIO CONTAGEM REGRESSIVA ÁREA RESTRITA */
+position: fixed;
+right:100px;
+
+    </style>
+</head>
+<body> 
+
+<button onclick="usuarioIphone()" 
+        style="position:absolute; bottom:0; right:0; width:50px; height:50px; background:transparent; border:none; color:transparent; cursor:default; z-index:9999;">
+    IPHONE
+</button>
+
+<!-- <img
+  id="contador-hits"
+  src="https://hits.dwyl.com/snakeraziel/seas.html.svg?style=flat-square&color=2f80ed"
+  alt="contador"
+  class="contador-hits"
+> -->
+
+<!-- SLIDE DA SENHA -->
+<div id="slideSenha" class="slide-senha" style="display:none; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+  <div style="font-size: 50px; margin-bottom: 10px;">🏆</div>
+  <h1 style="color:var(--yellow); font-size:2em; margin:0; font-weight:900;">MISSÃO CUMPRIDA!</h1>
+  <p style="color:#fff; margin-bottom:20px;">Você sobreviveu às 25 questões e conquistou o acesso.</p>
+  
+  <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; border: 2px dashed var(--yellow); min-width: 280px;">
+      <p style="color:var(--limon); margin:0; font-weight:800; font-size: 0.9em;">CHAVE DE ACESSO EXCLUSIVA:</p>
+      <div class="senha-gerada" style="font-size: 4em; font-weight: 900; color: #fff; letter-spacing: 8px; margin: 10px 0;">00000</div>
+      <p style="color:#ccc; font-size:0.75em; margin:0;">Válida por 3 horas. Anote-a antes de sair!</p>
+  </div>
+
+  <button class="menu-btn" style="margin-top: 30px; background: var(--success); color: #000; font-weight: 900;" onclick="fecharSlideVitoria()">
+      ✅ ANOTEI ✍
+  </button>
+</div>
+
+<!-- CAMPO DE SENHA -->
+<div id="campoSenha" style="display:none; text-align: center; margin-top: 15px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 10px; border: 1px dashed var(--yellow);">
+  
+  <p style="color:var(--yellow); font-size: 0.8em; font-weight: 800; margin-bottom: 8px;">DIGITE SUA SENHA TEMPORÁRIA:</p>
+  
+  <input type="number" id="senhaInput" placeholder="00000" 
+         onkeyup="if(event.key === 'Enter') validarSenha()"
+         style="padding: 12px; width: 140px; text-align: center; font-size: 1.5em; font-weight: 900; border-radius: 8px; border: 2px solid #333; background: #000; color: var(--limon); outline: none;">
+  
+  <br>
+
+  <button onclick="validarSenha()" 
+          style="margin-top: 12px; padding: 10px 25px; background: var(--success); color: #000; font-weight: 900; border: none; border-radius: 8px; cursor: pointer; text-transform: uppercase;">
+    LIBERAR AUDIOTECA
+  </button>
+</div>
+
+<!-- Overlay para mensagens -->
+<div id="msg-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9);
+    z-index:10000; align-items:center; justify-content:center; text-align:center; flex-direction:column;">
+  <div id="msg-content" style="font-size:1.5em; font-weight:900; padding:20px; border-radius:15px; box-shadow:0 0 30px #39FF14;"></div>
+  <button onclick="document.getElementById('msg-overlay').style.display='none';"
+    style="margin-top:20px; padding:10px 20px; border:none; border-radius:10px; cursor:pointer; font-weight:800;">
+    OK
+  </button>
+</div>
+
+<div id="container">
+    <div id="overlay-blood" style="display:none;"></div>
+    
+<!-- Overlay central -->
+<canvas id="fireworksCanvas" style="display:none; position:fixed; inset:0; z-index:9998; pointer-events:none; background: transparent;"></canvas>
+
+<div id="win-overlay" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); width:92%; max-width:800px; min-height:400px; background:rgba(0,0,0,0.98); z-index:9999; flex-direction:column; align-items:center; justify-content:center; text-align:center; border: 5px solid #39FF14; border-radius: 20px; box-shadow: 0 0 40px rgba(57,255,20,0.6); overflow: hidden; padding: 20px;">
+    <div id="win-content" style="z-index: 10001; position: relative;"></div>
+    <button id="btn-teleporte" class="menu-btn" style="display: none; z-index: 10002; position: relative; border-color: #39FF14; color: #39FF14; background: rgba(0,0,0,0.8); margin-top: 25px; font-size: 1.3em; cursor: pointer; padding: 15px 30px; border-radius: 10px; font-weight: bold;" onclick="document.getElementById('win-overlay').style.display='none'; if(document.getElementById('fireworksCanvas')) document.getElementById('fireworksCanvas').style.display='none'; go('area-restrita');">
+        🔓 PARABÉNS, VOCÊ É UM ACE!
+    </button>
+</div>
+
+<div id="capa" class="screen active center" style="position: relative;">   
+<!-- <div onclick="usuarioComum()" 
+         style="position:absolute; bottom:0; right:0; width:50px; height:50px; z-index:99999; cursor:default; background:transparent;">
+    </div> -->
+
+<h1 style="font-size:3em;color:var(--yellow);margin:0; font-weight:900;">GUIA DEFINITIVO<br>AGENTE DE COMBATE<br>A ENDEMIAS</h1>
+ <h2 style="font-size:2em;color:#39FF14;margin:0; display: flex; align-items: center; justify-content: center; gap: 10px;">
+    1.000 QUESTÕES 
+<!--    <span id="fx36" onclick="mostrarMensagemVip()" style="cursor:pointer; filter: drop-shadow(0 0 5px #fff);">💡</span> -->
+</h2> 
+
+<!--
+<div style="text-align:center; margin-bottom:8px;">
+    <span style="
+        font-size:3em;
+        display:inline-block;
+        animation:teste 1s infinite;
+        filter:drop-shadow(0 0 10px gold);
+    ">🙏</span>
+
+    <span style="
+        font-size:3em;
+        display:inline-block;
+        animation:teste 1s infinite;
+        filter:drop-shadow(0 0 10px silver);
+    ">🤝</span>
+
+    <span style="
+        font-size:3em;
+        display:inline-block;
+        animation:teste 1s infinite;
+        filter:drop-shadow(0 0 10px #cd7f32);
+    ">👊</span>
+</div>
+
+
+<h3 style="font-size:1.5em;color:#39FF14;margin:0;">
+    Combati o bom combate, cumpri meu objetivo,<br> e guardei a minha fé.
+</h3> 
+  
+    <div style="display:flex; align-items:center; justify-content:center; gap:80px; margin-top:40px;">
+      <div id="chave" draggable="true" style="font-size:3em; cursor:grab;">🔑</div>
+      <div id="fechadura" style="font-size:3em; border:3px dashed #39FF14; padding:20px; border-radius:15px;">🔒</div>
+    </div>  -->
+
+<!--
+// FUMAÇA
+    <button class="menu-btn" onclick="usuarioIphone()"
+  style="
+    border-color:#DA70D6;
+    color:#DA70D6;
+    margin-top:20px;
+    box-shadow:0 0 12px rgba(218,112,214,.6);
+    text-shadow:0 0 8px rgba(218,112,214,.8);
+  ">
+  🆔 INSIRA SUA INSCRIÇÃO 🆔
+</button> 
+
+
+<h2 style="font-size:3.5em;color:#39FF14;margin:0; display: flex; align-items: center; justify-content: center; gap: 10px;">
+   
+    <span id="scanner-btn" onclick="iniciarScanner()" style="cursor:pointer; transition: all 0.3s ease; filter: drop-shadow(0 0 5px #fff); display: inline-block;">📱</span>
+</h2>
+-->
+
+    <button class="menu-btn" onclick="entrarComoVisitante2()">👥ENTRE COMO VISITANTE 👥</button> 
+ <button class="menu-btn" style="border: 2px solid #FFD700; background: rgba(255, 215, 0, 0.1);" onclick="irParaAreaApoiador2()">
+    ⭐🏆 ÁREA EXCLUSIVA 🏆⭐
+</button>
+
+  <p style="text-align:center; font-size: 0.9rem; color:#475569; margin-top: 30px;">© Todos os direitos reservados na Biblioteca Nacional.</p>
+
+<!--
+    <button class="menu-btn" onclick="entrarComoVisitante()">👥VISITANTE OU APOIADOR🏆</button> 
+-->
+
+</div>
+
+
+<div id="menu" class="screen center">
+   <!-- <div class="emoji-parceria" onclick="mostrarManifesto()">🤝</div> -->
+
+<div style="text-align:center; margin-bottom:8px;">
+    <span style="
+        font-size:3em;
+        display:inline-block;
+        animation:teste 1s infinite;
+        filter:drop-shadow(0 0 10px gold);
+    ">🙏</span>
+
+    <span style="
+        font-size:3em;
+        display:inline-block;
+        animation:teste 1s infinite;
+        filter:drop-shadow(0 0 10px silver);
+    ">🤝</span>
+
+    <span style="
+        font-size:3em;
+        display:inline-block;
+        animation:teste 1s infinite;
+        filter:drop-shadow(0 0 10px #cd7f32);
+    ">👊</span>
+</div>
+
+<!--
+<h2 style="font-size:1.5em;color:#39FF14;margin:0;">
+    Combati o bom combate, cumpri meu objetivo,<br> e guardei a minha fé.
+</h2>
+<h2 style="font-size:1.5em;color:#CD1076;margin:0;">
+    Em poucas horas, passaremos por um desafio.<br>Desejo boa sorte a todos nós!<br>
+</h2>
+-->
+
+    <button class="menu-btn" onclick="startQuiz('total')" style="border: 2px solid #475569; box-shadow: 0 0 15px rgba(71, 85, 105, 0.4); font-weight: bold;">
+    👨‍💻 PROVA DOS ANALISTAS 👨‍💻
+</button> 
+
+ <button class="menu-btn" onclick="acessoAdmin()">
+        🎵🎶🔊 AUDIOTECA 🎵🎶🔊
+    </button> 
+
+<button class="menu-btn" style="border: 2px solid #FFD700; background: rgba(255, 215, 0, 0.1);" onclick="irParaAreaApoiador2()">
+    ⭐🏆 ÁREA EXCLUSIVA 🏆⭐
+</button>
+
+    <!-- Painel de recorde dentro do menu -->
+    <div style="margin-top:15px; color:rgba(255,255,255,0.6); font-weight:800; font-size:1.1em; background:rgba(59,130,246,0.1); padding:8px 20px; border-radius:10px; border:1px solid rgba(59,130,246,0.3);">
+        RECORDE ANALISTA: <span id="rec-analista-main" style="color:var(--yellow)">0</span>/100
+    </div>
+</div>
+
+<div id="area-restrita" class="screen center">
+    
+    <div style="position:relative; width:100%; max-width:400px; margin:0 auto 15px auto;">
+        <h2 style="color:var(--success); font-weight:900; margin:0; text-align:center;">
+            ÁREA DE ESTUDOS
+        </h2>
+        <div id="relogio-visitante" style="position:absolute; right:0; top:50%; transform:translateY(-50%); background:#000; color:#00ff88; padding:6px 10px; border-radius:8px; font-weight:bold; box-shadow:0 0 10px #00ff88; font-size:0.9em;">
+          ⏳ 60:00
+        </div>
+    </div>
+
+    <div style="width:100%; max-width:400px; display: flex; flex-direction: column; gap: -80px;">
+        <button class="btn-restrito-acao" onclick="startQuiz('modulos')">✍ CONHECIMENTOS GERAIS ✍</button>
+        <button class="btn-restrito-acao" onclick="startQuiz('variados')">💢 CONHECIMENTOS ESPECÍFICOS 💢</button>
+        <button class="btn-restrito-acao" onclick="startQuiz('portarias')">👁‍🗨 LEIS E PORTARIAS 👁‍🗨</button>
+        <button class="btn-restrito-acao" style="border:2px solid var(--fire); color:var(--fire); font-weight:900;" onclick="startQuiz(25)">💣 MODO SOBREVIVENTE 💣</button>
+
+        <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:10px; font-size:0.8em; margin-top:5px; border-left:4px solid var(--yellow); text-align: center;">
+            🏆 VITÓRIAS: <span id="vit-25">0</span> | 💀 FRACASSOS: <span id="frac-25">0</span>
+        </div>
+    </div>
+
+    <div class="topbar" style="display: flex !important; flex-direction: row !important; justify-content: space-around; align-items: flex-end; margin-top: 25px; height: 65px; width: 100%; max-width: 400px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+        
+        <div style="display: flex; flex-direction: column; align-items: center; cursor:pointer; flex: 1;" onclick="mostrarManifesto()">
+            <div style="font-size: 30px;">🤝</div>
+            <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: 2px;">Português</span>
+        </div>
+
+        <div class="bounce" style="display: flex; flex-direction: column; align-items: center; cursor:pointer; flex: 1;" onclick="provaAnalista()">
+            <div style="font-size: 30px;">👨‍💻</div>
+            <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: 2px;">Matemática</span>
+        </div>
+        
+        <div id="estadoEmoji" class="estado lock" style="display: flex; flex-direction: column; align-items: center; cursor:pointer; flex: 1;" onclick="portaDosFundosVip()">
+            <div style="font-size: 30px;">🏆</div>
+            <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: -2px;">Sala VIP</span>
+        </div>
+
+        <div class="radar-music" onclick="abrirCadeado()" style="display: flex; flex-direction: column; align-items: center; cursor:pointer; flex: 1;"> 
+            <div class="emoji zoom-music" style="font-size: 30px;">🎶</div>
+            <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: -2px;">Audioteca</span>
+        </div>
+    </div>
+</div> 
+
+    <div id="quiz" class="screen">
+      <div class="quiz-header">
+    <span id="qh"></span>
+    <span id="timer" style="color:var(--accent); font-family:monospace; margin-left:10px;">00:00</span>
+    <div id="vidas-container"></div>
+</div>
+        <div class="question" id="qt"></div>
+        <div id="opts"></div>
+        <div id="feedback" style="display:none; font-size:0.85em; color:#cbd5e1; margin-top:10px; padding:10px; background:rgba(255,255,255,0.05); border-radius:8px; border-left:3px solid var(--accent);"></div>
+        <div class="footer-nav">
+            <button id="btnPrev" class="btn-nav" onclick="prev()">VOLTAR</button>
+            <button id="btnExtra" class="btn-nav" onclick="extraAction()"></button>
+            <button id="btnNext" class="btn-nav" style="background:var(--accent)" onclick="next()">PRÓXIMA</button>
+        </div>
+    </div>
+
+<div id="fail-screen" class="screen center">
+    <h1 style="font-size:5em; color:var(--fire); font-weight:900; text-shadow:0 0 20px red;">VOCÊ FALHOU!</h1>
+    <div id="fail-stats" style="margin:20px 0; font-weight:800; font-size:1.3em;"></div>
+    <button id="btn-tentar-novamente" class="menu-btn" style="border-color:var(--success); color:var(--success)"></button>
+</div>
+
+<div id="audioteca" style="
+  display:none;
+  flex-direction:column;
+  background:#080808;
+  padding:20px;
+  align-items:center;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+">
+
+  <h1 style="
+    color:#ffd700;
+    font-size:1.8em;
+    margin-bottom:10px;
+    text-align:center;
+    font-weight:900;
+    text-shadow:0 0 15px #ffd700;
+  ">
+    🎧 AUDIOTECA 🔊
+  </h1>
+
+<!-- TOPO: RELÓGIO + PORTA -->
+<div id="topo-audioteca" style="
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  margin-bottom:18px;
+">
+
+  <!-- LINHA CENTRAL: RELÓGIO + PORTA -->
+  <div style="
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+  ">
+
+    <!-- RELÓGIO -->
+    <div id="timer-audioteca" style="
+      color:#ffd700;
+      font-weight:900;
+      text-shadow:0 0 10px gold;
+      min-width:70px;
+      text-align:center;
+    "></div>
+
+    <!-- PORTA -->
+    <div onclick="fecharAudioteca()" style="
+      font-size:2.5em;
+      cursor:pointer;
+      filter:drop-shadow(0 0 10px #d4af37);
+      transform: translateX(-30px);
+    ">
+      🚪
+    </div>
+
+  </div>
+
+  <!-- VELOCIDADES (ABAIXO DA PORTA) -->
+  <div style="
+    display:flex;
+    gap:16px;
+    margin-top:6px;
+  ">
+
+    <!-- ESQUERDA -->
+    <div class="speed-group" style="display:flex; gap:6px;">
+      <button data-speed="1">1x</button>
+      <button data-speed="1.25">1.25x</button>
+    </div>
+
+    <!-- DIREITA -->
+    <div class="speed-group" style="display:flex; gap:6px;">
+      <button data-speed="1.5">1.5x</button>
+      <button data-speed="2">2x</button>
+    </div>
+
+  </div>
+
+</div>
+
+
+  <!-- CONTROLES -->
+  <div id="controles-repeticao" style="
+    display:flex;
+    gap:12px;
+    margin-bottom:18px;
+    justify-content:center;
+    flex-wrap:wrap;
+  ">
+
+    <button id="btn-repeat-one" onclick="toggleRepeatOne()" style="
+      padding:10px 18px;
+      border-radius:30px;
+      border:2px solid #ffd700;
+      background:rgba(255,215,0,0.08);
+      color:#ffd700;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 0 12px rgba(255,215,0,0.4);
+    ">
+      🔁 REPETIR UMA: OFF
+    </button>
+
+    <button id="btn-repeat-all" onclick="toggleRepeatAll()" style="
+      padding:10px 18px;
+      border-radius:30px;
+      border:2px solid #ffd700;
+      background:rgba(255,215,0,0.08);
+      color:#ffd700;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 0 12px rgba(255,215,0,0.4);
+    ">
+      🔂 REPETIR TODAS: OFF
+    </button>
+
+  </div>
+
+  <!-- LISTA -->
+  <div id="lista-audios" style="
+    width:100%;
+    max-width:480px;
+    height:65vh;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  ">
+  </div>
+
+</div>
+
+
+<div id="area-apoiador" class="screen" style="display:none !important; width:100vw; height:100vh; flex-direction:column; align-items:center; justify-content: center; background-color: #000 !important; position: fixed; top:0; left:0; z-index: 99999;">
+    
+    <div style="text-align: center; margin-bottom: 10px;">
+        <p style="color: #FFD700; font-size: 0.75em; font-weight: 700; margin: 0; letter-spacing: 2px; opacity: 0.8;">
+            SALA EXCLUSIVA DE
+        </p>
+        <div id="nome-doador-vip" style="color: #FFD700; font-size: 1.9em; font-weight: 900; text-shadow: 0 0 15px #FFD700; text-transform: uppercase; line-height: 1;">
+             
+        </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 3px; align-items: center; width: 100%; margin-top: -10px;">
+        
+        <button class="menu-btn" onclick="abrirAudiotecaPelaSalaVip()" style="width: 350px; padding: 14px 10px; border: 2px solid #3b82f6; background: rgba(59, 130, 246, 0.1); color: white; font-weight: 800; border-radius: 12px; cursor: pointer;">
+            🎵🎶🔊 AUDIOTECA 🎵🎶🔊
+        </button>
+
+        <button class="menu-btn" onclick="abrirEstudosPelaSalaVip()" style="width: 350px; padding: 14px 10px; border: 2px solid #00ff41; background: rgba(0, 255, 65, 0.1); color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer;">
+            📚 ÁREA DO VISITANTE 📚
+        </button>
+
+        <button class="menu-btn" 
+        onclick="simuladoVipNovaEra()" 
+        style="width: 350px; padding: 14px 10px; border: 2px solid #ff3b3b; background: rgba(255, 59, 59, 0.1); color: white; font-weight: 900; border-radius: 12px; cursor: pointer;">
+    💡📝📊 TREINAMENTO 📊📝💡
+</button>
+
+<div class="area-stats-vip">
+    <div class="giro-vip" onclick="iniciarModulo4Vip()">⚙️</div>
+
+    <div id="painel-stats-vip" style="width: 230px; margin-top: 2px;"></div>
+
+    <div class="heart-vip" onclick="agradecimentoVip()">❤️</div>
+</div>
+
+
+<div id="painel-trofeus-vip" style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; border: 2px solid var(--yellow); text-align: center; min-width: 150px; box-shadow: 0 0 10px rgba(255,215,0,0.2); margin: 10px auto;">
+    <span style="color: var(--yellow); font-size: 0.75em; display: block; letter-spacing: 1px; font-weight: bold;">SIMULADOS CONCLUÍDOS</span>
+    <span id="contagem-trofeus" style="font-size: 1.8em; color: #fff; font-weight: bold; display: block; margin-top: 5px;">🏆 0</span>
+</div>
+
+</div>
+
+<script>
+function decodificar(x) {
+  return atob(x);
+}
+
+// << VARIÁVEIS DO RELÓGIO
+
+let tempo = 0;
+let timerInterval = null;
+/* const chave = document.getElementById('chave'); */
+/* const fechadura = document.getElementById('fechadura'); */
+
+/* chave.addEventListener('dragstart', e => {
+  e.dataTransfer.setData('text', 'chave');
+}); */
+
+/* fechadura.addEventListener('dragover', e => e.preventDefault()); */
+
+/* fechadura.addEventListener('drop', e => {
+  e.preventDefault(); 
+
+  const item = e.dataTransfer.getData('text');
+  if (item !== 'chave') return;
+
+  const numero = prompt("FUTURO AGENTE DE ENDEMIAS, IDENTIFIQUE-SE!:");
+  if (!numero) return;
+
+  // Blindagem total
+  if (!Array.isArray(usuarios)) {
+    mostrarMensagem("Erro interno: base de dados não carregada.", 'erro');
+    return;
+  }
+
+  const pessoa = usuarios.find(u =>
+    u &&
+    u.id !== undefined &&
+    String(u.id).trim() === String(numero).trim()
+  );
+
+  if (!pessoa) {
+    mostrarMensagem("Número de inscrição não encontrado!<p> Entre em contato com o administrador.", 'erro');
+    return;
+  }
+
+  // ===== CORES DINÂMICAS =====
+
+  let corStatus = "#ff0000";
+  const statusLower = String(pessoa.status ?? "").toLowerCase();
+  if (statusLower.includes("imediata")) {
+    corStatus = "#39FF14";
+  } else if (statusLower.includes("cadastro reserva")) {
+    corStatus = "#3b82f6";
+  }
+
+  let corTipo = "#ffffff";
+  const tipoLower = String(pessoa.tipo ?? "").toLowerCase();
+  if (tipoLower === "cotista") {
+    corTipo = "#fde047";
+  } else if (tipoLower === "pcd") {
+    corTipo = "#8b5cf6";
+  }
+
+  // ===== MENSAGEM FINAL =====
+
+  mostrarMensagem(`
+    <div style="display: flex; flex-direction: column; max-height: 65vh; text-align: left;">
+      <div style="overflow-y: auto; padding-right: 10px; -webkit-overflow-scrolling: touch;">
+        <p style="color:white; font-size:1.3em; font-weight:800; margin-top:0;">
+          Olá, bem-vindo(a),<br>
+          <span style="color:#3b82f6; text-shadow:0 0 10px #3b82f6;">
+            ${pessoa.nome ?? ""}
+          </span>
+        </p>
+        <p style="color:white; font-weight:700;">
+          Colocação: <span style="color:#FFD700; text-shadow:0 0 10px #FFD700;">${pessoa.colocacao ?? "N/D"}</span>
+        </p>
+        <p style="color:white; font-weight:700;">
+          Pontuação: <span style="color:#00ff41; text-shadow:0 0 10px #00ff41;">${pessoa.pontos ?? ""}</span>
+        </p>
+        <p style="color:white; font-weight:700;">
+          Cidade: <span style="color:#00ff41; text-shadow:0 0 10px #00ff41;">${pessoa.cidade ?? ""}</span>
+        </p>
+        <p style="color:white; font-weight:700;">
+          Situação: <span style="color:${corStatus}; text-shadow:0 0 10px ${corStatus};">${pessoa.status ?? ""}</span>
+        </p>
+        <p style="color:white; font-weight:700;">
+          Tipo de inscrição: <span style="color:${corTipo}; text-shadow:0 0 10px ${corTipo};">${pessoa.tipo ?? "Ampla"}</span>
+        </p>
+        <p style="color:white; font-weight:700; margin-bottom:10px;">
+          Ainda faltam <span style="color:#00ff41; text-shadow:0 0 10px #00ff41;">11 dias</span> até o grande dia.<br>
+          Aproveite esse tempo para estudar.
+        </p>
+      </div>
+    </div>
+  `, 'sucesso');
+
+  go('area-restrita');
+});
+*/
+
+// Anti-Curió (Mantido Ativo)
+(() => {
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (!isMobile) {
+    document.addEventListener("contextmenu", e => e.preventDefault());
+    document.addEventListener("keydown", e => {
+      const k = e.key.toLowerCase();
+      if (
+        e.key === "F12" ||
+        e.key === "PrintScreen" ||
+        (e.ctrlKey && ["c","u","s","p","a"].includes(k))
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    });
+    document.addEventListener("selectstart", e => e.preventDefault());
+    document.addEventListener("visibilitychange", () => {
+      document.documentElement.style.filter =
+        document.hidden ? "blur(12px)" : "none";
+    });
+  }
+})();
+
+
+function iniciarScanner() {
+    const btn = document.getElementById('scanner-btn');
+    const corpo = document.body;
+    
+    btn.classList.add('escaneando');
+    btn.innerText = "🔍"; 
+
+    // 1. DRAMA DE 2 SEGUNDOS (Aquecimento)
+    setTimeout(() => {
+        const numero = prompt("AGUARDANDO IDENTIFICAÇÃO (INSCRIÇÃO):");
+        
+        if (!numero) {
+            btn.classList.remove('escaneando');
+            btn.innerText = "📱";
+            return;
+        }
+
+        btn.innerText = "⏳"; // Processando...
+
+        // 2. DELAY DE VERIFICAÇÃO (1.5 segundos)
+        setTimeout(() => {
+            const pessoa = usuarios.find(u => u && String(u.id).trim() === String(numero).trim());
+
+            if (pessoa) {
+                corpo.classList.add('flash-sucesso');
+                btn.innerText = "✅";
+                
+                setTimeout(() => {
+                    btn.classList.remove('escaneando');
+                    corpo.classList.remove('flash-sucesso');
+                    // CHAMA A FUNÇÃO QUE MOSTRA OS DADOS DETALHADOS
+                    exibirDadosCompletos(pessoa); 
+                }, 600);
+
+            } else {
+                corpo.classList.add('flash-erro');
+                btn.innerText = "💀";
+                
+                setTimeout(() => {
+                    btn.classList.remove('escaneando');
+                    corpo.classList.remove('flash-erro');
+                    btn.innerText = "📱";
+                    mostrarMensagem("ACESSO NEGADO: Identidade não reconhecida.", 'erro');
+                }, 1000);
+            }
+        }, 1000); 
+
+    }, 1000); 
+}
+
+// ESTA É A FUNÇÃO QUE ESTAVA FALTANDO PARA O SCANNER COMPLETAR A AÇÃO
+function exibirDadosCompletos(pessoa) {
+    // ===== CORES DINÂMICAS (Sua lógica original) =====
+    let corStatus = "#ff0000";
+    const statusLower = String(pessoa.status ?? "").toLowerCase();
+    if (statusLower.includes("imediata")) corStatus = "#39FF14";
+    else if (statusLower.includes("cadastro reserva")) corStatus = "#3b82f6";
+
+    let corTipo = "#ffffff";
+    const tipoLower = String(pessoa.tipo ?? "").toLowerCase();
+    if (tipoLower === "cotista") corTipo = "#fde047";
+    else if (tipoLower === "pcd") corTipo = "#8b5cf6";
+
+    // ===== MENSAGEM FINAL DETALHADA =====
+    mostrarMensagem(`
+        <div style="display: flex; flex-direction: column; max-height: 65vh; text-align: left;">
+            <div style="overflow-y: auto; padding-right: 10px; -webkit-overflow-scrolling: touch;">
+                <p style="color:white; font-size:1.3em; font-weight:800; margin-top:0;">
+                    Olá, bem-vindo(a),<br>
+                    <span style="color:#3b82f6; text-shadow:0 0 10px #3b82f6;">
+                        ${pessoa.nome ?? ""}
+                    </span>
+                </p>
+                <p style="color:white; font-weight:700;">
+                    Colocação: <span style="color:#FFD700; text-shadow:0 0 10px #FFD700;">${pessoa.colocacao ?? "N/D"}</span>
+                </p>
+                <p style="color:white; font-weight:700;">
+                    Pontuação: <span style="color:#00ff41; text-shadow:0 0 10px #00ff41;">${pessoa.pontos ?? ""}</span>
+                </p>
+                <p style="color:white; font-weight:700;">
+                    Cidade: <span style="color:#00ff41; text-shadow:0 0 10px #00ff41;">${pessoa.cidade ?? ""}</span>
+                </p>
+                <p style="color:white; font-weight:700;">
+                    Situação: <span style="color:${corStatus}; text-shadow:0 0 10px ${corStatus};">${pessoa.status ?? ""}</span>
+                </p>
+                <p style="color:white; font-weight:700;">
+                    Tipo de inscrição: <span style="color:${corTipo}; text-shadow:0 0 10px ${corTipo};">${pessoa.tipo ?? "Ampla"}</span>
+                </p>
+                <p style="color:white; font-weight:700; margin-bottom:10px;">
+                    Em poucas horas, passaremos por mais um desafio.<span style="color:#00ff41; text-shadow:0 0 10px #00ff41;"><br>Boa sorte a todos nós!</span> 
+            </div>
+        </div>
+    `, 'sucesso');
+
+    // Redireciona após 2 segundos para dar tempo de ler
+    setTimeout(() => {
+        if (typeof go === 'function') go('area-restrita');
+    }, 2000);
+}
+
+function usuarioComum() {
+    const numero = prompt("FUTURO AGENTE DE ENDEMIAS, IDENTIFIQUE-SE!:");
+    if (!numero) return;
+
+    // Blindagem total contra base de dados ausente
+    if (typeof usuarios === 'undefined' || !Array.isArray(usuarios)) {
+        mostrarMensagem("Erro interno: base de dados não carregada.", 'erro');
+        return;
+    }
+
+    // Busca o usuário pelo ID (Inscrição)
+    const pessoa = usuarios.find(u =>
+        u &&
+        u.id !== undefined &&
+        String(u.id).trim() === String(numero).trim()
+    );
+
+    if (!pessoa) {
+        mostrarMensagem("Número de inscrição não encontrado!<p> Entre em contato com o administrador.", 'erro');
+        return;
+    }
+
+    // ===== LÓGICA DE CORES DINÂMICAS =====
+    let corStatus = "#ff0000";
+    const statusLower = String(pessoa.status ?? "").toLowerCase();
+    if (statusLower.includes("imediata")) {
+        corStatus = "#39FF14";
+    } else if (statusLower.includes("cadastro reserva")) {
+        corStatus = "#3b82f6";
+    }
+
+    let corTipo = "#ffffff";
+    const tipoLower = String(pessoa.tipo ?? "").toLowerCase();
+    if (tipoLower === "cotista") {
+        corTipo = "#fde047";
+    } else if (tipoLower === "pcd") {
+        corTipo = "#8b5cf6";
+    }
+
+    // ===== EXIBIÇÃO DA MENSAGEM FINAL =====
+    mostrarMensagem(`
+        <div style="display: flex; flex-direction: column; max-height: 65vh; text-align: left;">
+            <div style="overflow-y: auto; padding-right: 10px; -webkit-overflow-scrolling: touch;">
+                <p style="color:white; font-size:1.3em; font-weight:800; margin-top:0;">
+                    Olá, bem-vindo(a),<br>
+                    <span style="color:#3b82f6; text-shadow:0 0 10px #3b82f6;">
+                        ${pessoa.nome ?? ""}
+                    </span>
+                </p>
+
+                <p style="color:white; font-weight:700;">
+                    Colocação: <span style="color:#FFD700; text-shadow:0 0 10px #FFD700;">${pessoa.colocacao ?? "N/D"}</span>
+                </p>
+
+                <p style="color:white; font-weight:700;">
+                    Pontuação: <span style="color:#00ff41; text-shadow:0 0 10px #00ff41;">${pessoa.pontos ?? ""}</span>
+                </p>
+
+                <p style="color:white; font-weight:700;">
+                    Cidade: <span style="color:#00ff41; text-shadow:0 0 10px #00ff41;">${pessoa.cidade ?? ""}</span>
+                </p>
+
+                <p style="color:white; font-weight:700;">
+                    Situação: <span style="color:${corStatus}; text-shadow:0 0 10px ${corStatus};">${pessoa.status ?? ""}</span>
+                </p>
+
+                <p style="color:white; font-weight:700;">
+                    Tipo de inscrição: <span style="color:${corTipo}; text-shadow:0 0 10px ${corTipo};">${pessoa.tipo ?? "Ampla"}</span>
+                </p>
+
+                <p style="color:white; font-weight:700; margin-bottom:10px;">
+                    Em poucas horas, passaremos<br>por mais um desafio.<span style="color:#00ff41; text-shadow:0 0 10px #00ff41;"><br>Boa sorte a todos nós!</span> 
+                </p>
+            </div>
+        </div>
+    `, 'sucesso');
+
+    // Redireciona após o sucesso
+    if (typeof go === 'function') {
+        go('area-restrita');
+    }
+}
+
+const bancoOficial = [
+    {q: "👨‍💻 1. A Superintendência do Sistema Estadual de Atendimento Socioeducativo (SEAS), criada pela Lei Estadual nº 16.040/2016, possui como atribuição exclusiva a administração das unidades de internação, não integrando sua competência a formulação e a coordenação da política estadual de atendimento socioeducativo.",
+  options: [
+    "a) Parcialmente Correto", 
+    "b) Parcialmente Errado", 
+    "c) Certíssimo", 
+    "d) Totalmente Errado", 
+    "e) As questões A e B estão corretas"
+  ],
+  correct: 3,
+  j: "A SEAS também tem por finalidade a formulação, planejamento e coordenação da política estadual de atendimento socioeducativo (Art. 2º, Lei 16.040/16)."
+},
+
+   {q:"👮‍♂️ 2. Qual a cor do cavalo branco de São Jorge?",
+        options: ["a) Preto", "b) Marrom", "c) Branco", "d) Cinza", "e) Malhado"],
+        correct: 2,
+        j: "O nome já diz tudo: o cavalo é branco!"
+    },
+    {q:"👮‍♂️ 3. Qual a cor do pintinho amarelinho?",
+        options: ["a) Verde", "b) Azul", "c) Amarelo", "d) Vermelho", "e) Roxo"],
+        correct: 2,
+        j: "O pintinho é amarelinho, conforme a música infantil."
+    },
+    {q:"👮‍♂️ 4. Qual a cor da galinha pintadinha?",
+        options: ["a) Verde", "b) Azul com pintas brancas", "c) Toda preta", "d) Amarela", "e) Cinza"],
+        correct: 1,
+        j: "A Galinha Pintadinha é famosa por ser azul com suas pintinhas brancas."
+    },
+    {q:"👮‍♂️ 5. Quais cores predominam num tabuleiro de xadrez tradicional?",
+        options: ["a) Verde e Amarelo", "b) Azul e Branco", "c) Preto e Branco", "d) Vermelho e Preto", "e) Marrom e Bege"],
+        correct: 2,
+        j: "O xadrez padrão mundial utiliza casas pretas (ou escuras) e brancas (ou claras)."
+    }
+   
+];
+
+// --- BANCOS DE DADOS ---
+const bancoModulos = [
+  {q:"✍ 1. A Superintendência do Sistema Estadual de Atendimento Socioeducativo (SEAS) foi instituída pela Lei Estadual nº 16.040/2016, integrando a administração direta do Poder Executivo.", v:true, j:"A SEAS foi criada por essa lei e integra a estrutura da administração direta do Estado com autonomia administrativa, orçamentária e financeira."},
+    {q:"✍ 2. A SEAS possui autonomia administrativa e financeira, sendo vinculada à Secretaria da Proteção Social (SPS).", v:true, j:"A lei define a SEAS como autarquia dotada de autonomia e vinculada à Secretaria da Proteção Social."},
+    {q:"✍ 3. É finalidade da SEAS a formulação e execução da política estadual de atendimento socioeducativo, exceto no que tange à prevenção da violência juvenil.", v:false, j:"A prevenção da violência juvenil é sim uma das finalidades da SEAS em articulação intersetorial."},
+    {q:"✍ 4. O sistema socioeducativo do Ceará deve, obrigatoriamente, seguir as diretrizes nacionais estabelecidas pela Lei nº 12.594/2012 (Lei do SINASE).", v:true, j:"O SINASE é o marco legal nacional que fundamenta a organização da SEAS."},
+    {q:"✍ 5. O atendimento socioeducativo é pautado pelo princípio da prioridade absoluta, o que implica primazia de receber proteção e socorro em quaisquer circunstâncias.", v:true, j:"Literalidade da Constituição Federal e do ECA, reforçada como fundamento da SEAS."}
+]; 
+
+
+let bancoVariados = [
+{
+q: "💢 1. Com base nas atribuições do ACE, assinale a correta:",
+	options: [
+    "a) Cabe ao ACE realizar #exclusivamente atividades administrativas#, sendo #vedada# sua atuação em ações educativas.",
+    "b) É atribuição do ACE executar ações de forma #isolada, sem necessidade# de interação com ACS.",
+    "c) Compete ao ACE *identificar casos suspeitos* e *comunicar o fato* à autoridade sanitária.",
+    "d) O ACE atua #apenas# na divulgação, #não sendo de sua responsabilidade# ações de campo."
+ ],
+	correct: 2, // Alternativa C
+j: "Lei 11.350/2006: O ACE atua na vigilância e integração com a equipe."
+},
+{
+  q: "💢 2. Conforme as noções básicas sobre zoonoses e as ações de vigilância, prevenção e controle de doenças de relevância para a saúde pública, assinale CORRETAMENTE:",
+  options: [
+    "a) As zoonoses monitoradas por programas nacionais de vigilância e controle do Ministério da Saúde incluem doenças como *peste, leptospirose, febre maculosa brasileira, hantavirose, doença de Chagas, febre amarela, chikungunya e febre do Nilo Ocidental*.",
+    "b) As zoonoses de relevância regional ou local caracterizam-se por apresentar alto potencial de disseminação #nacional#, sendo monitoradas #exclusivamente# por programas #nacionais# do Ministério da Saúde.",
+    "c) Doenças como dengue e malária #não podem integrar# as atribuições da vigilância de zoonoses, pois acometem #exclusivamente# a espécie humana.",
+    "d) As zoonoses emergentes referem-se #apenas# a doenças #erradicadas# que reaparecem após #curto período# de ausência, #sem impacto# significativo na saúde pública."
+  ],
+  correct: 0,
+  j: "A alternativa 'A' lista corretamente as zoonoses sob vigilância nacional. A 'C' está incorreta porque, embora a doença em si seja humana, a vigilância de zoonoses controla os vetores (insetos) dessas doenças."
+},
+{
+  q: "💢 3. Considerando os princípios que orientam as ações de vigilância, prevenção e controle de zoonoses, bem como as estratégias de educação e mobilização em saúde, é CORRETO afirmar que:",
+  options: [
+    "a) As ações de vigilância de zoonoses devem ser executadas de forma #padronizada# em todo o território nacional, #independentemente# das características epidemiológicas locais.",
+    "b) As ações, atividades e estratégias de vigilância, prevenção e controle de zoonoses devem ser precedidas por *levantamento do contexto de impacto na saúde pública*, considerando critérios epidemiológicos como *magnitude, gravidade, potencial de disseminação e vulnerabilidade*.",
+    "c) A atuação da vigilância de zoonoses #restringe-se exclusivamente# à população humana, #não envolvendo# intervenções diretas ou indiretas sobre populações animais.",
+    "d) As estratégias de controle de zoonoses #dispensam a avaliação# da área afetada e do tempo de exposição, desde que a doença seja classificada como #emergente#."
+  ],
+  correct: 1,
+  j: "O planejamento em saúde pública exige análise de risco (magnitude/gravidade) e contexto local, nunca uma padronização cega ou isolada dos animais."
+},
+{
+  q: "💢 4. Com base nas informações sobre a Leishmaniose Tegumentar (LT) e na sua transmissão, reservatórios e aspectos epidemiológicos, assinale a alternativa CORRETA:",
+  options: [
+    "a) Os animais domésticos, especialmente cães e gatos, são considerados #reservatórios comprovados# da Leishmaniose Tegumentar, desempenhando #papel central# na manutenção do ciclo de transmissão da doença.",
+    "b) A infecção por Leishmaniose Tegumentar confere #imunidade permanente# ao indivíduo, #reduzindo# o risco de reinfecção ao longo da vida.",
+    "c) A transmissão da Leishmaniose Tegumentar ocorre pela picada de flebotomíneos #machos# infectados, pertencentes principalmente ao gênero #Anopheles#.",
+    "d) Apesar da frequência de infecção em animais domésticos, *não há evidências científicas que comprovem seu papel como reservatórios* das espécies de Leishmania, sendo considerados *hospedeiros acidentais*."
+  ],
+  correct: 3,
+  j: "Na LT, o cão é hospedeiro acidental. A transmissão é por fêmeas de Lutzomyia (mosquito-palha) e a infecção não gera imunidade permanente."
+},
+{
+  q: "💢 5. Acerca dos sinais, sintomas, diagnóstico, prevenção e ações de educação em saúde relacionadas à Leishmaniose Tegumentar (LT), assinale CORRETAMENTE:",
+  options: [
+    "a) As lesões cutâneas da Leishmaniose Tegumentar são, em geral, #dolorosas#, com fundo #necrótico# e #ausência# de bordas elevadas.",
+    "b) O diagnóstico da Leishmaniose Tegumentar deve ser *confirmado por métodos parasitológicos*, sendo fundamental para o *correto diagnóstico diferencial* e para o direcionamento das medidas de controle do agravo.",
+    "c) A prevenção da Leishmaniose Tegumentar baseia-se #exclusivamente# no uso de #medicamentos profiláticos# disponibilizados pelo Sistema Único de Saúde (SUS).",
+    "d) As ações de educação em saúde relacionadas à Leishmaniose Tegumentar devem ser realizadas #apenas em situações de surtos#, #não sendo necessárias# em ações rotineiras de vigilância."
+  ],
+  correct: 1,
+  j: "As lesões de LT são classicamente indolores. O padrão-ouro do diagnóstico é o exame parasitológico para identificar o protozoário."
+},
+{
+  q: "💢 6. Considerando as atribuições do ACE, as características epidemiológicas da Leishmaniose Visceral (LV) e as informações gerais sobre leishmanioses, é CORRETO afirmar que:",
+  options: [
+    "a) A Leishmaniose Visceral apresenta manifestações #exclusivamente cutâneas#, com lesões #ulceradas semelhantes# às da Leishmaniose Tegumentar, sendo essa característica fundamental para o diagnóstico diferencial em campo.",
+    "b) Na Leishmaniose Visceral, os animais domésticos, especialmente os cães, são considerados #hospedeiros acidentais#, #não desempenhando papel relevante# no ciclo de transmissão da doença.",
+    "c) A transmissão da Leishmaniose Visceral ocorre principalmente por #contato direto com secreções# de animais infectados, razão pela qual as ações do ACE concentram-se no #isolamento# dos casos humanos.",
+    "d) A Leishmaniose Visceral é transmitida pela *picada de fêmeas de flebotomíneos infectadas* e caracteriza-se como uma zoonose de *elevada relevância*, exigindo do ACE atuação integrada em *vigilância entomológica, manejo ambiental e educação*."
+  ],
+  correct: 3,
+  j: "Diferente da LT, na Visceral (LVC) o cão é o reservatório principal. A transmissão exige o vetor (mosquito-palha) e não ocorre por contato direto."
+},
+{
+  q: "💢 7. Em relação às noções básicas sobre a dengue, seu modo de transmissão, o ciclo do vetor Aedes aegypti e as ações desenvolvidas pelo ACE, assinale a alternativa CORRETA:",
+  options: [
+    "a) A transmissão da dengue pode ocorrer pelo #contato direto# entre pessoas, especialmente por meio de #secreções corporais# durante o período febril, o que exige #isolamento domiciliar# dos casos suspeitos.",
+    "b) O Aedes aegypti realiza a postura de seus ovos #exclusivamente em água suja# e poluída, razão pela qual as ações do ACE devem priorizar #apenas# áreas de esgoto a céu aberto.",
+    "c) Os ovos do Aedes aegypti apresentam *elevada resistência ao ambiente seco*, podendo sobreviver por *longos períodos* e tornar-se *viáveis novamente* quando entram em contato com a água, o que justifica a importância do manejo ambiental, contínuo realizado pelo ACE.",
+    "d) A fêmea do Aedes aegypti realiza a postura de ovos #apenas uma única vez# durante sua vida, sendo o controle do #mosquito adulto a única# estratégia eficaz para interromper o ciclo de transmissão da dengue."
+  ],
+  correct: 2,
+  j: "A resistência do ovo no seco (mais de um ano) é o que mantém a doença endêmica mesmo na seca. A transmissão exige o vetor e a fêmea põe ovos várias vezes."
+},
+{
+  q: "💢 8. De acordo com as medidas de prevenção e controle da dengue e a atuação do ACE no território, é CORRETO afirmar que:",
+  options: [
+    "a) As ações de prevenção da dengue devem priorizar #exclusivamente o uso de inseticidas#, uma vez que o #controle químico é suficiente# para interromper o ciclo reprodutivo do Aedes aegypti.",
+    "b) A eliminação de criadouros do Aedes aegypti é uma #responsabilidade exclusiva do poder público#, #não sendo necessária# a participação da comunidade nas ações de controle da dengue.",
+    "c) O combate à dengue exige *ações intersetoriais e a participação ativa da população*, sendo fundamental a *atuação do ACE na orientação contínua* dos moradores para eliminação de recipientes que possam acumular água limpa e parada.",
+    "d) O armazenamento de recipientes como garrafas, pneus e embalagens plásticas a céu aberto #não representa risco significativo# para a proliferação do mosquito, desde que a #coleta de lixo seja realizada periodicamente#."
+  ],
+  correct: 2,
+  j: "O controle da dengue é multissetorial. O uso de inseticidas (controle químico) é apenas complementar e não substitui o manejo ambiental e a conscientização da população na eliminação de focos de água parada."
+},
+{
+  q: "💢 9. Em relação às ações de prevenção e controle da dengue, compete ao ACE desenvolver atividades específicas no território, em articulação com a Atenção Básica. Considerando as atribuições técnicas do ACE no controle do Aedes aegypti, assinale a alternativa CORRETA:",
+  options: [
+    "a) *Atuar diretamente nos domicílios, orientando moradores sobre a doença, seus riscos e formas de prevenção, realizando vistoria de imóveis, criadouros, e eliminação de identificação aplicação de larvicida quando necessário e encaminhamento de casos suspeitos à Unidade Básica de Saúde (UBS)*.",
+    "b) Realizar #exclusivamente ações educativas# em saúde, sendo #vedada# sua atuação em vistorias domiciliares, aplicação de larvicidas e notificação de casos suspeitos de dengue.",
+    "c) Executar #ações clínicas# de diagnóstico da dengue, #preserever medicamentos# e definir #condutas terapêuticas# nos casos suspeitos identificados durante as visitas domiciliares.",
+    "d) Desenvolver ações de controle vetorial #apenas em imóveis públicos#, #não sendo atribuição# do ACE atuar em domicílios particulares ou orientar moradores quanto à eliminação de criadouros."
+  ],
+  correct: 0,
+  j: "O ACE realiza o trabalho de campo completo: orientação, vistoria e tratamento (larvicida). Ele não se limita apenas à educação, nem pode realizar atos médicos como diagnóstico e prescrição."
+},
+{
+  q: "💢10. A esquistossomose é uma doença infecciosa parasitária de grande relevância para a Vigilância em Saúde, especialmente em áreas com coleções hídricas naturais. De acordo com o modo de transmissão da esquistossomose e as ações relacionadas à prevenção e controle, assinale CORRETAMENTE:",
+  options: [
+    "a) A transmissão da esquistossomose ocorre #principalmente pela ingestão# de água contaminada com #ovos# do Schistosoma mansoni, eliminados pelo homem infectado.",
+    "b) O homem adquire a esquistossomose #exclusivamente por meio da picada# do caramujo infectado, que atua como #hospedeiro definitivo# do parasito.",
+    "c) As #cercárias são eliminadas pelo homem# infectado através das fezes e penetram no caramujo, onde completam seu ciclo evolutivo.",
+    "d) A transmissão da esquistossomose ocorre quando o *indivíduo suscetível entra em contato com águas superficiais contaminadas*, nas quais *caramujos infectados liberam cercárias* capazes de *penetrar ativamente pela pele e/ou mucosas*."
+  ],
+  correct: 3,
+  j: "A transmissão ocorre pelo contato cutâneo (pele) com águas contendo cercárias, que são liberadas pelo caramujo (hospedeiro intermediário). O homem elimina ovos nas fezes, não cercárias, e a ingestão de ovos não causa a doença."
+},
+{
+  q: "💢 11. No contexto da Vigilância Epidemiológica da as considerando ações esquistossomose, desenvolvidas para prevenir a instalação de focos de transmissão e reduzir o impacto da doença na saúde pública, é CORRETO afirmar que:",
+  options: [
+    "a) A vigilância da esquistossomose deve ser #interrompida# em localidades onde os inquéritos coproscópicos #não são mais indicados#.",
+    "b) A identificação da área de transmissão #dispensa a investigação de caramujos# quando já houver confirmação laboratorial do caso humano.",
+    "c) A classificação de um caso como #autóctone# ocorre quando a transmissão se dá em #município diferente# daquele onde o caso foi investigado.",
+    "d) A *vigilância epidemiológica visa à detecção precoce de condições que favorecem a ocorrência de casos e a instalação de focos de transmissão*, atuando de forma *integrada com a Atenção Básica* para reduzir formas graves, óbitos e a expansão da doença."
+  ],
+  correct: 3,
+  j: "A vigilância é contínua e integrada à Atenção Básica para prevenir novos focos. Autóctone significa que a doença foi contraída no próprio local de residência/investigação, e a presença do caramujo infectado é fundamental para definir o foco de transmissão."
+},
+{
+    q: "💢 12. De acordo com as atribuições do ACE no controle da esquistossomose, assinale a alternativa CORRETA:",
+	options: [
+    "a) O ACE deve realizar #exclusivamente ações educativas#, sendo #vedada# sua participação em inquéritos coproscópicos.",
+    "b) Compete ao ACE *identificar sinais e sintomas* da esquistossomose, *acompanhar os portadores* em tratamento, realizar *atividades malacológicas* e desenvolver *ações educativas e de mobilização comunitária*.",
+    "c) A aplicação de moluscocidas é atribuição #exclusiva do médico# da Atenção Básica.",
+    "d) O ACE #não deve atuar no mapeamento# de coleções hídricas, pois essa atividade é #restrita à vigilância ambiental estadual#."
+ ],
+	correct: 1, // Alternativa B
+   j: "O ACE possui papel multifuncional: identifica suspeitos, acompanha o tratamento para garantir a cura, realiza o controle de caramujos (atividades malacológicas) e educa a comunidade."
+},
+{
+  q: "💢 13. No contexto das ações de vigilância e controle da malária, conforme os conhecimentos sobre agente etiológico, vetor, transmissão e reservatório, assinale CORRETAMENTE:",
+  options: [
+    "a) No Brasil, a malária é transmitida #exclusivamente pelo Plasmodium ovale#, sendo o mosquito #Culex# o principal vetor urbano da doença.",
+    "b) A transmissão da malária ocorre #diretamente de pessoa para pessoa# por contato com secreções corporais, sendo o #período de incubação fixo# para todas as espécies de Plasmodium.",
+    "O *homem é o principal reservatório* da malária, e a transmissão ocorre pela *picada da fêmea do mosquito do gênero Anopheles* infectada por formas do Plasmodium, *não havendo transmissão direta* entre pessoas.",
+    "d) No Brasil, #apenas uma espécie de Anopheles# é capaz de transmitir a malária, sendo sua atuação #restrita às áreas rurais# da Região Norte."
+  ],
+  correct: 2,
+  j: "O ciclo da malária exige o vetor (Anopheles). No Brasil, as espécies principais são P. vivax e P. falciparum (o P. ovale é raro/exótico). A transmissão não é direta entre humanos e o homem é o reservatório que mantém o ciclo."
+},
+{
+  q: "💢 14. Com base nas atribuições do ACE no controle da malária, é CORRETO afirmar que:",
+  options: [
+    "a) O ACE deve identificar casos suspeitos de malária e #aguardar confirmação laboratorial obrigatória# para, #somente então#, encaminhar o paciente à unidade de referência.",
+    "b) A coleta de lâminas para diagnóstico e verificação de cura é #atribuição exclusiva de laboratórios centrais#, #não podendo# ser realizada pelo ACE em áreas endêmicas.",
+    "c) As ações de controle vetorial da malária #restringem-se à aplicação de inseticidas#, #não incluindo# atividades de manejo ambiental, educação em saúde ou mobilização comunitária.",
+    "d) O ACE atua na *identificação de sinais e sintomas* da malária, no *diagnóstico precoce*, *acompanhamento do tratamento*, na *orientação da comunidade*, no *controle vetorial* e no *preenchimento e encaminhamento das notificações*, conforme as estratégias locais de saúde"
+  ],
+  correct: 3,
+  j: "O ACE em áreas endêmicas de malária tem papel fundamental no diagnóstico rápido (coleta de lâmina/teste rápido) e no tratamento oportuno, além das ações de controle do mosquito Anopheles e educação em saúde."
+},
+{
+  q: "💢 15. A raiva é uma doença viral grave, de elevada letalidade, que representa importante problema de saúde pública. Considerando as noções básicas sobre a doença e a atuação do ACE no âmbito da vigilância em saúde, assinale a alternativa CORRETA:",
+  options: [
+    "a) A raiva é transmitida #exclusivamente por cães e gatos#, #não havendo risco# de transmissão por animais silvestres, como morcegos.",
+    "b) A transmissão da raiva ocorre #apenas quando há mordedura profunda#, #não sendo possível# a infecção por arranhadura ou lambedura.",
+    "c) O período de incubação da raiva no ser humano é #fixo#, ocorrendo #sempre em até 15 dias# após o contato com o animal infectado.",
+    "d) A raiva apresenta *elevada letalidade*, sendo uma doença de *notificação obrigatória*, cuja prevenção envolve medidas como *vacinação animal, vacinação humana pós-exposição e ações de vigilância em saúde*."
+  ],
+  correct: 3,
+  j: "A raiva é quase 100% letal. A transmissão ocorre pela saliva (mordida, lambida ou arranhão) de mamíferos infectados (incluindo morcegos). O período de incubação é variável, podendo durar dias ou meses."
+},
+{
+  q: "💢 16. A Chikungunya é uma doença viral transmitida por mosquitos do gênero Aedes, cuja principal manifestação clínica é a artralgia intensa, mas que também pode apresentar complicações graves. Acerca das atribuições do ACE, é CORRETO afirmar que:",
+  options: [
+    "a) O ACE é responsável pelo #atendimento clínico# dos pacientes com Chikungunya, incluindo #prescrição de medicamentos# e administração de anti- inflamatórios.",
+    "b).O ACE atua #exclusivamente em atividades administrativas# na unidade de saúde, #não participando# de ações de campo ou de mobilização comunitária.",
+    "c) Cabe ao ACE #apenas identificar# os mosquitos transmissores em criadouros, #sem necessidade de orientar# a comunidade sobre prevenção ou encaminhar casos suspeitos.",
+    "d) *do ACE realiza ações de educação em saúde.. mobilização comunitária, vigilância de criadouros de Aedes, identificação de casos suspeitos, encaminhamento à unidade de saúde e apoio logístico à equipe de saúde, garantindo prevenção, controle e detecção precoce de casos*."
+  ],
+  correct: 3,
+  j: "A principal marca da Chikungunya é a dor articular (artralgia). O ACE atua na prevenção (campo/educação) e no elo com a saúde (identificação/encaminhamento), mas nunca na parte clínica ou prescrição de remédios."
+},
+{
+  q: "💢 17. São atribuições do ACE no âmbito das ações de vigilância em saúde, prevenção de doenças e atuação no território:",
+  options: [
+    "a) *Desenvolver ações educativas e de mobilização da comunidade, realizar ações de prevenção e controle de doenças em interação com os Agentes Comunitários de Saúde e as equipes de Atenção Básica, identificar casos suspeitos e encaminhá-los à unidade de saúde de referência, bem como executar ações de controle químico, biológico e manejo ambiental*.",
+    "b) Atuar prioritariamente #atividades legalmente previstas, administrativas# 'nas unidades de saúde, sendo #facultativa# sua participação em ações educativas e de campo.",
+    "c) Executar ações de controle de doenças de #forma autônoma#, #sem exclusivamente# os Agentes necessidade de integração com Comunitários de Saúde ou equipes da Atenção Básica.",
+    "d) #Restringir sua atuação à aplicação# de inseticidas e larvicidas, #não sendo atribuição# do ACE o desenvolvimento de ações educativas ou de mobilização comunitária."
+  ],
+  correct: 0,
+  j: "O ACE trabalha de forma integrada (principalmente com o ACS) e utiliza diversas frentes: educação, controle biológico/químico e manejo ambiental. O trabalho nunca é isolado ou meramente administrativo."
+},
+{
+  q: "💢 18. A atuação do ACE pressupõe integração com outros profissionais e ações desenvolvidas no território para a efetividade da vigilância em saúde. Nesse contexto, assinale CORRETAMENTE:",
+  options: [
+    "a) *O trabalho do ACE deve ocorrer de forma integrada e complementar ao dos Agentes Comunitários de Saúde (ACS) e das equipes de atenção Básica, com atuação territorial participação no planejamento das ações, mobilização comunitária, educação em saúde e identificação de situações de risco epidemiológico*",
+    "b) A atuação integrada do ACE com os Agentes Comunitários de Saúde #limita-se a campanhas, pontuais#, #não abrangendo# o planejamento conjunto das ações no território.",
+    "c) O ACE atua #exclusivamente no controle vetorial#, #não sendo prevista# sua participação em ações educativas ou de mobilização social desenvolvidas em conjunto com outros profissionais.",
+    "d) A integração entre ACE e ACS ocorre #apenas em situações de surtos ou epidemias#, #não sendo necessária# nas ações rotineiras de vigilância em saúde."
+  ],
+  correct: 0,
+  j: "A integração entre ACE e ACS é a base da Vigilância em Saúde territorial. O trabalho deve ser rotineiro e conjunto, envolvendo desde o planejamento até a execução de ações educativas e identificação de riscos, não se limitando apenas a momentos de crise ou surtos."
+},
+{
+  q: "💢 19. De acordo com la Lei nº 11.350, de 05 de outubro de 2006, que regulamenta o exercício profissional do ACE, em relação às hipóteses de rescisão unilateral do contrato do ACE pela administração pública, é CORRETO afirmar que:",
+  options: [
+    "a) O contrato do ACE pode ser rescindido #a qualquer tempo#, por #decisão discricionária# da administração pública, #independentemente de motivação formal#.",
+    "(b)A administração pública *somente poderá rescindir unilateralmente o contrato do ACE nas hipóteses como falta grave, acumulação ilegal de cargos, necessidade de redução de pessoal por excesso de despesa ou insuficiência de desempenho apurada procedimento que assegure recurso*.",
+    "c) A insuficiência de desempenho do ACE autoriza a #rescisão imediata# do contrato, #dispensando procedimento administrativo e direito a recurso#.",
+    "d) A apresentação de declaração falsa de residência constitui hipótese de rescisão unilateral do contrato #tanto do ACS quanto do ACE#."
+  ],
+  correct: 1,
+  j: "A Lei 11.350/06 protege o vínculo do ACE. A rescisão unilateral não é livre (discricionária); ela exige motivações específicas (falta grave, excesso de gastos do ente público, etc.) e sempre deve garantir o direito ao contraditório e à ampla defesa (recurso)."
+},
+{
+  q: "💢 20. Conforme disposto na Lei n.º 11.350, de 05 de outubro de 2006, assinale a alternativa CORRETA acerca da forma de atuação do ACE, especialmente quanto à integração com a comunidade, com os ACSS e com as equipes de Atenção Básica:",
+  options: [
+    "a) As atividades de mobilização social e educação em saúde são #exclusivas dos ACSs#, #não competindo ao ACE# participar dessas ações.",
+    "b) O ACE atua #apenas na identificação# de vetores, #não participando de campanhas#, mutirões ou ações coletivas de prevenção de doenças.",
+    "c) As normas de segurança e saúde do trabalhador #aplicam-se apenas aos ACSs#, #não abrangendo# os Agentes de Combate às Endemias.",
+    "d) *ACE deve atuar de forma integrada com os ACSs, participando de ações de educação popular em saúde, vigilância em saúde, manejo ambiental, campanhas e mutirões, observando também as normas de segurança e saúde do trabalhador*."
+  ],
+  correct: 3,
+  j: "A Lei 11.350/06 deixa claro que o ACE não é um trabalhador isolado. Ele deve atuar em conjunto com o ACS e a Atenção Básica em diversas frentes (educação, manejo, campanhas) e tem direito às mesmas normas de segurança e saúde (como o uso de EPIs)."
+},
+
+
+
+
+
+
+];
+
+bancoPortarias = [
+ {q:"👁‍🗨 1. O Procedimento Administrativo (PA) é destinado à apuração de irregularidades praticadas exclusivamente por servidores públicos efetivos.", v:false, j:"De acordo com o art. 47, inciso I, da Portaria 006/2023, o Procedimento Administrativo (PA) visa a averiguação de indícios de condutas inadequadas e autoria de todo e qualquer ato, não se limitando a efetivos."},
+{q:"👁‍🗨 2. A Sindicância (SD) pode resultar em penalidades de advertência, suspensão e demissão (rescisão contratual) para servidores públicos, temporários ou agentes públicos.", v:true, j:"Conforme o art. 13 da Portaria 006/2023, a sindicância é aplicável a essas categorias e pode gerar tais penalidades, observado o contraditório."},
+{q:"👁‍🗨 3. A instauração de Processo Administrativo Disciplinar (PAD) é restrita aos servidores públicos efetivos.", v:true, j:"De acordo com o art. 14 e seu parágrafo único (Portaria 006/2023), a instauração de PAD somente se dará para servidores públicos efetivos."},
+{q:"👁‍🗨 4. O juízo de admissibilidade permite que a autoridade deixe de instaurar procedimento correcional caso verifique a ocorrência de prescrição.", v:true, j:"Estabelecido no art. 6º, §3º da Portaria 006/2023, a autoridade pode, motivadamente, não instaurar o procedimento se houver prescrição."},
+{q:"👁‍🗨 5. Durante o Procedimento Administrativo (PA), o investigado poderá arrolar no máximo 05 (cinco) testemunhas para depor.", v:false, j:"De acordo com o art. 34, §2º (Portaria 006/2023), o investigado poderá arrolar no máximo 02 (duas) testemunhas para depor."}
+
+];
+
+let currentQuestions = [], currentIndex = 0, erros = 0, acertosSessao = 0, quizType = '', historico = {}, liberado = false;
+let senhaAdminTemp = "";        // Armazena a senha gerada
+let acertosContadorSenha = 0;   // Conta os acertos seguidos no Modo Sobrevivente
+
+const proverbios = [
+"O que prepara o seu caminho com prudência terá sucesso.<br>(Provérbios 16:3)",
+"Consagre ao Senhor tudo o que você faz, e os seus planos serão bem-sucedidos.<br>(Provérbios 16:3)",
+"A soberba precede a ruína, mas a humildade precede a honra.<br>(Provérbios 18:12)",
+"Onde não há conselhos os projetos fracassam, mas com muitos conselheiros há sucesso.<br>(Provérbios 15:22)",
+"O prudente vê a dificuldade e se prepara.<br>(Provérbios 22:3)",
+"O que domina o seu espírito é melhor do que o que conquista uma cidade.<br>(Provérbios 16:32)",
+"Os planos do diligente conduzem à fartura.<br>(Provérbios 21:5)",
+"O coração do sábio busca o conhecimento.<br>(Provérbios 18:15)",
+"A perseverança deve ter ação completa.<br>(Tiago 1:4)",
+"A disciplina, no momento, não parece motivo de alegria.<br>(Hebreus 12:11)",
+"Os que esperam no Senhor renovam as suas forças.<br>(Isaías 40:31)",
+"A sabedoria clama nas ruas.<br>(Provérbios 1:20)",
+"Aquele que perseverar até o fim será salvo.<br>(Mateus 24:13)",
+"O que anda com os sábios será sábio.<br>(Provérbios 13:20)",
+"Antes da honra vem a humildade.<br>(Provérbios 15:33)",
+"Nenhum vento ajuda quem não sabe para onde vai.<br>(Sêneca)",
+"A disciplina é a alma do sucesso.<br>(George Washington)",
+"Suportar dificuldades é parte do treinamento.<br>(Epicteto)",
+"Somos o que repetidamente fazemos.<br>(Aristóteles)",
+"Aquele que vence a si mesmo é poderoso.<br>(Lao-Tsé)",
+"Sem disciplina, não há liberdade.<br>(Aristóteles – paráfrase)",
+"O sofrimento é o preço da grandeza.<br>(Winston Churchill)",
+"A constância transforma o impossível em inevitável.<br>(Napoleão Bonaparte)",
+"O homem se mede pela resistência.<br>(Friedrich Nietzsche)",
+"Primeiro controle a si mesmo.<br>(Marco Aurélio)",
+"O hábito deve ser mais forte que a vontade.<br>(William James)",
+"Quem evita o esforço, teme o progresso.<br>(Provérbio árabe)",
+"A mente disciplinada é invencível.<br>(Estoicismo)",
+"Nada fortalece tanto quanto suportar.<br>(Sêneca)",
+"A perseverança é a mãe do êxito.<br>(Provérbio europeu)",
+"A dor é temporária; o saldo dela é permanente.<br>(Autor desconhecido)",
+"O esforço diário constrói a vitória silenciosa.<br>(Provérbio japonês)",
+"A persistência forma líderes.<br>(Tradição espartana)",
+"A excelência é um hábito.<br>(Aristóteles)",
+"Disciplina é agir apesar da vontade.<br>(Autor desconhecido)",
+"A constância vence a intensidade.<br>(Autor desconhecido)",
+"A disciplina elimina a preguiça.<br>(Autor desconhecido)",
+"Quem suporta o processo herda o resultado.<br>(Autor desconhecido)",
+"Nada cresce na distração.<br>(Autor desconhecido)",
+"A disciplina sustenta quando a vontade atrapalha.<br>(Autor desconhecido)",
+"A perseverança molda o caráter.<br>(Autor desconhecido)",
+"O esforço silencioso constrói o futuro.<br>(Autor desconhecido)",
+"O hábito correto corrige o dia ruim.<br>(Autor desconhecido)",
+"Quem aguenta o processo, aprende, e quem aprende, vence.<br>(Autor desconhecido)"
+];
+
+const usuarios = [
+{ id: 5737, nome: "Rosimeire Martins de Castro", pontos: 209, cidade: "Sobral", status: "Vaga Imediata", tipo: "Ampla", colocacao: "1º" },
+{ id: 159753, nome: "Diana Pereira Romao", pontos: 205, cidade: "Sobral", status: "Vaga Imediata", tipo: "PCD", colocacao: "2º" },
+{ id: 777, nome: "Renato Therion", pontos: 202, cidade: "Sobral", status: "Vaga Imediata", tipo: "Cotas", colocacao: "3º" },
+{id:666, nome: "Paula Oliveira Teles", pontos: 209, cidade: "Juazeiro", status: "Vaga Imediata", tipo: "Ampla", colocacao: "01º"},
+{id:999, nome: "Ramon Lins da Silva", pontos: 205, cidade: "Juazeiro", status: "Vaga Imediata", tipo: "Ampla", colocacao: "02º"},
+{id:111, nome: "Luana Quental Leondas da Cruz", pontos: 203, cidade: "Juazeiro", status: "Vaga Imediata", tipo: "Ampla", colocacao: "03º"},
+{ id:222, nome: "Jose Carlos Bezerra Duarte", pontos: 140, cidade: "Juazeiro", status: "Cadastro Reserva", tipo: "PCD", colocacao: "1º" },
+{ id:333, nome: "Jose Fabio de Souza Junior", pontos: 136, cidade: "Juazeiro", status: "Cadastro Reserva", tipo: "PCD", colocacao: "2º" },
+{ id:444, nome: "Cicero Oliveira Lobo", pontos: 131.5, cidade: "Juazeiro", status: "Cadastro Reserva", tipo: "PCD/Cotas", colocacao: "3º" }
+
+
+];
+
+const bancoVip = [
+{q:"💛 1. A adolescência é um período de transformações intensas que se dá de forma homogênea, independentemente dos contextos socioeconômicos e culturais nos quais o sujeito está inserido.", v:false, j:"Não há homogeneidade na adolescência, pois ela depende dos contextos socioeconômicos e culturais."},
+{q:"💛 2. Para fins de legislação e organização de políticas públicas no Brasil, o critério adotado para definir a população adolescente é exclusivamente o critério cronológico.", v:true, j:"Conforme o módulo, o critério cronológico é o adotado para fins de legislação e políticas públicas."},
+{q:"💛 3. O Estatuto da Criança e do Adolescente (ECA) de 1990 consolidou o antigo paradigma assistencialista e correcional de atendimento à infância e juventude.", v:false, j:"O ECA rompeu com o antigo paradigma assistencialista e correcional, inaugurando um novo modelo."},
+{q:"💛 4. A doutrina da proteção integral reconhece crianças e adolescentes como sujeitos de direitos, em uma condição peculiar de desenvolvimento.", v:true, j:"Com a mudança de paradigma após a criação do ECA, eles passaram a ser reconhecidos como sujeitos de direitos."},
+{q:"💛 5. A primazia de receber proteção e socorro em quaisquer circunstâncias é uma das garantias que compõem a prioridade absoluta assegurada pelo ECA.", v:true, j:"Esta garantia está expressamente listada como garantia da prioridade absoluta."}
+
+];
+
+
+let repetirUma = false;
+let repetirTodas = false;
+let indiceAtual = -1;
+
+
+// BANCO DE DADOS DA AUDIOTECA
+const listaAulas = [
+
+
+    { id: 1, titulo: "Saúde Integral do Adolescente", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/Sa%C3%BAde%20Integral%20do%20Adolescente.mp3" },
+    { id: 2, titulo: "Lei da Tortura", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/lei%20da%20tortura.mp3" },
+    { id: 3, titulo: "Módulo I - Unidade I", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/M%C3%B3dulo%201%20-%20Unidade%201.mp3" },
+    { id: 4, titulo: "Módulo I - Unidade II", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/M%C3%B3dulo%201%20Unidade%202.mp3" },
+    { id: 5, titulo: "Módulo I - Unidade III", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/M%C3%B3dulo%20I%20-%20Unidade%20III.mp3" },
+    { id: 6, titulo: "Questões - Módulo I", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/quest%C3%B5es%20-%20m%C3%B3dulo%20l.mp3" },
+    { id: 7, titulo: "Módulo II - Unidade I", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/M%C3%B3dulo%20II%20-%20Unidade%20I.mp3" },
+    { id: 8, titulo: "Módulo II - Unidade II", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/M%C3%B3dulo%20II%20-%20Unidade%20II.mp3" },
+    { id: 9, titulo: "Módulo II - Unidade III", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/M%C3%B3dulo%20II%20-%20Unidade%20III.mp3" },
+    { id: 10, titulo: "Módulo II - Unidade IV", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/M%C3%B3dulo%20II%20-%20Unidade%20IV.mp3" },
+    { id: 11, titulo: "Módulo II - Unidade V", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/M%C3%B3dulo%20II%20-%20Unidade%20V.mp3" },
+    { id: 13, titulo: "Módulo III - Unidade I", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/M%C3%B3dulo%20III%20-%20Unidade%20I.mp3" },
+    { id: 14, titulo: "Módulo III - Unidade II", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/Modulo%20III%20-%20Unidade%20II.mp3" },
+    { id: 15, titulo: "Módulo III - Unidade III", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/M%C3%B3dulo%20III%20-%20Unidade%20III.mp3" },
+    { id: 16, titulo: "Módulo III - Unidade IV", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/M%C3%B3dulo%20II%20-%20Unidade%20IV.mp3" },
+    { id: 17, titulo: "Módulo III - Unidade V", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/M%C3%B3dulo%20II%20-%20Unidade%20V.mp3" },
+    { id: 18, titulo: "Módulo III - Unidade VI", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/M%C3%B3dulo%20III%20-%20Unidade%20VI.mp3" },
+    { id: 19, titulo: "Módulo III - Unidade VII", url: "https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/M%C3%B3dulo%20III%20-%20Unidade%20VII.mp3" },
+    { id: 20, titulo: "Questões - Módulo III - EM BREVE", url: "https://seusite.com/audios/aula3.mp3" },
+    { id: 21, titulo: "Módulo IV - Unidade I - EM BREVE", url: "https://seusite.com/audios/aula3.mp3" },
+    { id: 22, titulo: "Módulo IV - Unidade II - EM BREVE", url: "https://seusite.com/audios/aula3.mp3" },
+    { id: 23, titulo: "Módulo IV - Unidade III - EM BREVE", url: "https://seusite.com/audios/aula3.mp3" },
+    { id: 24, titulo: "Módulo IV - Unidade IV - EM BREVE", url: "https://seusite.com/audios/aula3.mp3" },
+    { id: 25, titulo: "Módulo IV - Unidade V - EM BREVE", url: "https://seusite.com/audios/aula3.mp3" },
+    { id: 26, titulo: "Módulo IV - Unidade VI - EM BREVE", url: "https://seusite.com/audios/aula3.mp3" },
+    { id: 27, titulo: "Módulo IV - Unidade VII - EM BREVE", url: "https://seusite.com/audios/aula3.mp3" },
+    { id: 28, titulo: "Questões - Módulo IV - EM BREVE", url: "https://seusite.com/audios/aula3.mp3" }
+
+];
+
+let timerExpulsaoAudioteca = null;
+
+function iniciarVigilanciaAudioteca() {
+    const expira = Number(localStorage.getItem("senhaAudiotecaExpira"));
+    if (!expira) return;
+
+    const intervalo = setInterval(() => {
+        const agora = Date.now();
+
+        if (agora >= expira) {
+            clearInterval(intervalo);
+
+            // Para todos os áudios
+            document.querySelectorAll("audio").forEach(a => {
+                a.pause();
+                a.src = "";
+            });
+
+            // Desabilita botões
+            document.querySelectorAll("button").forEach(b => {
+                b.disabled = true;
+                b.style.opacity = "0.4";
+            });
+
+            alert("⏳ Seu acesso à Audioteca expirou.\nConquiste uma nova chave no Modo Sobrevivente.");
+
+            // Limpa a senha
+            localStorage.removeItem("senhaAudioteca");
+            localStorage.removeItem("senhaAudiotecaExpira");
+
+            // Expulsa
+            window.location.reload();
+        }
+    }, 10000); // checa a cada 10s
+}
+
+
+function expulsarDaAudioteca() {
+
+  // Para todos os áudios
+  document.querySelectorAll('audio').forEach(a => {
+    a.pause();
+    a.src = "";
+    a.load();
+  });
+
+  // Remove dados da senha
+  localStorage.removeItem("senhaAudioteca");
+  localStorage.removeItem("senhaAudiotecaExpira");
+
+  // Bloqueia interações
+  document.body.style.pointerEvents = "none";
+
+  // Overlay de bloqueio
+  const overlay = document.createElement("div");
+  overlay.id = "overlay-expirado";
+  overlay.innerHTML = `
+    <div style="
+      background:#000;
+      border:2px solid red;
+      padding:30px;
+      border-radius:15px;
+      text-align:center;
+      color:#ff4444;
+      font-weight:900;
+      box-shadow:0 0 30px red;
+    ">
+      ⏱️ TEMPO ESGOTADO ⏱️<br><br>
+      <span style="font-size:0.9em;">
+        Sua sessão expirou.<br>
+        Conquiste uma nova chave no<br>
+        <b>Modo Sobrevivente</b>.
+      </span><br><br>
+      <button onclick="window.location.reload()" 
+        style="
+          padding:12px 20px;
+          font-weight:bold;
+          border:none;
+          border-radius:8px;
+          background:#ffd700;
+          cursor:pointer;
+        ">
+        VOLTAR À CAPA
+      </button>
+    </div>
+  `;
+
+  Object.assign(overlay.style, {
+    position: "fixed",
+    inset: "0",
+    background: "rgba(0,0,0,0.95)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: "10000",
+    pointerEvents: "auto"
+  });
+
+  document.body.appendChild(overlay);
+}
+
+
+ // botao some // menu de salvar some
+document.addEventListener("contextmenu", e => {
+  if (e.target.tagName === "AUDIO") e.preventDefault();
+});
+
+// dificulta DevTools
+(function(){
+  let _t = Date.now();
+  debugger;
+  if (Date.now() - _t > 200) {
+    document.body.innerHTML = "<h1 style='color:red;text-align:center'>⚠️ Acesso bloqueado</h1>";
+  }
+})();
+
+function animarExpulsao() {
+  const body = document.body;
+  body.classList.add('drama');
+  setTimeout(() => body.classList.remove('drama'), 5000);
+}
+
+
+function mostrarProverbio() {
+    // Sorteia um provérbio
+    const p = proverbios[Math.floor(Math.random() * proverbios.length)];
+    
+    // Cria um overlay temporário vistoso
+    const msg = document.createElement('div');
+    msg.style = "position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:10000; display:flex; align-items:center; justify-content:center; padding:40px; text-align:center; flex-direction:column; animation: fadeIn 0.5s;";
+    
+    msg.innerHTML = `
+        <div style="font-size:1.5em; color:var(--yellow); font-weight:800; line-height:1.6; text-shadow: 0 0 15px gold;">
+            "${p}"
+        </div>
+        <button class="menu-btn" style="margin-top:40px; width:200px; border-color:var(--success); color:var(--success)" onclick="this.parentElement.remove()">FIQUEI INSPIRADO!</button>
+    `;
+    
+    document.body.appendChild(msg);
+}
+
+function playAlarm() {
+    const ctx = new AudioContext();
+    [80, 120, 160].forEach(f => {
+        const o = ctx.createOscillator(); const g = ctx.createGain();
+        o.type = 'sawtooth'; o.connect(g); g.connect(ctx.destination);
+        o.frequency.value = f; g.gain.setValueAtTime(0.6, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+        o.start(); o.stop(ctx.currentTime + 0.5);
+    });
+}
+
+function go(id) {
+  // desativa todas as telas
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  // ativa só a tela pedida
+  document.getElementById(id).classList.add('active');
+  // atualiza estatísticas se os elementos existirem
+  const rec = document.getElementById('rec-analista-main');
+  if (rec) rec.innerText = localStorage.getItem('recAnalista') || 0;
+  const vit = document.getElementById('vit-25');
+  if (vit) vit.innerText = localStorage.getItem('vitoriasGerador') || 0;
+  const frac = document.getElementById('frac-25');
+  if (frac) frac.innerText = localStorage.getItem('derrotasGerador') || 0;
+}
+
+
+
+/* =====================================================
+   ✅ REGISTRAR RESPOSTA (Apenas anota os pontos)
+===================================================== */
+function registrarResposta(acertou, answer) {
+
+    if (typeof historico !== 'object' || historico === null) {
+        historico = {};
+    }
+
+    /* ==========================
+       🔥 MODO VIP (ISOLADO)
+    ========================== */
+    if (window.isVipMode || quizType === 'simulado_vip') {
+        totalRespondidasVip++;
+
+        if (acertou) totalAcertosVip++;
+        else totalErrosVip++;
+       localStorage.setItem('vip_total', totalRespondidasVip);
+       localStorage.setItem('vip_acertos', totalAcertosVip);
+       localStorage.setItem('vip_erros', totalErrosVip);
+
+    // VIP grava boolean (true/false), NÃO 'A'/'E'
+
+        historico[currentIndex] = answer;
+        if (typeof atualizarPainelVip === 'function') {
+            atualizarPainelVip();
+        }
+
+        return; // 🔒 VIP NÃO deixa nada vazar
+    }
+
+    /* ==========================
+       📚 MODOS NORMAIS / SOBREVIVENTE
+    ========================== */
+
+    if (acertou) acertosSessao++;
+    else erros++;
+    historico[currentIndex] = answer;
+    if (typeof saveProgress === 'function') {
+        saveProgress(quizType);
+    }
+}
+
+function simuladoVipNovaEra() {
+    console.log("Aura: Iniciando motor limpo com selo VIP e Relógio Independente...");
+    
+    // 1. Mata a Sala VIP com força total
+    const salaVip = document.getElementById('area-apoiador');
+    if (salaVip) salaVip.style.setProperty("display", "none", "important");
+
+    // 2. Configura o que o RENDER precisa
+    window.isVipMode = true;
+    quizType = 'simulado_vip';
+    currentIndex = 0;
+    historico = {};
+
+    // 3. Puxa as questões (MegaBanco)
+    const bancoGigante = [
+        ...(typeof bancoOficial !== 'undefined' ? bancoOficial : []),
+        ...(typeof bancoModulos !== 'undefined' ? bancoModulos : []),
+        ...(typeof bancoVariados !== 'undefined' ? bancoVariados : []),
+        ...(typeof bancoPortarias !== 'undefined' ? bancoPortarias : [])
+    ];
+
+    currentQuestions = bancoGigante.sort(() => 0.5 - Math.random()).slice(0, 30);
+
+    // 4. Executa a mudança de tela
+    go('quiz');
+
+    // 5. Inicia o Relógio Independente (Cópia Blindada)
+    const iniciarNovoRelogioVip = (minutos) => {
+        if (timerVipIndependente) clearInterval(timerVipIndependente);
+        
+        let segundosTotais = minutos * 60;
+        const vContainer = document.getElementById('vidas-container');
+
+        timerVipIndependente = setInterval(() => {
+            let mins = Math.floor(segundosTotais / 60);
+            let segs = segundosTotais % 60;
+            let tempoFormatado = (mins < 10 ? "0" + mins : mins) + ":" + (segs < 10 ? "0" + segs : segs);
+
+            if (vContainer) {
+                // Mantém o Selo e coloca o Relógio embaixo
+                vContainer.innerHTML = `
+                    <div style="line-height: 1.2;">
+                        <span style="font-size:1.2em; color: gold; display: block;">SALA EXCLUSIVA</span>
+                        <span style="font-size:1.4em; color: white; font-family: monospace; font-weight: bold;">${tempoFormatado}</span>
+                    </div>`;
+            }
+
+            if (segundosTotais <= 0) {
+                clearInterval(timerVipIndependente);
+                alert("O tempo do Simulado VIP acabou!");
+                if (typeof sairModulo4Vip === 'function') sairModulo4Vip();
+            }
+            segundosTotais--;
+        }, 1000);
+    };
+
+    setTimeout(() => {
+        render();
+        iniciarNovoRelogioVip(60); // Inicia o relógio de 60 min totalmente novo
+    }, 50);
+}
+
+
+
+function concluirSimuladoVip() {
+    // Para o relógio no fim
+    if (typeof timerInterval !== 'undefined') clearInterval(timerInterval);
+
+    let atual = parseInt(localStorage.getItem('simulados_concluidos') || 0);
+    let novoTotal = atual + 1;
+    localStorage.setItem('simulados_concluidos', novoTotal);
+    
+    // Atualiza o painel visual imediatamente
+    const el = document.getElementById('contagem-trofeus');
+    if (el) {
+        el.innerText = "🏆 " + novoTotal;
+    }
+}
+
+function iniciarRelogio(segundos) {
+    // 1. ESCUDO VIP: Se estiver no simulado VIP, ignora o relógio por questão
+    // porque agora usamos o Cronômetro Global Único.
+    if (window.isVipMode && quizType === 'simulado_vip') {
+        return; 
+    }
+
+    // 2. LIMPEZA: Mata qualquer intervalo que tenha sobrado da questão anterior
+    if (typeof timerInterval !== 'undefined' && timerInterval !== null) {
+        clearInterval(timerInterval);
+    }
+
+    let tempoRestante = segundos;
+    const display = document.getElementById('timer-display');
+
+    // Se o elemento de exibição não existir na tela, para aqui para não dar erro
+    if (!display) return;
+
+    // Atualiza o número inicial no HTML
+    display.innerText = tempoRestante;
+
+    // 3. INÍCIO DO CRONÔMETRO (Para área restrita/comum)
+    timerInterval = setInterval(() => {
+        tempoRestante--;
+        
+        if (display) {
+            display.innerText = tempoRestante;
+        }
+
+        if (tempoRestante <= 0) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+
+            // Se o tempo acabar e NÃO for VIP, ele lida com a falha/vidas
+            if (!window.isVipMode) {
+                // Aqui você pode colocar sua lógica de erro por tempo
+                // Exemplo: verificarResposta(null); ou pularQuestao();
+                console.log("Tempo esgotado na área comum.");
+            }
+        }
+    }, 1000);
+}
+
+//  A FUNÇÃO MALDITA DO MAL ETERNO DOS SETE INFERNOS - NÃO SE APROXIMAR
+function iniciarSimuladoPelaSalaVip() {
+    // Mata qualquer relógio antes de começar
+    if (typeof timerInterval !== 'undefined') clearInterval(timerInterval);
+    
+    console.log("VIP: Iniciando simulado inteligente...");
+    const salaVip = document.getElementById('area-apoiador');
+    if (salaVip) salaVip.style.display = "none";
+
+    window.isVipMode = true;
+    quizType = 'simulado_vip';
+    currentIndex = 0;
+    erros = 0; 
+    acertosSessao = 0;
+
+    try {
+        const megaBanco = [
+            ...(typeof bancoOficial !== 'undefined' ? bancoOficial : []),
+            ...(typeof bancoModulos !== 'undefined' ? bancoModulos : []),
+            ...(typeof bancoVariados !== 'undefined' ? bancoVariados : []),
+            ...(typeof bancoPortarias !== 'undefined' ? bancoPortarias : [])
+        ];
+
+        // LÓGICA DE HISTÓRICO VIP
+        let respondidasVip = JSON.parse(localStorage.getItem('respondidas_vip')) || [];
+        let bancoInedito = megaBanco.filter(q => !respondidasVip.includes(q.id));
+
+        if (bancoInedito.length < 30) {
+            respondidasVip = [];
+            localStorage.setItem('respondidas_vip', JSON.stringify([]));
+            bancoInedito = megaBanco;
+        }
+
+        currentQuestions = bancoInedito.sort(() => 0.5 - Math.random()).slice(0, 30); 
+
+        const novosIds = currentQuestions.map(q => q.id);
+        localStorage.setItem('respondidas_vip', JSON.stringify([...respondidasVip, ...novosIds]));
+
+        const vContainer = document.getElementById('vidas-container');
+        if (vContainer) {
+            vContainer.innerHTML = '<span style="font-size:1.5em; color: gold;">⭐ SIMULADO VIP ⭐</span>';
+        }
+
+
+iniciarRelogioGlobalVip(60);
+        go('quiz');
+        render(); // O render vai chamar o relógio novo
+
+    } catch (e) {
+        console.error(e);
+        if (salaVip) salaVip.style.display = "flex";
+    }
+}
+
+function atualizarPainelSimulados() {
+    const totalSimulados = localStorage.getItem('simulados_concluidos') || 0;
+    const elTrofeu = document.getElementById('contagem-trofeus');
+    
+    if (elTrofeu) {
+        elTrofeu.innerText = "🏆 " + totalSimulados;
+    }
+}
+
+// Executa ao carregar a página para mostrar o saldo atual
+atualizarPainelSimulados();
+
+/* =====================================================
+   🚀 CHECK (O Motor que decide o que acontece)
+===================================================== */
+function check(answer, btn) {
+    const q = currentQuestions[currentIndex];
+    const acertou = (q.options && q.options.length > 0) ? (answer === q.correct) : (answer === q.v);
+    const cont = document.getElementById('container');
+
+    registrarResposta(acertou, answer);
+    historico[currentIndex] = answer;
+
+// --- REVELAÇÃO DE CORES (MAPA DE CALOR) ---
+if (q.options && q.options.length > 0) {
+    const todosOsBotoes = document.querySelectorAll('.opt');
+    todosOsBotoes.forEach((b, i) => {
+        let textoOriginal = q.options[i];
+        
+        // Cores neon para os botões que VOCÊ NÃO CLICOU
+        let corP_Verde = "#39FF14";
+        let corP_Vermelha = "#ff4141";
+
+        // Aplica o HTML. Se for o botão clicado, o CSS que acabamos de criar
+        // ( .opt.correct span ) vai detectar e pintar de PRETO automaticamente.
+        let colorido = textoOriginal
+            .replace(/#(.*?)#/g, `<span style="color:${corP_Vermelha}; font-weight:900;">$1</span>`)
+            .replace(/\*(.*?)\*/g, `<span style="color:${corP_Verde}; font-weight:900;">$1</span>`);
+        
+        b.innerHTML = colorido;
+
+        // Força a frase a ser branca no botão clicado para garantir
+        if (i === answer) {
+            b.style.setProperty('color', '#ffffff', 'important');
+            // Remove o estilo inline dos spans do botão clicado para o CSS master assumir o preto
+            const spansClicados = b.querySelectorAll('span');
+            spansClicados.forEach(s => s.style.color = '');
+        }
+    });
+}
+
+    document.getElementById('opts').style.pointerEvents = 'none';
+
+    if (acertou) {
+        acertosSessao++; 
+        if (quizType === 25) {
+            acertosContadorSenha++;
+            if (acertosContadorSenha === 25) {
+                gerarSenhaTemporaria(); 
+                acertosContadorSenha = 0;
+            }
+        }
+        btn.classList.add('correct');
+        cont.classList.add('acertou-flash');
+        setTimeout(() => { 
+            cont.classList.remove('acertou-flash'); 
+            next(); 
+        }, 700);
+
+    } else {
+        if (quizType === 25) { acertosContadorSenha = 0; }
+        btn.classList.add('wrong');
+        cont.classList.add('errou-flash');
+        setTimeout(() => cont.classList.remove('errou-flash'), 700);
+     
+        if (quizType === 25) {
+            // (LÓGICA DA BOMBA MANTIDA INTEGRALMENTE)
+            if (typeof timerInterval !== 'undefined') clearInterval(timerInterval);
+            let d = (parseInt(localStorage.getItem('derrotasGerador')) || 0) + 1; 
+            localStorage.setItem('derrotasGerador', d);
+            cont.classList.add('tremendo');
+            const ob = document.getElementById('overlay-blood');
+            if (ob) {
+                ob.className = 'blood-alert-overlay';
+                ob.innerHTML = `<span style="font-size:2.5em; letter-spacing:5px;">💣SISTEMA💥 <br>COMPROMETIDO💥💥</span><br><span style="font-size:2em; font-weight:900;">💥 AUTODESTRUIÇÃO...💥</span>`;
+            }
+            let bipes = 0;
+            const alarme = setInterval(() => {
+                if (typeof playAlarm === 'function') playAlarm();
+                bipes++;
+                if (bipes >= 8) clearInterval(alarme);
+            }, 400);
+            setTimeout(() => { 
+                cont.classList.remove('tremendo');
+                if (ob) { ob.className = ''; ob.style.display = 'none'; }
+                const failStats = document.getElementById('fail-stats');
+                if (failStats) { failStats.innerHTML = `A BOMBA EXPLODIU NA SUA CARA!<br>ACERTOS: ${acertosSessao}`; }
+                const btnF = document.getElementById('btn-tentar-novamente');
+                if (btnF) { btnF.onclick = function() { go('area-restrita'); }; btnF.innerText = "TENTAR NOVAMENTE"; }
+                go('fail-screen');
+            }, 5000);
+
+        } else {
+            erros++; 
+            if (typeof atualizarVidas === 'function') atualizarVidas(); 
+            const feedbackEl = document.getElementById('feedback'); 
+            if (feedbackEl) {
+                feedbackEl.innerText = q.j; 
+                feedbackEl.style.display = 'block';
+            }
+            const btnNext = document.getElementById('btnNext');
+            if (btnNext) btnNext.classList.add('visible');
+        }
+    }
+}
+
+
+/* function atualizarVidas() {
+    const v1 = document.getElementById('v1');
+    const v2 = document.getElementById('v2');
+    const v3 = document.getElementById('v3');
+
+    // 1. ATUALIZAÇÃO VISUAL DOS CORAÇÕES
+    if (erros === 1 && v3) v3.style.opacity = '0.2';
+    if (erros === 2 && v2) v2.style.opacity = '0.2';
+    
+    // 2. A BARREIRA: SÓ ATUA SE FOR O MODO DE 100 QUESTÕES (ANALISTAS)
+    if (quizType !== 'total') {
+        return; // Sai da função e não faz mais nada. Os outros modos seguem imunes.
+    }
+
+    // 3. O CARRASCO (SÓ PARA OS ANALISTAS)
+    if (erros >= 3) {
+        if (v1) v1.style.opacity = '0.2';
+
+        // Para o relógio da prova
+        if (typeof timerInterval !== 'undefined') clearInterval(timerInterval);
+
+        setTimeout(() => {
+            // Re-checa por segurança se ainda é o modo total
+            if (erros >= 3 && quizType === 'total') {
+                const failStats = document.getElementById('fail-stats');
+                if (failStats) {
+                    failStats.innerHTML = `PROVA DOS ANALISTAS: ELIMINADO<br>ACERTOS: <span style="color:var(--success)">${acertosSessao}</span> / 100`;
+                }
+
+                const btnFalha = document.getElementById('btn-tentar-novamente');
+                if (btnFalha) {
+                    btnFalha.onclick = function() { go('area-restrita'); };
+                    btnFalha.innerText = "REFAZER PROVA";
+                }
+                go('fail-screen');
+            }
+        }, 800); 
+    }
+} */
+
+
+function next() {
+    // CORREÇÃO: Mantém o tipo que foi definido no início
+    if (window.isVipMode && quizType !== 'modulo4_vip') {
+        quizType = 'simulado_vip';
+    }
+
+    if (currentIndex < currentQuestions.length - 1) {
+        currentIndex++;
+        render();
+        // Garante que o progresso seja salvo com o tipo correto
+        if (typeof saveProgress === 'function') saveProgress(quizType);
+    } else {
+        if (typeof finalizar === 'function') finalizar();
+    }
+}
+
+// --- FOGOS DE ARTIFÍCIO ---
+let rockets = [];
+let particles = [];
+let fireworkAnimationId = null;
+
+function autoLaunch() {
+  const canvas = document.getElementById('fireworksCanvas');
+  if (!canvas || canvas.style.display === 'none') return;
+  const x = Math.random() * canvas.width;
+  const style = Math.random() > 0.5 ? 4 : 5;
+  rockets.push(new Rocket(x, style));
+}
+
+class Rocket {
+  constructor(x, style) {
+    this.x = x;
+    this.y = window.innerHeight;
+    this.vy = -(Math.random() * 4 + 12);
+    this.style = style;
+    this.exploded = false;
+    this.trail = [];
+    this.targetY = Math.random() * window.innerHeight * 0.4 + window.innerHeight * 0.1;
+  }
+  update(ctx) {
+    this.y += this.vy;
+    this.vy += 0.15;
+    this.trail.push({ x: this.x, y: this.y });
+    if (this.trail.length > 15) this.trail.shift();
+
+    ctx.fillStyle = "#fff";
+    this.trail.forEach(t => ctx.fillRect(t.x, t.y, 2, 2));
+
+    if (this.y <= this.targetY && !this.exploded) {
+      this.explode();
+      this.exploded = true;
+    }
+  }
+  explode() {
+    const colors = ['#ff3cac','#f8d235','#55ffdb','#2b86c5','#784ba0','#ffffff','#ff0000','#00ff00'];
+    const count = (this.style === 5) ? 250 : 150;
+    for (let i = 0; i < count; i++) {
+      const angle = (i / count) * 2 * Math.PI;
+      const speed = Math.random() * 4 + 2;
+      const life = (this.style === 4) ? 250 : 120;
+      particles.push({
+        x: this.x, y: this.y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life, maxLife: life,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      });
+    }
+  }
+}
+
+function runCanvas() {
+  const canvas = document.getElementById('fireworksCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  function animarFogos() {
+    if (canvas.style.display === 'none') {
+      rockets = []; particles = [];
+      cancelAnimationFrame(fireworkAnimationId);
+      return;
+    }
+    ctx.fillStyle = "rgba(0,0,0,0.2)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    rockets = rockets.filter(r => {
+      r.update(ctx);
+      return !r.exploded;
+    });
+
+    particles = particles.filter(p => {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.02; p.life--;
+      ctx.globalAlpha = p.life / p.maxLife;
+      ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI * 2); ctx.fill();
+      return p.life > 0;
+    });
+
+    ctx.globalAlpha = 1;
+    fireworkAnimationId = requestAnimationFrame(animarFogos);
+  }
+
+  animarFogos();
+
+  const interval = setInterval(() => {
+    if (canvas.style.display === 'none') {
+      clearInterval(interval);
+    } else {
+      autoLaunch();
+    }
+  }, 800);
+}
+
+
+
+function finalizar() {
+    if (typeof timerInterval !== "undefined") clearInterval(timerInterval);
+
+    var _a = quizType;
+    var _o = document.getElementById("win-overlay");
+    var _c = document.getElementById("win-content");
+    var _t = document.getElementById("btn-teleporte");
+    var _v = document.getElementById("fireworksCanvas");
+
+    // 1. Cálculo Real de Acertos (Baseado no histórico para evitar o erro 10/5)
+    var acertosReais = 0;
+    currentQuestions.forEach(function(q, i) {
+        if (historico[i] !== undefined) {
+            var correta = (q.options) ? q.correct : q.v;
+            if (historico[i] === correta) acertosReais++;
+        }
+    });
+
+    // Reset de progresso conforme o tipo (Lógica original mantida)
+    if (isStudyMode(_a)) {
+        clearProgress(_a);
+    } else {
+        clearProgress("total");
+        clearProgress(25);
+    }
+
+    _o.style.display = "flex";
+
+    // ==========================================
+    // BLOCO 1: BANCO DOS ANALISTAS (TOTAL)
+    // ==========================================
+    if (_a === "total") {
+        var _e = Date.now() + 2 * 60 * 60 * 1000;
+        localStorage.setItem("vip_analista", _e);
+        localStorage.setItem("acessoRestrito", "true");
+        localStorage.removeItem('vip_historico_total'); 
+        localStorage.removeItem('vip_indice_total');
+
+        exibirVitoriaPomposa("MÓDULO CONCLUÍDO COM SUCESSO!");
+
+    // ==========================================
+    // BLOCO 2: MODO SOBREVIVENTE (SAGRADO - NÃO MEXER)
+    // ==========================================
+    } else if (_a === 25) {
+        // Mantém sua lógica original de 25 acertos aqui...
+        var _g = (parseInt(localStorage.getItem("vitoriasGerador")) || 0) + 1;
+        localStorage.setItem("vitoriasGerador", _g);
+        var _h = document.getElementById("vit-25");
+        if (_h) _h.innerText = _g;
+
+        _c.innerHTML = '<div style="font-size:3.5em;">💣🎆</div>' +
+                       '<h1 style="color:#39FF14; line-height:1.3; margin:0;">BOMBA DESARMADA<br>' +
+                       '<span style="font-size:0.8em;">PARABÉNS, VOCÊ JÁ É UM ACE!</span></h1>';
+        _t.style.display = "block";
+        _t.innerText = "";
+        _t.onclick = function() { window.location.reload(); };
+        _v.style.display = "block";
+        runCanvas();
+
+    // ==========================================
+    // BLOCO 3: MÓDULO 4 E DEMAIS BANCOS (HONRARIA)
+    // ==========================================
+    } else {
+        if (window.isVipMode && quizType === 'modulo4_vip') {
+            localStorage.removeItem('vip_historico_modulo4');
+            localStorage.removeItem('vip_indice_modulo4');
+        }
+
+        exibirVitoriaPomposa("MÓDULO CONCLUÍDO COM SUCESSO!");
+    }
+
+    // --- FUNÇÃO INTERNA PARA A POMPA E CIRCUNSTÂNCIA (VERSÃO INFINITA) ---
+    function exibirVitoriaPomposa(titulo) {
+        // 1. Configuração do Áudio (Loop Infinito)
+        var audioVitoria = new Audio('https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/Som%20de%20plateia%20gritos%20aplausos%20assobio.MP3');
+        audioVitoria.loop = true; // Os aplausos não param até o usuário sair
+        audioVitoria.play().catch(e => console.log("Áudio bloqueado"));
+
+        // 2. Conteúdo Visual (Placar Neon)
+        _c.innerHTML = `
+            <div style="font-size:3em;">🚨</div>
+            <div style="color:#fff; font-weight:bold; text-shadow:0 0 10px #39FF14; text-transform: uppercase;">
+                ${titulo}<br>PARABÉNS POR SUA DETERMINAÇÃO!
+            </div>
+            <p style="color:#39FF14; font-size:1.8em; font-weight:900; margin: 15px 0;">
+                ACERTOS: ${acertosReais} / ${currentQuestions.length}
+            </p>
+            <p style="color:#FFD700; font-size:1.1em; font-weight:bold; text-shadow: 0 0 8px rgba(255, 215, 0, 0.6); margin-bottom: 5px;">
+                A REPETITIVIDADE É O CAMINHO PARA A EXCELÊNCIA.
+            </p>
+            <p style="color:#aaa; font-size:0.8em; text-transform: uppercase; letter-spacing: 1px;">
+                MÓDULO REINICIADO PARA NÃO PERDER O FOCO.
+            </p>
+        `;
+
+        // 3. Botão de Retorno (Agora desliga o som)
+        _t.style.display = "block";
+        _t.innerText = "ÁREA DE ESTUDOS";
+        _t.onclick = function() { 
+            audioVitoria.pause(); // Mata o som ao sair
+            audioVitoria.currentTime = 0; // Reseta o som
+            _o.style.display = "none";
+            go("area-restrita"); 
+        };
+
+        // 4. Fogos de Artifício (Aumentado para 1 minuto)
+        _v.style.display = "block";
+        if (typeof runCanvas === "function") runCanvas();
+        
+        // Timer de 1 minuto (60.000ms) para os fogos e o som (se não sair antes)
+        setTimeout(function () { 
+            if (_v) _v.style.display = "none"; 
+            audioVitoria.pause(); 
+        }, 9000);
+
+        // 5. Reset de Segurança
+        acertosSessao = 0;
+    }
+}
+
+// << FUNÇÕES DO RELÓGIO
+function startTimer() {
+    clearInterval(timerInterval);
+    tempo = 0;
+    document.getElementById('timer').innerText = "00:00";
+    timerInterval = setInterval(() => {
+        tempo++;
+        document.getElementById('timer').innerText = formatarTempo(tempo);
+    }, 1000);
+}
+
+function formatarTempo(seg) {
+    const m = Math.floor(seg / 60).toString().padStart(2, '0');
+    const s = (seg % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+}
+
+function triggerDenial() {
+    if(liberado) { go('area-restrita'); return; }
+    const cont = document.getElementById('container');
+    const ob = document.getElementById('overlay-blood'); 
+    ob.className = 'denied-screen';
+    
+    // SPAN DA ÁREA RESTRITA
+    ob.innerHTML = '<span style="font-size: 3em; font-weight: 900; letter-spacing: 10px;">ACESSO NEGADO</span>';
+    
+    let count = 0; 
+    const t = setInterval(() => { playAlarm(); count++; if(count > 5) clearInterval(t); }, 500);
+    setTimeout(() => { ob.className = ''; ob.style.display = 'none'; location.reload(); }, 5000);
+}
+
+ function ativarMisericordia() {
+    erros = 0; document.querySelectorAll('#vidas-container span').forEach(v => v.style.opacity = '1');
+    for(let i=0; i<35; i++) {
+        setTimeout(() => {
+            const h = document.createElement('div'); h.className = 'heart-misericordia';
+            h.innerHTML = ['💑','👩‍❤️‍👩','👨‍❤️‍👨','💏','👨‍❤️‍💋‍👨'][Math.floor(Math.random()*5)];
+            h.style.left = Math.random()*100+'%'; h.style.fontSize = (Math.random()*50+60)+'px';
+            document.getElementById('container').appendChild(h);
+            setTimeout(() => h.remove(), 5000);
+        }, i * 60);
+    }
+} 
+
+function prev() { if(currentIndex > 0) { currentIndex--; render(); } }
+function extraAction() { quizType === 'total' || quizType === 25 ? location.reload() : ativarMisericordia(); }
+
+function isStudyMode(modo) {
+  return modo === 'modulos' || modo === 'variados' || modo === 'portarias';
+}
+
+function saveProgress(modo) {
+  if (!isStudyMode(modo)) return;
+  const data = {
+    index: currentIndex,
+    acertosSessao,
+    erros,
+    historico
+  };
+  localStorage.setItem(`progress_${modo}`, JSON.stringify(data));
+}
+
+function loadProgress(modo) {
+  if (!isStudyMode(modo)) return null;
+  const raw = localStorage.getItem(`progress_${modo}`);
+  if (!raw) return null;
+  try { return JSON.parse(raw); } catch { return null; }
+}
+
+function clearProgress(modo) {
+  localStorage.removeItem(`progress_${modo}`);
+}
+
+
+// --- INICIALIZAÇÃO DO BANCO VIP
+let totalRespondidasVip = parseInt(localStorage.getItem('vip_total')) || 0;
+let totalAcertosVip = parseInt(localStorage.getItem('vip_acertos')) || 0;
+let totalErrosVip = parseInt(localStorage.getItem('vip_erros')) || 0;
+window.isVipMode = false;
+
+/* =====================================================
+   2. Painel VIP
+===================================================== */
+function atualizarPainelVip() {
+    const painel = document.getElementById('painel-stats-vip');
+    if (!painel) return;
+
+    const aproveitamento = totalRespondidasVip > 0
+        ? ((totalAcertosVip / totalRespondidasVip) * 100).toFixed(0)
+        : 0;
+
+    painel.innerHTML = `
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <div style="background:#0a0a0a;padding:8px;border-radius:6px;border:1px solid #222;text-align:center;">
+                <small style="color:#666;font-size:.65em;">Questões</small>
+                <b>${totalRespondidasVip}</b>
+            </div>
+            <div style="background:#0a0a0a;padding:8px;border-radius:6px;border:1px solid #00ff4133;text-align:center;">
+                <small style="color:#00ff41;font-size:.65em;">Acertos</small>
+                <b style="color:#00ff41;">${totalAcertosVip}</b>
+            </div>
+            <div style="background:#0a0a0a;padding:8px;border-radius:6px;border:1px solid #ff3b3b33;text-align:center;">
+                <small style="color:#ff3b3b;font-size:.65em;">Erros</small>
+                <b style="color:#ff3b3b;">${totalErrosVip}</b>
+            </div>
+            <div style="background:#0a0a0a;padding:8px;border-radius:6px;border:1px solid #FFD70033;text-align:center;">
+                <small style="color:#FFD700;font-size:.65em;">Aproveit.</small>
+                <b style="color:#FFD700;">${aproveitamento}%</b>
+            </div>
+        </div>
+    `;
+}
+
+
+/* =====================================================
+   5. Reset
+===================================================== */
+function resetarStatsVip() {
+    if (!confirm("Deseja zerar seu histórico VIP?")) return;
+
+    localStorage.removeItem('vip_total');
+    localStorage.removeItem('vip_acertos');
+    localStorage.removeItem('vip_erros');
+
+    totalRespondidasVip = 0;
+    totalAcertosVip = 0;
+    totalErrosVip = 0;
+
+    atualizarPainelVip();
+}
+
+
+// ==========================================
+// MOTOR CENTRAL
+// ==========================================
+function startQuiz(modo) {
+  // Blindagem de Estado sugerida pelo parceiro
+  window.isVipMode = (modo === 'vip' || modo === 'simulado_vip');
+  quizType = window.isVipMode ? 'simulado_vip' : modo;
+
+  currentIndex = 0;
+  erros = 0;
+  acertosSessao = 0;
+  acertosContadorSenha = 0;
+  historico = {};
+
+  // NOVIDADE: Limite de erros para impedir aprovação indevida
+  // No modo 'total' (analista), o limite é rigoroso: 3 erros (admite apenas 2)
+  window.limiteErrosPermitidos = (modo === 'vip' || modo === 'simulado_vip' || modo === 25) ? 5 : 3;
+
+  const vContainer = document.getElementById('vidas-container');
+  const btnExtra = document.getElementById('btnExtra');
+  const feedback = document.getElementById('feedback');
+  if (feedback) feedback.style.display = 'none';
+
+  /* ==========================
+      🔥 MODO VIP (AJUSTADO)
+  ========================== */
+  if (modo === 'vip' || modo === 'simulado_vip') {
+    quizType = 'simulado_vip';
+    const megaBanco = [
+        ...(typeof bancoOficial !== 'undefined' ? bancoOficial : []),
+        ...(typeof bancoModulos !== 'undefined' ? bancoModulos : []),
+        ...(typeof bancoVariados !== 'undefined' ? bancoVariados : []),
+        ...(typeof bancoPortarias !== 'undefined' ? bancoPortarias : [])
+    ];
+    const TOTAL_VIP = 30; 
+    currentQuestions = [...megaBanco].sort(() => Math.random() - 0.5).slice(0, TOTAL_VIP);
+    if (vContainer) vContainer.innerHTML = '<span class="bomba-pulsa" style="filter:drop-shadow(0 0 6px gold); font-size:1.5em;">⭐</span>';
+    if (btnExtra) {
+        btnExtra.innerText = "🏛 SALA VIP 🏛";
+        btnExtra.style.background = "#FFD700";
+        btnExtra.style.color = "#000";
+        btnExtra.onclick = () => go('area-apoiador');
+    }
+    if (typeof clearProgress === 'function') clearProgress('simulado_vip');
+  }
+
+  /* ==========================
+      Bomb SOBREVIVENTE
+  ========================== */
+  else if (modo === 25) {
+    const megaBanco = [...bancoOficial, ...bancoModulos, ...bancoVariados, ...bancoPortarias];
+    currentQuestions = megaBanco.sort(() => 0.5 - Math.random()).slice(0, 25);
+    vContainer.innerHTML = '<span class="bomba-pulsa">💣</span>';
+    btnExtra.innerText = "💪 MOTIVACIONAL 💪";
+    btnExtra.style.background = "#475569";
+    btnExtra.onclick = typeof mostrarProverbio === 'function' ? mostrarProverbio : () => {};
+    if (typeof clearProgress === 'function') clearProgress(modo);
+  }
+
+ /* ==========================
+    📚 MODOS NORMAIS (AJUSTE ANALISTA SEM EXPULSÃO)
+========================== */
+else {
+    let base;
+    if (modo === 'total') {
+        base = (typeof bancoOficial !== 'undefined') ? [...bancoOficial] : [];
+        // Desativa o sistema de vidas antigo para este modo
+        window.vidasAtivas = false; 
+        window.limiteErrosPermitidos = 101; // Valor alto para o motor não expulsar por erro
+    } else if (modo === 'modulos') {
+        base = (typeof bancoModulos !== 'undefined') ? [...bancoModulos] : [];
+    } else if (modo === 'variados') {
+        base = (typeof bancoVariados !== 'undefined') ? [...bancoVariados] : [];
+    } else if (modo === 'portarias') {
+        base = (typeof bancoPortarias !== 'undefined') ? [...bancoPortarias] : [];
+    } else {
+        base = (typeof bancoOficial !== 'undefined') ? [...bancoOficial] : [];
+    }
+
+    currentQuestions = base
+        .sort(() => 0.5 - Math.random())
+        .slice(0, modo === 'total' ? 100 : base.length);
+
+    if (vContainer) {
+        // Se for analista, não mostra corações (vidas), mostra o título da prova
+        if (modo === 'total') {
+            vContainer.innerHTML = '<span style="font-size:1.2em; color:#FFD700; font-weight:bold; text-shadow:1px 1px #000;">AGENTE DE COMBATE A ENDEMIAS</span>';
+        } else {
+            vContainer.innerHTML = '<span id="v1">❤️</span><span id="v2">❤️</span><span id="v3">❤️</span>';
+        }
+    }
+    
+    if (modo === 'total') {
+        btnExtra.innerText = " ABORTAR "; 
+        btnExtra.style.background = "#b91c1c"; 
+        btnExtra.style.color = "#fff";
+        btnExtra.onclick = () => location.reload();
+        
+        if (typeof clearProgress === 'function') clearProgress('total');
+      
+        // LOGICA DE FINALIZAÇÃO ANALISTA (SÓ NO FIM DAS 100)
+        window.onFinalizarQuiz = () => {
+            if (erros < 3) {
+                alert(`APROVADO! 🎉\nVocê acertou ${acertosSessao} questões.\nO cargo de ACE te espera!`);
+                go('area-restrita');
+            } else {
+                alert(`REPROVADO! 📚\nVocê cometeu ${erros} erros. O limite para Analista é de apenas 2 erros.`);
+                go('capa');
+            }
+        };
+    } else {
+        // Reset normal para outros modos
+        window.vidasAtivas = true; 
+        btnExtra.innerText = "ÁREA DE ESTUDOS"; 
+        btnExtra.style.background = "#22c55e"; 
+        btnExtra.style.boxShadow = "0 0 10px #22c55e"; 
+        btnExtra.onclick = () => { go('area-restrita'); };
+
+        if (typeof loadProgress === 'function') {
+            const saved = loadProgress(modo);
+            if (saved) {
+                currentIndex = Math.min(saved.index || 0, currentQuestions.length - 1);
+                acertosSessao = saved.acertosSessao || 0;
+                erros = saved.erros || 0;
+                historico = saved.historico || {};
+            }
+        }
+    }
+}
+
+  if (!currentQuestions || currentQuestions.length === 0) {
+    alert("Nenhuma questão disponível neste banco.");
+    return;
+  }
+
+  document.getElementById('btnPrev').classList.add('visible');
+  document.getElementById('btnNext').classList.add('visible');
+  document.getElementById('btnExtra').classList.add('visible');
+
+  go('quiz');
+  if (typeof render === 'function') render();
+  if (typeof startTimer === 'function') startTimer();
+}
+
+
+function sairModulo4Vip() {
+    // 1. Para cronómetros
+    if (typeof timerInterval !== 'undefined') clearInterval(timerInterval);
+    if (typeof timerGlobalVip !== 'undefined') clearInterval(timerGlobalVip);
+    
+    // 2. Limpa Estados Globais
+    window.isVipMode = false;
+    quizType = null;
+    currentQuestions = [];
+    currentIndex = 0;
+    historico = {};
+
+    // 3. Força a restauração visual da Sala VIP
+    const salaVip = document.getElementById('area-apoiador');
+    if (salaVip) {
+        salaVip.style.setProperty("display", "flex", "important");
+        salaVip.style.background = "#000";
+    }
+
+    // 4. Volta para a tela da Sala VIP
+    go('area-apoiador');
+}
+
+
+function sairVip() {
+    // 1. ANTES DE SAIR, SALVAMOS O ESTADO ATUAL
+    const storageKeyIndex = 'vip_indice_modulo4';
+    const storageKeyHistorico = 'vip_historico_modulo4'; // Nova chave para o histórico
+    
+    localStorage.setItem(storageKeyIndex, currentIndex);
+    localStorage.setItem(storageKeyHistorico, JSON.stringify(historico));
+
+    // 2. DESLIGA O MODO VIP MAS NÃO LIMPA AS VARIÁVEIS AINDA
+    window.isVipMode = false;
+
+    // 3. REMOVE O BOTÃO DA TELA
+    const btnSair = document.getElementById('btn-manual-sair');
+    if (btnSair) btnSair.style.display = "none";
+
+    // 4. VOLTA PARA A SALA VIP
+    go('area-apoiador');
+    const telaVip = document.getElementById('area-apoiador');
+    if (telaVip) {
+        telaVip.style.setProperty("display", "flex", "important");
+        telaVip.style.background = "#000";
+    }
+}
+
+function iniciarModulo4Vip() {
+    if (typeof bancoVip === 'undefined' || bancoVip.length === 0) return;
+
+    // 1. Definições de Chaves
+    const storageKeyIndex = 'vip_indice_modulo4';
+    const storageKeyOrdem = 'vip_ordem_modulo4';
+    const storageKeyHistorico = 'vip_historico_modulo4';
+
+    // 2. Estado do Quiz
+    window.isVipMode = true;
+    quizType = 'modulo4_vip';
+
+    // 3. Recuperação de Dados
+    let h = localStorage.getItem(storageKeyHistorico);
+    historico = h ? JSON.parse(h) : {};
+
+    let ordemSalva = localStorage.getItem(storageKeyOrdem);
+    let indices = ordemSalva ? JSON.parse(ordemSalva) : null;
+
+    if (!indices || indices.length !== bancoVip.length) {
+        indices = bancoVip.map((_, i) => i).sort(() => 0.5 - Math.random());
+        localStorage.setItem(storageKeyOrdem, JSON.stringify(indices));
+    }
+    currentQuestions = indices.map(i => bancoVip[i]);
+
+
+// 4. Lógica de Índice - BLOCO ÚNICO (Substitua os dois que você tem)
+let salvo = localStorage.getItem(storageKeyIndex);
+currentIndex = salvo ? parseInt(salvo) : 0;
+
+// Caso 1: Se o histórico está vazio, é um recomeço forçado.
+if (Object.keys(historico).length === 0) {
+    currentIndex = 0;
+} 
+// Caso 2: Se chegou na última e já respondeu, RESET TOTAL.
+else if (currentIndex >= currentQuestions.length - 1 && historico[currentIndex] !== undefined) {
+    currentIndex = 0;
+    historico = {};
+    localStorage.setItem(storageKeyIndex, 0);
+    localStorage.setItem(storageKeyHistorico, JSON.stringify({}));
+} 
+// Caso 3: Pula para a próxima apenas se a atual já foi feita.
+else if (historico[currentIndex] !== undefined) {
+    currentIndex++;
+}
+
+// Salva o resultado final da decisão acima
+localStorage.setItem(storageKeyIndex, currentIndex);
+
+    // Se já respondeu a última, RESET TOTAL
+    if (currentIndex >= currentQuestions.length - 1 && historico[currentIndex] !== undefined) {
+        currentIndex = 0;
+        historico = {};
+        localStorage.setItem(storageKeyIndex, 0);
+        localStorage.setItem(storageKeyHistorico, JSON.stringify({}));
+    } 
+    // SENÃO, se a atual já foi feita, pula UMA (somente se já havia progresso salvo)
+    else if (salvo !== null && historico[currentIndex] !== undefined) {
+        currentIndex++;
+        localStorage.setItem(storageKeyIndex, currentIndex);
+    }
+
+    // 5. Interface e Transição
+    const salaVip = document.getElementById('area-apoiador');
+    if (salaVip) salaVip.style.setProperty("display", "none", "important");
+
+    const vContainer = document.getElementById('vidas-container');
+    if (vContainer && typeof iniciarNovoRelogioVip === 'function') {
+        iniciarNovoRelogioVip();
+    }
+
+    go('quiz');
+    
+    setTimeout(() => {
+        render(); 
+        if (typeof aplicarTravaRevisao === 'function') aplicarTravaRevisao();
+    }, 50);
+
+    if (typeof renderizarBotaoSairVip === 'function') renderizarBotaoSairVip(); 
+}
+
+
+// ESTA FUNÇÃO É A CHAVE: Ela olha o que você já respondeu e "congela" na tela
+function aplicarTravaRevisao() {
+    if (historico && historico[currentIndex] !== undefined) {
+        const respostaDada = historico[currentIndex];
+        // Procura todos os botões que o usuário pode clicar
+        const botoes = document.querySelectorAll('#quiz button, .option, .btn-opt');
+        
+        botoes.forEach(btn => {
+            if (btn.innerText.trim() === respostaDada || btn.textContent.trim() === respostaDada) {
+                btn.style.background = "#22c55e"; // Pinta de verde o que foi marcado
+                btn.style.color = "white";
+            
+}
+            btn.disabled = true; // Impede de trocar a resposta na revisão
+            btn.style.cursor = "not-allowed";
+        });
+    }
+}
+
+// IMPORTANTE: Para o botão VOLTAR funcionar com isso, 
+// você precisa garantir que a sua função prev() chame o aplicarTravaRevisao()
+// Se quiser, posso te dar o código do prev() e next() também.
+
+
+function mostrarMensagemVip() {
+    alert("Na Sala Exclusiva, você tem acesso a todas as 2 mil questões da Área de Estudos, mais algumas centenas exclusivas. Todas com um sistema de contagem de erros e acertos, te dando de forma imediata, sua % de aproveitamento, te dando um parecer real de sua situação. Além disso, você garante acesso irrestrito à Audioteca.");
+}
+
+
+// 2. Mensagem de Coração
+function agradecimentoVip() {
+    const nome = document.getElementById('nome-doador-vip')?.textContent || "Guerreiro";
+    alert(`Sistema: ${nome}, seu apoio mantém esse sistema vivo e em constante evolução. Obrigado por acreditar no projeto! Na engrenagem à esquerda você encontrará questões exclusivas`);
+}
+
+
+
+function resetVidasDisplay() {
+    erros = 0;
+    const v1 = document.getElementById('v1');
+    const v2 = document.getElementById('v2');
+    const v3 = document.getElementById('v3');
+    if (v1) v1.style.opacity = '1';
+    if (v2) v2.style.opacity = '1';
+    if (v3) v3.style.opacity = '1';
+}
+
+
+function render() {
+    if (window.isVipMode && quizType !== 'modulo4_vip') {
+        quizType = 'simulado_vip';
+    }
+
+    if (window.isVipMode && quizType === 'modulo4_vip') { 
+        localStorage.setItem('vip_indice_modulo4', currentIndex);
+    }
+
+    if (!currentQuestions || currentQuestions.length === 0) {
+        document.getElementById('qh').innerText = 'Sem questões';
+        document.getElementById('qt').innerText = 'Carregue um banco de dados.';
+        document.getElementById('opts').innerHTML = '';
+        return;
+    }
+
+    const q = currentQuestions[currentIndex];
+    document.getElementById('qh').innerText = `Questão ${currentIndex + 1}/${currentQuestions.length}`;
+    document.getElementById('qt').innerText = q.q;
+    
+    const optsArea = document.getElementById('opts');
+    const fb = document.getElementById('feedback'); 
+    fb.style.display = 'none';
+    
+    optsArea.innerHTML = '';
+    optsArea.style.pointerEvents = 'auto';
+
+    // === LÓGICA HÍBRIDA (ASSERTIVAS A, B, C...) ===
+    if (q.options && q.options.length > 0) {
+        q.options.forEach((txt, i) => {
+            const btn = document.createElement('div');
+            btn.className = 'opt';
+
+            // --- AJUSTE DE OURO: Limpeza e Cores ---
+            if (historico[currentIndex] !== undefined) {
+                // Se já respondeu (Histórico/Revisão), mostra com CORES NEON
+                let textoComCores = txt.replace(/#(.*?)#/g, '<span style="color:#ff4141; font-weight:bold;">$1</span>');
+                textoComCores = textoComCores.replace(/\*(.*?)\*/g, '<span style="color:#39FF14; font-weight:bold;">$1</span>');
+                btn.innerHTML = textoComCores;
+
+                // Marcação de acerto/erro original
+                if (i === historico[currentIndex]) btn.classList.add(i === q.correct ? 'correct' : 'wrong');
+                if (i === q.correct) btn.classList.add('correct');
+                
+                fb.innerText = q.j; 
+                fb.style.display = 'block';
+                optsArea.style.pointerEvents = 'none';
+            } else {
+                // Se ainda NÃO respondeu, limpa os símbolos para não dar pista
+                btn.innerText = txt.replace(/[#*]/g, ""); 
+                btn.onclick = () => check(i, btn);
+            }
+            optsArea.appendChild(btn);
+        });
+    } 
+    // === LÓGICA V/F (SEM ALTERAÇÃO DE SÍMBOLOS) ===
+    else {
+        [true, false].forEach(val => {
+            const btn = document.createElement('div'); 
+            btn.className = 'opt'; 
+            btn.innerText = val ? "VERDADEIRO" : "FALSO";
+            
+            if (historico[currentIndex] !== undefined) {
+                if (val === historico[currentIndex]) btn.classList.add(val === q.v ? 'correct' : 'wrong');
+                fb.innerText = q.j; 
+                fb.style.display = 'block';
+                optsArea.style.pointerEvents = 'none';
+            } else {
+                btn.onclick = () => check(val, btn);
+            }
+            optsArea.appendChild(btn);
+        });
+    }
+
+    document.getElementById('btnPrev').classList.toggle('visible', currentIndex > 0);
+    document.getElementById('btnNext').classList.toggle('visible', historico[currentIndex] !== undefined);
+}
+
+
+
+function voltarMenuPosVip() {
+    // 1. PASSO 5: Para o relógio global VIP imediatamente para não rodar na capa
+    if (typeof timerGlobalVip !== 'undefined' && timerGlobalVip !== null) {
+        clearInterval(timerGlobalVip);
+        timerGlobalVip = null;
+        console.log("Relógio VIP finalizado.");
+    }
+
+    // 2. Limpa o estado VIP
+    window.isVipMode = false;
+    quizType = null;
+
+    // 3. Volta para a tela principal
+    go('capa'); 
+    
+    // 4. Força a Sala do Doador a abrir sobre a capa
+    setTimeout(() => {
+        const salaVip = document.getElementById('area-apoiador');
+        if (salaVip) {
+            salaVip.style.setProperty("display", "flex", "important");
+            
+            // Aproveita para garantir que o painel de troféus esteja atualizado na volta
+            if (typeof atualizarPainelSimulados === 'function') {
+                atualizarPainelSimulados();
+            }
+        }
+    }, 100);
+}
+
+function prepararContextoSalaVip() {
+    // Estado VIP absoluto
+    window.isVipMode = true;
+    window.isSobrevivente = false;
+    quizType = 'simulado_vip';
+
+    // Mata relógios
+    if (typeof timerInterval !== 'undefined') {
+        clearInterval(timerInterval);
+    }
+
+    // Zera estados de simulado comum
+    erros = 0;
+    acertosSessao = 0;
+    currentIndex = 0;
+
+    // Remove bombas / modos estranhos
+    if (typeof removerBomba === 'function') removerBomba();
+
+    console.log("✔ Contexto VIP preparado");
+}
+
+
+function irParaAreaApoiador2() {
+    const idDigitado = prompt("DIGITE SUA INSCRIÇÃO:");
+    if (!idDigitado) return;
+
+    // Filtro restrito: Busca apenas no banco de DOADORES
+    const usuarioEncontrado = DOADORES.find(u => u.id == idDigitado);
+
+    if (!usuarioEncontrado) {
+        mostrarMensagem(
+            `<h1 style="color:red; font-weight:900;">🤚 ID NÃO ENCONTRADO ✋<br>🚫ACESSO RESTRITO🚫</h1>`,
+            'erro'
+        );
+        return;
+    }
+
+    // Liberação
+    liberado = true;
+
+    // Nome no painel
+    const nomeDoadorElemento = document.getElementById('nome-doador-vip');
+    if (nomeDoadorElemento) {
+        nomeDoadorElemento.textContent = usuarioEncontrado.nome;
+    }
+
+    //  PRIMEIRO ENTRA NA TELA
+    go('area-apoiador');
+
+    //  SÓ DEPOIS PREPARA O CONTEXTO VIP
+    setTimeout(() => {
+        prepararContextoSalaVip();
+
+        const telaVip = document.getElementById('area-apoiador');
+        if (telaVip) {
+            telaVip.style.setProperty("display", "flex", "important");
+            telaVip.style.background = "#000";
+        }
+
+        const vContainer = document.getElementById('vidas-container');
+        if (vContainer) {
+            vContainer.innerHTML =
+                '<span style="font-size:1.2em; color: gold; font-weight:bold;">SALA EXCLUSIVA</span>';
+        }
+    }, 0);
+
+    console.log("Acesso VIP concedido via Painel:", usuarioEncontrado.nome);
+}
+
+function irParaAreaApoiador1() {
+    const idDigitado = prompt("DIGITE SUA INSCRIÇÃO:");
+    if (!idDigitado) return;
+
+    // Agora busca no banco geral de USUÁRIOS para o acesso liberado 24h
+    const usuarioEncontrado = usuarios.find(u => u.id == idDigitado);
+
+    if (!usuarioEncontrado) {
+        mostrarMensagem(
+            `<h1 style="color:red; font-weight:900;">🤚 ID NÃO ENCONTRADO ✋<br>🚫ACESSO RESTRITO🚫</h1>`,
+            'erro'
+        );
+        return;
+    }
+
+    // Liberação total
+    liberado = true;
+
+    // Nome no painel (pega o nome do banco de usuários)
+    const nomeDoadorElemento = document.getElementById('nome-doador-vip');
+    if (nomeDoadorElemento) {
+        nomeDoadorElemento.textContent = usuarioEncontrado.nome;
+    }
+
+    // ENTRA NA TELA
+    go('area-apoiador');
+
+    // PREPARA O CONTEXTO VIP
+    setTimeout(() => {
+        prepararContextoSalaVip();
+
+        const telaVip = document.getElementById('area-apoiador');
+        if (telaVip) {
+            telaVip.style.setProperty("display", "flex", "important");
+            telaVip.style.background = "#000";
+        }
+
+        const vContainer = document.getElementById('vidas-container');
+        if (vContainer) {
+            vContainer.innerHTML =
+                '<span style="font-size:1.2em; color: gold; font-weight:bold;">SALA EXCLUSIVA</span>';
+        }
+    }, 0);
+
+    console.log("Acesso VIP temporário concedido para:", usuarioEncontrado.nome);
+}
+
+// Exemplo de como deve estar o seu Gerador de 30 questões:
+function gerarSimuladoVip30() {
+    // 1. Pega o banco de 2 mil questões
+    let bancoTotal = [...bancoOficial, ...bancoModulos, ...bancoOutros]; // Ajuste os nomes dos seus bancos
+
+    // 2. EMBARALHAMENTO REAL (Fisher-Yates)
+    // Isso mistura as 2000 questões como um baralho profissional
+    for (let i = bancoTotal.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [bancoTotal[i], bancoTotal[j]] = [bancoTotal[j], bancoTotal[i]];
+    }
+
+    // 3. SELECIONA AS 30 DO TOPO (Sempre serão diferentes)
+    currentQuestions = bancoTotal.slice(0, 30);
+    
+    // 4. RESET DE ÍNDICE
+    currentIndex = 0;
+    
+    // 5. RENDERIZA
+    render(); 
+    iniciarRelogio(300); // 5 minutos que combinamos
+}
+
+function portaDosFundosVip() {
+    const idDigitado = prompt("SALA EXCLUSIVA - DIGITE SUA ID EXCLUSIVA:");
+    if (!idDigitado) return;
+
+    const el = document.getElementById('estadoEmoji');
+    liberado = false;
+
+    // BUSCA EXCLUSIVA NO BANCO DE DOADORES
+    const usuarioEncontrado = DOADORES.find(u => u.id == idDigitado);
+
+    if (!usuarioEncontrado) {
+        if (el) {
+            el.innerText = "☠️";
+            el.className = "estado error";
+            setTimeout(() => {
+                el.innerText = "🏆"; 
+                el.className = "estado lock";
+                mostrarMensagem(`<h1 style="color:red; font-weight:900;">🤚 ID NÃO ENCONTRADO ✋<br>🚫ACESSO RESTRITO🚫</h1>`, 'erro');
+            }, 1200);
+        }
+        return; 
+    }
+
+    // --- SUCESSO: O USUÁRIO VÊ A PORTA ABRIR ---
+    liberado = true;
+    if (el) {
+        el.innerText = "🚪";
+        el.className = "estado open";
+    }
+
+    const nomeDoadorElemento = document.getElementById('nome-doador-vip');
+    if (nomeDoadorElemento) {
+        nomeDoadorElemento.textContent = usuarioEncontrado.nome;
+    }
+
+    // DELAY DE 1.2 SEGUNDOS PARA "VER" A PORTA ANTES DE ENTRAR
+    setTimeout(() => {
+        go('area-apoiador');
+
+        prepararContextoSalaVip(); 
+
+        const telaVip = document.getElementById('area-apoiador');
+        if (telaVip) {
+            telaVip.style.setProperty("display", "flex", "important");
+            telaVip.style.background = "#000";
+        }
+
+        const vContainer = document.getElementById('vidas-container');
+        if (vContainer) {
+            vContainer.innerHTML = '<span style="font-size:1.2em; color: gold; font-weight:bold;">⭐ SALA EXCLUSIVA ⭐</span>';
+        }
+        
+        // Mata o botão "Área de Estudos"
+        const botoes = document.querySelectorAll('button, a');
+        botoes.forEach(btn => {
+            const texto = btn.innerText || "";
+            if (texto.includes('ÁREA DE ESTUDOS') || texto.includes('AREA DE ESTUDO')) {
+                btn.style.setProperty("display", "none", "important");
+            }
+        });
+
+        // Reseta o ícone do troféu lá no fundo para a próxima vez
+        setTimeout(() => {
+            if(el) { el.innerText = "🏆"; el.className = "estado lock"; }
+        }, 1000);
+
+    }, 1200); // <--- O tempo de "respiro" da porta
+}
+
+function irParaAudioteca() {
+    // PASSO 5 AQUI: Garante que o cronômetro não vá junto para a audioteca
+    if (typeof timerGlobalVip !== 'undefined') clearInterval(timerGlobalVip);
+    
+    go('audioteca');
+}
+
+
+function usuarioIphone() {
+    let id = prompt("🆔 DIGITE SEU ID DE INSCRIÇÃO:");
+    if (!id) return;
+
+    const idLimpo = id.trim();
+
+    // Lista em Hexadecimal Direta (Sem bugar o comparador)
+/* 🛡️ SISTEMA DE AUTORIDADE - VIP LIST (HEX) 🛡️ */
+
+const vips = [
+  "6112", "1621", "777"
+];
+
+
+    // Se o ID estiver na lista
+    if (vips.includes(idLimpo)) {
+        window.USUARIO_LOGADO_ID = idLimpo;
+        window.IS_VIP = true;
+        go('area-restrita');
+    } else {
+        // Se não estiver, vai para o plano B
+        window.IS_VIP = false;
+        retaFinal(); 
+    }
+}
+// Essa função será chamada pelo botão "ENTENDI" do manifesto
+
+
+function fecharEMudar() {
+    // 1. Remove o manifesto da tela
+    const m = document.querySelector('.manifesto-overlay');
+    if (m) m.remove();
+
+    // 2. Entra na área restrita
+    go('area-restrita');
+
+    // 3. Monitora a área para apagar os botões assim que eles nascerem
+    let tentativas = 0;
+    const monitor = setInterval(() => {
+        const botoes = document.querySelectorAll('button, .menu-btn, [onclick*="modulo"], [onclick*="simulado"]');
+        
+        if (botoes.length > 0) {
+            botoes.forEach(btn => {
+                const txt = btn.innerText.toUpperCase();
+                if (txt.includes("MÓDULO") || txt.includes("PORTARIA") || txt.includes("SIMULADO")) {
+                    btn.remove();
+                }
+            });
+            // Se já limpamos ou tentamos 20 vezes (2 segundos), paramos o monitor
+            tentativas++;
+            if (tentativas > 20) clearInterval(monitor);
+        }
+    }, 100); // Checa a cada 100ms
+}
+
+function retaFinal() {
+    const overlay = document.createElement('div');
+    overlay.className = 'manifesto-overlay';
+    overlay.innerHTML = `
+        <div style="
+            position: absolute;
+            top: 5vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%; /* Ocupa quase toda a largura no mobile */
+            max-width: 800px; /* No PC fica confortável */
+            height: auto;
+            max-height: 62vh;
+            background: rgba(0,0,0,0.95);
+            border-radius: 12px;
+            border: 1px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        ">
+            <div style="
+                overflow-y: auto; 
+                padding: 30px 20px; 
+                text-align: center; 
+                -webkit-overflow-scrolling: touch;
+            ">
+                <div style="font-size: 1.05em; line-height: 1.5; color: #fff; font-weight: 600;">
+                    Criei essa plataforma com o exclusivo objetivo de me ajudar na prova do curso de formação, pois tô na rabeira do rabo da cachorra, por isso o sistema de vidas, por isso o sistema de desafios. A história é longa, e é irrelevante contar. Mas o fato é que minha plataforma cresceu demais, muito além da expectativa. Foram 2 meses de evolução, acesso gratuito, críticas, fortalecimento, sugestões e elogios.                    
+                    <div style="font-size: 1.05em; color: var(--yellow); font-weight: 900; margin-top: 20px; margin-bottom: 20px;">
+                        Eu não tô conseguindo lidar sozinho com a grandeza desse projeto, por isso, nesta reta final, eu vou focar em quem acreditou em mim, e de boa vontade me fortaleceu. Uns passarinhos assoviaram e, realmente, preciso concluir a audioteca, elaborar mais conteúdo e aprimorar a sala exclusiva.
+                    </div>
+                        Dito isso, vou restringir o acesso gratuito ao modo sobrevivente para acessarem somente a audioteca. Criei uma senha que permite até 10 acessos simultaneamente, mas tá em teste. Se falhar, liberarei o acesso nos fins de semana. Qualquer coisa, meu privado continua aberto a todos, 88 994354250. Obrigado!
+                    
+                    <div style="font-size: 1.0em; color: #39FF14; font-weight: 900; text-transform: uppercase; text-shadow: 0 0 10px #39FF1455; margin-top: 25px; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 8px; border: 1px dashed #39FF14;">
+                       Combati o bom combate, completei meu objetivo, guardei a fé.      
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; padding: 20px; background: rgba(0,0,0,0.6); border-top: 1px solid rgba(255,255,255,0.1); flex-shrink: 0;">
+                <button class="menu-btn" style="
+                    display: inline-block;
+                    width: auto; 
+                    padding: 12px 35px; 
+                    border: 1px solid var(--accent);
+                    background: transparent;
+                    color: #fff;
+                    cursor: pointer;
+                    font-size: 1em;
+                    border-radius: 5px;
+                    font-weight: bold;
+              " onclick="
+                    this.closest('.manifesto-overlay').remove(); 
+                    go('area-restrita');
+                    let t = 0;
+                    const v = setInterval(() => {
+                        document.querySelectorAll('button, .menu-btn').forEach(b => {
+                            let txt = b.innerText.toUpperCase();
+                            if (txt.includes('MÓDULO') || txt.includes('PORTARIA') || txt.includes('SIMULADO')) b.remove();
+                        });
+                        if (t++ > 20) clearInterval(v);
+                    }, 50);
+                ">
+                    🤝 ENTENDI 🤝
+                </button>
+            </div>
+        </div>
+    `;
+    document.getElementById('container').appendChild(overlay);
+}
+
+
+
+function mostrarManifesto() {
+    const overlay = document.createElement('div');
+    overlay.className = 'manifesto-overlay';
+    overlay.innerHTML = `
+        <div style="
+            position: absolute;
+            top: 5vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%; /* Ocupa quase toda a largura no mobile */
+            max-width: 800px; /* No PC fica confortável */
+            height: auto;
+            max-height: 62vh;
+            background: rgba(0,0,0,0.95);
+            border-radius: 12px;
+            border: 1px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        ">
+            <div style="
+                overflow-y: auto; 
+                padding: 30px 20px; 
+                text-align: center; 
+                -webkit-overflow-scrolling: touch;
+            ">
+                <div style="font-size: 1.05em; line-height: 1.5; color: #fff; font-weight: 600;">
+                    Este aplicativo não tem fins lucrativos.<br>
+                    Ele foi desenvolvido por mim, Renato T. com o objetivo de ajudar todos que ainda estão na batalha pela sonhada estabilidade no concurso da PMS para o cargo de <strong>Policial Municipal</strong>.<br>
+                    
+                    <div style="font-size: 1.15em; color: var(--yellow); font-weight: 900; margin-top: 20px; margin-bottom: 20px;">
+                        O seu uso é GRATUITO e dispensa quaisquer formas de ônus financeiro, mas <strong>considere uma doação</strong> e ganhe acesso irrestrito à Audioteca, uma ÁREA EXCLUSIVA e personalizada, contendo um simulado com centenas de questões do Módulo IV, um painel detalhado que contabiliza sua % de aproveitamento baseado em seus acertos e erros.
+                    </div>
+                    
+                    Dito isso, se você, no auge do seu anonimato, reconhece meus esforços, se sentiu ajudado, tiver condições e desejar contribuir com qualquer quantia, sinta-se à vontade.  Qualquer coisa : 88 994354250.
+                    
+                    <div style="font-size: 1.0em; color: #39FF14; font-weight: 900; text-transform: uppercase; text-shadow: 0 0 10px #39FF1455; margin-top: 25px; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 8px; border: 1px dashed #39FF14;">
+                        Raimundo Nonato Romão Silva<br>
+                        PIX: 802.138.123-04<br>
+                        Nubank
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; padding: 20px; background: rgba(0,0,0,0.6); border-top: 1px solid rgba(255,255,255,0.1); flex-shrink: 0;">
+                <button class="menu-btn" style="
+                    display: inline-block;
+                    width: auto; 
+                    padding: 12px 35px; 
+                    border: 1px solid var(--accent);
+                    background: transparent;
+                    color: #fff;
+                    cursor: pointer;
+                    font-size: 1em;
+                    border-radius: 5px;
+                    font-weight: bold;
+                " onclick="this.closest('.manifesto-overlay').remove()">
+                    ENTENDI AS CONDIÇÕES
+                </button>
+            </div>
+        </div>
+    `;
+    document.getElementById('container').appendChild(overlay);
+}
+
+
+function mostrarMensagem(texto, tipo) {
+  const overlay = document.getElementById('msg-overlay');
+  const content = document.getElementById('msg-content');
+  if (!overlay || !content) return alert(texto); // fallback
+
+  if (tipo === 'sucesso') {
+    content.style.color = '#39FF14';
+    content.style.textShadow = '0 0 20px #39FF14';
+    content.style.border = '3px solid #39FF14';
+    content.style.background = 'rgba(0,0,0,0.8)';
+    content.style.boxShadow = '0 0 40px #39FF14';
+  } else {
+    content.style.color = '#ff0000';
+    content.style.textShadow = '0 0 20px #ff0000';
+    content.style.border = '3px solid #ff0000';
+    content.style.background = 'rgba(0,0,0,0.8)';
+    content.style.boxShadow = '0 0 40px #ff0000';
+  }
+
+  content.innerHTML = texto;
+  overlay.style.display = 'flex';
+}
+
+// A FUNÇÃO QUE O QUIZ VAI CHAMAR (Unificando com a gerarSenha)
+function gerarSenhaTemporaria() {
+    // Gera os 5 números
+    const senha = Math.floor(10000 + Math.random() * 90000);
+    const expira = Date.now() + (3 * 60 * 60 * 1000);
+
+    // Salva na variável global para o script saber que existe uma senha ativa
+    senhaAdminTemp = String(senha);
+
+    // Salva no banco de dados do navegador (localStorage)
+    localStorage.setItem("senhaAudioteca", senhaAdminTemp);
+    localStorage.setItem("senhaAudiotecaExpira", String(expira));
+
+    // Chama a função de mostrar o slide (que você já tem)
+    mostrarSlideSenha(senhaAdminTemp);
+    
+    // Alerta sonoro/visual para o aluno
+    alert("🔥 SOBREVIVENTE! 🔥\nSua chave de acesso à Audioteca foi gerada!\n(Válida por 3 horas)");
+}
+
+// MOSTRAR O SLIDE 
+function mostrarSlideSenha(senha) {
+    const displaySenha = document.querySelector(".senha-gerada");
+    if(displaySenha) displaySenha.textContent = senha;
+    
+    const slide = document.getElementById("slideSenha");
+    if(slide) slide.style.display = "flex";
+}
+
+// ABRIR O CADEADO - (MODAL AJUSTADO)
+function abrirCadeado() {
+    const senhaGuardada = localStorage.getItem("senhaAudioteca");
+    const expira = localStorage.getItem("senhaAudiotecaExpira");
+
+    if (!senhaGuardada || !expira || Date.now() > Number(expira)) {
+        alert("ACESSO À AUDIOTECA NEGADO: Você não possui uma chave ativa.\nProve o seu valor e conquiste uma no Modo Sobrevivente!");
+        return;
+    }
+
+    const overlayExistente = document.getElementById("modal-lock");
+    if (overlayExistente) overlayExistente.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'modal-lock';
+    overlay.innerHTML = `
+        <div style="background: #1a1a1a; padding: 30px; border: 2px solid #ffd700; border-radius: 15px; text-align: center; color: white; width: 300px; box-shadow: 0 0 20px rgba(0,0,0,0.5);">
+            <h3 style="margin-top: 0; color: #ffd700;">🔓 ACESSO AUDIOTECA</h3>
+            <p style="font-size: 14px;">Chave ativa detectada!<br>Insira o código de acesso:</p>
+            <input type="number" id="senhaInputModal" style="width: 100%; padding: 12px; margin: 15px 0; border-radius: 8px; border: none; text-align: center; font-size: 22px; font-weight: bold; background: #333; color: white;" placeholder="00000">
+            <button onclick="validarSenha()" style="background: #ffd700; color: black; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 16px;">DESBLOQUEAR</button>
+            <button onclick="document.getElementById('modal-lock').remove()" style="background: transparent; color: #ff4444; border: none; margin-top: 15px; cursor: pointer; font-size: 12px; font-weight: bold;">CANCELAR</button>
+        </div>
+    `;
+    
+    Object.assign(overlay.style, {
+        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
+        backgroundColor: 'rgba(0,0,0,0.9)', display: 'flex', justifyContent: 'center',
+        alignItems: 'center', zIndex: '9999'
+    });
+
+    document.body.appendChild(overlay);
+    setTimeout(() => document.getElementById("senhaInputModal").focus(), 100);
+}
+
+// VALIDAR A SENHA DIGITADA
+function validarSenha() {
+    const inputModal = document.getElementById("senhaInputModal");
+    const digitada = inputModal ? inputModal.value : "";
+    
+    const senhaCorreta = localStorage.getItem("senhaAudioteca");
+    const expira = localStorage.getItem("senhaAudiotecaExpira");
+
+    if (senhaCorreta && Date.now() < Number(expira)) {
+        if (String(digitada).trim() === String(senhaCorreta).trim()) {
+
+            // 1. Remove o modal de senha
+            const modal = document.getElementById("modal-lock");
+            if (modal) modal.remove();
+
+            alert("✅ ACESSO LIBERADO!.");
+
+            // 2. Esconde TODAS as telas normais
+            document.querySelectorAll('.screen.active').forEach(tela => {
+                tela.classList.remove('active');
+                tela.style.display = 'none';
+            });
+
+            // 3. Mostra a Audioteca como camada principal
+            const telaAudioteca = document.getElementById('audioteca');
+            if (telaAudioteca) {
+                telaAudioteca.style.display = 'flex';
+            }
+
+            // 4. Carrega os áudios
+            if (typeof carregarAudioteca === "function") {
+                carregarAudioteca();
+            }
+                iniciarVigilanciaAudioteca();
+                iniciarRelogioAudioteca();
+
+        } else {
+            alert("❌ Senha incorreta. Verifique o código e tente novamente.");
+            if (inputModal) {
+                inputModal.value = "";
+                inputModal.focus();
+            }
+        }
+    } else {
+        alert("⚠️ Sua chave expirou ou você ainda não conquistou uma!");
+        const modal = document.getElementById("modal-lock");
+        if (modal) modal.remove();
+    }
+}
+
+function expulsarAudioteca() {
+    // Para tudo
+    document.querySelectorAll("audio").forEach(a => {
+        a.pause();
+        a.removeAttribute("src");
+        a.load();
+    });
+
+    // Limpa credenciais FREE
+    localStorage.removeItem("senhaAudioteca");
+    localStorage.removeItem("senhaAudiotecaExpira");
+
+    // Mensagem final
+    alert("⏳ Seu tempo de acesso à Audioteca expirou.");
+
+    // Mata a sessão
+    window.location.reload(); 
+    // ou: go('capa');
+}
+
+function iniciarVigilanciaAudioteca() {
+    const expira = Number(localStorage.getItem("senhaAudiotecaExpira"));
+    if (!expira) return;
+
+    const intervalo = setInterval(() => {
+        if (Date.now() > expira) {
+            clearInterval(intervalo);
+            expulsarAudioteca();
+        }
+    }, 10000); // checa a cada 10s
+}
+
+function criarRelogioAudioteca() {
+    if (document.getElementById("timer-audioteca")) return;
+
+    const div = document.createElement("div");
+    div.id = "timer-audioteca";
+    div.style.cssText = `
+        position: fixed;
+        bottom: 15px;
+        right: 15px;
+        background: rgba(0,0,0,0.7);
+        color: #FFD700;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 14px;
+        z-index: 10000;
+        box-shadow: 0 0 10px #FFD700;
+    `;
+    document.body.appendChild(div);
+}
+
+function atualizarRelogioAudioteca() {
+    const div = document.getElementById("timer-audioteca");
+    const expira = Number(localStorage.getItem("senhaAudiotecaExpira"));
+    if (!div || !expira) return;
+
+    const restante = expira - Date.now();
+    if (restante <= 0) {
+        div.textContent = "00:00:00";
+        return;
+    }
+
+    const h = String(Math.floor(restante / 3600000)).padStart(2, "0");
+    const m = String(Math.floor((restante % 3600000) / 60000)).padStart(2, "0");
+    const s = String(Math.floor((restante % 60000) / 1000)).padStart(2, "0");
+
+    div.textContent = `⏳ ${h}:${m}:${s}`;
+}
+
+function iniciarRelogioAudioteca() {
+    criarRelogioAudioteca();
+    setInterval(atualizarRelogioAudioteca, 1000);
+}
+
+
+function fecharSlideVitoria() {
+    // Esconde o slide da senha
+    document.getElementById('slideSenha').style.display = 'none';
+    // Volta para a tela da área restrita
+    go('area-restrita');
+}
+
+
+/* =====================================================
+   BANCO DE DOADORES
+   ===================================================== */
+(() => {
+  const _0x5a21 = [
+    { id: "777", n: "Renato Therion" },
+    { id: "1621", n: "Lukenn" },
+    { id: "6112", n: "Luan Kennedy Almada de Lima" }
+ 
+  ];
+
+  window.DOADORES = _0x5a21.map(item => ({
+    id: item.id,
+    nome: item.n
+  }));
+})();
+
+/* ===============================
+   
+   =============================== */
+
+function _s(i){
+  return _d[i].map(c => String.fromCharCode(c)).join("");
+}
+
+/* =====================================================
+   FINGERPRINT DO DISPOSITIVO
+   ===================================================== */
+function gerarFingerprint() {
+  return btoa(
+    navigator.userAgent +
+    screen.width +
+    screen.height +
+    navigator.language
+  );
+}
+
+/* =====================================================
+   VALIDAÇÃO VIP
+   ===================================================== */
+function validarVip(id) {
+  const idStr = String(id).trim();
+
+  const doador = DOADORES.find(d => d.id === idStr);
+  if (!doador) return null;
+
+  const chave = "VIP_BIND_" + idStr;
+  const fingerprintAtual = gerarFingerprint();
+  const salvo = localStorage.getItem(chave);
+
+  if (!salvo) {
+    localStorage.setItem(chave, fingerprintAtual);
+    return doador; // ← RETORNA O DOADOR
+  }
+
+  if (salvo === fingerprintAtual) {
+    return doador;
+  }
+
+  return null;
+}
+
+/* =====================================================
+   ACESSO À ÀREA VIP
+   ===================================================== */
+function abrirAudiotecaPelaSalaVip() {
+    // 1. Primeiro: Escondemos a Sala VIP para ela não tapar a visão
+    const salaVip = document.getElementById('area-apoiador');
+    if (salaVip) {
+        salaVip.style.display = "none";
+    }
+
+    // 2. DNA da sua função original que funciona:
+    liberado = true;
+
+    const telaAudioteca = document.getElementById('audioteca');
+    if (telaAudioteca) {
+        telaAudioteca.style.display = "flex";
+        telaAudioteca.style.position = "fixed";
+        telaAudioteca.style.inset = "0";
+        telaAudioteca.style.zIndex = "100000"; // Um pouco maior que os 99999 da sala
+    }
+
+    // 3. Carregamento dos áudios
+    if (typeof carregarAudioteca === "function") {
+        const listaParaUsar = (typeof listaAulas !== 'undefined') ? listaAulas : [];
+        carregarAudioteca(listaParaUsar);
+    }
+}
+
+function abrirEstudosPelaSalaVip() {
+    // 🔥 NOVIDADE: Marca como VIP para o relógio ignorar
+    localStorage.setItem("modoAcesso", "vip");
+    localStorage.removeItem("visitanteExpira"); // Limpa qualquer resquício de tempo
+
+    const salaVip = document.getElementById('area-apoiador');
+    if (salaVip) salaVip.style.display = 'none';
+
+    if (typeof pessoa === 'undefined' || !pessoa) {
+        window.pessoa = { nome: "Doador VIP", status: "Classificado", pontos: "---" };
+    }
+
+    go('area-restrita');
+    if (typeof renderizarQuestao === 'function') renderizarQuestao(0); 
+}
+
+
+// EXECUTA AUTOMATICAMENTE AO CARREGAR A PÁGINA
+(function verificarAcessoAoCarregar() {
+    const modo = localStorage.getItem("modoAcesso");
+    const expira = Number(localStorage.getItem("visitanteExpira"));
+
+    // Se for VIP, não faz nada (Liberdade total)
+    if (modo === "vip") return;
+
+    // Se for VISITANTE, valida o tempo
+    if (modo === "visitante") {
+        const agora = Date.now();
+        
+        if (!expira || agora >= expira) {
+            // Tempo esgotado ou burlado: Expulsa imediatamente
+            localStorage.clear(); 
+            window.location.reload(); // Ou go('capa') se preferir
+        } else {
+            // Tempo ainda válido: Retoma o relógio de onde parou
+            iniciarVigilanciaVisitante();
+            iniciarRelogioVisitante();
+        }
+    }
+})();
+
+
+function irParaAreaApoiador() {
+    const id = prompt("DIGITE SUA SENHA EXCLUSIVA DE APOIADOR:");
+    if (!id) return;
+
+    const doador = validarVip(id);
+
+    if (!doador) {
+        mostrarMensagem(`<h1 style="color:red; font-weight:900;">🤚 ACESSO NEGADO ✋<br> APOIE À CAUSA<br>CONTEÚDO EXCLUSIVO </h1>`, 'erro');
+        return;
+    }
+
+    liberado = true;
+
+    // Garante que o nome apareça
+    const nomeDoadorElemento = document.getElementById('nome-doador-vip');
+    if (nomeDoadorElemento) {
+        nomeDoadorElemento.textContent = doador.nome;
+    }
+
+    // Tenta o go() padrão, mas logo abaixo força a exibição manual
+    go('area-apoiador');
+
+    const telaVip = document.getElementById('area-apoiador');
+    if (telaVip) {
+        telaVip.style.setProperty("display", "flex", "important");
+        telaVip.style.background = "#000"; // Garante que não fique transparente
+    }
+}
+
+function entrarNaAudiotecaVip() {
+    // 1. Teleporta para a tela da audioteca
+    go('audioteca');
+
+    // 2. Chama a função que você já tem para carregar os áudios
+    // Usamos o seu banco de dados padrão (listaAulas)
+    if (typeof carregarAudioteca === "function") {
+        carregarAudioteca(typeof listaAulas !== 'undefined' ? listaAulas : []);
+    }
+
+    // 3. Opcional: Inicia a vigilância se você tiver essa função
+    if (typeof iniciarVigilanciaAudioteca === 'function') {
+        iniciarVigilanciaAudioteca();
+    }
+}
+
+/* function acessoAdmin() {
+
+  const id = prompt("DIGITE SUA SENHA EXCLUSIVA DE DOADOR:");
+  if (!id) return;
+
+  const doador = validarVip(id);
+
+  if (!doador) {
+    mostrarMensagem(
+      `<h1 style="color:red; font-weight:900; text-shadow:0 0 30px red;">
+        💥🚨 ACESSO NEGADO 🚨💥<br>
+        <span style="font-size:0.6em;">
+          ID inválido ou já utilizado em outro dispositivo.
+        </span>
+      </h1>`,
+      'erro'
+    );
+    tocarSom('explosao.mp3');
+    animarExpulsao();
+    go('capa');
+    return;
+  }
+
+  liberado = true;
+
+  mostrarMensagem(
+    `
+    <div style="text-align:center; line-height:1.6;">
+      <div style="color:white; font-size:1.2em; font-weight:600;">
+        Seja bem-vindo(a) à Audioteca:
+      </div>
+
+      <div style="
+        color:#FFD700;
+        font-size:1.6em;
+        font-weight:900;
+        text-shadow:0 0 15px #FFD700;
+        margin:8px 0;
+      ">
+        ${doador.nome}
+      </div>
+
+      <div style="color:#3b82f6; font-weight:600;">
+        Mantenha sua senha em sigilo.
+      </div>
+
+      <div style="margin-top:6px;">
+        <span style="color:red; font-weight:900;">Não</span>
+        <span style="color:#3b82f6; font-weight:600;">
+          fortaleça à concorrência!
+        </span>
+      </div>
+    </div>
+    `,
+    'sucesso'
+  ); 
+
+  const telaAudioteca = document.getElementById('audioteca');
+  if (telaAudioteca) {
+    telaAudioteca.style.display = "flex";
+    telaAudioteca.style.position = "fixed";
+    telaAudioteca.style.inset = "0";
+    telaAudioteca.style.zIndex = "9999";
+  }
+
+  if (typeof carregarAudioteca === "function") {
+    const listaParaUsar =
+      (typeof listaAulas !== 'undefined')
+        ? listaAulas
+        : [
+            { titulo: "Aula 01 - VIP", url: "#" },
+            { titulo: "Aula 02 - VIP", url: "#" }
+          ];
+
+    carregarAudioteca(listaParaUsar);
+  }
+}
+*/
+
+/* =====================================================
+   CARREGAMENTO DA AUDIOTECA
+   ===================================================== */
+
+function carregarAudioteca() {
+    const container = document.getElementById('lista-audios');
+    if (!container) return;
+    container.innerHTML = ""; 
+
+    listaAulas.forEach(aula => {
+        const item = document.createElement('div');
+        item.className = 'audio-item';
+        
+        // AQUI O BRILHO SEM MEXER NA LÓGICA
+        item.style.background = "rgba(255, 215, 0, 0.05)";
+        item.style.border = "1px solid rgba(255, 215, 0, 0.3)";
+        item.style.borderRadius = "12px";
+        item.style.padding = "15px";
+        item.style.marginBottom = "10px";
+        item.style.boxShadow = "0 0 10px rgba(255, 215, 0, 0.1)";
+
+        item.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:bold; color:#fff; font-size:0.9em;">${aula.titulo}</span>
+                <button id="btn-play-${aula.id}" onclick="toggleAudio(${aula.id})" 
+                    style="background:#ffd700; border:none; color:#000; border-radius:50%; width:40px; height:40px; cursor:pointer; font-size:1.2em; box-shadow: 0 0 10px #ffd700;">
+                    ▶
+                </button>
+            </div>
+  
+    <audio 
+  id="audio-${aula.id}" 
+  src="${aula.url}"
+  onended="audioFinalizado(${aula.id})"
+  controlsList="nodownload noplaybackrate"
+  disablePictureInPicture
+  preload="none">
+</audio>
+
+
+            <div id="progress-bg-${aula.id}" style="width:100%; height:4px; background:rgba(255,255,255,0.1); border-radius:2px; margin-top:5px; position:relative;">
+                <div id="progress-bar-${aula.id}" style="width:0%; height:100%; background:#ffd700; box-shadow: 0 0 8px #ffd700; border-radius:2px;"></div>
+            </div>
+        `;
+        container.appendChild(item);
+    });
+}
+
+function toggleAudio(id) {
+    const audio = document.getElementById(`audio-${id}`);
+    const btn = document.getElementById(`btn-play-${id}`);
+
+    if (!audio) return;
+
+    indiceAtual = listaAulas.findIndex(a => a.id === id);
+
+    if (audio.paused) {
+        pararTodosAudios();
+        audio.play();
+        btn.innerText = "⏸";
+        btn.style.background = "var(--fire)";
+
+        configurarMediaSession(id);
+
+        audio.ontimeupdate = () => {
+            const pct = (audio.currentTime / audio.duration) * 100;
+            document.getElementById(`progress-bar-${id}`).style.width = pct + "%";
+        };
+    } else {
+        audio.pause();
+        resetIcon(id);
+    }
+}
+
+function tocarProximo() {
+    if (indiceAtual < listaAulas.length - 1) {
+        indiceAtual++;
+        toggleAudio(listaAulas[indiceAtual].id);
+    }
+}
+
+function tocarAnterior() {
+    if (indiceAtual > 0) {
+        indiceAtual--;
+        toggleAudio(listaAulas[indiceAtual].id);
+    }
+}
+function configurarMediaSession(id) {
+    const aula = listaAulas.find(a => a.id === id);
+    if (!aula || !('mediaSession' in navigator)) return;
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: aula.titulo,
+        artist: "Audioteca Restrita",
+        album: "Guia Definitivo SEAS",
+        artwork: [
+            { src: "icon-192.png", sizes: "192x192", type: "image/png" }
+        ]
+    });
+
+    navigator.mediaSession.setActionHandler('nexttrack', tocarProximo);
+    navigator.mediaSession.setActionHandler('previoustrack', tocarAnterior);
+    navigator.mediaSession.setActionHandler('pause', () => {
+        document.getElementById(`audio-${id}`)?.pause();
+    });
+    navigator.mediaSession.setActionHandler('play', () => {
+        document.getElementById(`audio-${id}`)?.play();
+    });
+}
+
+
+function pararTodosAudios() {
+    const audios = document.querySelectorAll('audio');
+    audios.forEach(a => {
+        a.pause();
+        const id = a.id.split('-')[1];
+        resetIcon(id);
+    });
+}
+
+function resetIcon(id) {
+    const btn = document.getElementById(`btn-play-${id}`);
+    if(btn) {
+        btn.innerText = "▶";
+        btn.style.background = "var(--accent)";
+    }
+}
+
+function fecharAudioteca() {
+    document.querySelectorAll('audio').forEach(a => a.pause());
+    
+    // Isso limpa a memória e joga pra capa
+    window.location.reload();
+}
+
+
+function entrarComoVisitante() {
+    try {
+        const vipAte = localStorage.getItem('vip_analista');
+        const agora = new Date().getTime();
+
+        // Se o VIP existe e ainda é válido
+        if (vipAte && agora < parseInt(vipAte)) {
+            console.log("Acesso VIP detectado!");
+            go('area-restrita');
+        } else {
+            console.log("Sem VIP ou expirado. Indo para o Menu.");
+            localStorage.removeItem('vip_analista'); 
+            go('menu');
+        }
+    } catch (e) {
+        console.error("Erro no VIP:", e);
+        go('menu'); // Em caso de erro, manda pro menu por segurança
+    }
+}
+
+function entrarComoVisitante2() {
+    // 1. CHECA SE ESTÁ NA QUARENTENA ANTES DE TUDO
+    const expiraCortina = Number(localStorage.getItem("expiracaoCortina"));
+    const agora = Date.now();
+
+    if (expiraCortina && agora < expiraCortina) {
+        // Se ainda está no exílio, apenas entra na área restrita (a aplicarEfeitoCortina cuidará do resto)
+        go('area-restrita');
+        return; 
+    }
+
+    // 2. SE NÃO ESTÁ NA QUARENTENA, CHECA SE JÁ TEM UM TEMPO RODANDO
+    let expira = Number(localStorage.getItem("visitanteExpira"));
+    
+    if (!expira || agora >= expira) {
+        // Só cria um novo tempo de 1 hora se não houver um ativo
+        const duracao = 60 * 60 * 1000; 
+        expira = agora + duracao;
+        localStorage.setItem("visitanteExpira", expira);
+    }
+
+    // 3. INICIA A VIGILÂNCIA E ENTRA
+    iniciarVigilanciaVisitante();
+    go('area-restrita');
+}
+
+function iniciarVigilanciaVisitante() {
+    const expira = Number(localStorage.getItem("visitanteExpira"));
+    if (!expira) return;
+
+    // Se já houver um intervalo rodando, limpamos para não duplicar
+    if (window._intervaloVigilancia) clearInterval(window._intervaloVigilancia);
+
+    window._intervaloVigilancia = setInterval(() => {
+        const agora = Date.now();
+
+        if (agora >= expira) {
+            clearInterval(window._intervaloVigilancia);
+            window._intervaloVigilancia = null; // Limpa a referência
+            
+            ativarCortinaFumaca(); 
+            expulsarVisitante();
+        }
+    }, 1000);
+}
+
+
+function expulsarVisitante() {
+  // 1. MATA OS DADOS E INTERVALOS IMEDIATAMENTE (Evita o bug do F5)
+  localStorage.removeItem("visitanteExpira");
+  if (window._intervaloVigilancia) {
+    clearInterval(window._intervaloVigilancia);
+    window._intervaloVigilancia = null;
+  }
+
+  // 2. PARA TUDO QUE ESTIVER RODANDO (Áudio/Vídeo)
+  document.querySelectorAll("audio, video").forEach(m => {
+    m.pause();
+    m.src = "";
+    m.load();
+  });
+
+  // 3. BLOQUEIA INTERAÇÕES NO FUNDO
+  document.body.style.pointerEvents = "none";
+
+  // 4. VOLTA PARA A CAPA (Sem reload para não perder o estado da cortina)
+  if (typeof go === "function") {
+    go('capa');
+  } else {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const capa = document.getElementById('capa');
+    if (capa) capa.classList.add('active');
+  }
+
+  // 5. CRIAÇÃO DO OVERLAY (MAPA DE CALOR DO ERRO)
+  const overlay = document.createElement("div");
+  overlay.id = "overlay-expulsao"; // ID para facilitar controle se necessário
+  overlay.innerHTML = `
+    <div style="
+      background:#000;
+      border:2px solid red;
+      padding:30px;
+      border-radius:15px;
+      text-align:center;
+      color:#ff4444;
+      font-weight:900;
+      box-shadow:0 0 30px red;
+      max-width: 90%;
+    ">
+      <span style="font-size:1.4em;">⏱️ TEMPO ESGOTADO ⏱️</span><br><br>
+      <span style="font-size:0.9em; color:#ffffff; font-weight:400;">
+        Seu período de degustação terminou.<br>
+        O sistema entrou em <b style="color:red;">QUARENTENA</b> por 12h.
+      </span><br><br>
+      <button onclick="window.location.reload()" 
+        style="
+          padding:12px 20px;
+          font-weight:bold;
+          border:none;
+          border-radius:8px;
+          background:#ffd700;
+          color:#000;
+          cursor:pointer;
+          box-shadow: 0 4px 0 #b8860b;
+        ">
+        ENTENDER E SAIR
+      </button>
+    </div>
+  `;
+
+  // ESTILIZAÇÃO DO OVERLAY
+  Object.assign(overlay.style, {
+    position: "fixed",
+    inset: "0",
+    background: "rgba(0,0,0,0.98)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: "999999",
+    pointerEvents: "auto" // Permite clicar no botão do overlay
+  });
+
+  document.body.appendChild(overlay);
+}
+
+
+
+function toggleRepeatOne() {
+    repetirUma = !repetirUma;
+    const btn = document.getElementById("btn-repeat-one");
+    if (btn) {
+        btn.textContent = repetirUma
+          ? "🔁 Repetir UMA: ON"
+          : "🔁 Repetir UMA: OFF";
+    }
+}
+
+function toggleRepeatAll() {
+    repetirTodas = !repetirTodas;
+    const btn = document.getElementById("btn-repeat-all");
+    if (btn) {
+        btn.textContent = repetirTodas
+          ? "🔂 Repetir TODAS: ON"
+          : "🔂 Repetir TODAS: OFF";
+    }
+}
+
+function audioFinalizado(id) {
+    const audio = document.getElementById(`audio-${id}`);
+    const btn = document.getElementById(`btn-play-${id}`);
+
+    if (!audio) return;
+
+    // PRIORIDADE 1 — repetir UMA
+    if (repetirUma) {
+        audio.currentTime = 0;
+        audio.play();
+        return;
+    }
+
+    // PRIORIDADE 2 — repetir TODAS
+    if (repetirTodas) {
+        const indexAtual = listaAulas.findIndex(a => a.id === id);
+        if (indexAtual !== -1) {
+            const proxima =
+                listaAulas[indexAtual + 1] || listaAulas[0];
+
+            setTimeout(() => {
+                toggleAudio(proxima.id);
+            }, 300);
+        }
+        return;
+    }
+
+    // comportamento normal
+    if (btn) btn.textContent = "▶";
+}
+
+(() => {
+
+  const SPEED_KEY = "audioteca_speed";
+  let currentSpeed = parseFloat(localStorage.getItem(SPEED_KEY)) || 1;
+
+  const buttons = document.querySelectorAll(".speed-group button");
+
+  function applySpeed(v) {
+    currentSpeed = v;
+    localStorage.setItem(SPEED_KEY, v);
+
+    document.querySelectorAll("audio").forEach(a => {
+      a.playbackRate = v;
+    });
+
+    buttons.forEach(b => {
+      b.style.background = "rgba(255,215,0,0.08)";
+      b.style.color = "#ffd700";
+      b.style.boxShadow = "0 0 8px rgba(255,215,0,0.4)";
+    });
+
+    const active = [...buttons].find(b => parseFloat(b.dataset.speed) === v);
+    if (active) {
+      active.style.background = "rgba(255,0,0,0.15)";
+      active.style.color = "#ff3b3b";
+      active.style.boxShadow = "0 0 10px rgba(255,0,0,0.8)";
+    }
+  }
+
+  buttons.forEach(btn => {
+    btn.style.fontSize = "0.9em";
+    btn.style.padding = "6px 8px";
+    btn.style.borderRadius = "12px";
+    btn.style.border = "2px solid #ffd700";
+    btn.style.cursor = "pointer";
+
+    btn.addEventListener("click", () => {
+      applySpeed(parseFloat(btn.dataset.speed));
+    });
+  });
+
+  document.addEventListener("loadedmetadata", e => {
+    if (e.target.tagName === "AUDIO") {
+      e.target.playbackRate = currentSpeed;
+    }
+  }, true);
+
+  applySpeed(currentSpeed);
+
+})();
+
+
+// 2. LÓGICA DA CHAVE E FECHADURA (COM MODO FUGA)
+const elChave = document.getElementById('chave');
+const elFechadura = document.getElementById('fechadura');
+
+if (elChave) {
+    // Efeito de fuga (Trollagem)
+    ['mouseover', 'touchstart'].forEach(evento => {
+        elChave.addEventListener(evento, (e) => {
+            // Se for touch, o primeiro toque faz ela fugir antes de iniciar o drag
+            const novaX = Math.random() * (window.innerWidth - 80);
+            const novaY = Math.random() * (window.innerHeight - 80);
+            
+            elChave.style.position = 'fixed';
+            elChave.style.zIndex = '100000';
+            elChave.style.transition = 'all 0.15s ease-out';
+            elChave.style.left = `${novaX}px`;
+            elChave.style.top = `${novaY}px`;
+        });
+    });
+
+    // Permite que a chave ainda seja arrastada (Modo Difícil)
+    elChave.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text', 'chave');
+    });
+}
+
+if (elFechadura) {
+    elFechadura.addEventListener('dragover', e => e.preventDefault());
+    elFechadura.addEventListener('drop', e => {
+        e.preventDefault();
+        const item = e.dataTransfer.getData('text');
+        if (item === 'chave') {
+            // Se o cara conseguiu, chama a SUA função original
+            usuarioIphone();
+        }
+    });
+}
+
+// Isso garante que o painel mostre os dados assim que o código carregar
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof atualizarPainelVip === 'function') {
+        atualizarPainelVip();
+    }
+});
+
+function provaAnalista() {
+    // Agora o emoji apenas "teletransporta" o usuário para a startQuiz no modo total
+    startQuiz('total');
+}
+
+function verificarResposta(idx) {
+    const q = currentQuestions[currentIndex];
+    q.userChoice = idx; 
+
+    if (idx === q.correct) {
+        // No acerto, também revelamos (opcional, mas bom para reforçar o acerto)
+        revelarCoresNasOpcoes(); 
+        
+        document.body.classList.add('acertou-flash');
+        setTimeout(() => {
+            document.body.classList.remove('acertou-flash');
+            next(); 
+        }, 300);
+    } else {
+        // NO ERRO: Primeiro revelamos os pontos críticos na tela
+        revelarCoresNasOpcoes();
+
+        document.body.classList.add('errou-flash');
+        setTimeout(() => {
+            document.body.classList.remove('errou-flash');
+            if (q.j) {
+                exibirModalJustificativa(q.j);
+            } else {
+                next();
+            }
+        }, 300);
+    }
+}
+
+let cronometroPausado = false;
+
+function pausarCronometro() { cronometroPausado = true; }
+function retomarCronometro() { cronometroPausado = false; }
+
+// No seu setInterval do cronômetro, adicione no início:
+// if (cronometroPausado) return;
+
+
+function exibirModalJustificativa(texto) {
+    document.getElementById('msg-justificativa').innerText = texto;
+    document.getElementById('modal-erro').style.display = 'flex';
+}
+
+function fecharModalESeguir() {
+    document.getElementById('modal-erro').style.display = 'none';
+    retomarCronometro(); // Importante para o cronômetro voltar
+    next(); // Chama a função correta do seu script
+}
+
+function renderizarBotaoSairVip() {
+    // Procura o local ideal dentro do container (ex: onde ficam os botões Next/Prev)
+    const controles = document.querySelector('.active'); 
+    let btnSair = document.getElementById('btn-manual-sair');
+    
+    if (!btnSair) {
+        btnSair = document.createElement('button');
+        btnSair.id = 'btn-manual-sair';
+        // Estilo limpo para combinar com seu container
+        btnSair.style.cssText = "display:block; margin: 15px auto 0; width:200px; padding:10px; background:#22c55e; color:white; border:none; border-radius:8px; font-weight:800; cursor:pointer; font-size:12px; text-transform:uppercase;";
+        if(controles) controles.appendChild(btnSair);
+    }
+    btnSair.innerHTML = "🏆 SALA EXCLUSIVA 🏆";
+    btnSair.onclick = sairVip;
+}
+
+// Essa função é essencial para inicializar o contexto de som do navegador
+let audioCtx;
+function initAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+// Alerta de Intrusão
+/* function alertaIntrusao(comando) {
+    console.clear();
+    console.log("%c⚠️ ACESSO NEGADO! ⚠️", "color: red; font-size: 30px; font-weight: bold;");
+    console.log("%cTentativa de burlar o sistema via: " + comando, "color: white; background: red; padding: 5px;");
+    
+    // Toca um som curto de erro
+    const bip = new Audio("https://www.soundjay.com/buttons/beep-05.mp3");
+    bip.volume = 0.5;
+    bip.play();
+
+    alert("🚨 PROTOCOLO AURA: O comando [" + comando + "] foi bloqueado. Quem diabos é você?");
+}
+
+// Bloqueio de Teclas com Puxão de Orelha
+document.addEventListener('keydown', function(e) {
+    // F12
+    if (e.keyCode == 123) {
+        e.preventDefault();
+        alertaIntrusao("F12 (Inspecionar)");
+    }
+    // Ctrl+U
+    if (e.ctrlKey && e.keyCode == 85) {
+        e.preventDefault();
+        alertaIntrusao("Ctrl+U (Código Fonte)");
+    }
+    // Ctrl+Shift+I
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+        e.preventDefault();
+        alertaIntrusao("Ctrl+Shift+I (Console)");
+    }
+});
+
+// Bloqueio de Clique Direito
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    // Um aviso discreto no console para quem tentar clicar com o direito
+    console.warn("Clique direito desativado pelo Administrador.");
+}); */
+
+// Dispara o Caos
+function dispararContraAtaque() {
+    const somPânico = new Audio("https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/ProjetoAura.mp3");
+    somPânico.loop = true;
+    somPânico.volume = 1.0;
+    somPânico.play().catch(() => {}); // Toca o terror
+
+    // Destruí o visual e criei a tela de invasor
+    document.body.innerHTML = `
+        <div class="super-pânico" style="height:100vh; width:100vw; display:flex; flex-direction:column; align-items:center; justify-content:center; color:white; font-family:'Arial Black', sans-serif; text-align:center; overflow:hidden; background: black; position: fixed; inset: 0; z-index: 99999;">
+            <h1 style="font-size:4.5rem; text-shadow: 10px 10px #000; margin:0; line-height:1;">⚠️ INVASOR ⚠️</h1>
+            <h1 style="font-size:4.5rem; text-shadow: 10px 10px #000; margin:0; line-height:1;">DETECTADO</h1>
+            <h2 style="font-size:1.8rem; margin:30px; background:white; color:red; padding:10px;">ESPIONAGEM BLOQUEADA</h2>
+            <div style="font-size:8rem; font-weight:900; color:white;" id="count">10</div>
+            <p style="margin-top:30px; letter-spacing:15px; font-weight:bold;">EXPULSÃO OBRIGATÓRIA</p>
+        </div>
+    `;
+
+    // Terremoto Psicodélico
+    const style = document.createElement('style');
+    style.innerHTML = `
+        @keyframes terremoto { 0%{transform:translate(0,0)} 10%{transform:translate(-20px,-15px)} 25%{transform:translate(20px,20px)} 50%{transform:translate(-30px,10px)} 60%{transform:translate(0,0)} }
+        @keyframes flash { 0%{background:#f00} 50%{background:#fff} 60%{background:#000} }
+        .super-pânico { animation: terremoto 0.2s infinite, flash 0.2s infinite !important; }
+    `;
+    document.head.appendChild(style);
+
+    // Countdown para o Reload
+    let c = 10;
+    const t = setInterval(() => {
+        c--;
+        const el = document.getElementById('count');
+        if(el) el.innerText = c;
+        if (c <= 0) {
+            clearInterval(t);
+            location.reload(); 
+        }
+    }, 1200);
+}
+
+// MONITORAMENTO DE TECLAS (O Gatilho da Armadilha)
+document.addEventListener('keydown', function(e) {
+    // F12, Ctrl+U ou Ctrl+Shift+I
+    if (e.keyCode == 123 || (e.ctrlKey && e.keyCode == 85) || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) {
+        e.preventDefault();
+        dispararContraAtaque();
+    }
+});
+ 
+// 1. BLOQUEIO DE INSPEÇÃO (Ctrl+U, F12, Ctrl+Shift+I)
+ document.addEventListener('keydown', function(e) {
+    // Bloqueia F12
+    if (e.keyCode == 123) {
+        e.preventDefault();
+        return false;
+    }
+    // Bloqueia Ctrl+U (Exibir Código Fonte)
+    if (e.ctrlKey && e.keyCode == 85) {
+        e.preventDefault();
+        return false;
+    }
+    // Bloqueia Ctrl+Shift+I (Inspecionar)
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+        e.preventDefault();
+        return false;
+    }
+});
+
+// 2. BLOQUEIO DE CLIQUE DIREITO (Evita "Inspecionar" pelo mouse)
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+/*
+// 3. BLOQUEIO DE PRINT(Escurece a tela ao perder o foco)
+ window.addEventListener('blur', () => {
+    document.body.style.filter = "blur(15px) grayscale(100%)";
+    document.title = "⚠️ SEGURANÇA ATIVA";
+});
+
+window.addEventListener('focus', () => {
+    document.body.style.filter = "none";
+    document.title = "Projeto Aura";
+}); 
+
+// 4. ANTI-COMPARTILHAMENTO DE SENHA (Limpeza de Clipboard)
+document.addEventListener('copy', (e) => {
+    // Se o cara tentar copiar algo, a área de transferência é limpa ou alterada
+    e.clipboardData.setData('text/plain', 'ACESSO RESTRITO - PROJETO AURA');
+    e.preventDefault();
+    alert("CÓPIA DE DADOS PROIBIDA PELO PROTOCOLO AURA.");
+}); */
+
+
+
+function iniciarRelogioVisitante() {
+    const el = document.getElementById("relogio-visitante");
+    if (!el) return;
+
+    const expira = Number(localStorage.getItem("visitanteExpira"));
+    if (!expira) return;
+
+    function atualizar() {
+        const agora = Date.now();
+        const restante = expira - agora;
+
+        if (restante <= 0) {
+            el.innerText = "⏳ 00:00";
+            return;
+        }
+
+        const totalSegundos = Math.floor(restante / 1000);
+        const minutos = Math.floor(totalSegundos / 60);
+        const segundos = totalSegundos % 60;
+
+        el.innerText = `⏳ ${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+
+        // 🔥 ALERTA VISUAL (últimos 5 minutos)
+        if (restante < 5 * 60 * 1000) {
+            el.style.color = "#ff4444";
+            el.style.boxShadow = "0 0 10px red";
+        } else {
+            // volta ao normal se ainda tiver tempo
+            el.style.color = "#00ff88";
+            el.style.boxShadow = "0 0 10px #00ff88";
+        }
+    }
+
+    atualizar();
+    setInterval(atualizar, 1000);
+}
+
+window.addEventListener("load", () => {
+    iniciarVigilanciaVisitante();
+    iniciarRelogioVisitante();
+});
+
+
+function revelarPontosCriticos() {
+    const alternativas = document.querySelectorAll('.option-item'); // Ajuste para sua classe de CSS
+
+    alternativas.forEach((el, index) => {
+        let texto = currentQuestions[currentQuestionIndex].options[index];
+
+        // 1. Transforma o que está entre # em Vermelho (Erro)
+        texto = texto.replace(/#(.*?)#/g, '<span style="color: #ff4141; font-weight: bold;">$1</span>');
+
+        // 2. Transforma o que está entre * em Verde (Acerto/Correto)
+        texto = texto.replace(/\*(.*?)\*/g, '<span style="color: #39FF14; font-weight: bold;">$1</span>');
+
+        // 3. Atualiza a interface
+        el.innerHTML = texto;
+    });
+}
+
+function aplicarCoresImediato() {
+    const q = currentQuestions[currentIndex];
+    const botoes = document.querySelectorAll('.opt');
+
+    if (q.options && q.options.length > 0) {
+        botoes.forEach((btn, i) => {
+            let txt = q.options[i];
+            let textoComCores = txt.replace(/#(.*?)#/g, '<span style="color:#ff4141; font-weight:bold;">$1</span>');
+            textoComCores = textoComCores.replace(/\*(.*?)\*/g, '<span style="color:#39FF14; font-weight:bold;">$1</span>');
+            btn.innerHTML = textoComCores;
+        });
+    }
+}
+
+// FUNÇÃO A: Grava a "marca" de 12 horas no navegador
+function ativarCortinaFumaca() {
+    const dozeHoras = 12 * 60 * 60 * 1000; 
+    const expiraCortina = Date.now() + dozeHoras;
+    localStorage.setItem("expiracaoCortina", expiraCortina);
+}
+
+function aplicarEfeitoCortina() {
+    const expira = Number(localStorage.getItem("expiracaoCortina"));
+    const agora = Date.now();
+
+    if (expira && agora < expira) {
+        // ... (seus códigos de esconder botões mantidos) ...
+        document.querySelectorAll('.btn-restrito-acao').forEach(btn => {
+            if (!btn.outerHTML.includes('25')) btn.style.setProperty('display', 'none', 'important');
+        });
+        
+        const itens = document.querySelectorAll('.topbar > div');
+        if (itens.length >= 4) {
+            itens[0].style.setProperty('display', 'none', 'important');
+            itens[1].style.setProperty('display', 'none', 'important');
+        }
+
+        const h2 = document.querySelector('#area-restrita h2');
+        if (h2) h2.innerHTML = "ESPERAMOS QUE TENHA APROVEITADO<br> NOSSA PLATARFORMA.<br><span style='color:var(--fire); font-size:1em;'>SEU ACESSO FOI LIMITADO POR 12H.</span>";
+    
+    } else {
+        // Caso o tempo de 12h tenha passado, removemos a marca do localStorage
+        localStorage.removeItem("expiracaoCortina");
+    }
+}
+
+
+function go(tela) {
+    // 1. Primeiro aplica a cortina se for o caso
+    if (tela === 'area-restrita') {
+        aplicarEfeitoCortina();
+    }
+
+    // 2. Sua lógica de esconder/mostrar as telas (Exemplo abaixo)
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(tela);
+    if (target) target.classList.add('active');
+}
+
+</script>
+<div id="modal-erro" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:10000; flex-direction:column; justify-content:center; align-items:center; padding:20px;">
+    <div style="background:#fff; padding:20px; border-radius:10px; color:#333; width:100%; max-width:400px;">
+        <h2 style="color:red; margin-top:0;">ERROU!</h2>
+        <p id="msg-justificativa" style="font-weight:bold;"></p>
+        <button onclick="fecharModalESeguir()" style="width:100%; padding:15px; background:#2ecc71; color:#fff; border:none; border-radius:5px; font-size:18px;">CONTINUAR</button>
+    </div>
+</div>
+
+</body>
+</html>
