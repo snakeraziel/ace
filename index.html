@@ -869,7 +869,7 @@ right:100px;
   box-shadow:0 0 10px rgba(0,255,136,0.4);
   font-size:0.9em;
   backdrop-filter: blur(2px);
-  opacity:0.7;
+  opacity:0.4;
 ">
   ⏳ 60:00
 </div>
@@ -1468,7 +1468,7 @@ const bancoModulos = [
 
 let bancoVariados = [
 {
-  q: "💢 Com base nas atribuições legais do Agente de Combate às Endemias (ACE), assinale a alternativa correta:",
+  q: "💢 1. Com base nas atribuições legais do Agente de Combate às Endemias (ACE), assinale a alternativa correta:",
   options: [
     "a) #Cabe ao ACE realizar exclusivamente atividades administrativas# no âmbito das unidades de saúde, sendo vedada sua atuação em ações educativas e de mobilização comunitária.",
     "b) É atribuição do ACE executar ações de prevenção e controle de doenças de forma isolada, #som necessidade de interação# com os Agentes Comunitários de Saúde ou com as equipes de Atenção Básica.",
@@ -1604,7 +1604,7 @@ let bancoVariados = [
   options: [
     "a) No Brasil, a malária é transmitida #exclusivamente pelo Plasmodium ovale#, sendo o mosquito #Culex# o principal vetor urbano da doença.",
     "b) A transmissão da malária ocorre #diretamente de pessoa para pessoa# por contato com secreções corporais, sendo o #período de incubação fixo# para todas as espécies de Plasmodium.",
-    "O *homem é o principal reservatório* da malária, e a transmissão ocorre pela *picada da fêmea do mosquito do gênero Anopheles* infectada por formas do Plasmodium, *não havendo transmissão direta* entre pessoas.",
+    "c) O *homem é o principal reservatório* da malária, e a transmissão ocorre pela *picada da fêmea do mosquito do gênero Anopheles* infectada por formas do Plasmodium, *não havendo transmissão direta* entre pessoas.",
     "d) No Brasil, #apenas uma espécie de Anopheles# é capaz de transmitir a malária, sendo sua atuação #restrita às áreas rurais# da Região Norte."
   ],
   correct: 2,
@@ -1798,7 +1798,7 @@ let bancoVariados = [
   j: "A Síndrome de Weil é a forma grave e clássica da leptospirose, definida pela tríade de icterícia rubínica (cor alaranjada), insuficiência renal aguda e fenômenos hemorrágicos, sendo a hemorragia alveolar (pulmonar) a causa mais comum de óbito."
 },
 {
-  q: "💢 31. Assinale a alternativa com o correto tipo de animais pe-çonhentos que ocasiona os acidentes por Lonomia obliqua.",
+  q: "💢 31. Assinale a alternativa com o correto tipo de animais peçonhentos que ocasiona os acidentes por Lonomia obliqua.",
   options: [
     "a) #Cobras.#",
     "b) *Lagartas.*",
@@ -2605,6 +2605,7 @@ function check(answer, btn) {
     // 1. CHAMA O REGISTRO (Aqui ele já soma acertosSessao ou erros uma vez)
     registrarResposta(acertou, answer);
     historico[currentIndex] = answer;
+   document.getElementById('opts').style.pointerEvents = 'none';
 
     // --- REVELAÇÃO DE CORES (MAPA DE CALOR) MANTIDA ---
     if (q.options && q.options.length > 0) {
@@ -2625,86 +2626,106 @@ function check(answer, btn) {
         });
     }
 
-    document.getElementById('opts').style.pointerEvents = 'none';
+   
+// MODO SOBREVIVENTE - NÃO TOCAR - NÃO OLHAR - NÃO RESPIRAR PERTO
 
-    if (acertou) {
-        acertosSessao++; // 🔥 INSERÇÃO
+if (acertou) {
+    acertosSessao++; 
+    
+    // --- LÓGICA DA SENHA DA AUDIOTECA ---
+    if (quizType === 25) {
+        acertosContadorSenha++;
 
-        // No antigo, você tinha "acertosSessao++" aqui de novo. 
-        // Se o seu visor usa uma variável global chamada 'acertos', vamos garantir ela aqui:
-        if (typeof acertos !== 'undefined') acertos++; 
+        if (acertosContadorSenha === 25) {
+            // REGISTRA VITÓRIA NO STORAGE E NO PAINEL
+            let v = (parseInt(localStorage.getItem('vitoriasGerador')) || 0) + 1;
+            localStorage.setItem('vitoriasGerador', v);
+            const pVit = document.getElementById('vit-25');
+            if (pVit) pVit.innerText = v;
 
-        if (quizType === 25) {
-            acertosContadorSenha++;
-            if (acertosContadorSenha === 25) {
-                gerarSenhaTemporaria(); 
-                acertosContadorSenha = 0;
-            }
-        }
-        
-        // ESSENCIAL: Atualiza o visor após os incrementos
-        if (typeof atualizarVisor === 'function') atualizarVisor();
-        else if (typeof atualizarPainel === 'function') atualizarPainel();
-
-        btn.classList.add('correct');
-        cont.classList.add('acertou-flash');
-        setTimeout(() => { 
-            cont.classList.remove('acertou-flash'); 
-            next(); 
-        }, 700);
-
-    } else {
-        // Se errou e for Sobrevivente, a lógica da bomba assume:
-        if (quizType === 25) {
+            gerarSenhaTemporaria(); 
             acertosContadorSenha = 0;
-            btn.classList.add('wrong');
-            cont.classList.add('errou-flash');
-            
-            // Força atualização do placar de erros antes de explodir
-            if (typeof atualizarVisor === 'function') atualizarVisor();
-
-            setTimeout(() => cont.classList.remove('errou-flash'), 700);
-         
-            // (LÓGICA DA BOMBA INTEGRAL)
-            if (typeof timerInterval !== 'undefined') clearInterval(timerInterval);
-            let d = (parseInt(localStorage.getItem('derrotasGerador')) || 0) + 1; 
-            localStorage.setItem('derrotasGerador', d);
-            cont.classList.add('tremendo');
-            const ob = document.getElementById('overlay-blood');
-            if (ob) {
-                ob.className = 'blood-alert-overlay';
-                ob.innerHTML = `<span style="font-size:2.5em; letter-spacing:5px;">💣SISTEMA💥 <br>COMPROMETIDO💥💥</span><br><span style="font-size:2em; font-weight:900;">💥 AUTODESTRUIÇÃO...💥</span>`;
-            }
-            let bipes = 0;
-            const alarme = setInterval(() => {
-                if (typeof playAlarm === 'function') playAlarm();
-                bipes++;
-                if (bipes >= 8) clearInterval(alarme);
-            }, 400);
-            setTimeout(() => { 
-                cont.classList.remove('tremendo');
-                if (ob) { ob.className = ''; ob.style.display = 'none'; }
-                const failStats = document.getElementById('fail-stats');
-                if (failStats) { 
-                    failStats.innerHTML = `A BOMBA EXPLODIU NA SUA CARA!<br>ACERTOS: ${acertosSessao}`; 
-                }
-                const btnF = document.getElementById('btn-tentar-novamente');
-                if (btnF) { btnF.onclick = function() { go('area-restrita'); }; btnF.innerText = "TENTAR NOVAMENTE"; }
-                go('fail-screen');
-            }, 5000);
-
-        } else {
-            // Modo Normal: o erros++ já aconteceu lá no registrarResposta
-            if (typeof atualizarVidas === 'function') atualizarVidas(); 
-            const feedbackEl = document.getElementById('feedback'); 
-            if (feedbackEl) {
-                feedbackEl.innerText = q.j; 
-                feedbackEl.style.display = 'block';
-            }
-            const btnNext = document.getElementById('btnNext');
-            if (btnNext) btnNext.classList.add('visible');
         }
     }
+    // ------------------------------------
+
+    btn.classList.add('correct');
+    cont.classList.add('acertou-flash');
+    setTimeout(() => { 
+        cont.classList.remove('acertou-flash'); 
+        next(); 
+    }, 700);
+
+} else {
+    // SE ERROU NA BOMBA, O CONTADOR DE SENHA VOLTA PARA ZERO
+    if (quizType === 25) {
+       acertosContadorSenha = 0;
+    }
+    btn.classList.add('wrong');
+    cont.classList.add('errou-flash');
+    setTimeout(() => cont.classList.remove('errou-flash'), 700);
+ 
+    if (quizType === 25) {
+        if (typeof timerInterval !== 'undefined') clearInterval(timerInterval);
+        
+        // REGISTRA DERROTA NO STORAGE
+        let d = (parseInt(localStorage.getItem('derrotasGerador')) || 0) + 1; 
+        localStorage.setItem('derrotasGerador', d);
+        
+        // ATUALIZA O PAINEL DE FRACASSOS IMEDIATAMENTE
+        const pFrac = document.getElementById('frac-25');
+        if (pFrac) pFrac.innerText = d;
+
+        cont.classList.add('tremendo');
+        const ob = document.getElementById('overlay-blood');
+
+        if (ob) {
+            ob.className = 'blood-alert-overlay';
+            ob.innerHTML = `
+                <span style="font-size:2.5em; letter-spacing:5px;">💣SISTEMA💥 <br>COMPROMETIDO💥💥</span><br>
+                <span style="font-size:2em; font-weight:900;">💥 AUTODESTRUIÇÃO...💥</span>
+            `;
+        }
+
+        let bipes = 0;
+        const alarme = setInterval(() => {
+            if (typeof playAlarm === 'function') playAlarm();
+            bipes++;
+            if (bipes >= 8) clearInterval(alarme);
+        }, 400);
+
+        setTimeout(() => { 
+            cont.classList.remove('tremendo');
+            if (ob) { 
+                ob.className = ''; 
+                ob.style.display = 'none'; 
+            }
+
+            const failStats = document.getElementById('fail-stats');
+            if (failStats) {
+                failStats.innerHTML = `A BOMBA EXPLODIU NA SUA CARA!<br>ACERTOS: ${acertosSessao}`;
+            }
+            const btnF = document.getElementById('btn-tentar-novamente');
+
+            if (btnF) {
+                btnF.onclick = function() { go('area-restrita'); };
+                btnF.innerText = "TENTAR NOVAMENTE";
+            }
+            go('fail-screen');
+        }, 5000);
+
+    } else {
+        erros++; 
+        if (typeof atualizarVidas === 'function') atualizarVidas(); 
+        const feedbackEl = document.getElementById('feedback');
+        if (feedbackEl) {
+            feedbackEl.innerText = q.j; 
+            feedbackEl.style.display = 'block';
+        }
+        const btnNext = document.getElementById('btnNext');
+        if (btnNext) btnNext.classList.add('visible');
+    }
+  }
 }
 
 
@@ -5188,15 +5209,30 @@ function aplicarEfeitoCortina() {
 
 
 function go(tela) {
-    // 1. Primeiro aplica a cortina se for o caso
+
     if (tela === 'area-restrita') {
         aplicarEfeitoCortina();
+
+        // 🔥 GARANTE QUE O PAINEL SEMPRE SINCRONIZE
+        setTimeout(() => {
+            atualizarPainelSobrevivente();
+        }, 50);
     }
 
-    // 2. Sua lógica de esconder/mostrar as telas (Exemplo abaixo)
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const target = document.getElementById(tela);
     if (target) target.classList.add('active');
+}
+
+function atualizarPainelSobrevivente() {
+    const v = parseInt(localStorage.getItem('vitoriasGerador')) || 0;
+    const d = parseInt(localStorage.getItem('derrotasGerador')) || 0;
+
+    const pVit = document.getElementById('vit-25');
+    const pFrac = document.getElementById('frac-25');
+
+    if (pVit) pVit.innerText = v;
+    if (pFrac) pFrac.innerText = d;
 }
 
 </script>
