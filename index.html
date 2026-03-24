@@ -486,15 +486,18 @@ button {
 }
 
 @keyframes vitoria-brilho {
-    0% { box-shadow: 0 0 20px #39FF14; }
-    50% { box-shadow: 0 0 50px #39FF14, inset 0 0 30px #39FF14; }
-    100% { box-shadow: 0 0 20px #39FF14; }
+    /* Troquei o #39FF14 pelo Verde Esmeralda Suave #2ECC71 */
+    /* Diminuí o raio do brilho de 50px para 15px */
+    0% { box-shadow: 0 0 10px rgba(46, 204, 113, 0.4); }
+    50% { box-shadow: 0 0 10px rgba(46, 204, 113, 0.6), inset 0 0 10px rgba(46, 204, 113, 0.3); }
+    100% { box-shadow: 0 0 10px rgba(46, 204, 113, 0.4); }
 }
 
 .slide-vitoria {
     background: #000 !important;
-    border: 5px solid #39FF14 !important;
-    animation: vitoria-brilho 2s infinite;
+    /* Borda mais fina e cor menos agressiva */
+    border: 3px solid #2ECC71 !important; 
+    animation: vitoria-brilho 3s infinite; /* Aumentei para 3s para a pulsação ser mais lenta e calma */
 }
 
 /* Tela trincando / rasgando */
@@ -638,6 +641,9 @@ button {
 position: fixed;
 right:100px;
 
+
+
+
     </style>
 </head>
 <body> 
@@ -777,7 +783,7 @@ right:100px;
 </h2>
 -->
 
-    <button class="menu-btn" onclick="entrarComoVisitante2()">👥ENTRE COMO VISITANTE 👥</button> 
+    <button class="menu-btn" onclick="entrarComoVisitante2()">👥 ENTRE COMO VISITANTE 👥</button> 
  <button class="menu-btn" style="border: 2px solid #FFD700; background: rgba(255, 215, 0, 0.1);" onclick="irParaAreaApoiador2()">
     ⭐🏆 ÁREA EXCLUSIVA 🏆⭐
 </button>
@@ -850,9 +856,23 @@ right:100px;
         <h2 style="color:var(--success); font-weight:900; margin:0; text-align:center;">
             ÁREA DE ESTUDOS
         </h2>
-        <div id="relogio-visitante" style="position:absolute; right:0; top:50%; transform:translateY(-50%); background:#000; color:#00ff88; padding:6px 10px; border-radius:8px; font-weight:bold; box-shadow:0 0 10px #00ff88; font-size:0.9em;">
-          ⏳ 60:00
-        </div>
+        <div id="relogio-visitante" style="
+  position:absolute;
+  right:0;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.3);
+  color:#00ff88;
+  padding:6px 10px;
+  border-radius:8px;
+  font-weight:bold;
+  box-shadow:0 0 10px rgba(0,255,136,0.4);
+  font-size:0.9em;
+  backdrop-filter: blur(2px);
+  opacity:0.7;
+">
+  ⏳ 60:00
+</div>
     </div>
 
     <div style="width:100%; max-width:400px; display: flex; flex-direction: column; gap: -80px;">
@@ -1804,7 +1824,7 @@ let bancoVariados = [
   options: [
     "a) #Conjugação dos recursos financeiros, tecnológicos, ma-teriais e humanos da União, dos Estados, do Distrito Federal e dos Municípios na prestação de serviços de atenção à sa-úde da população.#",
     "b) #Capacidade de resolução dos serviços em todos os níveis de atenção.#",
-    "c) *Organização dos serviços públicos, de modo a evitar du-plicidade de meios para fins idênticos.*",
+    "c) *Organização dos serviços públicos, de modo a evitar duplicidade de meios para fins idênticos.*",
     "d) #Integração em nível legislativo das ações de saúde, meio ambiente e saneamento básico.#"
   ],
   correct: 2,
@@ -2582,41 +2602,38 @@ function check(answer, btn) {
     const acertou = (q.options && q.options.length > 0) ? (answer === q.correct) : (answer === q.v);
     const cont = document.getElementById('container');
 
+    // 1. CHAMA O REGISTRO (Aqui ele já soma acertosSessao ou erros uma vez)
     registrarResposta(acertou, answer);
     historico[currentIndex] = answer;
 
-// --- REVELAÇÃO DE CORES (MAPA DE CALOR) ---
-if (q.options && q.options.length > 0) {
-    const todosOsBotoes = document.querySelectorAll('.opt');
-    todosOsBotoes.forEach((b, i) => {
-        let textoOriginal = q.options[i];
-        
-        // Cores neon para os botões que VOCÊ NÃO CLICOU
-        let corP_Verde = "#39FF14";
-        let corP_Vermelha = "#ff4141";
-
-        // Aplica o HTML. Se for o botão clicado, o CSS que acabamos de criar
-        // ( .opt.correct span ) vai detectar e pintar de PRETO automaticamente.
-        let colorido = textoOriginal
-            .replace(/#(.*?)#/g, `<span style="color:${corP_Vermelha}; font-weight:900;">$1</span>`)
-            .replace(/\*(.*?)\*/g, `<span style="color:${corP_Verde}; font-weight:900;">$1</span>`);
-        
-        b.innerHTML = colorido;
-
-        // Força a frase a ser branca no botão clicado para garantir
-        if (i === answer) {
-            b.style.setProperty('color', '#ffffff', 'important');
-            // Remove o estilo inline dos spans do botão clicado para o CSS master assumir o preto
-            const spansClicados = b.querySelectorAll('span');
-            spansClicados.forEach(s => s.style.color = '');
-        }
-    });
-}
+    // --- REVELAÇÃO DE CORES (MAPA DE CALOR) MANTIDA ---
+    if (q.options && q.options.length > 0) {
+        const todosOsBotoes = document.querySelectorAll('.opt');
+        todosOsBotoes.forEach((b, i) => {
+            let textoOriginal = q.options[i];
+            let corP_Verde = "#008000";
+            let corP_Vermelha = "#ff4141";
+            let colorido = textoOriginal
+                .replace(/#(.*?)#/g, `<span style="color:${corP_Vermelha}; font-weight:900;">$1</span>`)
+                .replace(/\*(.*?)\*/g, `<span style="color:${corP_Verde}; font-weight:900;">$1</span>`);
+            b.innerHTML = colorido;
+            if (i === answer) {
+                b.style.setProperty('color', '#ffffff', 'important');
+                const spansClicados = b.querySelectorAll('span');
+                spansClicados.forEach(s => s.style.color = '');
+            }
+        });
+    }
 
     document.getElementById('opts').style.pointerEvents = 'none';
 
     if (acertou) {
-        acertosSessao++; 
+        acertosSessao++; // 🔥 INSERÇÃO
+
+        // No antigo, você tinha "acertosSessao++" aqui de novo. 
+        // Se o seu visor usa uma variável global chamada 'acertos', vamos garantir ela aqui:
+        if (typeof acertos !== 'undefined') acertos++; 
+
         if (quizType === 25) {
             acertosContadorSenha++;
             if (acertosContadorSenha === 25) {
@@ -2624,6 +2641,11 @@ if (q.options && q.options.length > 0) {
                 acertosContadorSenha = 0;
             }
         }
+        
+        // ESSENCIAL: Atualiza o visor após os incrementos
+        if (typeof atualizarVisor === 'function') atualizarVisor();
+        else if (typeof atualizarPainel === 'function') atualizarPainel();
+
         btn.classList.add('correct');
         cont.classList.add('acertou-flash');
         setTimeout(() => { 
@@ -2632,13 +2654,18 @@ if (q.options && q.options.length > 0) {
         }, 700);
 
     } else {
-        if (quizType === 25) { acertosContadorSenha = 0; }
-        btn.classList.add('wrong');
-        cont.classList.add('errou-flash');
-        setTimeout(() => cont.classList.remove('errou-flash'), 700);
-     
+        // Se errou e for Sobrevivente, a lógica da bomba assume:
         if (quizType === 25) {
-            // (LÓGICA DA BOMBA MANTIDA INTEGRALMENTE)
+            acertosContadorSenha = 0;
+            btn.classList.add('wrong');
+            cont.classList.add('errou-flash');
+            
+            // Força atualização do placar de erros antes de explodir
+            if (typeof atualizarVisor === 'function') atualizarVisor();
+
+            setTimeout(() => cont.classList.remove('errou-flash'), 700);
+         
+            // (LÓGICA DA BOMBA INTEGRAL)
             if (typeof timerInterval !== 'undefined') clearInterval(timerInterval);
             let d = (parseInt(localStorage.getItem('derrotasGerador')) || 0) + 1; 
             localStorage.setItem('derrotasGerador', d);
@@ -2658,14 +2685,16 @@ if (q.options && q.options.length > 0) {
                 cont.classList.remove('tremendo');
                 if (ob) { ob.className = ''; ob.style.display = 'none'; }
                 const failStats = document.getElementById('fail-stats');
-                if (failStats) { failStats.innerHTML = `A BOMBA EXPLODIU NA SUA CARA!<br>ACERTOS: ${acertosSessao}`; }
+                if (failStats) { 
+                    failStats.innerHTML = `A BOMBA EXPLODIU NA SUA CARA!<br>ACERTOS: ${acertosSessao}`; 
+                }
                 const btnF = document.getElementById('btn-tentar-novamente');
                 if (btnF) { btnF.onclick = function() { go('area-restrita'); }; btnF.innerText = "TENTAR NOVAMENTE"; }
                 go('fail-screen');
             }, 5000);
 
         } else {
-            erros++; 
+            // Modo Normal: o erros++ já aconteceu lá no registrarResposta
             if (typeof atualizarVidas === 'function') atualizarVidas(); 
             const feedbackEl = document.getElementById('feedback'); 
             if (feedbackEl) {
@@ -4654,10 +4683,11 @@ function expulsarVisitante() {
       box-shadow:0 0 30px red;
       max-width: 90%;
     ">
-      <span style="font-size:1.4em;">⏱️ TEMPO ESGOTADO ⏱️</span><br><br>
+      <span style="font-size:1.4em;">⏱️ SEU ACESSO FOI LIMITADO ⏱️</span><br><br>
       <span style="font-size:0.9em; color:#ffffff; font-weight:400;">
-        Seu período de degustação terminou.<br>
-        O sistema entrou em <b style="color:red;">QUARENTENA</b> por 12h.
+        🎶<b style="color:blue;">Audioteca</b> e 💣<b style="color:red;">Modo Sobrevivente</b> disponíveis.<br>
+         A <b style="color:green;">Área de Estudos</b> retorna plena em 12h.<br>
+         Dúvidas? Entre em contato: <b style="color:red;">88 994354250</b>.
       </span><br><br>
       <button onclick="window.location.reload()" 
         style="
@@ -4670,7 +4700,7 @@ function expulsarVisitante() {
           cursor:pointer;
           box-shadow: 0 4px 0 #b8860b;
         ">
-        ENTENDER E SAIR
+        ENTENDI
       </button>
     </div>
   `;
@@ -5148,7 +5178,7 @@ function aplicarEfeitoCortina() {
         }
 
         const h2 = document.querySelector('#area-restrita h2');
-        if (h2) h2.innerHTML = "ESPERAMOS QUE TENHA APROVEITADO<br> NOSSA PLATARFORMA.<br><span style='color:var(--fire); font-size:1em;'>SEU ACESSO FOI LIMITADO POR 12H.</span>";
+        if (h2) h2.innerHTML = "ESPERAMOS QUE TENHA APROVEITADO<br> NOSSA PLATARFORMA.<br><span style='color:#ffff; font-size:1em;'>PARA MAIORES ESCLARECIMENTOS:<br>88 994354250</span>";
     
     } else {
         // Caso o tempo de 12h tenha passado, removemos a marca do localStorage
