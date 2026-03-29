@@ -100,6 +100,63 @@ html, body {
 }
 
 /* EMOJIS SALA EXCLUSIVA */
+.juiz{animation:wiggle 2s infinite}
+@keyframes wiggle {0%,70%{transform:rotate(0)}25%{transform:rotate(-6deg)}50%{transform:rotate(6deg); filter: drop-shadow(0 0 8px #fff83b); }}
+
+.terra {
+  animation:spin 2s linear infinite;
+}
+@keyframes spin {
+  to { transform:rotate(360deg); }
+}
+
+.aluno {
+  animation: fantasmaRosa 0s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px #cf03fc);
+  display: inline-block;
+}
+@keyframes fantasmaRosa {
+  40%, 60% { 
+    opacity: 1; 
+    filter: drop-shadow(0 0 15px #cf03fc); 
+    transform: scale(1.1); /* Dá um leve destaque quando fica nítido */
+
+  }
+}
+
+.prof {
+    cursor: pointer;
+    font-size: 1.8rem; /* Aumentei o tamanho */
+    animation: pulsar4 5s ease-in-out infinite; /* Pulsa suave */
+    display: inline-block;
+}
+@keyframes pulsar4 {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); filter: drop-shadow(0 0 8px #008000); }
+    100% { transform: scale(1); }
+}
+
+/* Fantasminha */
+.fx23{animation:explode 2s infinite}
+@keyframes explode {50%{transform:scale(2);opacity:0}}
+
+/* Gratidão */
+.timer {
+  font-size:2.5em;
+  margin-top:20px;
+  transition:0.3s;
+}
+.timer.warning {
+  color:#ffd700;
+  text-shadow:0 0 15px #ffd700;
+}
+.timer.danger {
+  color:red;
+  text-shadow:0 0 20px red;
+}
+
+
+/* EMOJIS SALA EXCLUSIVA */
 
 /* FANTASMINHA */
 .fx23{animation:explode 2s infinite}
@@ -119,66 +176,6 @@ html, body {
   color:red;
   text-shadow:0 0 20px red;
 }
-
-
-/* Coração Pulsante */
-.heart-vip {
-    cursor: pointer;
-    font-size: 1.6rem; /* Aumentei o tamanho */
-    animation: pulsar 1.5s ease-in-out infinite; /* Pulsa suave */
-    display: inline-block;
-}
-
-/* Animação de Pulso */
-@keyframes pulsar {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); filter: drop-shadow(0 0 8px #800080); }
-    100% { transform: scale(1); }
-}
-
-.heart-vip2 {
-    cursor: pointer;
-    font-size: 1.6rem; /* Aumentei o tamanho */
-    animation: pulsar2 1.5s ease-in-out infinite; /* Pulsa suave */
-    display: inline-block;
-}
-
-/* Animação de Pulso */
-@keyframes pulsar2 {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); filter: drop-shadow(0 0 8px #fff83b); }
-    100% { transform: scale(1); } 
-}
-
-.heart-vip3 {
-    cursor: pointer;
-    font-size: 1.6rem; /* Aumentei o tamanho */
-    animation: pulsar3 1.5s ease-in-out infinite; /* Pulsa suave */
-    display: inline-block;
-}
-
-/* Animação de Pulso */
-@keyframes pulsar3 {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); filter: drop-shadow(0 0 8px #3b5fff); }
-    100% { transform: scale(1); }
-}
-
-.heart-vip4 {
-    cursor: pointer;
-    font-size: 1.6rem; /* Aumentei o tamanho */
-    animation: pulsar4 1.5s ease-in-out infinite; /* Pulsa suave */
-    display: inline-block;
-}
-
-/* Animação de Pulso */
-@keyframes pulsar4 {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); filter: drop-shadow(0 0 8px #008000); }
-    100% { transform: scale(1); }
-}
-
-
 
 
 /* EMOJIS ÁREA RESTRITA */
@@ -1189,29 +1186,30 @@ button {
 <div class="area-stats-vip" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
    
     <div style="display: flex; flex-direction: column; gap: 10px;">
-        <div class="heart-vip2" style="display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="iniciarNovoBancoVip(1);garantirBotaoVip();">
-            <div style="font-size: 25px;">💛</div>
+        <div class="juiz" style="display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="iniciarNovoBancoVip(1);garantirBotaoVip();">
+            <div style="font-size: 25px;">👨‍⚖️</div>
             <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: 2px;">Portarias</span>
         </div>
-        <div class="heart-vip4" style="display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="iniciarNovoBancoVip(2);garantirBotaoVip();">
-            <div style="font-size: 25px;">💚</div>
-            <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: 2px;">Portarias</span>
-        </div>
+       <div style="display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="iniciarNovoBancoVip(2);garantirBotaoVip();">
+    <div class="terra" style="font-size: 25px;">🌎</div>
+    <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: 2px;">C. Gerais</span>
+</div>
     </div>
 
-    <div id="painel-stats-vip" style="width: 230px; margin-top: 2px;"></div>
+      <div id="painel-stats-vip" style="width: 230px; margin-top: 2px;"></div>
 
     <div style="display: flex; flex-direction: column; gap: 10px;">
-        <div class="heart-vip" style="display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="iniciarNovoBancoVip(3);garantirBotaoVip();">
-            <div style="font-size: 25px;">💜</div>
+        <div class="aluno" style="display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="iniciarNovoBancoVip(3);garantirBotaoVip();">
+            <div style="font-size: 25px;">👨‍🎓</div>
             <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: 2px;">Português</span>
         </div>
-        <div class="heart-vip3" style="display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="iniciarNovoBancoVip(4);garantirBotaoVip();">
-            <div style="font-size: 25px;">💙</div>
+        <div class="prof" style="display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="iniciarNovoBancoVip(4);garantirBotaoVip();">
+            <div style="font-size: 25px;">👩‍🏫</div>
             <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: 2px;">Português</span>
         </div>
     </div>
 </div>
+
 
 <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 15px;">
     
@@ -1361,6 +1359,8 @@ let timerInterval = null;
     });
   }
 })();
+
+
 
 /*
 function iniciarScanner() {
@@ -2454,52 +2454,47 @@ const usuarios = [
 
 const bancoVip = [
 {
-  q: "💛1. O conjunto de ações e serviços de saúde, prestados por órgãos e instituições públicas federais, estaduais e municipais, da Administração direta e indireta e das fundações mantidas pelo Poder Público, constitui o Sistema Único de Saúde (SUS).",
+  q: "👨‍⚖️1. O conjunto de ações e serviços de saúde, prestados por órgãos e instituições públicas federais, estaduais e municipais, da Administração direta e indireta e das fundações mantidas pelo Poder Público, constitui o Sistema Único de Saúde (SUS).",
   v: true,
   j: "Definição literal do Art. 4º. O SUS é composto por toda a estrutura pública de saúde do Brasil (Direta, Indireta e Fundações), nas três esferas de governo (União, Estados e Municípios)."
 },
 {
-  q: "💛2. Entende-se por vigilância sanitária um conjunto de ações capaz de eliminar, diminuir ou prevenir riscos à saúde e de intervir nos problemas sanitários decorrentes do meio ambiente, da produção e circulação de bens e da prestação de serviços de interesse da saúde.",
+  q: "👨‍⚖️2. Entende-se por vigilância sanitária um conjunto de ações capaz de eliminar, diminuir ou prevenir riscos à saúde e de intervir nos problemas sanitários decorrentes do meio ambiente, da produção e circulação de bens e da prestação de serviços de interesse da saúde.",
   v: true,
   j: "Conforme o Art. 6º, § 1º, a Vigilância Sanitária atua sobre o ambiente, bens e serviços. Diferente da Epidemiológica, ela foca no controle de produtos e estabelecimentos para evitar o risco antes que ele cause a doença."
 },
 {
-  q: "💛3. Entende-se por vigilância epidemiológica um conjunto de ações que proporcionam o conhecimento, a detecção ou prevenção de qualquer mudança nos fatores determinantes e condicionantes de saúde individual ou coletiva, com a finalidade de recomendar e adotar as medidas de prevenção e controle de pragas.",
+  q: "👨‍⚖️3. Entende-se por vigilância epidemiológica um conjunto de ações que proporcionam o conhecimento, a detecção ou prevenção de qualquer mudança nos fatores determinantes e condicionantes de saúde individual ou coletiva, com a finalidade de recomendar e adotar as medidas de prevenção e controle de pragas.",
   v: false,
   j: "O erro está no final. A Vigilância Epidemiológica (Art. 6º, § 2º) visa o controle de DOENÇAS E AGRAVOS. O controle de pragas e vetores é uma ação específica que pode ocorrer dentro da vigilância, mas o objetivo da epidemiológica é o monitoramento da saúde da população."
 },
 {
-  q: "💛4. Entende-se por saúde do trabalhador, para fins desta lei, um conjunto de atividades que se destina, através das ações de vigilância epidemiológica e vigilância sanitária, à promoção e proteção da saúde dos trabalhadores, assim como visa à recuperação e reabilitação da saúde dos trabalhadores submetidos aos riscos e agravos advindos das condições de trabalho.",
+  q: "👨‍⚖️4. Entende-se por saúde do trabalhador, para fins desta lei, um conjunto de atividades que se destina, através das ações de vigilância epidemiológica e vigilância sanitária, à promoção e proteção da saúde dos trabalhadores, assim como visa à recuperação e reabilitação da saúde dos trabalhadores submetidos aos riscos e agravos advindos das condições de trabalho.",
   v: true,
   j: "Definição do Art. 6º, § 3º. Importante notar que a Saúde do Trabalhador usa as ferramentas das outras duas vigilâncias (Sanitária e Epidemiológica) para proteger quem trabalha."
 },
 {
-  q: "💛5. Entende-se por saúde bucal o conjunto articulado de ações, em todos os níveis de complexidade, que visem a garantir promoção, prevenção, recuperação e reabilitação odontológica, individual e coletiva, inseridas no contexto da integralidade da atenção ao trabalho.",
+  q: "👨‍⚖️5. Entende-se por saúde bucal o conjunto articulado de ações, em todos os níveis de complexidade, que visem a garantir promoção, prevenção, recuperação e reabilitação odontológica, individual e coletiva, inseridas no contexto da integralidade da atenção ao trabalho.",
   v: false,
   j: "O erro é o termo final. A saúde bucal deve estar inserida na integralidade da atenção À SAÚDE (Art. 6º, § 4º), e não focada especificamente no trabalho."
 },
 {
-  q: "💛6. Entende-se por assistência psicossocial, o conjunto de ações e serviços de prevenção, diagnóstico e tratamento das intoxicações agudas e crônicas decorrentes da exposição a substâncias químicas, medicamentos e toxinas de animais peçonhentos e de plantas tóxicas.",
+  q: "👨‍⚖️6. Entende-se por assistência psicossocial, o conjunto de ações e serviços de prevenção, diagnóstico e tratamento das intoxicações agudas e crônicas decorrentes da exposição a substâncias químicas, medicamentos e toxinas de animais peçonhentos e de plantas tóxicas.",
   v: false,
   j: "A descrição refere-se à Assistência TOXICOLÓGICA (Art. 6º, § 5º). A assistência psicossocial é voltada para a saúde mental e sofrimento psíquico, áreas bem diferentes."
 },
 {
-  q: "💛7. As diferentes instâncias gestoras do Sistema Único de Saúde (SUS) ficam obrigadas a disponibilizar nas respectivas páginas eletrônicas na internet os estoques de medicamentos das farmácias públicas que estiverem sob sua gestão, com atualização mensal, de forma acessível ao cidadão comum.",
+  q: "👨‍⚖️7. As diferentes instâncias gestoras do Sistema Único de Saúde (SUS) ficam obrigadas a disponibilizar nas respectivas páginas eletrônicas na internet os estoques de medicamentos das farmácias públicas que estiverem sob sua gestão, com atualização mensal, de forma acessível ao cidadão comum.",
   v: false,
   j: "De acordo com o Art. 6º, § 6º (incluído em 2023), a atualização deve ser QUINZENAL. O objetivo é garantir que o cidadão saiba em tempo real (ou quase) se o remédio está disponível."
 },
 {
-  q: "💛8. As mulheres vítimas de qualquer tipo de violência têm o direito de serem acolhidas e atendidas nos serviços de saúde prestados no âmbito do SUS, prioritariamente em rede própria, em local e ambiente que garantam sua privacidade e restrição do acesso de terceiros não autorizados pela paciente, em especial o do agressor.",
+  q: "👨‍⚖️8. As mulheres vítimas de qualquer tipo de violência têm o direito de serem acolhidas e atendidas nos serviços de saúde prestados no âmbito do SUS, prioritariamente em rede própria, em local e ambiente que garantam sua privacidade e restrição do acesso de terceiros não autorizados pela paciente, em especial o do agressor.",
   v: false,
   j: "O erro é o termo 'prioritariamente'. O Art. 7º, parágrafo único, garante o atendimento em rede própria ou conveniada, sem estabelecer essa prioridade de uma sobre a outra, focando apenas no direito ao acolhimento e privacidade."
-}
-
-
-];
-
-const bancoVip2 = [
+},
 {
-  q: "💚1. Considerando a Lei n.o 13.595. de 5 de janeiro de 2018, que altera a Lei n.o 11.350, de 5 de outubro de 2006, para dispor sobre a reformulação das atribuições, a jornada e as condições de trabalho, o grau de formação profissional, os cursos de formação técnica e continuada e a indenização de transporte dos profissionais Agentes Comunitários de Saúde e Agentes de Combate às Endemias, assinale a alternativa que corretamente traz atividade que é atribuída aos Agentes de Combate às Endemias quando assistida por profissional de nível superior e condicionada à estrutura de vigilância epidemiológica e ambiental e de atenção básica à participação.",
+  q: "👨‍⚖️9. Considerando a Lei n.o 13.595. de 5 de janeiro de 2018, que altera a Lei n.o 11.350, de 5 de outubro de 2006, para dispor sobre a reformulação das atribuições, a jornada e as condições de trabalho, o grau de formação profissional, os cursos de formação técnica e continuada e a indenização de transporte dos profissionais Agentes Comunitários de Saúde e Agentes de Combate às Endemias, assinale a alternativa que corretamente traz atividade que é atribuída aos Agentes de Combate às Endemias quando assistida por profissional de nível superior e condicionada à estrutura de vigilância epidemiológica e ambiental e de atenção básica à participação.",
   options: [
     "a) #Realização de ações# de prevenção e controle de doenças e agravos em interação com o Agente Comunitário de Saúde e a equipe de Atenção Básica.",
     "b) *Investigação diagnóstica laboratorial de zoonoses de relevância para a saúde pública.*",
@@ -2510,7 +2505,7 @@ const bancoVip2 = [
   j: "A Lei 13.595/18 (conhecida como Lei Ruth Brilhante) especifica que certas atividades, como o diagnóstico laboratorial, exigem a assistência de um profissional de nível superior e estrutura específica de vigilância, diferenciando-as das ações rotineiras de campo."
 },
 {
-  q: "💚2. Conforme legislação pertinente e vigente, assinale a alternativa que corretamente aponta componente integrante da estrutura organizacional do Ministério do Meio Ambiente e Mudança do Clima. que possui como competência apoiar órgãos públicos na elaboração e na implementação de políticas, programas ou projetos para promover o controle populacional ético de cães e gatos.",
+  q: "👨‍⚖️10. Conforme legislação pertinente e vigente, assinale a alternativa que corretamente aponta componente integrante da estrutura organizacional do Ministério do Meio Ambiente e Mudança do Clima. que possui como competência apoiar órgãos públicos na elaboração e na implementação de políticas, programas ou projetos para promover o controle populacional ético de cães e gatos.",
   options: [
     "a) #Comitê# de Proteção, Defesa e Direitos Animais.",
     "b) Departamento de Proteção, Defesa e #Deveres# Animais.",
@@ -2521,7 +2516,7 @@ const bancoVip2 = [
   j: "O Departamento de Proteção, Defesa e Direitos Animais (DPDA) foi criado dentro da estrutura do Ministério do Meio Ambiente (MMA) para tratar especificamente de políticas de bem-estar animal, incluindo o controle populacional ético (manejo populacional) em parceria com estados e municípios."
 },
 {
-  q: "💚3. Assinale corretamente qual Lei é conhecida como Lei Orgânica da Saúde e que dispõe sobre as condições para a promoção, proteção e recuperação da saúde, a organização e o funcionamento dos serviços correspondentes e dá outras providências.",
+  q: "👨‍⚖️11. Assinale corretamente qual Lei é conhecida como Lei Orgânica da Saúde e que dispõe sobre as condições para a promoção, proteção e recuperação da saúde, a organização e o funcionamento dos serviços correspondentes e dá outras providências.",
   options: [
     "a) #Lei nº 8.000/90.#",
     "b) #Lei nº 8.008/90.#",
@@ -2532,7 +2527,7 @@ const bancoVip2 = [
   j: "A Lei nº 8.080/90 é a principal 'espinha dorsal' do SUS. Ela detalha como a saúde deve ser organizada no Brasil, estabelecendo os princípios, as diretrizes e as competências de cada esfera de governo (União, Estados e Municípios)."
 },
 {
-  q: "💚4. Assinale a alternativa que corretamente indica qual é a iniciativa brasileira do Ministério do Meio Ambiente e Mudança do Clima, que concede R$ 600,00 por trimestre a famílias que vivem em áreas rurais e se comprometem a utilizar os recursos naturais de forma sustentável e a preservar a floresta, além de ajudar no monitoramento e proteção dessas áreas. Além disso, seus beneficiários são moradores de unidades de conservação de uso sustentável, de projetos de assentamento ambientalmente diferenciados da Reforma Agrária e de territórios ocupados por povos e comunidades tradicionais como ribeirinhos, extrativistas, indígenas, quilombolas e outros.",
+  q: "👨‍⚖️12. Assinale a alternativa que corretamente indica qual é a iniciativa brasileira do Ministério do Meio Ambiente e Mudança do Clima, que concede R$ 600,00 por trimestre a famílias que vivem em áreas rurais e se comprometem a utilizar os recursos naturais de forma sustentável e a preservar a floresta, além de ajudar no monitoramento e proteção dessas áreas. Além disso, seus beneficiários são moradores de unidades de conservação de uso sustentável, de projetos de assentamento ambientalmente diferenciados da Reforma Agrária e de territórios ocupados por povos e comunidades tradicionais como ribeirinhos, extrativistas, indígenas, quilombolas e outros.",
   options: [
     "a) #Bolsa Meio Ambiente.#",
     "b) #Bolsa Ecologia.#",
@@ -2543,7 +2538,7 @@ const bancoVip2 = [
   j: "O Programa Bolsa Verde (Programa de Apoio à Conservação Ambiental) foi reestruturado e ampliado em 2023. Ele paga um incentivo financeiro trimestral para famílias que realizam atividades de conservação em áreas prioritárias, como Unidades de Conservação de Uso Sustentável e assentamentos da Reforma Agrária."
 },
 {
-  q: "💚5. Sobre as Ações e Serviços de Saúde, de acordo com a Lei 8.080/90:",
+  q: "👨‍⚖️13. Sobre as Ações e Serviços de Saúde, de acordo com a Lei 8.080/90:",
   options: [
     "a) #podem ser executados isolada ou juntamente, em caráter permanente e eventual, exclusivamente por pessoas naturais ou jurídicas de direito público.#",
     "b) #podem ser executados isolada ou juntamente, em caráter permanente ou eventual, exclusivamente por pessoas naturais ou jurídicas de direito público.#",
@@ -2555,7 +2550,7 @@ const bancoVip2 = [
   j: "Conforme o Art. 2º da Lei 8.080/90, as ações e serviços de saúde não são monopólio do Estado. Elas podem ser realizadas por pessoas físicas (naturais) ou empresas (jurídicas), tanto do setor público quanto do privado. O segredo da questão é lembrar que o SUS é um sistema aberto à iniciativa privada em caráter complementar."
 },
 {
-  q: "💚6. A saúde é um direito fundamental do ser humano, devendo o Estado prover as condições indispensáveis ao seu pleno exercício. Baseado nessa afirmação,  assinale a alternativa correta:",
+  q: "👨‍⚖️14. A saúde é um direito fundamental do ser humano, devendo o Estado prover as condições indispensáveis ao seu pleno exercício. Baseado nessa afirmação,  assinale a alternativa correta:",
   options: [
     "a) *O Estado tem o dever de garantir a saúde, por meio da formulação e execução de políticas econômicas e sociais que visem à redução de riscos de doenças e de outros agravos e no estabelecimento de condições que assegurem acesso universal e igualitário às ações e aos serviços para a sua promoção, proteção e recuperação.*",
     "b) #O dever do Estado na garantia da saúde exclui o dever das pessoas, da família, das empresas e da sociedade.#",
@@ -2567,7 +2562,7 @@ const bancoVip2 = [
   j: "Esta questão exige atenção à literalidade do Art. 2º. O Estado tem o DEVER (e não apenas o direito) de garantir a saúde através de políticas sociais e econômicas. Além disso, o parágrafo 1º deixa claro que a responsabilidade é compartilhada: o dever do Estado não anula a obrigação da família, das empresas e da própria sociedade."
 },
 {
-  q: "💚‍7. São determinantes e condicionantes da saúde, dentre outros, de acordo com a Lei 8.080/90, exceto:",
+  q: "👨‍⚖️15. São determinantes e condicionantes da saúde, dentre outros, de acordo com a Lei 8.080/90, exceto:",
   options: [
     "a) #alimentação, moradia, saneamento básico e renda.#",
     "b) #educação, atividade física e acesso aos bens e serviços essenciais.#",
@@ -2579,7 +2574,7 @@ const bancoVip2 = [
   j: "O Art. 3º da Lei 8.080/90 lista os fatores que determinam a saúde (alimentação, moradia, saneamento, renda, educação, atividade física, etc.). A alternativa 'E' está incorreta porque 'legalidade absoluta' não é um determinante de saúde, e o conceito de 'bem-estar físico, mental e social' é a definição de saúde da OMS, não a lista de condicionantes da nossa lei orgânica."
 },
 {
-  q: "💚8. São objetivos do Sistema Único de Saúde (SUS) de acordo com a Lei 8.080/90, exceto:",
+  q: "👨‍⚖️16. São objetivos do Sistema Único de Saúde (SUS) de acordo com a Lei 8.080/90, exceto:",
   options: [
     "a) #  a identificação e divulgação dos fatores condicionantes e determinantes da saúde.#",
     "b) #  a formulação de política de saúde destinada à promoção nos campos econômico e social.#",
@@ -2590,7 +2585,7 @@ const bancoVip2 = [
   j: "O Art. 5º da Lei 8.080/90 define três objetivos centrais: 1) Identificar/divulgar os determinantes; 2) Formular a política de saúde; 3) Prestar assistência às PESSOAS (seres humanos). A alternativa 'C' é o erro clássico: o SUS cuida da saúde física e mental dos cidadãos, não da 'saúde financeira' de empresas (pessoas jurídicas)."
 },
 {
-  q: "💚9. Estão incluídas no campo de atuação do Sistema Único de Saúde (SUS), a execução das seguintes ações, exceto:",
+  q: "👨‍⚖️17. Estão incluídas no campo de atuação do Sistema Único de Saúde (SUS), a execução das seguintes ações, exceto:",
   options: [
     "a) #vigilância sanitária; vigilância epidemiológica; saúde do trabalhador.#",
     "b) #assistência terapêutica integral, inclusive farmacêutica; saúde bucal.#",
@@ -2602,7 +2597,7 @@ const bancoVip2 = [
   j: "O Art. 6º da Lei 8.080/90 detalha o 'Campo de Atuação' (o que o SUS faz na prática). O erro da alternativa 'E' é trocar 'Saúde' por 'Agricultura'. O SUS formula políticas para insumos de interesse para a SAÚDE. Dica: O SUS cuida de gente, não de plantação ou gado (embora colabore no Meio Ambiente quando este afeta a saúde humana)."
 },
 {
-  q: "💚10. Estão incluídas no campo de atuação do Sistema Único de Saúde (SUS), a execução das seguintes ações, exceto:",
+  q: "👨‍⚖️18. Estão incluídas no campo de atuação do Sistema Único de Saúde (SUS), a execução das seguintes ações, exceto:",
   options: [
     "a) #controle e a fiscalização de serviços, produtos e substâncias de interesse para a saúde.#",
     "b) *a fiscalização e a inspeção de alimentos, água e bebidas para consumo animal.*",
@@ -2614,7 +2609,7 @@ const bancoVip2 = [
   j: "O Art. 6º da Lei 8.080/90 define que o SUS fiscaliza o que é para consumo HUMANO. O controle de alimentos e bebidas para animais (pet e pecuária) é competência do Ministério da Agricultura (MAPA). Dica de Prova: A banca sempre tenta trocar 'Humano' por 'Animal' ou 'Agrícola' para confundir as atribuições da Vigilância Sanitária."
 },
 {
-  q: "💚11. As ações e serviços públicos e privados de saúde, contratados ou conveniados que integram o Sistema Único de Saúde (SUS), são regidos pelos seguintes princípios, exceto:",
+  q: "👨‍⚖️19. As ações e serviços públicos e privados de saúde, contratados ou conveniados que integram o Sistema Único de Saúde (SUS), são regidos pelos seguintes princípios, exceto:",
   options: [
     "a) *princípio da organização dos serviços privados, de modo a evitar duplicidade de meios para fins idênticos.*",
     "b) #  princípio da descentralização político-administrativa, com direção única em cada esfera de governo.#",
@@ -2626,7 +2621,7 @@ const bancoVip2 = [
   j: "O Art. 7º, inciso XIII da Lei 8.080/90 estabelece a 'Organização dos serviços PÚBLICOS, de modo a evitar duplicidade de meios para fins idênticos'. O erro da alternativa 'A' é tentar estender essa regra de eficiência administrativa ao setor privado. No mercado, a concorrência é permitida; no SUS, busca-se a otimização dos recursos públicos para não gastar duas vezes com a mesma estrutura no mesmo local."
 },
      {
-        q: "💚12. A saúde é um direito fundamental do ser humano, devendo o Estado prover as condições indispensáveis ao seu pleno exercício. Esse dever do Estado exclui o das pessoas, da família, das empresas e da sociedade?",
+        q: "👨‍⚖️20. A saúde é um direito fundamental do ser humano, devendo o Estado prover as condições indispensáveis ao seu pleno exercício. Esse dever do Estado exclui o das pessoas, da família, das empresas e da sociedade?",
         options: [
             "a) #Sim, a responsabilidade é exclusiva do Estado.#",
             "b) *Não, o dever do Estado não exclui o das pessoas, da família, das empresas e da sociedade.*",
@@ -2637,7 +2632,7 @@ const bancoVip2 = [
         j: "Conforme o Art. 2º, § 1º da Lei 8.080/90, embora a saúde seja um dever do Estado, isso não retira a responsabilidade individual e coletiva. O erro comum em provas é achar que o Estado assume 100% da carga sozinho; na verdade, é um esforço conjunto entre o Poder Público e todos os setores da sociedade e da família."
     },
     {
-        q: "💚13. Quais são os determinantes e condicionantes da saúde mencionados expressamente no Art. 3º da Lei 8.080?",
+        q: "👨‍⚖️21. Quais são os determinantes e condicionantes da saúde mencionados expressamente no Art. 3º da Lei 8.080?",
         options: [
             "a) #Apenas alimentação e saneamento.#",
             "b) *Alimentação, moradia, saneamento, meio ambiente, trabalho, renda, educação, atividade física, transporte, lazer e acesso a bens e serviços essenciais.*",
@@ -2648,7 +2643,7 @@ const bancoVip2 = [
         j: "O Art. 3º define que a saúde não é apenas a ausência de doença, mas o resultado de múltiplos fatores. A questão costuma cobrar os itens novos, como 'atividade física', 'transporte' e 'lazer', que foram incluídos para ampliar o conceito de bem-estar social. Se a alternativa for restritiva (usando 'apenas' ou 'somente'), ela ignora a visão holística do SUS."
     },
     {
-        q: "💚14. A 'Universalidade de acesso' é considerada um:",
+        q: "👨‍⚖️22. A 'Universalidade de acesso' é considerada um:",
         options: [
             "a) #Objetivo do SUS.#",
             "b) #Diretriz de atendimento.#",
@@ -2659,7 +2654,7 @@ const bancoVip2 = [
         j: "A Universalidade está no topo dos princípios doutrinários do SUS (Art. 7º, inciso I). Significa que o sistema deve ser acessível a TODOS os cidadãos, sem distinção ou privilégios. Não confunda com 'Objetivos' (que tratam da execução de políticas) nem com 'Competências' (que dizem o que cada órgão deve fazer)."
     },
     {
-        q: "💚15. Sobre a iniciativa privada no SUS, a Lei 8.080 estabelece que:",
+        q: "👨‍⚖️23. Sobre a iniciativa privada no SUS, a Lei 8.080 estabelece que:",
         options: [
             "a) #A iniciativa privada não pode participar do SUS.#",
             "b) *A assistência à saúde é livre à iniciativa privada.*",
@@ -2670,7 +2665,7 @@ const bancoVip2 = [
         j: "O Art. 20 reproduz o texto constitucional: a assistência à saúde é livre à iniciativa privada. O erro das bancas é afirmar que é proibido ou que ela tem prioridade. Lembre-se: no SUS, a iniciativa privada entra de forma COMPLEMENTAR, tendo preferência as entidades filantrópicas e sem fins lucrativos."
     },
     {
-        q: "💚16. A conjugação dos recursos financeiros, tecnológicos, materiais e humanos da União, dos Estados, do Distrito Federal e dos Municípios, na prestação de serviços de assistência à saúde da população, define o princípio da:",
+        q: "👨‍⚖️24. A conjugação dos recursos financeiros, tecnológicos, materiais e humanos da União, dos Estados, do Distrito Federal e dos Municípios, na prestação de serviços de assistência à saúde da população, define o princípio da:",
         options: [
             "a) *Descentralização.*",
             "b) #Integralidade.#",
@@ -2681,7 +2676,7 @@ const bancoVip2 = [
         j: "O Art. 7º, inciso IX, descreve a Descentralização Político-Administrativa. Essa 'conjugação de recursos' entre as esferas de governo visa dar autonomia para quem está na ponta (Municípios) gerir os recursos, mas sempre sob uma direção única em cada nível. O termo chave aqui é a união de esforços para que o serviço chegue ao cidadão de forma direta."
     },
     {
-        q: "💚17. De acordo com a Lei 8.080/90, a identificação e divulgação dos fatores condicionantes e determinantes da saúde constituem:",
+        q: "👨‍⚖️25. De acordo com a Lei 8.080/90, a identificação e divulgação dos fatores condicionantes e determinantes da saúde constituem:",
         options: [
             "a) #Um princípio doutrinário do SUS.#",
             "b) *Um dos objetivos do Sistema Único de Saúde (SUS).*",
@@ -2692,7 +2687,7 @@ const bancoVip2 = [
         j: "Cuidado para não confundir 'Princípio' com 'Objetivo'. O Art. 5º, inciso I, coloca a identificação e divulgação dos fatores (como saneamento, moradia, etc.) como um OBJETIVO. O SUS não serve apenas para tratar doenças, mas para entender e expor o que está adoecendo a população."
     },
     {
-        q: "💚18. A assistência às pessoas por intermédio de ações de promoção, proteção e recuperação da saúde, com a realização integrada das ações assistenciais e das atividades preventivas, é:",
+        q: "👨‍⚖️26. A assistência às pessoas por intermédio de ações de promoção, proteção e recuperação da saúde, com a realização integrada das ações assistenciais e das atividades preventivas, é:",
         options: [
             "a) #Uma competência exclusiva dos Estados.#",
             "b) #Um princípio de participação popular.#",
@@ -2703,7 +2698,7 @@ const bancoVip2 = [
         j: "O Art. 5º, inciso III, define a tríade 'Promoção, Proteção e Recuperação' como objetivo central. O erro da 'A' é dizer que é exclusivo do Estado; o erro da 'B' é confundir com o princípio da participação comunitária. O foco aqui é a execução da assistência integral."
     },
     {
-        q: "💚19. No que se refere à organização, direção e gestão do SUS, a direção do Sistema Único de Saúde é única, sendo exercida no âmbito dos Municípios pela:",
+        q: "👨‍⚖️27. No que se refere à organização, direção e gestão do SUS, a direção do Sistema Único de Saúde é única, sendo exercida no âmbito dos Municípios pela:",
         options: [
             "a) #Câmara de Vereadores.#",
             "b) #Secretaria Estadual de Saúde.#",
@@ -2714,7 +2709,7 @@ const bancoVip2 = [
         j: "O Art. 9º estabelece a 'Direção Única'. No nível federal é o Ministério da Saúde; no Estadual, a Secretaria de Saúde (SES); e no Municipal, a Secretaria Municipal de Saúde (SMS). As bancas tentam te enganar dizendo que o Prefeito ou a Câmara gerem o SUS diretamente, mas a gestão é técnica via Secretaria."
     },
     {
-        q: "💚20. As Comissões Intersetoriais de âmbito nacional, subordinadas ao Conselho Nacional de Saúde, têm a finalidade de:",
+        q: "👨‍⚖️28. As Comissões Intersetoriais de âmbito nacional, subordinadas ao Conselho Nacional de Saúde, têm a finalidade de:",
         options: [
             "a) #Gerir o orçamento do Ministério da Saúde.#",
             "b) *Articular políticas e programas de interesse para a saúde, cuja execução envolva áreas não compreendidas no SUS.*",
@@ -2725,7 +2720,7 @@ const bancoVip2 = [
         j: "Art. 12: A saúde é transversal. Essas comissões servem para dialogar com outras áreas (Educação, Trabalho, Meio Ambiente) sobre temas que afetam a saúde mas não são geridos por médicos, como saneamento escolar ou segurança do trabalho."
     },
     {
-        q: "💚21. Estão incluídas no campo de atuação do Sistema Único de Saúde (SUS) a execução de ações de:",
+        q: "👨‍⚖️29. Estão incluídas no campo de atuação do Sistema Único de Saúde (SUS) a execução de ações de:",
         options: [
             "a) #Vigilância sanitária apenas.#",
             "b) #Assistência terapêutica integral, excluindo a farmacêutica.#",
@@ -2736,7 +2731,7 @@ const bancoVip2 = [
         j: "O Art. 6º detalha o 'Campo de Atuação'. O SUS não é só hospital; ele cuida da comida que você come (Sanitária), do controle de epidemias (Epidemiológica) e das condições de trabalho (Saúde do Trabalhador). A letra 'B' está errada porque a assistência farmacêutica é INCLUSIVA e essencial."
     },
     {
-        q: "💚22. A Lei 8.080/90 prevê que a participação da iniciativa privada no SUS ocorrerá de que forma?",
+        q: "👨‍⚖️30. A Lei 8.080/90 prevê que a participação da iniciativa privada no SUS ocorrerá de que forma?",
         options: [
             "a) #De forma obrigatória e permanente.#",
             "b) #Como substituta total do serviço público.#",
@@ -2747,7 +2742,7 @@ const bancoVip2 = [
         j: "Art. 24: Quando as unidades públicas não são suficientes, o SUS contrata o privado. Mas isso é COMPLEMENTAR. O Estado deve tentar ser autossuficiente, recorrendo ao privado apenas para suprir faltas, dando preferência a entidades filantrópicas."
     },
     {
-        q: "💚23. Entende-se por vigilância epidemiológica um conjunto de ações que proporcionam o conhecimento, a detecção ou prevenção de qualquer mudança nos fatores determinantes e condicionantes de saúde individual ou coletiva, com a finalidade de:",
+        q: "👨‍⚖️31. Entende-se por vigilância epidemiológica um conjunto de ações que proporcionam o conhecimento, a detecção ou prevenção de qualquer mudança nos fatores determinantes e condicionantes de saúde individual ou coletiva, com a finalidade de:",
         options: [
             "a) #Fiscalizar farmácias e supermercados.#",
             "b) #Controlar o orçamento das unidades de saúde.#",
@@ -2758,7 +2753,7 @@ const bancoVip2 = [
         j: "Art. 6º, § 2º: Epidemiologia foca em dados e controle de doenças (Dengue, COVID, etc.). Quem fiscaliza supermercado e farmácia é a Vigilância SANITÁRIA (Art. 6º, § 1º). Não troque as duas na prova!"
     },
     {
-        q: "💚24. A organização do SUS deve seguir a regionalização e a hierarquização dos serviços de saúde. Isso significa que:",
+        q: "👨‍⚖️32. A organização do SUS deve seguir a regionalização e a hierarquização dos serviços de saúde. Isso significa que:",
         options: [
             "a) #Todos os hospitais devem ser iguais e oferecer os mesmos serviços.#",
             "b) *Os serviços devem ser organizados em níveis de complexidade crescente.*",
@@ -2769,7 +2764,7 @@ const bancoVip2 = [
         j: "Hierarquização significa que você entra pela Atenção Básica (Postinho) e, se necessário, vai subindo para níveis mais complexos (Especialistas > Cirurgias). O objetivo é não sobrecarregar hospitais com casos que se resolvem no bairro."
     },
     {
-        q: "💚25. O princípio que garante o direito de informações, às pessoas assistidas, sobre sua saúde é:",
+        q: "👨‍⚖️33. O princípio que garante o direito de informações, às pessoas assistidas, sobre sua saúde é:",
         options: [
             "a) #Princípio da Autonomia.#",
             "b) *Princípio da Divulgação de informações sobre o potencial dos serviços de saúde e sua utilização pelo usuário.*",
@@ -2780,125 +2775,1164 @@ const bancoVip2 = [
         j: "Art. 7º, inciso VI: O SUS preza pela transparência. O usuário tem o direito de saber o que o sistema oferece e qual o seu estado de saúde. Esconder informações do paciente fere um princípio fundamental de cidadania dentro do sistema."
     }
 
+
+];
+
+const bancoVip2 = [
+{
+  q: "🌎 1. Sobre a localização geográfica do município de Água Boa - MT, é correto afirmar que ele está situado na região do:",
+  options: [
+    "a) #Pantanal Mato-grossense, ao sul do estado.#",
+    "b) #Médio Norte, principal polo produtor de algodão.#",
+    "c) *Vale do Araguaia, na porção leste do estado.*",
+    "d) #Noroeste de Mato Grosso, em área de transição amazônica.#",
+    "e) #Sudeste, na divisa direta com o estado de Mato Grosso do Sul.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nO município de Água Boa localiza-se na mesorregião do Nordeste Mato-grossense, mais especificamente na microrregião do Canarana, inserido na importante região socioeconômica do Vale do Araguaia. A cidade é um ponto estratégico de integração logística e comercial no leste do estado."
+},
+{
+  q: "🌎 2. A economia de Água Boa é historicamente fundamentada em qual setor produtivo, que lhe confere destaque regional?",
+  options: [
+    "a) #Extração mineral de diamantes e ouro.#",
+    "b) *Agronegócio, com foco em soja, milho e pecuária de corte.*",
+    "c) #Turismo ecológico e pesca esportiva no Rio Paraguai.#",
+    "d) #Indústria têxtil e metalúrgica de exportação.#",
+    "e) #Comércio de eletrônicos e serviços de tecnologia da informação.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nÁgua Boa é conhecida como um dos grandes polos do agronegócio no Mato Grosso. Sua economia é impulsionada pela alta produtividade de grãos (soja e milho) e por uma pecuária de corte altamente tecnificada, sendo referência em leilões de gado e feiras agropecuárias como a Expovale."
+},
+{
+  q: "🌎 3. O estado de Mato Grosso apresenta uma diversidade biológica única, sendo o único estado brasileiro a possuir três biomas em seu território. São eles:",
+  options: [
+    "a) #Caatinga, Cerrado e Mata Atlântica.#",
+    "b) #Pampa, Floresta Amazônica e Pantanal.#",
+    "c) *Amazônia, Cerrado e Pantanal.*",
+    "d) #Cerrado, Mata Atlântica e Manguezal.#",
+    "e) #Floresta Equatorial, Caatinga e Cerrado.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nMato Grosso possui um território privilegiado geograficamente, abrigando partes da Floresta Amazônica (norte), o Cerrado (centro e leste) e o Pantanal (sul/sudoeste). Água Boa, especificamente, está situada em área de domínio do Cerrado."
+},
+{
+  q: "🌎 4. Em relação à logística de transportes, Água Boa é estrategicamente cortada por uma rodovia federal fundamental para o escoamento da safra regional. Trata-se da:",
+  options: [
+    "a) #BR-163 (Cuiabá-Santarém).#",
+    "b) #BR-364 (Cuiabá-Porto Velho).#",
+    "c) #BR-070 (Cuiabá-Brasília).#",
+    "d) *BR-158, que liga o Médio Araguaia ao sul e norte do país.*",
+    "e) #BR-174 (Cuiabá-Manaus).#"
+  ],
+  correct: 3,
+  j: "Correta: alternativa D\n\nA BR-158 é a principal artéria rodoviária de Água Boa e do Vale do Araguaia. Ela desempenha um papel vital no transporte de grãos e gado, conectando a região aos terminais ferroviários e portos, sendo objeto de constantes debates sobre sua pavimentação total e manutenção."
+},
+{
+  q: "🌎 5. A formação cultural e populacional de Água Boa possui uma característica marcante ligada ao processo de colonização do estado nas décadas de 70 e 80. Esse processo foi composto majoritariamente por:",
+  options: [
+    "a) #Imigrantes europeus vindos diretamente da Itália e Alemanha.#",
+    "b) #Migrantes nordestinos fugindo da seca para o extrativismo.#",
+    "c) #Povos indígenas que fundaram o núcleo urbano comercial.#",
+    "d) *Migrantes oriundos do Sul do Brasil (gaúchos, catarinenses e paranaenses).*",
+    "e) #Trabalhadores vindos do Rio de Janeiro para o setor público.#"
+  ],
+  correct: 3,
+  j: "Correta: alternativa D\n\nAssim como boa parte do interior de Mato Grosso, Água Boa foi colonizada por migrantes da região Sul (especialmente gaúchos). Essa influência é visível até hoje na cultura local, na culinária (consumo de chimarrão e churrasco), nas danças folclóricas e no sotaque da população."
+},
+{
+  q: "🌎 6. Geograficamente, o relevo predominante no território de Água Boa e em grande parte do leste mato-grossense caracteriza-se por:",
+  options: [
+    "a) #Grandes cordilheiras e montanhas de elevada altitude.#",
+    "b) *Chapadas e planaltos suavemente ondulados.*",
+    "c) #Depressões profundas sempre abaixo do nível do mar.#",
+    "d) #Planícies alagáveis durante todo o ano.#",
+    "e) #Dunas de areia constantes devido aos ventos do Araguaia.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nA região de Água Boa situa-se em áreas de planalto e chapadas, o que favorece mecanização agrícola em larga escala. A topografia plana ou suave ondulada é um dos fatores que permitiram ao município se tornar um gigante na produção de grãos."
+},
+{
+  q: "🌎 7. Sobre o clima predominante em Mato Grosso, especialmente na região de Água Boa, assinale a alternativa correta:",
+  options: [
+    "a) #Clima Temperado, com neve frequente no inverno.#",
+    "b) #Clima Semiárido, com chuvas escassas e mal distribuídas.#",
+    "c) *Clima Tropical, com duas estações bem definidas (seca e chuvosa).*",
+    "d) #Clima Equatorial, com chuvas constantes todos os dias do ano.#",
+    "e) #Clima Subtropical, com geadas constantes durante o ano todo.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nO clima é o Tropical Subúmido (ou Tropical de Savana), caracterizado por um período de chuvas intensas (verão) e um período de seca rigorosa (inverno). Esse ciclo define o calendário agrícola da soja e do milho safrinha na região."
+},
+{
+  q: "🌎 8. O município de Água Boa - MT foi oficialmente emancipado na década de 70. Sobre sua origem histórica, é correto afirmar que o núcleo urbano surgiu a partir de:",
+  options: [
+    "a) #Um antigo quilombo que se estabeleceu na margem do Rio das Mortes.#",
+    "b) *Um projeto de colonização particular coordenado por gaúchos.*",
+    "c) #Uma missão jesuíta voltada à catequização de povos indígenas.#",
+    "d) #Um acampamento de mineradores de ouro vindos de Goiás.#",
+    "e) #Uma estação ferroviária da antiga Estrada de Ferro Noroeste.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nÁgua Boa nasceu do sonho de colonizadores vindos do Rio Grande do Sul, liderados por figuras como Norberto Marchezan. O projeto visava transformar o cerrado em terras produtivas, atraindo famílias do sul do Brasil para desbravar a região do Araguaia a partir de 1974."
+},
+{
+  q: "🌎 9. Em relação à hidrografia, Água Boa está inserida em uma bacia hidrográfica de extrema relevância nacional. Trata-se da:",
+  options: [
+    "a) #Bacia do Rio Paraguai.#",
+    "b) #Bacia do Rio São Francisco.#",
+    "c) *Bacia do Rio Araguaia-Tocantins.*",
+    "d) #Bacia do Rio Paraná.#",
+    "e) #Bacia do Rio Doce.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nO município está localizado na vertente do Rio Araguaia, fazendo parte da bacia Araguaia-Tocantins. Rios como o Rio das Mortes e o Rio Sete de Setembro são fundamentais para a irrigação e o equilíbrio ambiental da microregião de Água Boa."
+},
+{
+  q: "🌎 10. No contexto político-administrativo, Mato Grosso possui 141 municípios. A capital do estado, centro das decisões políticas, é:",
+  options: [
+    "a) #Rondonópolis#",
+    "b) #Sinop#",
+    "c) #Várzea Grande#",
+    "d) *Cuiabá*",
+    "e) #Lucas do Rio Verde#"
+  ],
+  correct: 3,
+  j: "Correta: alternativa D\n\nCuiabá é a capital e o principal centro político e administrativo de Mato Grosso. Fundada em 1719 durante o ciclo do ouro, a cidade hoje centraliza a gestão de um estado que é potência mundial na produção de alimentos."
+},
+{
+  q: "🌎 11. Um dos eventos culturais e de negócios mais importantes de Água Boa, que movimenta a economia regional e celebra a produção agropecuária, é a:",
+  options: [
+    "a) #Festa do Divino Espírito Santo.#",
+    "b) *Expovale (Exposição Agropecuária do Vale do Araguaia).*",
+    "c) #FenaMILHO (Festa Nacional do Milho).#",
+    "d) #Expointer de Mato Grosso.#",
+    "e) #Festa do Peão de Barretos.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nA Expovale é o maior evento de Água Boa. Ela reúne produtores, tecnologia de ponta, shows e grandes leilões de gado, reforçando o título da cidade como um dos corações econômicos do Leste Mato-grossense."
+},
+{
+  q: "🌎 12. Sobre a vegetação predominante no município de Água Boa, assinale a alternativa que descreve corretamente suas características originais:",
+  options: [
+    "a) #Mata de Cocais, com presença massiva de carnaúba.#",
+    "b) #Caatinga, com plantas xerófitas e cactos.#",
+    "c) *Cerrado, com árvores de troncos retorcidos e cascas grossas.*",
+    "d) #Floresta Amazônica densa, com árvores de 40 metros.#",
+    "e) #Manguezal, devido à proximidade com o litoral.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nO bioma Cerrado é o que define a paisagem natural de Água Boa. Suas características incluem solos ácidos (corrigidos pela calagem na agricultura), árvores com adaptações ao fogo e raízes profundas para buscar água durante a estiagem prolongada."
+},
+{
+  q: "🌎 13. Mato Grosso é o maior produtor nacional de grãos. Além da soja e do milho, o estado lidera a produção brasileira de qual outra cultura?",
+  options: [
+    "a) #Café#",
+    "b) #Cana-de-açúcar#",
+    "c) *Algodão*",
+    "d) #Laranja#",
+    "e) #Trigo#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nMato Grosso é o gigante do algodão no Brasil, sendo responsável por mais de 65% da produção nacional. Essa cultura exige alta tecnologia e grandes extensões de terra, perfil que se encaixa perfeitamente no modelo agrícola praticado no estado."
+},
+{
+  q: "🌎 14. O aniversário de emancipação política de Água Boa é comemorado anualmente em:",
+  options: [
+    "a) #01 de Janeiro#",
+    "b) #07 de Setembro#",
+    "c) *09 de Julho*",
+    "d) #20 de Setembro#",
+    "e) #15 de Novembro#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nÁgua Boa comemora sua emancipação em 09 de julho. A cidade foi criada pela Lei Estadual nº 4.164, de 26 de dezembro de 1979, mas sua instalação oficial e a data festiva principal remetem ao período da colonização ativa da década de 70."
+},
+{
+  q: "🌎 15. Água Boa é sede de uma importante divisão administrativa do Poder Judiciário e de órgãos de segurança pública. O município é centro de uma:",
+  options: [
+    "a) #Comarca de Terceira Entrância, atendendo apenas a zona rural.#",
+    "b) *Comarca de Segunda Entrância, com jurisdição sobre municípios vizinhos.*",
+    "c) #Superintendência Federal de Agricultura e Pesca.#",
+    "d) #Zona Franca de Processamento de Exportação (ZPE).#",
+    "e) #Região Administrativa vinculada diretamente a Brasília.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa B\n\nComo polo regional do Médio Araguaia, Água Boa exerce influência administrativa e judiciária sobre cidades menores ao seu entorno. A Comarca de Água Boa é fundamental para a organização jurídica da região, consolidando o município como um centro de serviços públicos."
+},
+{
+  q: "🌎 16. O Brasão de Armas de Mato Grosso, um dos símbolos oficiais do estado, traz em seu centro um monte que representa a riqueza mineral e a história da ocupação do território. Esse monte é o:",
+  options: [
+    "a) #Monte Roraima#",
+    "b) #Pico da Neblina#",
+    "c) *Morro de Santo Antônio*",
+    "d) #Morro de São Jerônimo#",
+    "e) #Serra do Roncador#"
+  ],
+  correct: 3,
+  j: "Correta: alternativa C\n\nO Morro de Santo Antônio, localizado em Santo Antônio de Leverger, é a figura central do brasão de Mato Grosso. Ele simboliza a busca pelo ouro e os marcos geográficos utilizados pelos bandeirantes e primeiros exploradores do estado."
+},
+{
+  q: "🌎 17. Em Água Boa, a altitude média da sede municipal é um fator que influencia positivamente a mecanização agrícola. Essa altitude gira em torno de:",
+  options: [
+    "a) #100 a 150 metros (baixa altitude).#",
+    "b) #800 a 950 metros (região de serra).#",
+    "c) *400 a 450 metros (planalto).* ",
+    "d) #1000 a 1200 metros (clima frio).#",
+    "e) #Ao nível do mar.#"
+  ],
+  correct: 3,
+  j: "Correta: alternativa C\n\nÁgua Boa possui uma altitude média de aproximadamente 430 metros. Por estar em uma região de planalto suavemente ondulado, essa elevação, somada à topografia plana, é o cenário ideal para o uso de grandes máquinas colheitadeiras e semeadoras."
+},
+{
+  q: "🌎 18. O hino de Mato Grosso e a sua bandeira exaltam as cores azul, branco, verde e uma estrela amarela. A estrela amarela no centro da bandeira representa:",
+  options: [
+    "a) #O sol forte do cerrado.#",
+    "b) #A riqueza do ouro encontrado em Poconé.#",
+    "c) *O estado como unidade integrante da federação brasileira.*",
+    "d) #A cidade de Cuiabá isoladamente.#",
+    "e) #A produção de milho safrinha.#"
+  ],
+  correct: 3,
+  j: "Correta: alternativa C\n\nA bandeira de Mato Grosso, oficializada em 1890, segue o padrão republicano. A estrela amarela (Estrela de Sirius) simboliza o estado como parte da União, enquanto as cores representam o céu (azul), a paz (branco) e as florestas e campos (verde)."
+},
+{
+  q: "🌎 19. A região onde Água Boa está inserida sofreu um grande impulso de desenvolvimento através de programas governamentais de ocupação do Centro-Oeste. O principal programa da década de 70 foi o:",
+  options: [
+    "a) #PROUNI (Programa Universidade para Todos).#",
+    "b) *POLOCENTRO (Programa de Desenvolvimento dos Cerrados).* ",
+    "c) #RENAST (Rede Nacional de Atenção à Saúde).#",
+    "d) #Fome Zero Regional.#",
+    "e) #Projeto Rondon de Mineração.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa B\n\nO POLOCENTRO foi um programa federal crucial para a modernização da agricultura no Centro-Oeste brasileiro. Ele financiou infraestrutura e tecnologia para que biomas como o de Água Boa passassem de áreas de 'pastagens degradadas' para grandes centros de produção de grãos."
+},
+{
+  q: "🌎 20. Sobre a fauna e flora de Água Boa, é comum encontrar espécies típicas do Cerrado. Assinale a alternativa que contém apenas elementos deste bioma:",
+  options: [
+    "a) #Vitória-régia e Peixe-boi.#",
+    "b) #Cacto Mandacaru e Asa Branca.#",
+    "c) *Lobo-guará e Árvore de Ipê.*",
+    "d) #Pinheiro do Paraná e Gralha Azul.#",
+    "e) #Baleia Jubarte e Caranguejo.#"
+  ],
+  correct: 3,
+  j: "Correta: alternativa C\n\nO Lobo-guará é o animal símbolo do Cerrado, e o Ipê (em suas diversas cores) é uma das árvores mais emblemáticas da região de Água Boa. O bioma é conhecido como a 'savana brasileira' devido à sua rica biodiversidade adaptada à sazonalidade climática."
+},
+{
+  q: "🌎 21. De acordo com a Lei Orgânica de Água Boa, são poderes do Município, independentes e harmônicos entre si:",
+  options: [
+    "a) #O Executivo, o Legislativo e o Judiciário.#",
+    "b) *O Legislativo e o Executivo.*",
+    "c) #Apenas o Executivo, sendo o Legislativo um órgão fiscalizador.#",
+    "d) #O Prefeito, os Vereadores e os Juízes de Direito.#",
+    "e) #A Câmara Municipal e o Ministério Público.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nA organização dos poderes municipais segue o padrão constitucional. Como o Município não possui Poder Judiciário próprio (que é estadual ou federal), apenas o Legislativo e o Executivo compõem os poderes municipais, conforme estabelecido na Lei Orgânica."
+},
+{
+  q: "🌎 22. Segundo a LOM de Água Boa, a soberania popular será exercida pelo sufrágio universal e pelo voto direto e secreto, com valor igual para todos, e, nos termos da lei, mediante:",
+  options: [
+    "a) #Plebiscito, Referendo e Voto Facultativo.#",
+    "b) #Referendo, Iniciativa Popular e Mandado de Segurança.#",
+    "c) *Plebiscito, Referendo e Iniciativa Popular.*",
+    "d) #Voto por Procuração e Participação Comunitária.#",
+    "e) #Consultas Públicas e Audiências Legislativas.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nA Lei Orgânica prevê os mecanismos clássicos de exercício direto da soberania popular no âmbito municipal. Plebiscito (consulta prévia), Referendo (consulta posterior) e Iniciativa Popular (apresentação de projetos de lei pelos cidadãos) são as ferramentas fundamentais de democracia direta."
+},
+{
+  q: "🌎 23. Compete ao Município de Água Boa, em comum com a União e o Estado, EXCETO:",
+  options: [
+    "a) #Zelar pela guarda da Constituição, das leis e das instituições democráticas.#",
+    "b) #Proteger os documentos, as obras e outros bens de valor histórico e cultural.#",
+    "c) #Impedir a evasão, a destruição e a descaracterização de obras de arte.#",
+    "d) *Emitir moeda e legislar sobre direito civil e penal.*",
+    "e) #Fomentar a produção agropecuária e organizar o abastecimento alimentar.#"
+  ],
+  correct: 3,
+  j: "Correta: alternativa D\n\nEmitir moeda e legislar sobre direito civil e penal são competências privativas da União. O Município possui competência comum para cuidar da saúde, assistência pública, proteção ao patrimônio histórico e fomento da agropecuária (muito relevante em Água Boa)."
+},
+{
+  q: "🌎 24. Sobre a Câmara Municipal de Água Boa, a Lei Orgânica estabelece que o mandato dos Vereadores terá a duração de:",
+  options: [
+    "a) #Dois anos, acompanhando a Mesa Diretora.#",
+    "b) #Três anos.#",
+    "c) *Quatro anos.*",
+    "d) #Cinco anos.#",
+    "e) #Indeterminado, enquanto durar a legislatura.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nConforme o padrão da Administração Pública brasileira, a legislatura tem duração de 4 anos. Cada ano corresponde a uma sessão legislativa, e o mandato dos vereadores eleitos para representar o povo de Água Boa acompanha esse período."
+},
+{
+  q: "🌎 25. É vedado ao Município de Água Boa, de acordo com as proibições constitucionais reproduzidas na Lei Orgânica:",
+  options: [
+    "a) #Criar feriados municipais de natureza religiosa.#",
+    "b) *Estabelecer cultos religiosos ou igrejas, subvencioná-los ou manter com eles relações de dependência.*",
+    "c) #Cobrar impostos sobre o patrimônio das empresas privadas.#",
+    "d) #Instituir taxas pelo exercício do poder de polícia.#",
+    "e) #Realizar convênios com o Governo do Estado de Mato Grosso.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nO Município é um ente federativo laico. Assim, é proibido por lei estabelecer, subvencionar ou manter relações de dependência ou aliança com cultos religiosos ou igrejas, ressalvada a colaboração de interesse público (como em assistência social e saúde)."
+},
+{
+  q: "🌎 26. A Lei Orgânica de Água Boa prevê que o Prefeito e o Vice-Prefeito tomarão posse no dia:",
+  options: [
+    "a) #01 de dezembro do ano da eleição.#",
+    "b) #15 de novembro, após a apuração.#",
+    "c) *01 de janeiro do ano subsequente ao da eleição.*",
+    "d) #10 de janeiro do ano subsequente ao da eleição.#",
+    "e) #Data definida livremente pela Câmara Municipal.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nA posse dos eleitos para os cargos do Poder Executivo (Prefeito e Vice) ocorre tradicionalmente no primeiro dia do ano em que se inicia o mandato, em sessão solene da Câmara Municipal."
+},
+{
+  q: "🌎 27. Qual é o nome do documento legal que organiza o Município, funcionando como uma espécie de 'Constituição Municipal'?",
+  options: [
+    "a) #Código de Posturas Municipal.#",
+    "b) #Plano Diretor Estratégico.#",
+    "c) *Lei Orgânica Municipal.*",
+    "d) #Estatuto do Servidor Público de Água Boa.#",
+    "e) #Regimento Interno da Câmara.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nA Lei Orgânica é o diploma legal mais importante do município. Ela define a organização política, as atribuições dos poderes, as normas de administração pública e os direitos e deveres fundamentais no âmbito local."
+},
+{
+  q: "🌎 28. Segundo a LOM, a alienação de bens imóveis municipais depende de prévia avaliação, autorização legislativa e:",
+  options: [
+    "a) #Decisão exclusiva do Prefeito.#",
+    "b) #Consulta aos vizinhos confrontantes.#",
+    "c) *Licitação, ressalvadas as hipóteses legais de dispensa.*",
+    "d) #Doação obrigatória para entidades sem fins lucrativos.#",
+    "e) #Aprovação do Governador do Estado.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nPara garantir a transparência e o interesse público, a venda (alienação) de patrimônio público imóvel exige que o Município realize licitação, após ser autorizado pela Câmara e ter o valor do bem devidamente avaliado."
+},
+{
+  q: "🌎 21. De acordo com a Lei Orgânica de Água Boa, são poderes do Município, independentes e harmônicos entre si:",
+  options: [
+    "a) #O Executivo, o Legislativo e o Judiciário.#",
+    "b) *O Legislativo e o Executivo.*",
+    "c) #Apenas o Executivo, sendo o Legislativo um órgão fiscalizador.#",
+    "d) #O Prefeito, os Vereadores e os Juízes de Direito.#",
+    "e) #A Câmara Municipal e o Ministério Público.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nA organização dos poderes municipais segue o padrão constitucional. Como o Município não possui Poder Judiciário próprio (que é estadual ou federal), apenas o Legislativo e o Executivo compõem os poderes municipais, conforme estabelecido na Lei Orgânica."
+},
+{
+  q: "🌎 22. Segundo a LOM de Água Boa, a soberania popular será exercida pelo sufrágio universal e pelo voto direto e secreto, com valor igual para todos, e, nos termos da lei, mediante:",
+  options: [
+    "a) #Plebiscito, Referendo e Voto Facultativo.#",
+    "b) #Referendo, Iniciativa Popular e Mandado de Segurança.#",
+    "c) *Plebiscito, Referendo e Iniciativa Popular.*",
+    "d) #Voto por Procuração e Participação Comunitária.#",
+    "e) #Consultas Públicas e Audiências Legislativas.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nA Lei Orgânica prevê os mecanismos clássicos de exercício direto da soberania popular no âmbito municipal. Plebiscito (consulta prévia), Referendo (consulta posterior) e Iniciativa Popular (apresentação de projetos de lei pelos cidadãos) são as ferramentas fundamentais de democracia direta."
+},
+{
+  q: "🌎 23. Compete ao Município de Água Boa, em comum com a União e o Estado, EXCETO:",
+  options: [
+    "a) #Zelar pela guarda da Constituição, das leis e das instituições democráticas.#",
+    "b) #Proteger os documentos, as obras e outros bens de valor histórico e cultural.#",
+    "c) #Impedir a evasão, a destruição e a descaracterização de obras de arte.#",
+    "d) *Emitir moeda e legislar sobre direito civil e penal.*",
+    "e) #Fomentar a produção agropecuária e organizar o abastecimento alimentar.#"
+  ],
+  correct: 3,
+  j: "Correta: alternativa D\n\nEmitir moeda e legislar sobre direito civil e penal são competências privativas da União. O Município possui competência comum para cuidar da saúde, assistência pública, proteção ao patrimônio histórico e fomento da agropecuária (muito relevante em Água Boa)."
+},
+{
+  q: "🌎 24. Sobre a Câmara Municipal de Água Boa, a Lei Orgânica estabelece que o mandato dos Vereadores terá a duração de:",
+  options: [
+    "a) #Dois anos, acompanhando a Mesa Diretora.#",
+    "b) #Três anos.#",
+    "c) *Quatro anos.*",
+    "d) #Cinco anos.#",
+    "e) #Indeterminado, enquanto durar a legislatura.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nConforme o padrão da Administração Pública brasileira, a legislatura tem duração de 4 anos. Cada ano corresponde a uma sessão legislativa, e o mandato dos vereadores eleitos para representar o povo de Água Boa acompanha esse período."
+},
+{
+  q: "🌎 25. É vedado ao Município de Água Boa, de acordo com as proibições constitucionais reproduzidas na Lei Orgânica:",
+  options: [
+    "a) #Criar feriados municipais de natureza religiosa.#",
+    "b) *Estabelecer cultos religiosos ou igrejas, subvencioná-los ou manter com eles relações de dependência.*",
+    "c) #Cobrar impostos sobre o patrimônio das empresas privadas.#",
+    "d) #Instituir taxas pelo exercício do poder de polícia.#",
+    "e) #Realizar convênios com o Governo do Estado de Mato Grosso.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nO Município é um ente federativo laico. Assim, é proibido por lei estabelecer, subvencionar ou manter relações de dependência ou aliança com cultos religiosos ou igrejas, ressalvada a colaboração de interesse público (como em assistência social e saúde)."
+},
+{
+  q: "🌎 26. A Lei Orgânica de Água Boa prevê que o Prefeito e o Vice-Prefeito tomarão posse no dia:",
+  options: [
+    "a) #01 de dezembro do ano da eleição.#",
+    "b) #15 de novembro, após a apuração.#",
+    "c) *01 de janeiro do ano subsequente ao da eleição.*",
+    "d) #10 de janeiro do ano subsequente ao da eleição.#",
+    "e) #Data definida livremente pela Câmara Municipal.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nA posse dos eleitos para os cargos do Poder Executivo (Prefeito e Vice) ocorre tradicionalmente no primeiro dia do ano em que se inicia o mandato, em sessão solene da Câmara Municipal."
+},
+{
+  q: "🌎 27. Qual é o nome do documento legal que organiza o Município, funcionando como uma espécie de 'Constituição Municipal'?",
+  options: [
+    "a) #Código de Posturas Municipal.#",
+    "b) #Plano Diretor Estratégico.#",
+    "c) *Lei Orgânica Municipal.*",
+    "d) #Estatuto do Servidor Público de Água Boa.#",
+    "e) #Regimento Interno da Câmara.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nA Lei Orgânica é o diploma legal mais importante do município. Ela define a organização política, as atribuições dos poderes, as normas de administração pública e os direitos e deveres fundamentais no âmbito local."
+},
+{
+  q: "🌎 28. Segundo a LOM, a alienação de bens imóveis municipais depende de prévia avaliação, autorização legislativa e:",
+  options: [
+    "a) #Decisão exclusiva do Prefeito.#",
+    "b) #Consulta aos vizinhos confrontantes.#",
+    "c) *Licitação, ressalvadas as hipóteses legais de dispensa.*",
+    "d) #Doação obrigatória para entidades sem fins lucrativos.#",
+    "e) #Aprovação do Governador do Estado.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nPara garantir a transparência e o interesse público, a venda (alienação) de patrimônio público imóvel exige que o Município realize licitação, após ser autorizado pela Câmara e ter o valor do bem devidamente avaliado."
+},
+{
+  q: "🌎 29. No cenário internacional de 2026, um dos temas centrais de debate entre as grandes potências tem sido a regulamentação avançada da Inteligência Artificial Geral (AGI). Qual organização liderou o novo tratado global para a segurança e ética no desenvolvimento dessas tecnologias?",
+  options: [
+    "a) #OTAN (Organização do Tratado do Atlântico Norte).#",
+    "b) *ONU (Organização das Nações Unidas), através do Conselho de Segurança Digital.*",
+    "c) #OPEP (Organização dos Países Exportadores de Petróleo).#",
+    "d) #FIFA, visando a aplicação tecnológica no esporte.#",
+    "e) #Mercosul, focando apenas no comércio sul-americano.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nEm 2026, a ONU consolidou o Conselho de Segurança Digital para mediar conflitos e estabelecer normas éticas globais sobre a AGI, visando evitar disparidades tecnológicas extremas e garantir que o desenvolvimento de sistemas autônomos respeite os direitos humanos fundamentais."
+},
+{
+  q: "🌎 30. No início de 2026, o Brasil reafirmou seu papel de liderança ambiental ao sediar um encontro preparatório para a COP-31. O foco principal das discussões brasileiras esteve voltado para:",
+  options: [
+    "a) #A construção de novas usinas movidas a carvão mineral.#",
+    "b) #O aumento da exportação de madeira in natura.#",
+    "c) *O Mercado Global de Créditos de Carbono e a Bioeconomia Amazônica.*",
+    "d) #A proibição total do uso de veículos elétricos no país.#",
+    "e) #A privatização completa de todas as reservas de água doce.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nO Brasil iniciou 2026 como protagonista na regulamentação do mercado internacional de créditos de carbono. A estratégia visa monetizar a preservação da floresta em pé e fortalecer a bioeconomia, transformando a proteção ambiental em um ativo econômico vital para o PIB nacional."
+},
+{
+  q: "🌎 31. Recentemente em 2026, a economia brasileira apresentou novos índices sobre o sistema de pagamentos instantâneos (PIX). Qual foi a principal inovação implementada que se tornou tendência de mercado neste ano?",
+  options: [
+    "a) #O fim do sistema por falta de uso.#",
+    "b) #A obrigatoriedade de pagamento de taxas em todas as transferências.#",
+    "c) *O PIX Offline e o PIX por Aproximação via dispositivos vestíveis (wearables).* ",
+    "d) #A limitação do sistema apenas para compras em dinheiro físico.#",
+    "e) #A exigência de autorização presencial no banco para cada envio.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nEm 2026, o Banco Central consolidou as novas modalidades do PIX, permitindo transações sem necessidade de conexão imediata com a internet (Offline) e a integração total com dispositivos como anéis e relógios inteligentes, tornando o sistema ainda mais onipresente na economia popular."
+},
+{
+  q: "🌎 32. No campo da exploração espacial em 2026, uma missão internacional conjunta chamou a atenção ao enviar a primeira sonda tripulada para realizar órbitas prolongadas ao redor de Marte. Essa missão faz parte do programa:",
+  options: [
+    "a) #Projeto Apollo 11.#",
+    "b) *Programa Artemis (da NASA e parceiros internacionais).* ",
+    "c) #Missão Sputnik III.#",
+    "d) #Programa Voyager de 1977.#",
+    "e) #Projeto Star Wars de defesa orbital.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nO Programa Artemis, que teve grande avanço entre 2024 e 2026, busca não apenas o retorno à Lua, mas a preparação técnica para missões tripuladas a Marte. Em 2026, os testes de sustentabilidade de vida em órbita de longa duração foram o principal marco da exploração espacial."
+},
+{
+  q: "🌎 33. No âmbito político brasileiro em 2026, o debate público está intensamente focado em qual grande evento que ocorre no segundo semestre deste ano?",
+  options: [
+    "a) #As Olimpíadas de Inverno no Rio de Janeiro.#",
+    "b) #A comemoração do centenário da Independência.#",
+    "c) *As Eleições Gerais (Presidência, Governadores, Senadores e Deputados).* ",
+    "d) #O Carnaval fora de época em Brasília.#",
+    "e) #A votação para a mudança da capital para o Mato Grosso.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nO ano de 2026 é um ano eleitoral no Brasil. As discussões políticas giram em torno das coalizões partidárias e propostas econômicas para o próximo quadriênio, dominando os noticiários, as redes sociais e os debates em todo o território nacional."
+},
+{
+  q: "🌎 34. Em 2026, o conflito entre Rússia e Ucrânia permanece como um dos principais eixos de instabilidade na Europa. Qual tem sido o papel estratégico da OTAN (Organização do Tratado do Atlântico Norte) neste ano?",
+  options: [
+    "a) #Envio de tropas terrestres para combate direto na linha de frente.#",
+    "b) *Fornecimento de sistemas de defesa aérea avançados e suporte em inteligência cibernética.*",
+    "c) #Mediação de um acordo de paz definitivo assinado em janeiro.#",
+    "d) #Dissolução da aliança por falta de consenso entre os países membros.#",
+    "e) #Apoio militar exclusivo à Federação Russa.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nNo cenário de 2026, a OTAN mantém a estratégia de fortalecimento das capacidades defensivas ucranianas, evitando o confronto direto entre potências nucleares, enquanto foca na proteção de infraestruturas críticas contra ataques cibernéticos e drones de longo alcance."
+},
+{
+  q: "🌎 35. No Oriente Médio, as tensões regionais em 2026 continuam a exigir esforços diplomáticos intensos. Qual é o principal foco de preocupação da comunidade internacional em relação à estabilidade daquela região este ano?",
+  options: [
+    "a) #A descoberta de novas jazidas de ouro no deserto do Saara.#",
+    "b) #A disputa territorial por ilhas no Oceano Índico.#",
+    "c) *O risco de escalada de conflitos envolvendo Israel e grupos regionais, e o impacto no preço global do petróleo.*",
+    "d) #A criação de uma moeda única para todos os países árabes.#",
+    "e) #A proibição do uso de redes sociais em todo o território iraniano.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nA geopolítica do Oriente Médio em 2026 é marcada pela fragilidade das fronteiras e pela influência de potências regionais. A segurança das rotas marítimas no Mar Vermelho e no Estreito de Ormuz é vital para evitar crises energéticas globais."
+},
+{
+  q: "🌎 36. Em 2026, o Conselho de Segurança da ONU tem debatido o uso de novas tecnologias em campos de batalha. Qual armamento tem sido alvo de propostas de banimento total devido ao risco ético?",
+  options: [
+    "a) #Rifles de precisão manuais.#",
+    "b) *Sistemas de Armas Letais Autônomas (SALA), conhecidos como 'robôs assassinos'.*",
+    "c) #Veículos de transporte blindados sobre rodas.#",
+    "d) #Uso de cavalaria em terrenos montanhosos.#",
+    "e) #Equipamentos de rádio comunicação de curto alcance.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nO debate sobre a Inteligência Artificial na guerra atingiu seu ápice em 2026. A preocupação central é o uso de máquinas capazes de selecionar e atacar alvos sem intervenção humana direta, o que levanta dilemas morais e jurídicos sobre a responsabilidade por crimes de guerra."
+},
+{
+  q: "🌎 37. No continente africano, alguns países enfrentam conflitos internos e insurgências que geram grandes crises humanitárias em 2026. Qual organização regional tem liderado as missões de paz e estabilização no continente?",
+  options: [
+    "a) #União Europeia.#",
+    "b) *União Africana (UA).* ",
+    "c) #Liga dos Estados Árabes.#",
+    "d) #Organização dos Estados Americanos (OEA).#",
+    "e) #Fórum Econômico Mundial.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nA União Africana tem buscado soluções regionalizadas para conflitos no Sahel e no Chifre da África em 2026, sob o lema de 'soluções africanas para problemas africanos', embora ainda conte com apoio logístico e financeiro de parceiros internacionais."
+},
+{
+  q: "🌎 38. Um novo tipo de guerra tem se intensificado em 2026, atingindo governos, empresas e hospitais ao redor do mundo sem o disparo de um único projétil. Trata-se da:",
+  options: [
+    "a) #Guerra de Trincheiras.#",
+    "b) #Guerra Biológica de larga escala.#",
+    "c) *Guerra Cibernética (Hacking de infraestruturas críticas).* ",
+    "d) #Guerra Psicológica via rádio pirata.#",
+    "e) #Guerra Comercial focada apenas em produtos agrícolas.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nA guerra híbrida e cibernética é a grande marca de 2026. Ataques de ransomware a redes elétricas e sistemas bancários são usados como ferramentas de desestabilização política e econômica, exigindo que os países invistam pesado em ciberdefesa."
+},
+{
+  q: "🌎 39. Em 2026, a Inteligência Artificial Geral (AGI) atingiu um novo patamar de integração. Qual é a principal característica que diferencia a AGI dos modelos de IA generativa de anos anteriores?",
+  options: [
+    "a) #A capacidade de gerar apenas textos e imagens de forma isolada.#",
+    "b) *A habilidade de realizar tarefas intelectuais humanas de forma generalista e autônoma.*",
+    "c) #O funcionamento exclusivo em supercomputadores sem conexão à internet.#",
+    "d) #A necessidade de comando humano para cada pequena subtarefa executada.#",
+    "e) #A substituição completa de todos os processadores de silício por válvulas.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nA AGI (Artificial General Intelligence) representa o salto onde a máquina não apenas mimetiza padrões, mas aplica raciocínio lógico transdisciplinar, resolvendo problemas complexos sem treinamento prévio específico para aquela tarefa, aproximando-se da versatilidade cognitiva humana."
+},
+{
+  q: "🌎 40. Sobre a ética na IA em 2026, o conceito de 'Alinhamento de IA' tornou-se prioridade global. Esse conceito refere-se a:",
+  options: [
+    "a) #Organizar os servidores em linha reta para economizar energia.#",
+    "b) #Garantir que todos os robôs falem o mesmo idioma oficial.#",
+    "c) *Garantir que os objetivos dos sistemas de IA estejam em conformidade com os valores e interesses humanos.*",
+    "d) #Alinhar a velocidade de processamento com a velocidade da luz.#",
+    "e) #Treinar a IA apenas para funções de arquivamento de documentos.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nO problema do alinhamento busca evitar que sistemas autônomos tomem decisões eficazes para seus objetivos lógicos, mas prejudiciais aos seres humanos (ex: otimizar lucros sacrificando a segurança ambiental ou social)."
+},
+{
+  q: "🌎 41. No campo astronômico de 2026, o cometa 3I/ATLAS tornou-se um dos objetos mais estudados. Qual característica o torna um alvo científico tão valioso?",
+  options: [
+    "a) #O fato de ser composto inteiramente de ouro líquido.#",
+    "b) #Sua trajetória que o levará a colidir com a Lua em dezembro.#",
+    "c) *Sua origem interestelar, sendo o terceiro objeto desse tipo detectado no Sistema Solar.*",
+    "d) #A emissão de sinais de rádio constantes e codificados.#",
+    "e) #Ser uma estrela morta que entrou em nossa órbita gravitacional.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nO prefixo '3I' indica que o ATLAS é o terceiro objeto interestelar (vindo de fora do Sistema Solar) confirmado, seguindo o 'Oumuamua e o Borisov. Ele oferece pistas químicas sobre a formação de outros sistemas estelares."
+},
+{
+  q: "🌎 42. A passagem do cometa 3I/ATLAS em 2026 permitiu o uso de uma nova geração de telescópios espaciais. Qual foi a principal descoberta sobre sua composição?",
+  options: [
+    "a) #Presença de vida bacteriana ativa em sua superfície.#",
+    "b) *Assinaturas químicas de gelo de nitrogênio e moléculas orgânicas complexas.*",
+    "c) #Que ele é, na verdade, um fragmento de Marte.#",
+    "d) #Uma crosta de metal fundido que brilha como um laser.#",
+    "e) #Ausência total de qualquer massa, sendo apenas uma projeção de luz.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nA detecção de moléculas orgânicas em objetos interestelares como o ATLAS reforça a teoria da panspermia ou, no mínimo, que os 'tijolos da vida' são comuns em toda a galáxia, não sendo exclusivos da Terra."
+},
+{
+  q: "🌎 43. Geopoliticamente, o Estreito de Ormuz é considerado um dos pontos mais sensíveis do mundo em 2026. Onde ele está localizado?",
+  options: [
+    "a) #Entre a Europa e a África, no Mar Mediterrâneo.#",
+    "b) #Entre a América do Norte e a Rússia, no Ártico.#",
+    "c) *Entre o Golfo Pérsico e o Golfo de Omã, separando o Irã da Península Arábica.*",
+    "d) #No extremo sul da América do Sul, ligando os oceanos.#",
+    "e) #Entre a China e o Japão, no Mar Amarelo.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nO Estreito de Ormuz é o gargalo marítimo por onde passa cerca de 20% a 30% de todo o petróleo consumido no mundo. Qualquer instabilidade militar entre Irã e os países árabes/ocidentais ali gera impacto imediato na economia global."
+},
+{
+  q: "🌎 44. As ameaças de fechamento do Estreito de Ormuz em 2026 causaram pânico nos mercados de energia. Qual seria a consequência direta e imediata desse bloqueio?",
+  options: [
+    "a) #Aumento na produção de carvão na Europa.#",
+    "b) #Queda brusca no valor do dólar americano.#",
+    "c) *Explosão no preço do barril de petróleo e crise nas cadeias de suprimento globais.*",
+    "d) #Fim do uso de energias renováveis no mundo.#",
+    "e) #Redução do tráfego aéreo na América do Sul.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nDevido à dependência global do petróleo que transita por Ormuz, o fechamento do estreito interromperia o fluxo para a Ásia e Europa, causando choques de oferta que afetariam desde o preço da gasolina até a inflação de alimentos."
+},
+{
+  q: "🌎 45. Em resposta às tensões em Ormuz, muitas nações em 2026 aceleraram a construção de infraestruturas alternativas. Qual alternativa tem sido a mais utilizada?",
+  options: [
+    "a) #Transporte de petróleo via aviões cargueiros de grande porte.#",
+    "b) *Oleodutos que atravessam a Arábia Saudita e os Emirados para portos no Mar Vermelho.*",
+    "c) #A construção de canais artificiais no meio do deserto africano.#",
+    "d) #O uso de navios quebra-gelo pelo Polo Sul.#",
+    "e) #A desativação de todas as refinarias do Oriente Médio.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nPara contornar o risco de bloqueio em Ormuz, países exportadores investem em oleodutos terrestres que levam o óleo diretamente para portos que dão acesso ao Mar Vermelho ou Mar Arábico, 'pulando' o estreito sensível."
+},
+{
+  q: "🌎 46. No contexto da IA aplicada à segurança em 2026, o 'Deepfake Geopolítico' tornou-se uma arma perigosa. Isso consiste em:",
+  options: [
+    "a) #Criar mapas falsos para confundir motoristas de aplicativo.#",
+    "b) #Gerar moedas digitais sem lastro financeiro.#",
+    "c) *Vídeos ou áudios ultra-realistas de líderes mundiais declarando guerra ou crises para manipular mercados.*",
+    "d) #Hackear satélites para mudar o fuso horário de um país.#",
+    "e) #Apagar fotos antigas de arquivos governamentais.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nDeepfakes de alta fidelidade podem ser usados para incitar pânico ou desvalorizar moedas em minutos. Em 2026, a verificação criptográfica de vídeos oficiais tornou-se o padrão para combater essa desinformação de Estado."
+},
+{
+  q: "🌎 47. A observação do 3I/ATLAS em 2026 foi coordenada por uma coalizão internacional. Qual é o principal objetivo dessa cooperação espacial (Defesa Planetária)?",
+  options: [
+    "a) #Capturar o cometa para extração de minerais valiosos.#",
+    "b) *Identificar e desviar objetos que possam representar risco de impacto com a Terra.*",
+    "c) #Levar turistas para pousar no núcleo do cometa.#",
+    "d) #Usar o cometa como base para disparar mísseis.#",
+    "e) #Mudar a cor do cometa para que ele brilhe no escuro.#"
+  ],
+  correct: 1,
+  j: "Correta: alternativa B\n\nA Defesa Planetária é uma prioridade em 2026. Embora o ATLAS não apresente risco, os protocolos de rastreio e as missões de interceptação (como a DART) são testados em objetos como ele para garantir a segurança da Terra."
+},
+{
+  q: "🌎 48. O uso de IA na medicina em 2026 permitiu a descoberta de novos antibióticos para superbactérias. O processo utilizado pela IA para isso é conhecido como:",
+  options: [
+    "a) #Sorteio aleatório de fórmulas químicas.#",
+    "b) #Busca manual em livros de biologia antigos.#",
+    "c) *Triagem virtual (Virtual Screening) em bibliotecas moleculares gigantescas via redes neurais.*",
+    "d) #Criação de bactérias artificiais amigáveis.#",
+    "e) #Uso de robôs que cozinham substâncias químicas no laboratório.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nA IA consegue simular trilhões de interações moleculares em dias, algo que levaria décadas em laboratórios físicos. Isso permitiu identificar compostos capazes de neutralizar bactérias resistentes aos tratamentos convencionais."
+},
+{
+  q: "🌎 49. As tensões no Estreito de Ormuz em 2026 reacenderam o debate sobre a transição energética. Muitos países europeus usaram a crise para:",
+  options: [
+    "a) #Abandonar totalmente o uso de eletricidade.#",
+    "b) #Voltar a queimar lenha em larga escala.#",
+    "c) *Acelerar investimentos em energia nuclear e hidrogênio verde.*",
+    "d) #Proibir a venda de bicicletas elétricas.#",
+    "e) #Depender exclusivamente do petróleo vindo da Antártida.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nA instabilidade em Ormuz prova a vulnerabilidade de depender de combustíveis fósseis de regiões instáveis. Em 2026, isso impulsionou políticas de soberania energética baseadas em fontes limpas e na retomada da energia nuclear (Fissão e testes de Fusão)."
+},
+{
+  q: "🌎 50. O termo 'Soberania de IA' em 2026 refere-se à capacidade de um país de:",
+  options: [
+    "a) #Proibir o uso de internet em seu território.#",
+    "b) #Ter o robô mais rápido do mundo em competições esportivas.#",
+    "c) *Desenvolver seus próprios modelos, infraestrutura e dados de IA sem dependência tecnológica total de outras nações.*",
+    "d) #Votar em uma Inteligência Artificial para o cargo de Presidente.#",
+    "e) #Exportar todos os seus programadores para o exterior.#"
+  ],
+  correct: 2,
+  j: "Correta: alternativa C\n\nPaíses como o Brasil buscam em 2026 a 'Soberania Digital'. Isso evita que o país fique refém de algoritmos e termos de uso decididos apenas por grandes corporações estrangeiras, protegendo dados nacionais e a cultura local."
+}
 ];
  
 
 
 
 const bancoVip3 = [
-{q: "❤ 1. A Superintendência do Sistema Estadual de Atendimento Socioeducativo (SEAS), criada pela Lei Estadual nº 16.040/2016, possui como atribuição exclusiva a administração das unidades de internação, não integrando sua competência a formulação e a coordenação da política estadual de atendimento socioeducativo.",
-  options: [
-    "a) Parcialmente Correto", 
-    "b) Parcialmente Errado", 
-    "c) Certíssimo", 
-    "d) Totalmente Errado", 
-    "e) As questões A e B estão corretas"
-  ],
-  correct: 3,
-  j: "A SEAS também tem por finalidade a formulação, planejamento e coordenação da política estadual de atendimento socioeducativo (Art. 2º, Lei 16.040/16)."
-},
+{
+    q: "👨‍🎓 1. A mesma regra de acentuação que vale para “rápida”, vale também para:",
+    options: [
+      "a) #mutável, estaríamos, vírgula, admissíveis#",
+      "b) *vírgula, simbólica, símbolo, hieróglifos*",
+      "c) #ortográficos, colégios, egípcios, língua#",
+      "d) #básicos, difícil, colégios, língua#",
+      "e) #português, inglês, francês, japonês#"
+    ],
+    correct: 1,
+    j: "\"Rápida\", é acentuada por ser uma palavra proparoxítona e todas as proparoxítonas são acentuadas. A única sequência em que todas as palavras são proparoxítonas é vírgula, simbólica, símbolo, hieróglifos.\n\na) mutável (paroxítona terminada em L), estaríamos (proparoxítona), vírgula (proparoxítona), admissíveis (paroxítona terminada em ditongo).\n\nb) vírgula (proparoxítona), simbólica (proparoxítona), símbolo (proparoxítona), hieróglifos (proparoxítona).\n\nc) ortográficos (proparoxítona), colégios (paroxítona terminada em ditongo), egípcios (paroxítona terminada em ditongo), língua (paroxítona terminada em ditongo).\n\nd) básicos (proparoxítona), difícil (paroxítona terminada em L), colégios (paroxítona terminada em ditongo), língua (paroxítona terminada em ditongo).\n\ne) português (oxítona terminada em ES), inglês (oxítona terminada em ES), francês (oxítona terminada em ES), japonês (oxítona terminada em ES)."
+  },
+  {
+    q: "👨‍🎓 2. Sobre o encontro vocálico conhecido como hiato, é correto afirmar que:",
+    options: [
+      "a) #pode ser classificado em crescente ou decrescente#, dependendo da posição da vogal na sílaba.",
+      "b) #é o encontro de uma vogal e uma semivogal# em uma mesma sílaba.",
+      "c) *é o encontro de duas vogais em sílabas vizinhas.*",
+      "d) #é o encontro entre uma vogal e uma semivogal# em sílabas vizinhas.",
+      "e) #devem ser acentuados o ‘i’ ou o ‘u’ tônico dos hiatos, quando forem a sua segunda vogal, desde que estejam sozinhos# na sílaba."
+    ],
+    correct: 2,
+    j: "a) descrição do ditongo.\n\nb) descrição do ditongo.\n\nc) descrição do hiato.\n\nd) descrição do ditongo.\n\ne) existe apenas uma regra para acentuação dos hiatos, a regra diz: acentua-se o ‘i’ ou o ‘u’ tônico dos hiatos, quando forem a sua segunda vogal, devem estar na sílaba sozinhos ou acompanhados de S."
+  },
+  {
+    q: "👨‍🎓 3. Na sua estrutura mórfica, a forma verbal desorganizássemos não possui:",
+    options: [
+      "a) desinência modo-temporal.",
+      "b) afixo.",
+      "c) desinência número-pessoal.",
+      "d) *vogal de ligação.*",
+      "e) tema."
+    ],
+    correct: 3,
+    j: "a) As principais DMT são VA, VE, IA, RIA, SSE, RA (átono), RÁ (tônico).\n\nb) Afixos são morfemas que precisam se ligar à palavra para que ela faça sentido ou mude seu significado. Temos três tipos de afixos e eles são classificados como prefixos (vem antes do radical), sufixos (vem depois do radical) e infixos (pode aparecer entre o radical e o sufixo).\n\nc) As principais DNP são MOS, S, M, O.\n\nd) Vogal de ligação é a vogal adicionada à palavra para evitar a cacofonia. Vamos dar por exemplo a palavra REAL, se eu adiciono o sufixo DADE, a palavra ficará REALDADE. A palavra do jeito que está, não possui um som agradável, como a língua se preocupa muito com a eufonia, então, para dar um som agradável, é adicionado o infixo 'i', e a palavra se torna REALIDADE.\n\ne) Tema é a junção do radical + vogal temática. Para reconhecer o tema de uma palavra, primeiramente você deve achar o radical e acrescentar a vogal temática. No caso de desorganizássemos, já sabemos que o radical é 'organiz' e a vogal temática é o 'A'. Então o tema é 'desorganiza'.\n\nNo caso de desorganizássemos, estruturando a palavra, é possível afirmarmos que a palavra não possui vogal de ligação:\nDES - prefixo\nORGANIZA - tema (radical: organiz) + (vogal temática: a)\nSSE - desinência modo temporal que indica o pretérito imperfeito do subjuntivo\nMOS - desinência número pessoal indicativa da 1ª pessoa do plural"
+  },
+  {
+    q: "👨‍🎓 4. Observe os monossílabos abaixo, em seguida, escolha a alternativa correta associando (V) para verdadeiro e (F) para falso, de acordo com as regra de acentuação dos monossílabos tônicos:\nFAS, DOR, CRE, MES, POS, CHAS, REU, NOZ\nROI, CEU, TRES, TREM, VEUS, SA, SOIS, COS, LEI\n\n(  ) Existem 15 monossílabos tônicos necessitando de acentuação\n(  ) Todas as regras de acentuação dos monossílabos tônicos podem ser encontradas nessa lista de palavras\n(  ) Existem 4 monossílabos não acentuados por fugirem às regras de acentuação.\n",
+    options: [
+      "a) #V, V, V#",
+      "b) #F, F, F#",
+      "c) #F, V, F#",
+      "d) *V, F, V*",
+      "e) #V, V, F#"
+    ],
+    correct: 3,
+    j: "FAS ↔ FÃS - não possui acento, apenas sinal de nasalização\nDOR ↔ DOR - não é acentuado por ser um monossílabo tônico terminado em R\nCRE ↔ CRÊ - acentuado por ser monossílabo tônico terminado em E\nMES ↔ MÊS - acentuado por ser um monossílabo tônico terminado em ES\nPOS ↔ PÓS - acentuado por ser um monossílabo tônico terminado em ÓS\nCHAS ↔ CHÁS - acentuado por ser um monossílabo tônico terminado em AS\nFE ↔ FÉ - acentuado por ser um monossílabo tônico terminado em E\nREU ↔ RÉU - acentuado por ser um ditongo aberto de um monossílado tônico\nNOZ ↔ NOZ - não é acentuada por ser um monossílabo tônico terminado em Z\nROI ↔ RÓI - acentuado por ser ditongo aberto de um monossílabo tônico\nCEU ↔ CÉU - acentuado por ser ditongo aberto de um monossílabo tônico\nTRES ↔ TRÊS - acentuado por ser um monossílabo tônico terminado em ES\nTREM ↔ TREM - não é acentuado por ser um monossílabo tônico terminado em ditongo\nLA ↔ LÁ - acentuado por ser um monossílabo tônico terminado em A\nPE ↔ PÉ - acentuado por ser um monossílabo tônico terminado em E\nVEUS ↔ VÉUS - acentuado por ser um ditongo aberto de um monossílabo tônico\nSA ↔ SÁ - acentuado por ser um monossílabo tônico terminado em A\nCOS ↔ CÓS - acentuado por ser um monossílabo tônico terminado em OS\nSOIS ↔ SÓIS -  acentuado por ser um monossílabo tônico terminado em IS\nLEI ↔ LEI - não é acentuado por ser um ditongo fechado de um monossílabo tônico."
+  },
+  {
+    q: "👨‍🎓 5. Assinale a alternativa em que o elemento mórfico em destaque está corretamente analisado:",
+    options: [
+      "a) *menina – desinência nominal de gênero*",
+      "b) #vendeste – vogal de ligação#",
+      "c) #gasômetro – vogal temática de segunda conjugação#",
+      "d) #amassem – desinência de segunda pessoa do plural#",
+      "e) #cantaríeis  – desinência do imperfeito do subjuntivo#"
+    ],
+    correct: 0,
+    j: "Assinale a alternativa em que o elemento mórfico em destaque está corretamente analisado:\n \na) menina – desinência nominal de gênero\nb) vendeste – vogal de ligação\nc) gasômetro – vogal temática de segunda conjugação\nd) amassem – desinência de segunda pessoa do plural\ne) cantaríeis  – desinência do imperfeito do subjuntivo"
+  },
+  {
+    q: "👨‍🎓 6. Observe os prefixos abaixo:\n\nI- EPI significa sobre, por cima. Exemplos: epizoico, epílogo, episódio\nII- EU significa bom, agradável. Exemplos: eufonia, eufemismo\nIII- PARA significa atrás. Exemplos: paralelo, paramédico, paranormal\nIV- HIPER significa exessivo. Exemplos: hipertensão, hiperemocional\nV- PRO significa superioridade. Exemplos: prólogo, pró-vida, pró-arte",
+    options: [
+      "a) #Somente I, II e III estão corretas.#",
+      "b) *Somente I, II, IV estão corretas.*",
+      "c) #Somente II, III e IV estão corretas.#",
+      "d) #Somente II, III e V estão corretas.#",
+      "e) #Somente I, II e V estão corretas#"
+    ],
+    correct: 1,
+    j: "Correta: alternativa B\n\nPARA - significa lado a lado, à volta de, proximidade\nPRO - anterioridade, \nAtenção: Diferença de PRÓ e PRO\nO prefixo PRÓ, escrito com hífen e com acento, deve ser usado quando ele for independente da segunda palavra.\nExemplos: pró-brasileiro, pró-ativo, pró-forma, pró-atividade\nO prefixo PRO, escrito sem hífen e sem acento, deve ser usado quando ele for átono e dependente da segunda palavra.\nExemplos: propor, progredir, promover, prover, proativo, proatividade, procedente."
+  },
+  {
+    q: "👨‍🎓 7. Em 'O girassol da vida e o passatempo do tempo que passa não brincam nos lagos da lua', há, respectivamente:",
+    options: [
+      "a) #um elemento formado por aglutinação e outro por justaposição#",
+      "b) #um elemento formado por justaposição e outro por aglutinação#",
+      "c) *dois elementos formados por justaposição*",
+      "d) #dois elementos formados por aglutinação#",
+      "e) #dois substantivos formados por derivação conversiva#"
+    ],
+    correct: 2,
+    j: "Em \"O girassol da vida e o passatempo do tempo que passa não brincam nos lagos da lua\", há, respectivamente:\n \na) um elemento formado por aglutinação e outro por justaposição\nb) um elemento formado por justaposição e outro por aglutinação\nc) dois elementos formados por justaposição\nd) dois elementos formados por aglutinação\ne) dois substantivos formados por derivação conversiva"
+  },
+  {
+    q: "👨‍🎓 8. De acordo com os conhecimentos a respeito dos tipos de numerais, enumere a segunda coluna de acordo com a primeira.\n\n(1) Numeral Cardinal        (  ) dupla\n(2) Numeral Ordinal         (  ) ambos   \n(3) Numeral Multiplicativo   (  ) dúzia\n(4) Numeral Fracionário      (  ) dois\n(5) Numeral Coletivo         (  ) segundo\n(6) Numeral Dual             (  ) meio",
+    options: [
+      "a) #6, 5, 1, 3, 2, 4#",
+      "b) #2, 6, 3, 1, 4, 5#",
+      "c) #3, 6, 2, 1, 4, 5#",
+      "d) #3, 6, 2, 1, 5, 4#",
+      "e) *3, 6, 5, 1, 2, 4*"
+    ],
+    correct: 4,
+    j: "A sequência correta da numeração correlacionando os tipos de numerais é: (3) dupla, (6) ambos, (5) dúzia, (1) dois, (2) segundo, (4) meio."
+  },
+  {
+    q: "👨‍🎓 9. Em 'o clube percorreu um caminho espinhoso', temos:",
+    options: [
+      "a) *03 encontros consonantais, 04 dígrafos e 01 ditongo*",
+      "b) #03 encontros consonantais, 02 ditongos e 04 dígrafos#",
+      "c) #03 encontros consonantais, 02 dígrafos e 02 ditongos#",
+      "d) #03 encontros consonantais, 04 dígrafos e 02 ditongos#",
+      "e) #03 encontros consonantais, 02 ditongos e 04 dígrafos#"
+    ],
+    correct: 0,
+    j: "Correta: alternativa A\n\nEm o clube percorreu um caminho espinhoso, temos:\nClube - clu (encontro consonantal).\nPercorreu - rc (encontro consonantal); rr (dígrafo consonantal); eu (ditongo decrescente).\nUm - um (dígrafo vocálico).\nCaminho - nho (dígrafo consonantal).\nEspinhoso - sp (encontro consonantal); nho (dígrafo consonantal)."
+  },
+  {
+    q: "👨‍🎓 10. Assinale a alternativa incorreta quanto ao uso do hífen nos substantivos compostos:",
+    options: [
+      "a) #couve-flor#",
+      "b) #guarda-chuva#",
+      "c) *pára-quedas*",
+      "d) #navio-escola#",
+      "e) #carta-bilhete#"
+    ],
+    correct: 2,
+    j: "CORRETA: alternativa C (Incorreta quanto ao hífen)\nRegra 02: Usa-se hífen em palavras compostas por justaposição, desde que, quando separadas, cada elemento tenha seu próprio significado.\nExemplos: guarda-notuno, amor-perfeito, primeiro-ministro, boa-fé, decreto-lei...\n\na) couve-flor \nRegra 01- Usa-se hífen quando as palavras são usadas para denominar espécies de animais ou plantas.\nExemplos: cajá-manga, erva-cidreira, erva-doce, leão-marinho, bicho-preguiça...\n\nc) pára-quedas\nRegra 03- Não se usa hífen em palavras compostas por justaposição que perderam a noção da sua composição. Exemplos: paraquedas, girassol, madressilva, mandachuva, passatempo, pontapé...\n\nd) navio-escola\nRegra 04- Usa-se hífen em palavras compostas por justaposição, desde que, ambos os elementos sejam substantivos, e que o segundo elemento seja indicativo de tipo, forma, finalidade.\nExemplos: diretor-presidente, escola-modelo, plano-piloto, grupo-controle.\n\ne) carta-bilhete\nRegra 02- Usa-se hífen em palavras compostas por justaposição, desde que, cada elemento tenha seu próprio significado."
+  },
+  {
+    q: "👨‍🎓 11. Assinale a opção em que o vocábulo não apresenta desinência de feminino.",
+    options: [
+      "a) #primeira#",
+      "b) #incômoda#",
+      "c) #adulta#",
+      "d) #analfabeta#",
+      "e) *criatura*"
+    ],
+    correct: 4,
+    j: "Correta: alternativa E\n\nPara resolver uma questão de desinência de gênero, basta você procurar um correspondente do sexo oposto.\nCriatura, não existe criaturo.\nCriatura é uma palavra sobrecomum, portanto, só existe essa forma pra tratar masculino e feminino. Palavras sobrecomuns são aquelas definidas pelo contexto.\nSão exemplos de sobrecomum: A criança, a testemunha, o monstro, a criatura, o cônjuge, o indivíduo, a vítima, o algoz, o carrasco, o neném, o ser, o membro, a tribo, o fantasma, a árvore, etc."
+  },
+  {
+    q: "👨‍🎓 12. Associe as seguintes desinências modo temporais.\n\nI- VA- pretérito imperfeito do indicativo (1ª conjugação).\nII- RA (átono)- pretérito mais-que-perfeito do indicativo.\nIII- SSE- pretérito imperfeito do subjuntivo.\nIV- RIA- futuro perfeito do indicativo.\nV- IA- pretérito perfeito do indicativo (2ª e 3ª conjugação).",
+    options: [
+      "a) #Apenas I, III e V estão corretas.#",
+      "b) *Apenas I, II e III estão corretas.*",
+      "c) #Apenas I, II e V estão corretas.#",
+      "d) #Apenas I, III e IV estão corretas.#",
+      "e) #Todas as alternativas estão corretas.#"
+    ],
+    correct: 1,
+    j: "Correta: alternativa B\n\nVA e VE - desinência temporal do pretérito imperfeito do indicativo (1ª conjugação).\nExemplo: eu cantava... vós cantáveis...\nIA e IE - desinência temporal do pretérito imperfeito do indicativo (2ª e 3ª conjugação).\nExemplo: eu sumia... vós sumíeis...\nRA e RE (átono) - desinência temporal do pretérito mais-que-perfeito do indicativo.\nExemplo: eu vendera... vós vendêreis...\nSSE - desinência temporal do pretérito imperfeito do subjuntivo.\nExemplo: se eu cantasse, se tu cantasses...\nRIA e RIE - desinência temporal do futuro do pretérito do indicativo.\nExemplo: eu cantaria... vós cantaríeis..."
+  },
+  {
+    q: "👨‍🎓 13. O vocábulo cujo número de letras é igual ao número de fonemas está em:",
+    options: [
+      "a) #ressoou#",
+      "b) #habitando#",
+      "c) #grandes#",
+      "d) *sucedida*",
+      "e) #espinhos#"
+    ],
+    correct: 3,
+    j: "Correta: alternativa D\n\nA fórmula da contagem de fonemas é 'o número de letras é igual ao número fonemas, menos o número de dígrafos, mais o número de dífonos'.\nsucedida (possui oito letras, nenhum dígrafo e nenhum dífono. Logo, 8-0+0= 8 fonemas)\n\na) ressoou (possui sete letras, um dígrafo e nenhum dífono. Logo, 7-1+0= 6 fonemas)\nb) habitando (possui 'nove' letras, um dígrafo e nenhum dífono. Logo, 8-1+0= 7 fonemas)\nAtenção: ao lado de vogal, a letra H não é considerada na contagem de fonemas, pois ao lado de vogal, o H é uma letra muda. Por isso, a palavra habitando, que possui 9 letras, só foram consideradas 8.\nc) grandes (possui sete letras, um dígrafo e nenhum dífono. Logo, 7-1+0= 6 fonemas)\ne) espinhos (possui oito letras, um dígrafo e nenhum dífono. Logo, 8-1+0= 7 fonemas)"
+  },
+  {
+    q: "👨‍🎓 14. Na frase 'Aurélio não delinquiu', temos, respectivamente:",
+    options: [
+      "a) *ditongo decrescente oral, ditongo crescente oral, ditongo decrescente nasal, dígrafo e tritongo.*",
+      "b) #ditongo decrescente oral, ditongo crescente nasal, ditongo decrescente nasal, hiato e tritongo.#",
+      "c) #ditongo crescente oral, ditongo decrescente nasal, ditongo decrescente nasal, hiato e ditongo decrescente oral.#",
+      "d) #ditongo crescente nasal, ditongo crescente oral, ditongo crescente nasal, dígrafo e tritongo.#",
+      "e) #ditongo crescente oral, ditongo crescente oral, ditongo decrescente oral e ditongo crescente oral.#"
+    ],
+    correct: 0,
+    j: "Correta: alternativa A\n\nAurélio - Au (ditongo oral decrescente); lio (ditongo oral crescente).\nNão - não (ditongo nasal decrescente).\nDelinquiu - lin (dígrafo vocálico); quiu (tritongo oral)."
+  },
+  {
+    q: "👨‍🎓 15. Assinale a série de palavras em que todas são formadas por parassíntese:",
+    options: [
+      "a) *acorrentar, esburacar, despedaçar, amanhecer*",
+      "b) #solução, passional, corrupção, visionário#",
+      "c) #enrijecer, deslealdade, tortura, vidente#",
+      "d) #biografia, macróbio, bibliografia, asteróide#",
+      "e) #acromatismo, hidrogênio, litografar, idiotismo#"
+    ],
+    correct: 0,
+    j: "Correta: alternativa A\n\nA palavra 'acorrentar' é formada por derivação prefixal e sufixal, simultaneamente. O prefixo 'a-' (colocar/tornar-se) + radical 'corrente' + sufixo '-ar'.\n\n'esburacar' é formada por derivação prefixal e sufixal, simultaneamente. Prefixo 'es-' (afastamento) + radical 'buraco' + sufixo '-ar'.\n\n'despedaçar' é formada por derivação prefixal e sufixal, simultaneamente. Prefixo 'des-' (separação) + radical 'pedaço' + sufixo '-ar'.\n\n'amanhecer' é formada por derivação prefixal e sufixal, simultanemente. Prefixo 'a-' (início) + radical \"manhã\" + sufixo '-ecer'."
+  },
+  {
+    q: "👨‍🎓 16. Analise os termos destacados e marque a alternativa em que se verifica uma derivação parassintética.",
+    options: [
+      "a) *Não podíamos mais ficar ali e, então, caminhamos rumo àquele triste 'descampado'.*",
+      "b) #São ingênuas as pessoas que não acreditam na 'maldade', pois ela está em todo lugar.#",
+      "c) #Eu disse ao meu irmão que ele não era um 'super-homem' e devia se cuidar mais.#",
+      "d) #Na primeira segunda-feira de abril, a prisão da juíza causou o maior 'rebu' na cidade.#",
+      "e) #Meu irmão é um 'porco-espinho', anda sempre mal-humorado e não fala com ninguém.#"
+    ],
+    correct: 0,
+    j: "Correta: alternativa A\n\nA palavra 'descampado' é formada por derivação parassintética. O radical é 'campo'. O prefixo 'des-' + palavra primitiva (campo) + sufixo (ado). Se retirar um, a palavra não existe.\n\nb) 'maldade' é derivação sufixal (mal + dade).\nc) 'super-homem' é composição por justaposição.\nd) 'rebu' é uma simplificação informal de rebuliço.\ne) 'porco-espinho' é composição por justaposição."
+  },
+  {
+    q: "👨‍🎓 17. Estas revistas que eles ___ , ___ artigos curtos e manchetes que todos ___ .",
+    options: [
+      "a) #leem - tem - veem#",
+      "b) #leem - tem - vêm#",
+      "c) *leem - têm - veem*",
+      "d) #lêem - têm - vêm#",
+      "e) #ler - tem - veem#"
+    ],
+    correct: 2,
+    j: "Correta: alternativa C\n\nLêem, com acento, não existe (paroxítonas com letras repetidas não se acentuam).\nTem (singular) vs Têm (plural diferencial). Como o sujeito é plural, usa-se TÊM.\nVêm (sentido de vir) vs VEEM (sentido de ver). No contexto de manchetes, as pessoas VEEM (enxergam)."
+  },
+  {
+    q: "👨‍🎓 18. Considere os seguintes vocábulos: colégio, cárie, herói, oblíquo, céu;",
+    options: [
+      "a) #Todos os vocábulos são ditongos crescentes.#",
+      "b) #Todos os vocábulos são proparoxítonas aparentes.#",
+      "c) *Existem mais ditongos crescentes do que decrescentes.*",
+      "d) #Existem mais ditongos decrescentes do que crescentes.#",
+      "e) #Existem mais hiatos do que ditongos.#"
+    ],
+    correct: 2,
+    j: "Correta: alternativa C\n\nDitongo decrescente (vogal+semivogal): herói e céu (2).\nDitongo crescente (semivogal+vogal): colégio, cárie e oblíquo (3).\nLogo, existem mais crescentes do que decrescentes."
+  },
+  {
+    q: "👨‍🎓 19. Em qual das orações abaixo não foi usada uma palavra proparoxítona?",
+    options: [
+      "a) #Ela é fotógrafa do jornal da cidade.#",
+      "b) #Qual seria a dúvida?#",
+      "c) #Observara as tâmaras o dia inteiro.#",
+      "d) #Lamento pelo equívoco.#",
+      "e) *Divida 1500 por 3.*"
+    ],
+    correct: 4,
+    j: "Correta: alternativa E\n\nTodas as proparoxítonas são acentuadas. \nDívida (com acento) = substantivo (proparoxítona).\nDivida (sem acento) = verbo dividir (paroxítona).\nNas outras frases: fotógrafa, dúvida, tâmaras e equívoco são todas proparoxítonas."
+  },
+  {
+    q: "👨‍🎓 20. (Questão Duplicada ou Pulo de Numeração - Mantendo sequência do Usuário)",
+    options: ["a) *OK*", "b) # #", "c) # #", "d) # #", "e) # #"],
+    correct: 0,
+    j: "O usuário pulou a numeração ou consolidou na anterior. Mantendo o fluxo para não quebrar o script."
+  },
+  {
+    q: "👨‍🎓 21. Considere: (1) Vim - pretérito perfeito do indicativo (verbo vir); (2) Vir - infinitivo (verbo vir); (3) Vir - futuro do subjuntivo (verbo ver).\n\n( ) Quando eu ___ à lista de aprovados...\n( ) Se você o ___, por favor...\n( ) Eu nem queria te ver, mas ___ aqui...\n( ) ___ cedo para pegar um bom lugar.\n( ) Ela não deve ___ à próxima reunião.\n( ) ___ à exposição para conhecer...",
+    options: [
+      "a) #3, 3, 3, 1, 2, 1#",
+      "b) #3, 3, 2, 2, 1, 1#",
+      "c) #3, 3, 1, 2, 1, 2#",
+      "d) *3, 3, 2, 1, 2, 1*",
+      "e) #3, 3, 2, 2, 1, 2#"
+    ],
+    correct: 3,
+    j: "(3) Quando eu vir (futuro do ver);\n(3) Se você o vir (futuro do ver);\n(2) Mas vir aqui (infinitivo de vir);\n(1) Vim cedo (passado de vir);\n(2) Não deve vir (infinitivo de vir);\n(1) Vim à exposição (passado de vir)."
+  },
+  {
+    q: "👨‍🎓 22. Assinale a alternativa em que as duas palavras apresentem o mesmo número de fonemas:",
+    options: [
+      "a) #Impressora – correspondem#",
+      "b) #Conhecimento – consideração#",
+      "c) #Caracteres – consideração#",
+      "d) *Alcance – preenche*",
+      "e) #Delinquente – adequada#"
+    ],
+    correct: 3,
+    j: "Correta: alternativa D\n\nAlcance: 7 letras - 1 dígrafo (an) = 6 fonemas.\nPreenche: 8 letras - 2 dígrafos (pr/en/ch) = 6 fonemas.\n\nObservação: Em Correspondem, o EM final não é dígrafo, mas ditongo fonético (2 fonemas)."
+  },
+  {
+    q: "👨‍🎓 23. Assinale a alternativa que apresenta o plural dos substantivos compostos de acordo com a norma culta.",
+    options: [
+      "a) *notícia-bomba, notícias-bomba*",
+      "b) #bate-boca, bates-bocas#",
+      "c) #quinta-feira, quintas-feira#",
+      "d) #água-de-colônia, águas-de-colônias#",
+      "e) #tique-taque, tiques-taques#"
+    ],
+    correct: 0,
+    j: "Correta: alternativa A\n\nNotícias-bomba: Quando o segundo substantivo especifica o primeiro, apenas o primeiro varia.\nb) bate-bocas (verbo não varia);\nc) quintas-feiras (numeral varia);\nd) águas de colônia (preposicionado, só o 1º varia);\ne) tique-taques (repetidos, só o 2º varia)."
+  },
+  {
+    q: "👨‍🎓 24. Indique as desinências verbo nominais indicativas de: infinitivo - gerúndio - particípio",
+    options: [
+      "a) #r, do, do#",
+      "b) #r, to, ndo#",
+      "c) *r, ndo, to*",
+      "d) #ndo, r, to#",
+      "e) #to, ndo, r#"
+    ],
+    correct: 2,
+    j: "R- infinitivo | NDO- gerúndio | TO/DO- particípio.\n\nO particípio regular (verbo composto com TER/HAVER) usa ADO/IDO. O particípio irregular (verbo perifrásico com SER/ESTAR) pode sofrer alomorfia (ex: feito, cansado)."
+  },
+  {
+    q: "👨‍🎓 25. Na palavra equilibristas indique a ordem correta dos morfemas.",
+    options: [
+      "a) #radical, prefixo, desinência de gênero.#",
+      "b) #radical, sufixo, desinência de gênero.#",
+      "c) #radical, prefixo, desinência de número.#",
+      "d) *radical, sufixo, desinência de número.*",
+      "e) #radical, sufixo, desinência de gênero, desinência de número.#"
+    ],
+    correct: 3,
+    j: "Equilibr- (radical) | -ista (sufixo de ocupação/ofício) | -s (desinência de número plural). Não há desinência de gênero em equilibrista, pois é comum de dois gêneros."
+  }
 
-   {q:"❤ 2. Qual a cor do cavalo branco de São Jorge?",
-        options: [
-"a) Preto",
-"b) Marrom",
-"c) Branco",
-"d) Cinza",
-"e) Malhado"
-],
-        correct: 2,
-        j: "O nome já diz tudo: o cavalo é branco!"
-    },
-    {q:"❤ 3. Qual a cor do pintinho amarelinho?",
-        options: [
-"a) Verde",
-"b) Azul",
-"c) Amarelo",
-"d) Vermelho",
-"e) Roxo"
-],
-        correct: 2,
-        j: "O pintinho é amarelinho, conforme a música infantil."
-    },
-    {q:"❤ 4. Qual a cor da galinha pintadinha?",
-        options: [
-"a) Verde",
-"b) Azul com pintas brancas",
-"c) Toda preta",
-"d) Amarela",
-"e) Cinza"
-],
-        correct: 1,
-        j: "A Galinha Pintadinha é famosa por ser azul com suas pintinhas brancas."
-    },
-    {q:"❤ 5. Quais cores predominam num tabuleiro de xadrez tradicional?",
-        options: [
-"a) Verde e Amarelo",
-"b) Azul e Branco",
-"c) Preto e Branco",
-"d) Vermelho e Preto",
-"e) Marrom e Bege"],
-        correct: 2,
-        j: "O xadrez padrão mundial utiliza casas pretas (ou escuras) e brancas (ou claras)."
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ];
 
 const bancoVip4 = [
-{q: "💙 1. A Superintendência do Sistema Estadual de Atendimento Socioeducativo (SEAS), criada pela Lei Estadual nº 16.040/2016, possui como atribuição exclusiva a administração das unidades de internação, não integrando sua competência a formulação e a coordenação da política estadual de atendimento socioeducativo.",
-  options: [
-    "a) Parcialmente Correto", 
-    "b) Parcialmente Errado", 
-    "c) Certíssimo", 
-    "d) Totalmente Errado", 
-    "e) As questões A e B estão corretas"
-  ],
-  correct: 3,
-  j: "A SEAS também tem por finalidade a formulação, planejamento e coordenação da política estadual de atendimento socioeducativo (Art. 2º, Lei 16.040/16)."
-},
+  {
+    q: "👩‍🏫 1. No período “Fiquei ansiosa todas as vezes que viajei de avião.”, a expressão destacada não é escrita com acento grave (crase) porque:",
+    options: [
+      "a) #Trata-se da junção do artigo indefinido no plural 'as' com o advérbio de intensidade 'vezes'. Essa expressão gera efeito de sentido de 'sempre'.#",
+      "b) #Trata-se da junção do artigo indefinido 'a' com o verbo 'vir' no plural 'vezes'. Essa expressão gera efeito de sentido sinônimo de 'as ocasiões', 'os momentos.#",
+      "c) *Trata-se da junção do artigo definido no plural 'as' com o substantivo feminino no plural 'vezes'. Essa expressão gera efeito de sinônimo de 'as ocasiões', 'os momentos'.*",
+      "d) #Trata-se da junção do artigo definido no plural 'as' com o advérbio de modo no plural 'vezes'. Essa expressão gera efeito de sentido de 'todas as vezes'.#",
+      "e) #Trata-se da junção do artigo definido no singular com o substantivo composto no plural 'vezes'. Essa expressão gera efeito de sentido sinônimo de 'as ocasiões', 'os momentos'.#"
+    ],
+    correct: 2,
+    j: "Correta: alternativa C\n\nDe modo curto e resto, todas as vezes que \"às vezes\" puder ser retirado da frase, sem que a mesma perca o sentido, significa que \"às vezes\" é uma locução adverbial (adjunto adverbial). Todas as vezes que \"as vezes\" puder ser trocado por \"as ocasiões\", significa que \"as vezes\" é formado pelo plural do artigo definido \"A\" + substantivo feminino no plural \"VEZES\"."
+  },
+  {
+    q: "👩‍🏫 2. Sobre palavras cognatas, é correto afirmar:",
+    options: [
+      "a) #São palavras que não pertencem a uma mesma família.#",
+      "b) #Toda palavra que apresenta similaridade com outra é cognata.#",
+      "c) *Falsas cognatas são palavras que, à primeira vista, são parecidas, mas os significados de cada uma são bem distintos.*",
+      "d) #Palavras cognatas não são derivadas de uma mesma raiz.#",
+      "e) #Palavras cognatas não têm a mesma origem etimológica.#"
+    ],
+    correct: 2,
+    j: "Correta: alternativa C\n\nCognata, é um vocábulo derivado do latim – nossa língua mãe – cognatus, substantivo que denomina as palavras que 'nasceram juntas' e, por isso, apresentam similaridades. Os falsos cognatos apresentam uma semelhança meramente formal. Quando partimos para análise semântica, notamos que os significados são bem distintos\n\na) Palavras cognatas pertencem a uma mesma família.\nb) Nem toda palavra que apresenta similaridade com outra é cognata.\nd) Palavras cognatas são derivadas de uma mesma raiz.\ne) Palavras cognatas têm a mesma origem etimológica."
+  },
+  {
+    q: "👩‍🏫 3. O vocábulo CATEDRAL, do ponto de vista de sua formação é:",
+    options: [
+      "a) #Primitivo#",
+      "b) #Composto por aglutinação#",
+      "c) *Derivação sufixal*",
+      "d) #Parassintético#",
+      "e) #Derivado regressivo de catedrático#"
+    ],
+    correct: 2,
+    j: "Correta: alternativa C\n\nA palavra 'catedral' é formada a partir do substantivo 'cátedra' e do sufixo AL. A 'cátedra' é o assento elevado onde o bispo ou líder religioso se senta, e é um símbolo de autoridade na igreja.\nO sufixo AL é frequentemente usado para formar adjetivos a partir de substantivos, indicando uma relação ou característica. \nPortanto, 'catedral' é formada pela combinação do substantivo 'cátedra' com o sufixo AL, indicando uma igreja principal de uma diocese, que geralmente abriga o assento do bispo ou líder religioso e é o centro espiritual de uma comunidade religiosa.\nObservação: Importante lembrar que catedral é substantivo, mas a depender do contexto, catedral, pode ser considerado um adjetivo que se refere a algo relacionado à cátedra, caracterizando essa palavra uma derivação imprópria. Tudo vai depender de como o enunciado se aplica."
+  },
+  {
+    q: "👩‍🏫 4. Tendo em vista o código aqui exposto, aplique-o às palavras abaixo descritas, segundo os conhecimentos dos quais dispõe acerca da pronúncia dessas palavras:\n\n1- Ortoépia\n2- Cacoépia\n\n(  ) abecedário\n(  ) abóboda\n(  ) açogue\n(  ) aeroporto\n(  ) aterrisagem\n(  ) babador\n(  ) beneficiente\n(  ) cabeçário\n(  ) empecilho\n(  ) hilariedade",
+    options: [
+      "a) #1, 1, 2, 1, 2, 2, 1, 1, 1, 1#",
+      "b) #1, 1, 1, 1, 1, 2, 1, 2, 2, 2#",
+      "c) *1, 2, 2, 1, 2, 2, 2, 2, 1, 2*",
+      "d) #2, 2, 2, 1, 2, 1, 2, 2, 1, 1#",
+      "e) #1, 2, 2, 1, 1, 1, 2, 2, 1, 2#"
+    ],
+    correct: 2,
+    j: "Correta: alternativa C\n\nOrtoépia ou Ortoepia trata da pronúncia correta das palavras. A ortoepia é muito parecida com a Prosódia... cotidianamente pronunciamos palavras de forma incorreta, a esse erro de pronúncia, chamamos de cacoépia.\n\nPronúncia Correta - Pronúncia Errada\nabecedário           abecedalho\nabódada               abóboda\naçougue               açogue\naeroporto            areoporto\naterrissagem       aterrisagem\nbabadouro            babador\nbeneficente          beneficiente\ncabeçalho             cabeçário\nempecilho             impecilho\nhilaridade              hilariedade"
+  },
+  {
+    q: "👩‍🏫 5. Quanto aos substantivos, assinale a alternativa correta em relação à seguinte afirmação: Toda palavra determinada por _____ é considerada substantivo. A palavra que não caracteriza uma opção válida para a lacuna se encontra na alternativa:",
+    options: [
+      "a) #artigo#",
+      "b) #numeral#",
+      "c) #adjetivo#",
+      "d) *advérbio*",
+      "e) #pronome adjetivo#"
+    ],
+    correct: 3,
+    j: "Correta: alternativa D\n\nAs classes gramaticais que frequentemente são usadas para caracterizar ou descrever substantivos são artigo, numeral, adjetivo e pronome adjetivo. A questão pede que identifiquemos a classe gramatical que NÃO caracteriza o substantivo. Os advérbios não caracterizam substantivos; eles modificam verbos, adjetivos e outros advérbios."
+  },
+  {
+    q: "👩‍🏫 6. Observe os prefixos abaixo:\n\nI- ANTI significa oposição. Exemplos: antipatia, anticapitalista.\nII- ARCE e ARQUE significam superioridade. Exemplos: arcebispo, arquétipo.\nIII- CATA significa movimento pra cima. Exemplos: cataclisma, catavento.\nIV- DIS significa dificuldade. Exemplos: dispneia, distrair, difundir.\nV- EN significa posição exterior. Exemplos: encêfalo, enlatar.",
+    options: [
+      "a) #Somente I, II e V estão corretas.#",
+      "b) #Somente I, III e V estão corretas.#",
+      "c) #Somente I, II e III estão corretas.#",
+      "d) *Somente I, II e IV estão corretas.*",
+      "e) #Somente I, IV e V estão corretas.#"
+    ],
+    correct: 3,
+    j: "Correta: alternativa D\n\nI- ANTI significa oposição. (Correto)\nII- ARCE/ARQUE significa superioridade. (Correto)\nIII- CATA significa movimento pra BAIXO. (Incorreto: enunciado dizia 'cima')\nIV- DIS significa dificuldade. (Correto)\nV- EN significa posição INTERIOR. (Incorreto: enunciado dizia 'exterior')"
+  },
+  {
+    q: "👩‍🏫 7. Assinale a opção que apresenta desinência de número.",
+    options: [
+      "a) #pires#",
+      "b) *todos*",
+      "c) #lápis#",
+      "d) #vírus#",
+      "e) #férias#"
+    ],
+    correct: 1,
+    j: "Correta: alternativa B\n\nApesar de nenhuma das opções possuírem, verdadeiramente, desinência de número, podemos relacionar algum tipo de quantidade ao termo 'todos'. O plural de palavras terminadas com S, tais como pires, lápis, vírus, ônibus, tórax, tênis, bônus, cais, ônus, etc... desde que não oxítonas, faz-se do mesmo modo que no singular, portanto, não possuem desinência de número."
+  },
+  {
+    q: "👩‍🏫 8. Observe as palavras em destaque e assinale a frase que contém a forma incorreta do uso do hífen.",
+    options: [
+      "a) #O museu contém muitas 'obras-primas'.#",
+      "b) #As 'sempre-vivas' estão lindas no jardim.#",
+      "c) #Minha avó adorava assar 'pão de ló'.#",
+      "d) *Ele desenhou uma 'semi-reta' no quadro.*",
+      "e) #Todos foram nomeados 'tenentes-coronéis'.#"
+    ],
+    correct: 3,
+    j: "Correta: alternativa D\n\nRegra 15- Não se usa hífen quando o prefixo terminar em vogal e a segunda palavra começar com as consoantes R ou S, nesses casos, remove-se o hífen e duplica-se a consoante. Exemplos: semirreta, microrregião, antissocial, antirrugas, contrassenso...\n\na) Regra 23- Substantivo + adjetivo (obra-prima).\nb) Regra 01- Espécies de animais ou plantas (sempre-vivas).\nc) Regra 16- Palavras compostas ligadas por preposição (pão de ló) não usam hífen.\ne) Regra 02- Justaposição com elementos independentes (tenentes-coronéis)."
+  },
+  {
+    q: "👩‍🏫 16. Na frase: O girassol da vida e o passatempo do tempo que passa, não brincam nos lagos da lua, há, respectivamente:",
+    options: [
+      "a) #um elemento formado por aglutinação e outro por justaposição.#",
+      "b) #um elemento formado por justaposição e outro por aglutinação.#",
+      "c) *dois elementos formados por justaposição.*",
+      "d) #dois elementos formados por aglutinação.#",
+      "e) #nenhuma das alternativas#"
+    ],
+    correct: 2,
+    j: "Correta: alternativa C\n\nComposição justaposição: quando as duas (ou mais) palavras que se juntam não perdem nenhum fonema, mantendo a pronúncia anterior. Exemplos: passatempo (passa + tempo); girassol (gira + sol).\n \nComposição por aglutinação: quando pelo menos uma das palavra que se unem perde fonemas. Exemplos: petróleo (petra + óleo); fidalgo (filho + de + algo)."
+  },
+  {
+    q: "👩‍🏫 17. O mesmo processo de formação da palavra sublinhada em - Não se precisa de 'limpa' -, ocorre em:",
+    options: [
+      "a) #no mesmo ventre crescido.#",
+      "b) #iguais em tudo e na sina.#",
+      "c) *jamais o cruzei a nado.*",
+      "d) #na minha longa descida.#",
+      "e) #todo o velho contagia.#"
+    ],
+    correct: 2,
+    j: "Correta: alternativa C\n\nA palavra destacada sofreu uma derivação regressiva ou deverbal (limpar → limpa). Ao tentar fazermos a reversão da derivação, a única assertiva que fica com sentido é a C (nadar → nado).\n\na) 'crescido' usa sufixo IDO para particípio.\nb) 'sina' vem do latim 'signum', não é processo morfológico regular.\nd) 'descida' não permite transformação lógica deverbal similar.\ne) 'velho' em 'o velho' é derivação imprópria (mudança de classe), não regressiva."
+  }
 
-   {q:"💙 2. Qual a cor do cavalo branco de São Jorge?",
-        options: [
-"a) Preto",
-"b) Marrom",
-"c) Branco",
-"d) Cinza",
-"e) Malhado"
-],
-        correct: 2,
-        j: "O nome já diz tudo: o cavalo é branco!"
-    },
-    {q:"💙 3. Qual a cor do pintinho amarelinho?",
-        options: [
-"a) Verde",
-"b) Azul",
-"c) Amarelo",
-"d) Vermelho",
-"e) Roxo"
-],
-        correct: 2,
-        j: "O pintinho é amarelinho, conforme a música infantil."
-    },
-    {q:"💙 4. Qual a cor da galinha pintadinha?",
-        options: [
-"a) Verde",
-"b) Azul com pintas brancas",
-"c) Toda preta",
-"d) Amarela",
-"e) Cinza"
-],
-        correct: 1,
-        j: "A Galinha Pintadinha é famosa por ser azul com suas pintinhas brancas."
-    },
-    {q:"💙 5. Quais cores predominam num tabuleiro de xadrez tradicional?",
-        options: [
-"a) Verde e Amarelo",
-"b) Azul e Branco",
-"c) Preto e Branco",
-"d) Vermelho e Preto",
-"e) Marrom e Bege"],
-        correct: 2,
-        j: "O xadrez padrão mundial utiliza casas pretas (ou escuras) e brancas (ou claras)."
-    }
 ];
 
 
@@ -3579,14 +4613,11 @@ function registrarResposta(acertou, answer) {
 window.timerVipInterval = null; 
 
 function iniciarNovoRelogioVip() {
-    // 1. Limpa qualquer cronômetro que esteja rodando (evita o relógio acelerado)
     if (window.timerVipInterval) {
         clearInterval(window.timerVipInterval);
     }
 
     let segundos = 0;
-    // 2. Busca o elemento (pelas imagens, ele parece ser o que contém o "00:00")
-    // Tentei mapear pelo que vi nas prints, ajuste o ID se for diferente
     const displayRelogio = document.getElementById('timer') || document.querySelector('.timer');
 
     if (!displayRelogio) {
@@ -3594,38 +4625,37 @@ function iniciarNovoRelogioVip() {
         return;
     }
 
-    displayRelogio.innerHTML = "00:00"; // Reseta o visual ao iniciar
+    // 🔥 AJUSTE VIP: Define a cor dourada e reseta o tempo
+    displayRelogio.style.color = "gold"; 
+    displayRelogio.style.textShadow = "0 0 5px rgba(255, 215, 0, 0.5)";
+    displayRelogio.innerHTML = "00:00"; 
 
-    // 3. Inicia a contagem
     window.timerVipInterval = setInterval(() => {
         segundos++;
         
         let mins = Math.floor(segundos / 60);
         let secs = segundos % 60;
 
-        // Formatação para manter sempre dois dígitos (00:00)
         let formatado = 
             (mins < 10 ? "0" + mins : mins) + ":" + 
             (secs < 10 ? "0" + secs : secs);
 
         displayRelogio.innerHTML = formatado;
-    }, 1000); // Roda a cada 1 segundo
+    }, 1000);
 }
 
+
 function simuladoVipNovaEra() {
-    console.log("Aura: Iniciando motor limpo com selo VIP e Relógio Independente...");
+    console.log("Aura: Iniciando motor...");
     
-    // 1. Mata a Sala VIP com força total
     const salaVip = document.getElementById('area-apoiador');
     if (salaVip) salaVip.style.setProperty("display", "none", "important");
 
-    // 2. Configura o que o RENDER precisa
     window.isVipMode = true;
     quizType = 'simulado_vip';
     currentIndex = 0;
     historico = {};
 
-    // 3. Puxa as questões (MegaBanco)
     const bancoGigante = [
         ...(typeof bancoOficial !== 'undefined' ? bancoOficial : []),
         ...(typeof bancoModulos !== 'undefined' ? bancoModulos : []),
@@ -3635,42 +4665,11 @@ function simuladoVipNovaEra() {
 
     currentQuestions = bancoGigante.sort(() => 0.5 - Math.random()).slice(0, 30);
 
-    // 4. Executa a mudança de tela
     go('quiz');
-
-    // 5. Inicia o Relógio Independente (Cópia Blindada)
-    const iniciarNovoRelogioVip = (minutos) => {
-        if (timerVipIndependente) clearInterval(timerVipIndependente);
-        
-        let segundosTotais = minutos * 60;
-        const vContainer = document.getElementById('vidas-container');
-
-        timerVipIndependente = setInterval(() => {
-            let mins = Math.floor(segundosTotais / 60);
-            let segs = segundosTotais % 60;
-            let tempoFormatado = (mins < 10 ? "0" + mins : mins) + ":" + (segs < 10 ? "0" + segs : segs);
-
-            if (vContainer) {
-                // Mantém o Selo e coloca o Relógio embaixo
-                vContainer.innerHTML = `
-                    <div style="line-height: 1.2;">
-                        <span style="font-size:1.2em; color: gold; display: block;">SALA EXCLUSIVA</span>
-                        <span style="font-size:1.4em; color: white; font-family: monospace; font-weight: bold;">${tempoFormatado}</span>
-                    </div>`;
-            }
-
-            if (segundosTotais <= 0) {
-                clearInterval(timerVipIndependente);
-                alert("O tempo do Simulado VIP acabou!");
-                if (typeof sairModulo4Vip === 'function') sairModulo4Vip();
-            }
-            segundosTotais--;
-        }, 1000);
-    };
 
     setTimeout(() => {
         render();
-        iniciarNovoRelogioVip(60); // Inicia o relógio de 60 min totalmente novo
+        iniciarNovoRelogioVip(60); 
     }, 50);
 }
 
@@ -4237,52 +5236,55 @@ function finalizar() {
 }
 
 
-    // --- FUNÇÃO INTERNA PARA A POMPA E CIRCUNSTÂNCIA (VERSÃO INFINITA) ---
-    function exibirVitoriaPomposa(titulo) {
-        // 1. Configuração do Áudio (Loop Infinito)
-        var audioVitoria = new Audio('https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/Som%20de%20plateia%20gritos%20aplausos%20assobio.MP3');
-        audioVitoria.loop = true; // Os aplausos não param até o usuário sair
-        audioVitoria.play().catch(e => console.log("Áudio bloqueado"));
+   // --- FUNÇÃO INTERNA PARA A POMPA E CIRCUNSTÂNCIA (VERSÃO INFINITA) ---
+function exibirVitoriaPomposa(titulo) {
+    // 🔥 ÚNICO AJUSTE: Autodestruição do botão dourado para não sujar a vitória
+    document.getElementById('btn-sair-vip')?.remove();
 
-        // 2. Conteúdo Visual (Placar Neon)
-        _c.innerHTML = `
-            <div style="font-size:3em;">🚨</div>
-            <div style="color:#fff; font-weight:bold; text-shadow:0 0 10px #39FF14; text-transform: uppercase;">
-                ${titulo}<br>PARABÉNS POR SUA DETERMINAÇÃO!
-            </div>
-            <p style="color:#39FF14; font-size:1.8em; font-weight:900; margin: 15px 0;">
-                ACERTOS: ${acertosReais} / ${currentQuestions.length}
-            </p>
-            <p style="color:#FFD700; font-size:1.1em; font-weight:bold; text-shadow: 0 0 8px rgba(255, 215, 0, 0.6); margin-bottom: 5px;">
-                A REPETITIVIDADE É O CAMINHO DA EXCELÊNCIA.
-            </p>
-            <p style="color:#aaa; font-size:0.8em; text-transform: uppercase; letter-spacing: 1px;">
-                MÓDULO REINICIADO. MANTENHA O FOCO!
-            </p>
-        `;
+    // 1. Configuração do Áudio (Loop Infinito) - MANTIDO INTEGRALMENTE
+    var audioVitoria = new Audio('https://github.com/snakeraziel/aulas-seas/raw/refs/heads/main/Som%20de%20plateia%20gritos%20aplausos%20assobio.MP3');
+    audioVitoria.loop = true; 
+    audioVitoria.play().catch(e => console.log("Áudio bloqueado"));
 
-        // 3. Botão de Retorno (Agora desliga o som)
-        _t.style.display = "block";
-        _t.innerText = "ÁREA DE ESTUDOS";
-        _t.onclick = function() { 
-            audioVitoria.pause(); // Mata o som ao sair
-            audioVitoria.currentTime = 0; // Reseta o som
-            _o.style.display = "none";
-            go("area-restrita"); 
-        };
+    // 2. Conteúdo Visual (Placar Neon) - MANTIDO INTEGRALMENTE
+    _c.innerHTML = `
+        <div style="font-size:3em;">🚨</div>
+        <div style="color:#fff; font-weight:bold; text-shadow:0 0 10px #39FF14; text-transform: uppercase;">
+            ${titulo}<br>PARABÉNS POR SUA DETERMINAÇÃO!
+        </div>
+        <p style="color:#39FF14; font-size:1.8em; font-weight:900; margin: 15px 0;">
+            ACERTOS: ${acertosReais} / ${currentQuestions.length}
+        </p>
+        <p style="color:#FFD700; font-size:1.1em; font-weight:bold; text-shadow: 0 0 8px rgba(255, 215, 0, 0.6); margin-bottom: 5px;">
+            A REPETITIVIDADE É O CAMINHO DA EXCELÊNCIA.
+        </p>
+        <p style="color:#aaa; font-size:0.8em; text-transform: uppercase; letter-spacing: 1px;">
+            MÓDULO REINICIADO. MANTENHA O FOCO!
+        </p>
+    `;
 
-        // 4. Fogos de Artifício 
-        _v.style.display = "block";
-        if (typeof runCanvas === "function") runCanvas();
-        
-        setTimeout(function () { 
-            if (_v) _v.style.display = "none"; 
-            audioVitoria.pause(); 
-        }, 10000);
+    // 3. Botão de Retorno - MANTIDO INTEGRALMENTE
+    _t.style.display = "block";
+    _t.innerText = "ÁREA DE ESTUDOS";
+    _t.onclick = function() { 
+        audioVitoria.pause(); 
+        audioVitoria.currentTime = 0; 
+        _o.style.display = "none";
+        go("area-restrita"); 
+    };
 
-        // 5. Reset de Segurança
-        acertosSessao = 0;
-    }
+    // 4. Fogos de Artifício - MANTIDO INTEGRALMENTE
+    _v.style.display = "block";
+    if (typeof runCanvas === "function") runCanvas();
+    
+    setTimeout(function () { 
+        if (_v) _v.style.display = "none"; 
+        audioVitoria.pause(); 
+    }, 10000);
+
+    // 5. Reset de Segurança - MANTIDO INTEGRALMENTE
+    acertosSessao = 0;
+   }
 }
 
 
@@ -4595,7 +5597,7 @@ else {
         btnExtra.innerText = " ABORTAR "; 
         btnExtra.style.background = "#b91c1c"; 
         btnExtra.style.color = "#fff";
-        btnExtra.onclick = () => location.reload();
+        btnExtra.onclick = () => go('area-apoiador');
         
         if (typeof clearProgress === 'function') clearProgress('total');
       
@@ -6781,7 +7783,7 @@ function aplicarEfeitoCortina() {
         }
 
         const h2 = document.querySelector('#area-restrita h2');
-        if (h2) h2.innerHTML = "ESPERAMOS QUE TENHA APROVEITADO<br> NOSSA PLATARFORMA.<br><span style='color:#ffff; font-size:1em;'>PARA MAIORES ESCLARECIMENTOS:<br>88 994354250</span>";
+        if (h2) h2.innerHTML = "ESPERAMOS QUE TENHA APROVEITADO<br> NOSSA PLATAFORMA.<br><span style='color:#ffff; font-size:1em;'>PARA MAIORES INFORMAÇÕES:<br>88 994354250</span>";
     
     } else {
         // Caso o tempo de 12h tenha passado, removemos a marca do localStorage
