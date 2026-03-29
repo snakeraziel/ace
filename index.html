@@ -1172,12 +1172,11 @@ button {
 
 <div id="area-apoiador" class="screen" style="display:none !important; width:100vw; height:100vh; flex-direction:column; align-items:center; justify-content: center; background-color: #000 !important; position: fixed; top:0; left:0; z-index: 99999;">
     
-    <div style="text-align: center; margin-bottom: 10px;">
+   <div style="text-align: center; margin-bottom: 10px;">
         <p style="color: #FFD700; font-size: 1em; font-weight: 700; margin: 0; letter-spacing: 2px; opacity: 0.8;">
             SALA EXCLUSIVA DE
         </p>
         <div id="nome-doador-vip" style="color: #FFD700; font-size: 1.9em; font-weight: 900; text-shadow: 0 0 15px #FFD700; text-transform: uppercase; line-height: 1;">
-            ---
         </div>
     </div>
 
@@ -5808,7 +5807,7 @@ const bancoVip4 = [
     j: "Correta: alternativa D\n\nRegra 15- Não se usa hífen quando o prefixo terminar em vogal e a segunda palavra começar com as consoantes R ou S, nesses casos, remove-se o hífen e duplica-se a consoante. Exemplos: semirreta, microrregião, antissocial, antirrugas, contrassenso...\n\na) Regra 23- Substantivo + adjetivo (obra-prima).\nb) Regra 01- Espécies de animais ou plantas (sempre-vivas).\nc) Regra 16- Palavras compostas ligadas por preposição (pão de ló) não usam hífen.\ne) Regra 02- Justaposição com elementos independentes (tenentes-coronéis)."
   },
   {
-    q: "👩‍🏫 16. Na frase: O girassol da vida e o passatempo do tempo que passa, não brincam nos lagos da lua, há, respectivamente:",
+    q: "👩‍🏫 9. Na frase: O girassol da vida e o passatempo do tempo que passa, não brincam nos lagos da lua, há, respectivamente:",
     options: [
       "a) #um elemento formado por aglutinação e outro por justaposição.#",
       "b) #um elemento formado por justaposição e outro por aglutinação.#",
@@ -5820,7 +5819,7 @@ const bancoVip4 = [
     j: "Correta: alternativa C\n\nComposição justaposição: quando as duas (ou mais) palavras que se juntam não perdem nenhum fonema, mantendo a pronúncia anterior. Exemplos: passatempo (passa + tempo); girassol (gira + sol).\n \nComposição por aglutinação: quando pelo menos uma das palavra que se unem perde fonemas. Exemplos: petróleo (petra + óleo); fidalgo (filho + de + algo)."
   },
   {
-    q: "👩‍🏫 17. O mesmo processo de formação da palavra sublinhada em - Não se precisa de 'limpa' -, ocorre em:",
+    q: "👩‍🏫 10. O mesmo processo de formação da palavra sublinhada em - Não se precisa de 'limpa' -, ocorre em:",
     options: [
       "a) #no mesmo ventre crescido.#",
       "b) #iguais em tudo e na sina.#",
@@ -7323,7 +7322,6 @@ function resetarStatsVip() {
 
     atualizarPainelVip();
 }
-
 function iniciarNovoBancoVip(numero) {
     console.log("Iniciando Banco VIP:", numero);
 
@@ -7343,23 +7341,38 @@ function iniciarNovoBancoVip(numero) {
         else if (numero === 5) bancoBase = bancoVip5;
         else bancoBase = bancoVip;
 
-        let h = localStorage.getItem(keyHistorico);
-        historico = h ? JSON.parse(h) : {};
-
         let ordemSalva = localStorage.getItem(keyOrdem);
         let indices = ordemSalva ? JSON.parse(ordemSalva) : null;
 
         if (!indices || indices.length !== bancoBase.length) {
-            indices = bancoBase.map((_, i) => i).sort(() => 0.5 - Math.random());
+            indices = bancoBase.map((_, i) => i).sort(() => Math.random() - 0.5);
             localStorage.setItem(keyOrdem, JSON.stringify(indices));
         }
 
-        currentQuestions = indices.map(i => bancoBase[i]);
+        currentQuestions = indices.map(idxOriginal => {
+            let q = JSON.parse(JSON.stringify(bancoBase[idxOriginal]));
+            let textos = q.options.map(opt => opt.replace(/^[a-eA-E]\)\s*/, "").trim());
+
+            for (let i = textos.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [textos[i], textos[j]] = [textos[j], textos[i]];
+            }
+
+            const letras = ["a) ", "b) ", "c) ", "d) ", "e) "];
+            q.options = textos.map((t, i) => {
+                if (t.includes('*')) q.correct = i;
+                return letras[i] + t;
+            });
+
+            return q;
+        });
+
+        let h = localStorage.getItem(keyHistorico);
+        historico = h ? JSON.parse(h) : {};
 
         let salvo = localStorage.getItem(keyIndex);
         currentIndex = salvo ? parseInt(salvo) : 0;
 
-        // Lógica de Continuidade
         if (Object.keys(historico).length === 0) {
             currentIndex = 0;
         } 
@@ -7384,16 +7397,40 @@ function iniciarNovoBancoVip(numero) {
 
         go('quiz');
 
-        setTimeout(() => {
+        setTimeout(() => { 
             render();
-           
+
+            // 🔥 CORREÇÃO CIRÚRGICA (APÓS O RENDER)
+            const elementoNome = document.getElementById('nome-doador-vip');
+            if (elementoNome && window.nome) {
+                elementoNome.innerText = window.nome;
+            }
+
         }, 50);
 
     } catch (erro) {
-        console.error("ERRO CRÍTICO:", erro);
-        alert("Erro ao carregar o banco: " + erro);
+        console.error("ERRO:", erro);
+        alert("Erro ao carregar banco aleatório: " + erro);
     }
 }
+
+function aplicarNomeVip() {
+    const el = document.getElementById('nome-doador-vip');
+    if (el && window.nome) {
+        el.innerText = window.nome;
+    }
+}
+
+(function() {
+    const originalRender = render;
+
+    render = function() {
+        originalRender();
+        aplicarNomeVip();
+    };
+})();
+
+
 
 
 // ==========================================
@@ -7571,7 +7608,7 @@ function portuguesDoZero() {
     const prosseguir = confirm(`${saudacao}\n\nA área que você deseja adentrar é o coração de toda seleção ou concurso público, ainda assim, não tem questões.\n\nPor que essa área é tão relevante?\nPorque ela ensina o Português do Zero, de forma absoluta e de fácil entendimento. Você verá o português de forma diferente, em passo a passo, tornando sua aprendizagem diferenciada.\n\nVocê está tendo acesso a um conteúdo lapidado e feito com muito esmero. Sua simples leitura com foco na aprendizagem já te colocará em um outro nível.\n\nBoa leitura!`);
 
     if (prosseguir) {
-        go('menu');
+        go('area-apoiador');
     }
 }
 
@@ -8295,6 +8332,26 @@ function irParaAudioteca() {
     go('audioteca');
 }
 
+/* =====================================================
+   BANCO DE DOADORES - PORTA DA FRENTE
+   ===================================================== */
+(() => {
+  const _0x5a21 = [
+    { id: "0501", n: "Renato Therion" },
+    { id: "5010", n: "Raimundo Nonato Romão Silva" },
+    { id: "777", n: "Administrador" },
+    { id: "1621", n: "Lukenn" },
+    { id: "6112", n: "Luan Kennedy Almada de Lima" },
+    { id: "0682", n: "Laylson Costa Oliveira" }
+ 
+  ];
+
+  window.DOADORES = _0x5a21.map(item => ({
+    id: item.id,
+    nome: item.n
+  }));
+})();
+
 
 function usuarioIphone() {
     let id = prompt("🆔 DIGITE SEU ID DE INSCRIÇÃO:");
@@ -8302,13 +8359,10 @@ function usuarioIphone() {
 
     const idLimpo = id.trim();
 
-
 /* PORTA DOS FUNDOS */
-
 const vips = [
  "0501", "5010", "777", "1621", "6112", "0682"
 ];
-
 
     // Se o ID estiver na lista
     if (vips.includes(idLimpo)) {
@@ -8321,7 +8375,6 @@ const vips = [
         retaFinal(); 
     }
 }
-
 
 // Esse banco de dados casa com a função 'validar(input)' e com a 'agradecimentoVip'
 const limpeza = [
@@ -8726,26 +8779,6 @@ function fecharSlideVitoria() {
     go('area-restrita');
 }
 
-
-/* =====================================================
-   BANCO DE DOADORES - PORTA DA FRENTE
-   ===================================================== */
-(() => {
-  const _0x5a21 = [
-    { id: "0501", n: "Renato Therion" },
-    { id: "5010", n: "Raimundo Nonato Romão Silva" },
-    { id: "777", n: "Administrador" },
-    { id: "1621", n: "Lukenn" },
-    { id: "6112", n: "Luan Kennedy Almada de Lima" },
-    { id: "0682", n: "Laylson Costa Oliveira" }
- 
-  ];
-
-  window.DOADORES = _0x5a21.map(item => ({
-    id: item.id,
-    nome: item.n
-  }));
-})();
 
 
 /* =============================== */
