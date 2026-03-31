@@ -439,7 +439,7 @@ button {
     max-width: 95%;          /* Impede estouro */
     background: #020617;
     border: none !important;
-    padding: 5px 10px;      /* Aumentei um pouco para dar mais corpo */
+    padding: 5px 10px;
     margin-bottom: 8px;
     border-radius: 8px;
     cursor: pointer;
@@ -447,9 +447,15 @@ button {
     font-weight: 600;
     color: #cbd5e1;
     text-align: left;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+
+    /* 🔥 AJUSTE CIRÚRGICO */
+    display: block;          /* remove o flex que quebrava o HTML */
+    line-height: 1.4;        /* melhora leitura */
+    word-break: break-word;  /* evita quebra estranha */
+}
+
+.opt * {
+    display: inline !important;
 }
 
 /* 2. Ajuste Especial para V/F (Quando tem exatamente 2 opções) */
@@ -494,7 +500,9 @@ button {
     background: none !important;
 }
 
-
+.opt span[style*="#FFA500"] {
+    color: #FFA500 !important;
+}
 
         /* FLASHES DE TELA INTEIRA - ACERTO/ERRO */
         @keyframes flashVerde3x { 0%, 33%, 66%, 100% { background: #020617; } 15%, 48%, 81% { background: rgba(0,255,65,0.2); } }
@@ -726,14 +734,6 @@ button {
     100% { background-color: transparent; }
 }
 
-
-<!-- @media (max-width: 768px) {
-  .contador-hits {
-    right: 50%;
-    transform: translateX(50%);
-    bottom: 8px;
-  }
-} -->
 
 
     </style>
@@ -11974,7 +11974,7 @@ const bancoVip2 = [
 
 const bancoVip3 = [
 {
-    q: "👨‍🎓 1. A mesma regra de acentuação que vale para “rápida”, vale também para:",
+    q: "👨‍🎓 1. A mesma regra de acentuação que vale para <span style='color: #FFA500; font-weight: bold;'>rápida</span>, vale também para:",
     options: [
       "a) #mutável, estaríamos, vírgula, admissíveis#",
       "b) *vírgula, simbólica, símbolo, hieróglifos*",
@@ -11983,7 +11983,7 @@ const bancoVip3 = [
       "e) #português, inglês, francês, japonês#"
     ],
     correct: 1,
-    j: "\"Rápida\", é acentuada por ser uma palavra proparoxítona e todas as proparoxítonas são acentuadas. A única sequência em que todas as palavras são proparoxítonas é vírgula, simbólica, símbolo, hieróglifos.\n\na) mutável (paroxítona terminada em L), estaríamos (proparoxítona), vírgula (proparoxítona), admissíveis (paroxítona terminada em ditongo).\n\nb) vírgula (proparoxítona), simbólica (proparoxítona), símbolo (proparoxítona), hieróglifos (proparoxítona).\n\nc) ortográficos (proparoxítona), colégios (paroxítona terminada em ditongo), egípcios (paroxítona terminada em ditongo), língua (paroxítona terminada em ditongo).\n\nd) básicos (proparoxítona), difícil (paroxítona terminada em L), colégios (paroxítona terminada em ditongo), língua (paroxítona terminada em ditongo).\n\ne) português (oxítona terminada em ES), inglês (oxítona terminada em ES), francês (oxítona terminada em ES), japonês (oxítona terminada em ES)."
+    j: "<b>Rápida</b>, é acentuada por ser uma palavra proparoxítona e todas as proparoxítonas são acentuadas. A única sequência em que todas as palavras são proparoxítonas é vírgula, simbólica, símbolo, hieróglifos.<br><br>a) mutável (paroxítona terminada em L), estaríamos (proparoxítona), vírgula (proparoxítona), admissíveis (paroxítona terminada em ditongo).<br><br>b) vírgula (proparoxítona), simbólica (proparoxítona), símbolo (proparoxítona), hieróglifos (proparoxítona).<br><br>c) ortográficos (proparoxítona), colégios (paroxítona terminada em ditongo), egípcios (paroxítona terminada em ditongo), língua (paroxítona terminada em ditongo).<br><br>d) básicos (proparoxítona), difícil (paroxítona terminada em L), colégios (paroxítona terminada em ditongo), língua (paroxítona terminada em ditongo).<br><br>e) português (oxítona terminada em ES), inglês (oxítona terminada em ES), francês (oxítona terminada em ES), japonês (oxítona terminada em ES)."
   },
   {
     q: "👨‍🎓 2. Sobre o encontro vocálico conhecido como hiato, é correto afirmar que:",
@@ -11992,13 +11992,13 @@ const bancoVip3 = [
       "b) #é o encontro de uma vogal e uma semivogal# em uma mesma sílaba.",
       "c) *é o encontro de duas vogais em sílabas vizinhas.*",
       "d) #é o encontro entre uma vogal e uma semivogal# em sílabas vizinhas.",
-      "e) #devem ser acentuados o ‘i’ ou o ‘u’ tônico dos hiatos, quando forem a sua segunda vogal, desde que estejam sozinhos# na sílaba."
+      "e) #devem ser acentuados o <span style='color:orange;font-weight:bold'>i</span> ou o <span style='color:orange;font-weight:bold'>u</span> tônico dos hiatos, quando forem a sua segunda vogal, desde que estejam sozinhos na sílaba.#"
     ],
     correct: 2,
-    j: "a) descrição do ditongo.\n\nb) descrição do ditongo.\n\nc) descrição do hiato.\n\nd) descrição do ditongo.\n\ne) existe apenas uma regra para acentuação dos hiatos, a regra diz: acentua-se o ‘i’ ou o ‘u’ tônico dos hiatos, quando forem a sua segunda vogal, devem estar na sílaba sozinhos ou acompanhados de S."
-  },
+    j: "a) descrição do ditongo.<br><br>b) descrição do ditongo.<br><br>c) descrição do hiato.<br><br>d) descrição do ditongo.<br><br>e) existe apenas uma regra para acentuação dos hiatos: <i>acentua-se o <b>i</b> ou o <b>u</b> tônico dos hiatos, quando forem a sua segunda vogal, sozinhos na sílaba ou com S.</i>"
+},
   {
-    q: "👨‍🎓 3. Na sua estrutura mórfica, a forma verbal desorganizássemos não possui:",
+    q: "👨‍🎓 3. Na sua estrutura mórfica, a forma verbal <span style='color: #FFA500; font-weight: bold;'>desorganizássemos</span> não possui:",
     options: [
       "a) desinência modo-temporal.",
       "b) afixo.",
@@ -12007,10 +12007,10 @@ const bancoVip3 = [
       "e) tema."
     ],
     correct: 3,
-    j: "a) As principais DMT são VA, VE, IA, RIA, SSE, RA (átono), RÁ (tônico).\n\nb) Afixos são morfemas que precisam se ligar à palavra para que ela faça sentido ou mude seu significado. Temos três tipos de afixos e eles são classificados como prefixos (vem antes do radical), sufixos (vem depois do radical) e infixos (pode aparecer entre o radical e o sufixo).\n\nc) As principais DNP são MOS, S, M, O.\n\nd) Vogal de ligação é a vogal adicionada à palavra para evitar a cacofonia. Vamos dar por exemplo a palavra REAL, se eu adiciono o sufixo DADE, a palavra ficará REALDADE. A palavra do jeito que está, não possui um som agradável, como a língua se preocupa muito com a eufonia, então, para dar um som agradável, é adicionado o infixo 'i', e a palavra se torna REALIDADE.\n\ne) Tema é a junção do radical + vogal temática. Para reconhecer o tema de uma palavra, primeiramente você deve achar o radical e acrescentar a vogal temática. No caso de desorganizássemos, já sabemos que o radical é 'organiz' e a vogal temática é o 'A'. Então o tema é 'desorganiza'.\n\nNo caso de desorganizássemos, estruturando a palavra, é possível afirmarmos que a palavra não possui vogal de ligação:\nDES - prefixo\nORGANIZA - tema (radical: organiz) + (vogal temática: a)\nSSE - desinência modo temporal que indica o pretérito imperfeito do subjuntivo\nMOS - desinência número pessoal indicativa da 1ª pessoa do plural"
+    j: "a) As principais DMT são VA, VE, IA, RIA, SSE, RA (átono), RÁ (tônico).<br><br>b) Afixos são morfemas que precisam se ligar à palavra para que ela faça sentido ou mude seu significado. Temos três tipos de afixos e eles são classificados como prefixos (vem antes do radical), sufixos (vem depois do radical) e infixos (pode aparecer entre o radical e o sufixo).<br><br>c) As principais DNP são MOS, S, M, O.<br><br>d) Vogal de ligação é a vogal adicionada à palavra para evitar a cacofonia. Vamos dar por exemplo a palavra REAL, se eu adiciono o sufixo DADE, a palavra ficará REALDADE. A palavra do jeito que está, não possui um som agradável, como a língua se preocupa muito com a eufonia, então, para dar um som agradável, é adicionado o infixo <b>i</b>, e a palavra se torna REALIDADE.<br><br>e) Tema é a junção do radical + vogal temática. Para reconhecer o tema de uma palavra, primeiramente você deve achar o radical e acrescentar a vogal temática. No caso de <b>desorganizássemos</b>, já sabemos que o radical é <b>organiz</b> e a vogal temática é o <b>a</b>. Então o tema é <b>desorganiza</b>.<br>Estruturando a palavra, é possível afirmarmos que a palavra não possui vogal de ligação:<br>DES - prefixo<br>ORGANIZA - tema (radical: organiz) + (vogal temática: a)<br>SSE - desinência modo temporal que indica o pretérito imperfeito do subjuntivo<br>MOS - desinência número pessoal indicativa da 1ª pessoa do plural."
   },
   {
-    q: "👨‍🎓 4. Observe os monossílabos abaixo, em seguida, escolha a alternativa correta associando (V) para verdadeiro e (F) para falso, de acordo com as regra de acentuação dos monossílabos tônicos:\nFAS, DOR, CRE, MES, POS, CHAS, REU, NOZ\nROI, CEU, TRES, TREM, VEUS, SA, SOIS, COS, LEI\n\n(  ) Existem 15 monossílabos tônicos necessitando de acentuação\n(  ) Todas as regras de acentuação dos monossílabos tônicos podem ser encontradas nessa lista de palavras\n(  ) Existem 4 monossílabos não acentuados por fugirem às regras de acentuação.\n",
+    q: "👨‍🎓 4. Observe os monossílabos abaixo, em seguida, escolha a alternativa correta associando (V) para verdadeiro e (F) para falso, de acordo com as regra de acentuação dos monossílabos tônicos:<br>FAS, DOR, CRE, MES, POS, CHAS, REU, NOZ\nROI, CEU, TRES, TREM, VEUS, SA, SOIS, COS, LEI<br><br>(  ) Existem 15 monossílabos tônicos necessitando de acentuação.<br>(  ) Todas as regras de acentuação dos monossílabos tônicos podem ser encontradas nessa lista de palavras.<br>(  ) Existem 4 monossílabos não acentuados por fugirem às regras de acentuação.",
     options: [
       "a) #V, V, V#",
       "b) #F, F, F#",
@@ -12019,7 +12019,7 @@ const bancoVip3 = [
       "e) #V, V, F#"
     ],
     correct: 3,
-    j: "FAS ↔ FÃS - não possui acento, apenas sinal de nasalização\nDOR ↔ DOR - não é acentuado por ser um monossílabo tônico terminado em R\nCRE ↔ CRÊ - acentuado por ser monossílabo tônico terminado em E\nMES ↔ MÊS - acentuado por ser um monossílabo tônico terminado em ES\nPOS ↔ PÓS - acentuado por ser um monossílabo tônico terminado em ÓS\nCHAS ↔ CHÁS - acentuado por ser um monossílabo tônico terminado em AS\nFE ↔ FÉ - acentuado por ser um monossílabo tônico terminado em E\nREU ↔ RÉU - acentuado por ser um ditongo aberto de um monossílado tônico\nNOZ ↔ NOZ - não é acentuada por ser um monossílabo tônico terminado em Z\nROI ↔ RÓI - acentuado por ser ditongo aberto de um monossílabo tônico\nCEU ↔ CÉU - acentuado por ser ditongo aberto de um monossílabo tônico\nTRES ↔ TRÊS - acentuado por ser um monossílabo tônico terminado em ES\nTREM ↔ TREM - não é acentuado por ser um monossílabo tônico terminado em ditongo\nLA ↔ LÁ - acentuado por ser um monossílabo tônico terminado em A\nPE ↔ PÉ - acentuado por ser um monossílabo tônico terminado em E\nVEUS ↔ VÉUS - acentuado por ser um ditongo aberto de um monossílabo tônico\nSA ↔ SÁ - acentuado por ser um monossílabo tônico terminado em A\nCOS ↔ CÓS - acentuado por ser um monossílabo tônico terminado em OS\nSOIS ↔ SÓIS -  acentuado por ser um monossílabo tônico terminado em IS\nLEI ↔ LEI - não é acentuado por ser um ditongo fechado de um monossílabo tônico."
+    j: "FAS → FÃS - não possui acento, apenas sinal de nasalização<br>DOR → DOR - não é acentuado por ser um monossílabo tônico terminado em R<br>CRE → CRÊ - acentuado por ser monossílabo tônico terminado em E<br>MES → MÊS - acentuado por ser um monossílabo tônico terminado em ES<br>POS → PÓS - acentuado por ser um monossílabo tônico terminado em ÓS<br>CHAS → CHÁS - acentuado por ser um monossílabo tônico terminado em AS<br>FE → FÉ - acentuado por ser um monossílabo tônico terminado em E<br>REU → RÉU - acentuado por ser um ditongo aberto de um monossílado tônico<br>NOZ → NOZ - não é acentuada por ser um monossílabo tônico terminado em Z<br>ROI → RÓI - acentuado por ser ditongo aberto de um monossílabo tônico<br>CEU → CÉU - acentuado por ser ditongo aberto de um monossílabo tônico<br>TRES → TRÊS - acentuado por ser um monossílabo tônico terminado em ES<br>TREM → TREM - não é acentuado por ser um monossílabo tônico terminado em ditongo<br>LA → LÁ - acentuado por ser um monossílabo tônico terminado em A<br>PE → PÉ - acentuado por ser um monossílabo tônico terminado em E<br>VEUS → VÉUS - acentuado por ser um ditongo aberto de um monossílabo tônico<br>SA → SÁ - acentuado por ser um monossílabo tônico terminado em A<br>COS → CÓS - acentuado por ser um monossílabo tônico terminado em OS<br>SOIS → SÓIS -  acentuado por ser um monossílabo tônico terminado em IS<br>LEI → LEI - não é acentuado por ser um ditongo fechado de um monossílabo tônico."
   },
   {
     q: "👨‍🎓 5. Assinale a alternativa em que o elemento mórfico em destaque está corretamente analisado:",
@@ -12031,10 +12031,10 @@ const bancoVip3 = [
       "e) #cantaríeis  – desinência do imperfeito do subjuntivo#"
     ],
     correct: 0,
-    j: "Assinale a alternativa em que o elemento mórfico em destaque está corretamente analisado:\n \na) menina – desinência nominal de gênero\nb) vendeste – vogal de ligação\nc) gasômetro – vogal temática de segunda conjugação\nd) amassem – desinência de segunda pessoa do plural\ne) cantaríeis  – desinência do imperfeito do subjuntivo"
+    j: "Assinale a alternativa em que o elemento mórfico em destaque está corretamente analisado:<br><br>a) menina – desinência nominal de gênero<br>b) vendeste – vogal de ligação<br>c) gasômetro – vogal temática de segunda conjugação<br>d) amassem – desinência de segunda pessoa do plural<br>e) cantaríeis  – desinência do imperfeito do subjuntivo"
   },
   {
-    q: "👨‍🎓 6. Observe os prefixos abaixo:\n\nI- EPI significa sobre, por cima. Exemplos: epizoico, epílogo, episódio\nII- EU significa bom, agradável. Exemplos: eufonia, eufemismo\nIII- PARA significa atrás. Exemplos: paralelo, paramédico, paranormal\nIV- HIPER significa exessivo. Exemplos: hipertensão, hiperemocional\nV- PRO significa superioridade. Exemplos: prólogo, pró-vida, pró-arte",
+    q: "👨‍🎓 6. Observe os prefixos abaixo:<br><br>I- EPI significa sobre, por cima. Exemplos: epizoico, epílogo, episódio<br>II- EU significa bom, agradável. Exemplos: eufonia, eufemismo<br>III- PARA significa atrás. Exemplos: paralelo, paramédico, paranormal<br>IV- HIPER significa exessivo. Exemplos: hipertensão, hiperemocional<br>V- PRO significa superioridade. Exemplos: prólogo, pró-vida, pró-arte",
     options: [
       "a) #Somente I, II e III estão corretas.#",
       "b) *Somente I, II, IV estão corretas.*",
@@ -12043,10 +12043,10 @@ const bancoVip3 = [
       "e) #Somente I, II e V estão corretas#"
     ],
     correct: 1,
-    j: "Correta: alternativa B\n\nPARA - significa lado a lado, à volta de, proximidade\nPRO - anterioridade, \nAtenção: Diferença de PRÓ e PRO\nO prefixo PRÓ, escrito com hífen e com acento, deve ser usado quando ele for independente da segunda palavra.\nExemplos: pró-brasileiro, pró-ativo, pró-forma, pró-atividade\nO prefixo PRO, escrito sem hífen e sem acento, deve ser usado quando ele for átono e dependente da segunda palavra.\nExemplos: propor, progredir, promover, prover, proativo, proatividade, procedente."
+    j: "PARA - significa lado a lado, à volta de, proximidade<br>PRO - anterioridade<br><b>Atenção</b>: diferença de PRÓ e PRO<br>O prefixo PRÓ, escrito com hífen e com acento, deve ser usado quando ele for independente da segunda palavra.<br>Exemplos: pró-brasileiro, pró-ativo, pró-forma, pró-atividade<br>O prefixo PRO, escrito sem hífen e sem acento, deve ser usado quando ele for átono e dependente da segunda palavra.<br>Exemplos: propor, progredir, promover, prover, proativo, proatividade, procedente."
   },
   {
-    q: "👨‍🎓 7. Em 'O girassol da vida e o passatempo do tempo que passa não brincam nos lagos da lua', há, respectivamente:",
+    q: "👨‍🎓 7. Em <span style='color: #FFA500; font-weight: bold;'>O girassol da vida e o passatempo do tempo que passa não brincam nos lagos da lua</span>, há, respectivamente:",
     options: [
       "a) #um elemento formado por aglutinação e outro por justaposição#",
       "b) #um elemento formado por justaposição e outro por aglutinação#",
@@ -12055,10 +12055,10 @@ const bancoVip3 = [
       "e) #dois substantivos formados por derivação conversiva#"
     ],
     correct: 2,
-    j: "Em \"O girassol da vida e o passatempo do tempo que passa não brincam nos lagos da lua\", há, respectivamente:\n \na) um elemento formado por aglutinação e outro por justaposição\nb) um elemento formado por justaposição e outro por aglutinação\nc) dois elementos formados por justaposição\nd) dois elementos formados por aglutinação\ne) dois substantivos formados por derivação conversiva"
+    j: "Em <b>o girassol da vida e o passatempo do tempo que passa não brincam nos lagos da lua</b>, há, respectivamente:<br><br>a) um elemento formado por aglutinação e outro por justaposição<br><br>b) um elemento formado por justaposição e outro por aglutinação<br><br>c) dois elementos formados por justaposição<br><br>d) dois elementos formados por aglutinação<br><br>e) dois substantivos formados por derivação conversiva"
   },
-  {
-    q: "👨‍🎓 8. De acordo com os conhecimentos a respeito dos tipos de numerais, enumere a segunda coluna de acordo com a primeira.\n\n(1) Numeral Cardinal        (  ) dupla\n(2) Numeral Ordinal         (  ) ambos   \n(3) Numeral Multiplicativo   (  ) dúzia\n(4) Numeral Fracionário      (  ) dois\n(5) Numeral Coletivo         (  ) segundo\n(6) Numeral Dual             (  ) meio",
+ {
+    q: "👨‍🎓 8. De acordo com os conhecimentos a respeito dos tipos de numerais, enumere a segunda coluna de acordo com a primeira.<br><br>(1) Numeral Cardinal          ( ) dupla<br>(2) Numeral Ordinal           ( ) ambos<br>(3) Numeral Multiplicativo    ( ) dúzia<br>(4) Numeral Fracionário       ( ) dois<br>(5) Numeral Coletivo          ( ) segundo<br>(6) Numeral Dual              ( ) meio",
     options: [
       "a) #6, 5, 1, 3, 2, 4#",
       "b) #2, 6, 3, 1, 4, 5#",
@@ -12067,10 +12067,10 @@ const bancoVip3 = [
       "e) *3, 6, 5, 1, 2, 4*"
     ],
     correct: 4,
-    j: "A sequência correta da numeração correlacionando os tipos de numerais é: (3) dupla, (6) ambos, (5) dúzia, (1) dois, (2) segundo, (4) meio."
+    j: "A sequência correta da numeração correlacionando os tipos de numerais é:<br>(3) dupla<br>(6) ambos<br>(5) dúzia<br>(1) dois<br>(2) segundo<br>(4) meio."
   },
   {
-    q: "👨‍🎓 9. Em 'o clube percorreu um caminho espinhoso', temos:",
+    q: "👨‍🎓 9. Em <span style='color: #FFA500; font-weight: bold;'>o clube percorreu um caminho espinhoso</span>, temos:",
     options: [
       "a) *03 encontros consonantais, 04 dígrafos e 01 ditongo*",
       "b) #03 encontros consonantais, 02 ditongos e 04 dígrafos#",
@@ -12079,7 +12079,7 @@ const bancoVip3 = [
       "e) #03 encontros consonantais, 02 ditongos e 04 dígrafos#"
     ],
     correct: 0,
-    j: "Correta: alternativa A\n\nEm o clube percorreu um caminho espinhoso, temos:\nClube - clu (encontro consonantal).\nPercorreu - rc (encontro consonantal); rr (dígrafo consonantal); eu (ditongo decrescente).\nUm - um (dígrafo vocálico).\nCaminho - nho (dígrafo consonantal).\nEspinhoso - sp (encontro consonantal); nho (dígrafo consonantal)."
+    j: "Em <b>o clube percorreu um caminho espinhoso</b>, temos:<br>Clube - clu (encontro consonantal).<br>Percorreu - rc (encontro consonantal); rr (dígrafo consonantal); eu (ditongo decrescente).<br>Um - um (dígrafo vocálico).<br>Caminho - nho (dígrafo consonantal).<br>Espinhoso - sp (encontro consonantal); nho (dígrafo consonantal)."
   },
   {
     q: "👨‍🎓 10. Assinale a alternativa incorreta quanto ao uso do hífen nos substantivos compostos:",
@@ -12091,7 +12091,7 @@ const bancoVip3 = [
       "e) #carta-bilhete#"
     ],
     correct: 2,
-    j: "CORRETA: alternativa C (Incorreta quanto ao hífen)\nRegra 02: Usa-se hífen em palavras compostas por justaposição, desde que, quando separadas, cada elemento tenha seu próprio significado.\nExemplos: guarda-notuno, amor-perfeito, primeiro-ministro, boa-fé, decreto-lei...\n\na) couve-flor \nRegra 01- Usa-se hífen quando as palavras são usadas para denominar espécies de animais ou plantas.\nExemplos: cajá-manga, erva-cidreira, erva-doce, leão-marinho, bicho-preguiça...\n\nc) pára-quedas\nRegra 03- Não se usa hífen em palavras compostas por justaposição que perderam a noção da sua composição. Exemplos: paraquedas, girassol, madressilva, mandachuva, passatempo, pontapé...\n\nd) navio-escola\nRegra 04- Usa-se hífen em palavras compostas por justaposição, desde que, ambos os elementos sejam substantivos, e que o segundo elemento seja indicativo de tipo, forma, finalidade.\nExemplos: diretor-presidente, escola-modelo, plano-piloto, grupo-controle.\n\ne) carta-bilhete\nRegra 02- Usa-se hífen em palavras compostas por justaposição, desde que, cada elemento tenha seu próprio significado."
+    j: "Regra 02: Usa-se hífen em palavras compostas por justaposição, desde que, quando separadas, cada elemento tenha seu próprio significado.<br>Exemplos: guarda-notuno, amor-perfeito, primeiro-ministro, boa-fé, decreto-lei...<br><br>a) couve-flor<br>Regra 01- Usa-se hífen quando as palavras são usadas para denominar espécies de animais ou plantas.<br>Exemplos: cajá-manga, erva-cidreira, erva-doce, leão-marinho, bicho-preguiça...<br><br>c) pára-quedas<br>Regra 03- Não se usa hífen em palavras compostas por justaposição que perderam a noção da sua composição.<br>Exemplos: paraquedas, girassol, madressilva, mandachuva, passatempo, pontapé...<br><br>d) navio-escola<br>Regra 04- Usa-se hífen em palavras compostas por justaposição, desde que, ambos os elementos sejam substantivos, e que o segundo elemento seja indicativo de tipo, forma, finalidade.<br>Exemplos: diretor-presidente, escola-modelo, plano-piloto, grupo-controle.<br><br>e) carta-bilhete<br>Regra 02- Usa-se hífen em palavras compostas por justaposição, desde que, cada elemento tenha seu próprio significado."
   },
   {
     q: "👨‍🎓 11. Assinale a opção em que o vocábulo não apresenta desinência de feminino.",
@@ -12103,10 +12103,10 @@ const bancoVip3 = [
       "e) *criatura*"
     ],
     correct: 4,
-    j: "Correta: alternativa E\n\nPara resolver uma questão de desinência de gênero, basta você procurar um correspondente do sexo oposto.\nCriatura, não existe criaturo.\nCriatura é uma palavra sobrecomum, portanto, só existe essa forma pra tratar masculino e feminino. Palavras sobrecomuns são aquelas definidas pelo contexto.\nSão exemplos de sobrecomum: A criança, a testemunha, o monstro, a criatura, o cônjuge, o indivíduo, a vítima, o algoz, o carrasco, o neném, o ser, o membro, a tribo, o fantasma, a árvore, etc."
+    j: "Para resolver uma questão de desinência de gênero, basta você procurar um correspondente do sexo oposto.<br>Criatura, não existe criaturo.<br>Criatura é uma palavra sobrecomum, portanto, só existe essa forma pra tratar masculino e feminino. Palavras sobrecomuns são aquelas definidas pelo contexto.<br>São exemplos de sobrecomum: a criança, a testemunha, o monstro, a criatura, o cônjuge, o indivíduo, a vítima, o algoz, o carrasco, o neném, o ser, o membro, a tribo, o fantasma, a árvore, etc."
   },
   {
-    q: "👨‍🎓 12. Associe as seguintes desinências modo temporais.\n\nI- VA- pretérito imperfeito do indicativo (1ª conjugação).\nII- RA (átono)- pretérito mais-que-perfeito do indicativo.\nIII- SSE- pretérito imperfeito do subjuntivo.\nIV- RIA- futuro perfeito do indicativo.\nV- IA- pretérito perfeito do indicativo (2ª e 3ª conjugação).",
+    q: "👨‍🎓 12. Associe as seguintes desinências modo temporais.<br><br>I- VA- pretérito imperfeito do indicativo (1ª conjugação).<br>II- RA (átono)- pretérito mais-que-perfeito do indicativo.<br>III- SSE- pretérito imperfeito do subjuntivo.<br>IV- RIA- futuro perfeito do indicativo.<br>V- IA- pretérito perfeito do indicativo (2ª e 3ª conjugação).",
     options: [
       "a) #Apenas I, III e V estão corretas.#",
       "b) *Apenas I, II e III estão corretas.*",
@@ -12115,7 +12115,7 @@ const bancoVip3 = [
       "e) #Todas as alternativas estão corretas.#"
     ],
     correct: 1,
-    j: "Correta: alternativa B\n\nVA e VE - desinência temporal do pretérito imperfeito do indicativo (1ª conjugação).\nExemplo: eu cantava... vós cantáveis...\nIA e IE - desinência temporal do pretérito imperfeito do indicativo (2ª e 3ª conjugação).\nExemplo: eu sumia... vós sumíeis...\nRA e RE (átono) - desinência temporal do pretérito mais-que-perfeito do indicativo.\nExemplo: eu vendera... vós vendêreis...\nSSE - desinência temporal do pretérito imperfeito do subjuntivo.\nExemplo: se eu cantasse, se tu cantasses...\nRIA e RIE - desinência temporal do futuro do pretérito do indicativo.\nExemplo: eu cantaria... vós cantaríeis..."
+    j: "VA e VE - desinência temporal do pretérito imperfeito do indicativo (1ª conjugação).<br>Exemplo: eu cantava... vós cantáveis...<br>IA e IE - desinência temporal do pretérito imperfeito do indicativo (2ª e 3ª conjugação).<br>Exemplo: eu sumia... vós sumíeis...<br>RA e RE (átono) - desinência temporal do pretérito mais-que-perfeito do indicativo.<br>Exemplo: eu vendera... vós vendêreis...<br>SSE - desinência temporal do pretérito imperfeito do subjuntivo.<br>Exemplo: se eu cantasse, se tu cantasses...<br>RIA e RIE - desinência temporal do futuro do pretérito do indicativo.<br>Exemplo: eu cantaria... vós cantaríeis..."
   },
   {
     q: "👨‍🎓 13. O vocábulo cujo número de letras é igual ao número de fonemas está em:",
@@ -12127,10 +12127,10 @@ const bancoVip3 = [
       "e) #espinhos#"
     ],
     correct: 3,
-    j: "Correta: alternativa D\n\nA fórmula da contagem de fonemas é 'o número de letras é igual ao número fonemas, menos o número de dígrafos, mais o número de dífonos'.\nsucedida (possui oito letras, nenhum dígrafo e nenhum dífono. Logo, 8-0+0= 8 fonemas)\n\na) ressoou (possui sete letras, um dígrafo e nenhum dífono. Logo, 7-1+0= 6 fonemas)\nb) habitando (possui 'nove' letras, um dígrafo e nenhum dífono. Logo, 8-1+0= 7 fonemas)\nAtenção: ao lado de vogal, a letra H não é considerada na contagem de fonemas, pois ao lado de vogal, o H é uma letra muda. Por isso, a palavra habitando, que possui 9 letras, só foram consideradas 8.\nc) grandes (possui sete letras, um dígrafo e nenhum dífono. Logo, 7-1+0= 6 fonemas)\ne) espinhos (possui oito letras, um dígrafo e nenhum dífono. Logo, 8-1+0= 7 fonemas)"
+    j: "A fórmula da contagem de fonemas é <b>o número de letras é igual ao número fonemas, menos o número de dígrafos, mais o número de dífonos</b>.<br>Sucedida (possui oito letras, nenhum dígrafo e nenhum dífono. Logo, 8-0+0= 8 fonemas)<br><br>a) ressoou (possui sete letras, um dígrafo e nenhum dífono. Logo, 7-1+0= 6 fonemas)<br><br>b) habitando (possui nove letras, um dígrafo e nenhum dífono. Logo, 8-1+0= 7 fonemas)<br><b>Atenção</b>: ao lado de vogal, a letra H não é considerada na contagem de fonemas, pois ao lado de vogal, o H é uma letra muda. Por isso, a palavra habitando, que possui 9 letras, só foram consideradas 8<br><br>c) grandes (possui sete letras, um dígrafo e nenhum dífono. Logo, 7-1+0= 6 fonemas)<br><br>e) espinhos (possui oito letras, um dígrafo e nenhum dífono. Logo, 8-1+0= 7 fonemas)"
   },
   {
-    q: "👨‍🎓 14. Na frase 'Aurélio não delinquiu', temos, respectivamente:",
+    q: "👨‍🎓 14. Na frase <span style='color: #FFA500; font-weight: bold;'>Aurélio não delinquiu</span>, temos, respectivamente:",
     options: [
       "a) *ditongo decrescente oral, ditongo crescente oral, ditongo decrescente nasal, dígrafo e tritongo.*",
       "b) #ditongo decrescente oral, ditongo crescente nasal, ditongo decrescente nasal, hiato e tritongo.#",
@@ -12139,10 +12139,10 @@ const bancoVip3 = [
       "e) #ditongo crescente oral, ditongo crescente oral, ditongo decrescente oral e ditongo crescente oral.#"
     ],
     correct: 0,
-    j: "Correta: alternativa A\n\nAurélio - Au (ditongo oral decrescente); lio (ditongo oral crescente).\nNão - não (ditongo nasal decrescente).\nDelinquiu - lin (dígrafo vocálico); quiu (tritongo oral)."
+    j: "Aurélio - Au (ditongo oral decrescente); lio (ditongo oral crescente).<br>Não - não (ditongo nasal decrescente).<br>Delinquiu - lin (dígrafo vocálico); quiu (tritongo oral)."
   },
   {
-    q: "👨‍🎓 15. Assinale a série de palavras em que todas são formadas por parassíntese:",
+    q: "👨‍🎓 15. Assinale a alternativa em que todas as palavras são formadas por parassíntese:",
     options: [
       "a) *acorrentar, esburacar, despedaçar, amanhecer*",
       "b) #solução, passional, corrupção, visionário#",
@@ -12151,20 +12151,21 @@ const bancoVip3 = [
       "e) #acromatismo, hidrogênio, litografar, idiotismo#"
     ],
     correct: 0,
-    j: "Correta: alternativa A\n\nA palavra 'acorrentar' é formada por derivação prefixal e sufixal, simultaneamente. O prefixo 'a-' (colocar/tornar-se) + radical 'corrente' + sufixo '-ar'.\n\n'esburacar' é formada por derivação prefixal e sufixal, simultaneamente. Prefixo 'es-' (afastamento) + radical 'buraco' + sufixo '-ar'.\n\n'despedaçar' é formada por derivação prefixal e sufixal, simultaneamente. Prefixo 'des-' (separação) + radical 'pedaço' + sufixo '-ar'.\n\n'amanhecer' é formada por derivação prefixal e sufixal, simultanemente. Prefixo 'a-' (início) + radical \"manhã\" + sufixo '-ecer'."
+    j: "A palavra <b>acorrentar</b> é formada por derivação prefixal e sufixal, simultaneamente.<br>O prefixo <b>a</b>- (colocar/tornar-se) + radical <b>corrente</b> + sufixo -<b>ar</b>.<br>A palavra <b>esburacar</b> é formada por derivação prefixal e sufixal, simultaneamente.<br>O prefixo <b>es</b>- (afastamento) + radical <b>buraco</b> + sufixo -<b>ar</b>.<br>A palavra <b>despedaçar</b> é formada por derivação prefixal e sufixal, simultaneamente.<br>O prefixo <b>des</b>- (separação) + radical <b>pedaço</b> + sufixo -<b>ar</b>.<br>A palavra <b>amanhecer</b> é formada por derivação prefixal e sufixal, simultanemente.<br>O prefixo <b>a</b>- (início) + radical <b>manhã</b> + sufixo -<b>ecer</b>."
   },
   {
     q: "👨‍🎓 16. Analise os termos destacados e marque a alternativa em que se verifica uma derivação parassintética.",
     options: [
-      "a) *Não podíamos mais ficar ali e, então, caminhamos rumo àquele triste 'descampado'.*",
-      "b) #São ingênuas as pessoas que não acreditam na 'maldade', pois ela está em todo lugar.#",
-      "c) #Eu disse ao meu irmão que ele não era um 'super-homem' e devia se cuidar mais.#",
-      "d) #Na primeira segunda-feira de abril, a prisão da juíza causou o maior 'rebu' na cidade.#",
-      "e) #Meu irmão é um 'porco-espinho', anda sempre mal-humorado e não fala com ninguém.#"
+      "a) *Não podíamos mais ficar ali e, então, caminhamos rumo àquele triste <span style='color:orange;font-weight:bold'>descampado</span>.*",
+      "b) #São ingênuas as pessoas que não acreditam na <span style='color:orange;font-weight:bold'>maldade</span>, pois ela está em todo lugar.#",
+      "c) #Eu disse ao meu irmão que ele não era um <span style='color:orange;font-weight:bold'>super-homem</span> e devia se cuidar mais.#",
+      "d) #Na primeira segunda-feira de abril, a prisão da juíza causou o maior <span style='color:orange;font-weight:bold'>rebu</span> na cidade.#",
+      "e) #Meu irmão é um <span style='color:orange;font-weight:bold'>porco-espinho</span>, anda sempre mal-humorado e não fala com ninguém.#"
     ],
     correct: 0,
-    j: "Correta: alternativa A\n\nA palavra 'descampado' é formada por derivação parassintética. O radical é 'campo'. O prefixo 'des-' + palavra primitiva (campo) + sufixo (ado). Se retirar um, a palavra não existe.\n\nb) 'maldade' é derivação sufixal (mal + dade).\nc) 'super-homem' é composição por justaposição.\nd) 'rebu' é uma simplificação informal de rebuliço.\ne) 'porco-espinho' é composição por justaposição."
+    j: "A palavra <b>descampado</b> é formada por derivação parassintética.<br>O radical é <b>campo</b>, que se refere a terreno plano, com poucas árvores.<br>O prefixo <b>des</b>- é utilizado para indicar negação, inversão ou ação contrária.<br>No caso de <b>campo</b>, o prefixo <b>des</b>- modifica o verbo <b>campir</b> para indicar a ação contrária à perspectiva de campo.<br>O sufixo -<b>ado</b> é frequentemente usado para particípios que indicam ação completa ou o estado resultante dessa ação.<br>Portanto, <b>descampado</b> é uma palavra formada a partir da fusão do prefixo (des) + palavra primitiva (campo) + sufixo (ado).<br><br>b) maldade<br>A palavra </b>maldade<br> é formada por derivação sufixal.<br>O radical é <b>mal</b>, que é uma palavra que se refere a coisas negativas, prejudiciais.<br>O sufixo -<b>dade</b> é frequentemente usado para formar substantivos que indicam qualidade, estado ou condição.<br>Quando adicionado ao radical <b>mal</b>, ele forma o substantivo <b>maldade</b>, que indica a característica de ser ruim, cruel ou injusto.<br><br>c) super-homem<br>A palavra <b>super-homem</b> é formada por composição justaposição, que é um processo de formação de palavras que envolve a união de dois ou mais radicais independentes para criar um novo termo. Neste caso, <b>super</b> e <b>homem</b> são dois radicais combinados para formar uma nova palavra.<br>O radical <b>super</b> é um prefixo que significa <b>acima de</b>, <b>além de</b> ou <b>muito</b>.<br>É frequentemente usado para indicar algo extraordinário ou superior.<br>O radical <b>homem</b> refere-se à espécie humana, ao ser humano adulto do sexo masculino.<br><br>d) rebu<br>Cuidado com essa palavra que, frequentemente, cai em provas de concursos como derivação regressiva ou deverbal, gerando, quase sempre, recursos.<br>A palavra <b>rebu</b> não é derivada de <b>rebuliço</b> de maneira regressiva, mas sim através de uma simplificação informal.<br><b>Rebu</b> é uma forma abreviada de <b>rebuliço</b>.<br><b>Rebuliço</b> é formado a partir do verbo <b>rebular</b>.Essa palavra, com o sufixo -<b>iço</b>, é usada para expressar ação, estado ou resultado, no caso, o estado de agitação ou tumulto.<br>A forma <b>rebu</b> é uma abreviação que simplifica o termo <b>rebuliço</b>, retendo a ideia de agitação ou confusão. Portanto, podemos considerar <b>rebu</b> como uma simplificação informal de <b>rebuliço</b>, mas não como uma derivação regressiva, pois não há remoção de sufixo ou mudança de categoria gramatical envolvida.<br><br>e) porco-espinho<br>A palavra <b>porco-espinho</b> é formada por composição justaposição, que é um processo de formação que envolve a união de dois ou mais radicais independentes para criar um novo termo.<br>Nesse caso, <b>porco</b> e <b>espinho</b> são dois radicais combinados para formar uma nova palavra.<br>O radical <b>porco</b> refere-se a um mamífero que pertence à família dos suínos.<br>O radical <b>espinho</b> refere-se a uma estrutura pontiaguda e dura que pode ser encontrada em algumas espécies de animais e plantas.<br>Ao juntar os dois radicais, temos <b>porco-espinho</b>, que é um substantivo composto que se refere a um tipo de animal coberto de espinhos pontiagudos como uma forma de defesa."
   },
+
   {
     q: "👨‍🎓 17. Estas revistas que eles ___ , ___ artigos curtos e manchetes que todos ___ .",
     options: [
@@ -12175,7 +12176,7 @@ const bancoVip3 = [
       "e) #ler - tem - veem#"
     ],
     correct: 2,
-    j: "Correta: alternativa C\n\nLêem, com acento, não existe (paroxítonas com letras repetidas não se acentuam).\nTem (singular) vs Têm (plural diferencial). Como o sujeito é plural, usa-se TÊM.\nVêm (sentido de vir) vs VEEM (sentido de ver). No contexto de manchetes, as pessoas VEEM (enxergam)."
+    j: "<b>Lêem</b>, com acento, não existe (paroxítonas com letras repetidas não se acentuam).<br><b>Tem</b> (singular) vs <b>Têm</b> (plural diferencial). Como o sujeito é plural, usa-se TÊM.<br><b>Vêm</b> (sentido de vir) vs <b>Veem</b> (sentido de ver). No contexto de manchetes, as pessoas VEEM (enxergam)."
   },
   {
     q: "👨‍🎓 18. Considere os seguintes vocábulos: colégio, cárie, herói, oblíquo, céu;",
@@ -12187,7 +12188,7 @@ const bancoVip3 = [
       "e) #Existem mais hiatos do que ditongos.#"
     ],
     correct: 2,
-    j: "Correta: alternativa C\n\nDitongo decrescente (vogal+semivogal): herói e céu (2).\nDitongo crescente (semivogal+vogal): colégio, cárie e oblíquo (3).\nLogo, existem mais crescentes do que decrescentes."
+    j: "Ditongo decrescente: herói e céu (2)<br>Ditongo crescente: colégio, cárie e oblíquo (3).<br>Logo, existem mais crescentes do que decrescentes."
   },
   {
     q: "👨‍🎓 19. Em qual das orações abaixo não foi usada uma palavra proparoxítona?",
@@ -12199,16 +12200,10 @@ const bancoVip3 = [
       "e) *Divida 1500 por 3.*"
     ],
     correct: 4,
-    j: "Correta: alternativa E\n\nTodas as proparoxítonas são acentuadas. \nDívida (com acento) = substantivo (proparoxítona).\nDivida (sem acento) = verbo dividir (paroxítona).\nNas outras frases: fotógrafa, dúvida, tâmaras e equívoco são todas proparoxítonas."
+    j: "Tenha em mente que <b>todas</b> as proparoxítonas são acentuadas.<br>Dívida (com acento) = substantivo (proparoxítona).<br>Divida (sem acento) = verbo dividir (paroxítona).<br>Nas outras frases temos: fotógrafa, dúvida, tâmaras e equívoco, são todas proparoxítonas."
   },
   {
-    q: "👨‍🎓 20. (Questão Duplicada ou Pulo de Numeração - Mantendo sequência do Usuário)",
-    options: ["a) *OK*", "b) # #", "c) # #", "d) # #", "e) # #"],
-    correct: 0,
-    j: "O usuário pulou a numeração ou consolidou na anterior. Mantendo o fluxo para não quebrar o script."
-  },
-  {
-    q: "👨‍🎓 21. Considere: (1) Vim - pretérito perfeito do indicativo (verbo vir); (2) Vir - infinitivo (verbo vir); (3) Vir - futuro do subjuntivo (verbo ver).\n\n( ) Quando eu ___ à lista de aprovados...\n( ) Se você o ___, por favor...\n( ) Eu nem queria te ver, mas ___ aqui...\n( ) ___ cedo para pegar um bom lugar.\n( ) Ela não deve ___ à próxima reunião.\n( ) ___ à exposição para conhecer...",
+    q: "👨‍🎓 20. Considere:<br><br>(1) Vim - pretérito perfeito do indicativo (verbo vir);<br>(2) Vir - infinitivo (verbo vir);<br>(3) Vir - futuro do subjuntivo (verbo ver).<br><br>(  ) Quando eu ___ à lista de aprovados...<br>(  ) Se você o ___, por favor...<br>(  ) Eu nem queria te ver, mas ___ aqui...<br>(  ) ___ cedo para pegar um bom lugar.<br>(  ) Ela não deve ___ à próxima reunião.<br>(  ) ___ à exposição para conhecer...",
     options: [
       "a) #3, 3, 3, 1, 2, 1#",
       "b) #3, 3, 2, 2, 1, 1#",
@@ -12217,10 +12212,10 @@ const bancoVip3 = [
       "e) #3, 3, 2, 2, 1, 2#"
     ],
     correct: 3,
-    j: "(3) Quando eu vir (futuro do ver);\n(3) Se você o vir (futuro do ver);\n(2) Mas vir aqui (infinitivo de vir);\n(1) Vim cedo (passado de vir);\n(2) Não deve vir (infinitivo de vir);\n(1) Vim à exposição (passado de vir)."
+    j: "(3) Quando eu vir (futuro do ver)<br>(3) Se você o vir (futuro do ver)<br>(2) Mas vir aqui (infinitivo de vir)<br>(1) Vim cedo (passado de vir)<br>(2) Não deve vir (infinitivo de vir)<br>(1) Vim à exposição (passado de vir)."
   },
   {
-    q: "👨‍🎓 22. Assinale a alternativa em que as duas palavras apresentem o mesmo número de fonemas:",
+    q: "👨‍🎓 21. Assinale a alternativa em que as duas palavras apresentem o mesmo número de fonemas:",
     options: [
       "a) #Impressora – correspondem#",
       "b) #Conhecimento – consideração#",
@@ -12229,10 +12224,10 @@ const bancoVip3 = [
       "e) #Delinquente – adequada#"
     ],
     correct: 3,
-    j: "Correta: alternativa D\n\nAlcance: 7 letras - 1 dígrafo (an) = 6 fonemas.\nPreenche: 8 letras - 2 dígrafos (pr/en/ch) = 6 fonemas.\n\nObservação: Em Correspondem, o EM final não é dígrafo, mas ditongo fonético (2 fonemas)."
+    j: "Alcance: 7 letras - 1 dígrafo (an) = 6 fonemas.<br>Preenche: 8 letras - 2 dígrafos (pr/en/ch) = 6 fonemas.<br><b>Atenção</b>: em <b>correspondem</b>, o <b>EM</b> final não é dígrafo, mas ditongo fonético (2 fonemas)."
   },
   {
-    q: "👨‍🎓 23. Assinale a alternativa que apresenta o plural dos substantivos compostos de acordo com a norma culta.",
+    q: "👨‍🎓 22. Assinale a alternativa que apresenta o plural dos substantivos compostos de acordo com a norma culta.",
     options: [
       "a) *notícia-bomba, notícias-bomba*",
       "b) #bate-boca, bates-bocas#",
@@ -12241,10 +12236,10 @@ const bancoVip3 = [
       "e) #tique-taque, tiques-taques#"
     ],
     correct: 0,
-    j: "Correta: alternativa A\n\nNotícias-bomba: Quando o segundo substantivo especifica o primeiro, apenas o primeiro varia.\nb) bate-bocas (verbo não varia);\nc) quintas-feiras (numeral varia);\nd) águas de colônia (preposicionado, só o 1º varia);\ne) tique-taques (repetidos, só o 2º varia)."
+    j: "O plural de <b>notícia-bomba</b> é <b>notícias-bomba</b>, porque esse substantivo composto é formado por dois substantivos, sendo que o segundo deles especifica o primeiro. Nesses casos, somente o primeiro elemento vai para o plural.<br><br>Nas outras alternativas, temos:<br>b) bate-boca<br>O correto é <b>bate-bocas</b> (verbo + substantivo), adiciona-se o -<b>s</b> somente ao segundo elemento.<br>c) quinta-feira<br>O correto é <b>quintas-feiras</b> (palavra variável + palavra variável), adiciona-se o -<b>s</b> aos dois elementos.<br>d) água de colônia<br>O correto é <b>águas de colônia</b> (palavras unidas por preposição), adiciona-se o -<b>s</b> somente ao segundo elemento.<br>e) tiques-taques<br>O correto é <b>tique-taques</b> (palavras repetidas ou onomatopaicas), adiciona-se o -<b>s</b> somente ao segundo elemento."
   },
   {
-    q: "👨‍🎓 24. Indique as desinências verbo nominais indicativas de: infinitivo - gerúndio - particípio",
+    q: "👨‍🎓 23. Indique as desinências verbo nominais indicativas de:<br><br>infinitivo - gerúndio - particípio, respectivamente.",
     options: [
       "a) #r, do, do#",
       "b) #r, to, ndo#",
@@ -12253,10 +12248,10 @@ const bancoVip3 = [
       "e) #to, ndo, r#"
     ],
     correct: 2,
-    j: "R- infinitivo | NDO- gerúndio | TO/DO- particípio.\n\nO particípio regular (verbo composto com TER/HAVER) usa ADO/IDO. O particípio irregular (verbo perifrásico com SER/ESTAR) pode sofrer alomorfia (ex: feito, cansado)."
+    j: "Primeiramente, precisa-se ter o conhecimento de que <b>respectivamente</b> significa <b>na devida ordem</b>.<br>R- infinitivo<br>NDO- gerúndio<br>TO/DO- particípio<br>O particípio regular (verbo composto com TER/HAVER) usa ADO/IDO.<br>O particípio irregular (verbo perifrásico com SER/ESTAR) pode sofrer alomorfia (ex: feito, cansado)."
   },
   {
-    q: "👨‍🎓 25. Na palavra equilibristas indique a ordem correta dos morfemas.",
+    q: "👨‍🎓 24. Na palavra <span style='color: #FFA500; font-weight: bold;'>equilibristas</span> indique a ordem correta dos morfemas.",
     options: [
       "a) #radical, prefixo, desinência de gênero.#",
       "b) #radical, sufixo, desinência de gênero.#",
@@ -12265,37 +12260,8 @@ const bancoVip3 = [
       "e) #radical, sufixo, desinência de gênero, desinência de número.#"
     ],
     correct: 3,
-    j: "Equilibr- (radical) | -ista (sufixo de ocupação/ofício) | -s (desinência de número plural). Não há desinência de gênero em equilibrista, pois é comum de dois gêneros."
+    j: "<b>Equilibr</b>- (radical)<br>-<b>ista</b> (sufixo de ocupação/ofício)<br>-<b>s</b> (desinência de número plural).<br>Não há desinência de gênero em equilibristas, pois é comum de dois gêneros."
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -12305,16 +12271,16 @@ const bancoVip3 = [
 
 const bancoVip4 = [
   {
-    q: "👩‍🏫 1. No período “Fiquei ansiosa todas as vezes que viajei de avião.”, a expressão destacada não é escrita com acento grave (crase) porque:",
+    q: "👩‍🏫 1. No período <span style='color: #FFA500; font-weight: bold;'>Fiquei ansiosa todas as vezes que viajei de avião.</span>, a expressão destacada não é escrita com acento grave (crase) porque:",
     options: [
-      "a) #Trata-se da junção do artigo indefinido no plural 'as' com o advérbio de intensidade 'vezes'. Essa expressão gera efeito de sentido de 'sempre'.#",
-      "b) #Trata-se da junção do artigo indefinido 'a' com o verbo 'vir' no plural 'vezes'. Essa expressão gera efeito de sentido sinônimo de 'as ocasiões', 'os momentos.#",
-      "c) *Trata-se da junção do artigo definido no plural 'as' com o substantivo feminino no plural 'vezes'. Essa expressão gera efeito de sinônimo de 'as ocasiões', 'os momentos'.*",
-      "d) #Trata-se da junção do artigo definido no plural 'as' com o advérbio de modo no plural 'vezes'. Essa expressão gera efeito de sentido de 'todas as vezes'.#",
-      "e) #Trata-se da junção do artigo definido no singular com o substantivo composto no plural 'vezes'. Essa expressão gera efeito de sentido sinônimo de 'as ocasiões', 'os momentos'.#"
+      "a) #Trata-se da junção do artigo indefinido no plural <span style='color:orange;font-weight:bold'>as</span> com o advérbio de intensidade <span style='color:orange;font-weight:bold'>vezes</span>. Essa expressão gera efeito de sentido de <span style='color:orange;font-weight:bold'>sempre</span>.#",
+      "b) #Trata-se da junção do artigo indefinido <span style='color:orange;font-weight:bold'>a</span> com o verbo <span style='color:orange;font-weight:bold'>vir</span> no plural <span style='color:orange;font-weight:bold'>vezes</span>. Essa expressão gera efeito de sentido sinônimo de <span style='color:orange;font-weight:bold'>as ocasiões</span>, <span style='color:orange;font-weight:bold'>os momentos</span>.#",
+      "c) *Trata-se da junção do artigo definido no plural <span style='color:orange;font-weight:bold'>as</span> com o substantivo feminino no plural <span style='color:orange;font-weight:bold'>vezes</span>. Essa expressão gera efeito de sinônimo de <span style='color:orange;font-weight:bold'>as ocasiões</span>, <span style='color:orange;font-weight:bold'>os momentos</span>.*",
+      "d) #Trata-se da junção do artigo definido no plural <span style='color:orange;font-weight:bold'>as</span> com o advérbio de modo no plural <span style='color:orange;font-weight:bold'>vezes</span>. Essa expressão gera efeito de sentido de <span style='color:orange;font-weight:bold'>todas as vezes</span>.#",
+      "e) #Trata-se da junção do artigo definido no singular com o substantivo composto no plural <span style='color:orange;font-weight:bold'>vezes</span>. Essa expressão gera efeito de sentido sinônimo de <span style='color:orange;font-weight:bold'>as ocasiões</span>, <span style='color:orange;font-weight:bold'>os momentos</span>.#"
     ],
     correct: 2,
-    j: "Correta: alternativa C\n\nDe modo curto e resto, todas as vezes que \"às vezes\" puder ser retirado da frase, sem que a mesma perca o sentido, significa que \"às vezes\" é uma locução adverbial (adjunto adverbial). Todas as vezes que \"as vezes\" puder ser trocado por \"as ocasiões\", significa que \"as vezes\" é formado pelo plural do artigo definido \"A\" + substantivo feminino no plural \"VEZES\"."
+    j: "De modo curto e resto, todas as vezes que <br>às vezes</b> puder ser retirado da frase, sem que a mesma perca o sentido, significa que <b>às vezes</b> é uma locução adverbial (adjunto adverbial).<br>Todas as vezes que <b>as vezes</b> puder ser trocado por <b>as ocasiões</b>, significa que <b>as vezes</b> é formado pelo plural do artigo definido <b>a</b> + substantivo feminino no plural <b>vezes</b>."
   },
   {
     q: "👩‍🏫 2. Sobre palavras cognatas, é correto afirmar:",
@@ -12326,10 +12292,10 @@ const bancoVip4 = [
       "e) #Palavras cognatas não têm a mesma origem etimológica.#"
     ],
     correct: 2,
-    j: "Correta: alternativa C\n\nCognata, é um vocábulo derivado do latim – nossa língua mãe – cognatus, substantivo que denomina as palavras que 'nasceram juntas' e, por isso, apresentam similaridades. Os falsos cognatos apresentam uma semelhança meramente formal. Quando partimos para análise semântica, notamos que os significados são bem distintos\n\na) Palavras cognatas pertencem a uma mesma família.\nb) Nem toda palavra que apresenta similaridade com outra é cognata.\nd) Palavras cognatas são derivadas de uma mesma raiz.\ne) Palavras cognatas têm a mesma origem etimológica."
+    j: "Cognata, é um vocábulo derivado do latim – nossa língua mãe – cognatus, substantivo que denomina as palavras que <b>nasceram juntas</b> e, por isso, apresentam similaridades.<br>Os falsos cognatos apresentam uma semelhança meramente formal.<br>Quando partimos para análise semântica, notamos que os significados são bem distintos.<br><br>a) Palavras cognatas pertencem a uma mesma família.<br><br>b) Nem toda palavra que apresenta similaridade com outra é cognata.<br><br>d) Palavras cognatas são derivadas de uma mesma raiz.<br><br>e) Palavras cognatas têm a mesma origem etimológica."
   },
   {
-    q: "👩‍🏫 3. O vocábulo CATEDRAL, do ponto de vista de sua formação é:",
+    q: "👩‍🏫 3. O vocábulo <span style='color: #FFA500; font-weight: bold;'>catedral</span>, do ponto de vista de sua formação é:",
     options: [
       "a) #Primitivo#",
       "b) #Composto por aglutinação#",
@@ -12338,10 +12304,10 @@ const bancoVip4 = [
       "e) #Derivado regressivo de catedrático#"
     ],
     correct: 2,
-    j: "Correta: alternativa C\n\nA palavra 'catedral' é formada a partir do substantivo 'cátedra' e do sufixo AL. A 'cátedra' é o assento elevado onde o bispo ou líder religioso se senta, e é um símbolo de autoridade na igreja.\nO sufixo AL é frequentemente usado para formar adjetivos a partir de substantivos, indicando uma relação ou característica. \nPortanto, 'catedral' é formada pela combinação do substantivo 'cátedra' com o sufixo AL, indicando uma igreja principal de uma diocese, que geralmente abriga o assento do bispo ou líder religioso e é o centro espiritual de uma comunidade religiosa.\nObservação: Importante lembrar que catedral é substantivo, mas a depender do contexto, catedral, pode ser considerado um adjetivo que se refere a algo relacionado à cátedra, caracterizando essa palavra uma derivação imprópria. Tudo vai depender de como o enunciado se aplica."
+    j: "A palavra <b>catedral</b> é formada a partir do substantivo <b>cátedra</b> e do sufixo AL.<br>A <b>cátedra</b> é o assento elevado onde o bispo ou líder religioso se senta, e é um símbolo de autoridade na igreja.<br>O sufixo AL é frequentemente usado para formar adjetivos a partir de substantivos, indicando uma relação ou característica.<br>Portanto, <b>catedral</b> é formada pela combinação do substantivo <b>cátedra</b> com o sufixo AL, indicando uma igreja principal de uma diocese, que geralmente abriga o assento do líder religioso, e é o centro espiritual de uma comunidade religiosa.<br><b>Atenção</b>: é importante lembrar que catedral é <i>substantivo</i>, mas a depender do contexto, catedral, pode ser considerado um <i>adjetivo</i> que se refere a algo relacionado à cátedra, caracterizando essa palavra uma derivação imprópria.<br>Tudo vai depender de como o enunciado se aplica."
   },
   {
-    q: "👩‍🏫 4. Tendo em vista o código aqui exposto, aplique-o às palavras abaixo descritas, segundo os conhecimentos dos quais dispõe acerca da pronúncia dessas palavras:\n\n1- Ortoépia\n2- Cacoépia\n\n(  ) abecedário\n(  ) abóboda\n(  ) açogue\n(  ) aeroporto\n(  ) aterrisagem\n(  ) babador\n(  ) beneficiente\n(  ) cabeçário\n(  ) empecilho\n(  ) hilariedade",
+    q: "👩‍🏫 4. Tendo em vista o código aqui exposto, aplique-o às palavras abaixo descritas, segundo os conhecimentos dos quais dispõe acerca da pronúncia dessas palavras:<br><br>1- Ortoépia   -   2- Cacoépia<br><br>(  ) abecedário<br>(  ) abóboda<br>(  ) açogue<br>(  ) aeroporto<br>(  ) aterrisagem<br>(  ) babador<br>(  ) beneficiente<br>(  ) cabeçário<br>(  ) empecilho<br>(  ) hilariedade",
     options: [
       "a) #1, 1, 2, 1, 2, 2, 1, 1, 1, 1#",
       "b) #1, 1, 1, 1, 1, 2, 1, 2, 2, 2#",
@@ -12350,10 +12316,10 @@ const bancoVip4 = [
       "e) #1, 2, 2, 1, 1, 1, 2, 2, 1, 2#"
     ],
     correct: 2,
-    j: "Correta: alternativa C\n\nOrtoépia ou Ortoepia trata da pronúncia correta das palavras. A ortoepia é muito parecida com a Prosódia... cotidianamente pronunciamos palavras de forma incorreta, a esse erro de pronúncia, chamamos de cacoépia.\n\nPronúncia Correta - Pronúncia Errada\nabecedário           abecedalho\nabódada               abóboda\naçougue               açogue\naeroporto            areoporto\naterrissagem       aterrisagem\nbabadouro            babador\nbeneficente          beneficiente\ncabeçalho             cabeçário\nempecilho             impecilho\nhilaridade              hilariedade"
+    j: "Ortoépia ou Ortoepia trata da pronúncia correta das palavras. A ortoepia é muito parecida com a Prosódia. Cotidianamente, pronunciamos palavras de forma incorreta, a esse erro de pronúncia, chamamos de cacoépia.<br><br>Pronúncia Correta - Pronúncia Errada<br>abecedário   -   abecedalho<br>abódada   -   abóboda<br>açougue   -   açogue<br>aeroporto   -   areoporto<br>aterrissagem   -   aterrisagem<br>babadouro   -   babador<br>beneficente   -   beneficiente<br>cabeçalho   -   cabeçário<br>empecilho   -   impecilho<br>hilaridade   -   hilariedade"
   },
   {
-    q: "👩‍🏫 5. Quanto aos substantivos, assinale a alternativa correta em relação à seguinte afirmação: Toda palavra determinada por _____ é considerada substantivo. A palavra que não caracteriza uma opção válida para a lacuna se encontra na alternativa:",
+    q: "👩‍🏫 5. Quanto aos substantivos, assinale a alternativa correta em relação à seguinte afirmação:<br><br>Toda palavra determinada por _____ é considerada substantivo.<br><br>A palavra que não caracteriza uma opção válida para a lacuna se encontra na alternativa:",
     options: [
       "a) #artigo#",
       "b) #numeral#",
@@ -12362,10 +12328,10 @@ const bancoVip4 = [
       "e) #pronome adjetivo#"
     ],
     correct: 3,
-    j: "Correta: alternativa D\n\nAs classes gramaticais que frequentemente são usadas para caracterizar ou descrever substantivos são artigo, numeral, adjetivo e pronome adjetivo. A questão pede que identifiquemos a classe gramatical que NÃO caracteriza o substantivo. Os advérbios não caracterizam substantivos; eles modificam verbos, adjetivos e outros advérbios."
+    j: "As classes gramaticais que frequentemente são usadas para caracterizar ou descrever substantivos são: artigo, numeral, adjetivo e pronome adjetivo.<br>A questão pede que identifiquemos a classe gramatical que NÃO caracteriza o substantivo.<br>Os advérbios não caracterizam substantivos, eles modificam verbos, adjetivos e outros advérbios."
   },
   {
-    q: "👩‍🏫 6. Observe os prefixos abaixo:\n\nI- ANTI significa oposição. Exemplos: antipatia, anticapitalista.\nII- ARCE e ARQUE significam superioridade. Exemplos: arcebispo, arquétipo.\nIII- CATA significa movimento pra cima. Exemplos: cataclisma, catavento.\nIV- DIS significa dificuldade. Exemplos: dispneia, distrair, difundir.\nV- EN significa posição exterior. Exemplos: encêfalo, enlatar.",
+    q: "👩‍🏫 6. Observe os prefixos abaixo:<br><br>I- ANTI significa oposição. Exemplos: antipatia, anticapitalista.<br>II- ARCE e ARQUE significam superioridade. Exemplos: arcebispo, arquétipo.<br>III- CATA significa movimento pra cima. Exemplos: cataclisma, catavento.<br>IV- DIS significa dificuldade. Exemplos: dispneia, distrair, difundir.<br>V- EN significa posição exterior. Exemplos: encêfalo, enlatar.",
     options: [
       "a) #Somente I, II e V estão corretas.#",
       "b) #Somente I, III e V estão corretas.#",
@@ -12374,7 +12340,7 @@ const bancoVip4 = [
       "e) #Somente I, IV e V estão corretas.#"
     ],
     correct: 3,
-    j: "Correta: alternativa D\n\nI- ANTI significa oposição. (Correto)\nII- ARCE/ARQUE significa superioridade. (Correto)\nIII- CATA significa movimento pra BAIXO. (Incorreto: enunciado dizia 'cima')\nIV- DIS significa dificuldade. (Correto)\nV- EN significa posição INTERIOR. (Incorreto: enunciado dizia 'exterior')"
+    j: "ANTI significa oposição. (Correto)<br>II- ARCE/ARQUE significa superioridade. (Correto)<br>III- CATA significa movimento pra baixo. (Incorreto: enunciado dizia cima)<br>IV- DIS significa dificuldade. (Correto)<br>V- EN significa posição INTERIOR. (Incorreto: enunciado dizia exterior)"
   },
   {
     q: "👩‍🏫 7. Assinale a opção que apresenta desinência de número.",
@@ -12386,22 +12352,22 @@ const bancoVip4 = [
       "e) #férias#"
     ],
     correct: 1,
-    j: "Correta: alternativa B\n\nApesar de nenhuma das opções possuírem, verdadeiramente, desinência de número, podemos relacionar algum tipo de quantidade ao termo 'todos'. O plural de palavras terminadas com S, tais como pires, lápis, vírus, ônibus, tórax, tênis, bônus, cais, ônus, etc... desde que não oxítonas, faz-se do mesmo modo que no singular, portanto, não possuem desinência de número."
+    j: "Apesar de nenhuma das opções possuírem, verdadeiramente, desinência de número, podemos relacionar algum tipo de quantidade ao termo <b>todos</b>.<br>O plural de palavras terminadas com S, tais como pires, lápis, vírus, ônibus, tórax, tênis, bônus, cais, ônus, etc... desde que não oxítonas, faz-se do mesmo modo que no singular, portanto, <b>não</b> possuem desinência de número."
   },
   {
     q: "👩‍🏫 8. Observe as palavras em destaque e assinale a frase que contém a forma incorreta do uso do hífen.",
     options: [
-      "a) #O museu contém muitas 'obras-primas'.#",
-      "b) #As 'sempre-vivas' estão lindas no jardim.#",
-      "c) #Minha avó adorava assar 'pão de ló'.#",
-      "d) *Ele desenhou uma 'semi-reta' no quadro.*",
-      "e) #Todos foram nomeados 'tenentes-coronéis'.#"
+      "a) #O museu contém muitas <span style='color: orange;font-weight: bold;'>obras-primas</span>.#",
+      "b) #As <span style='color: orange;font-weight: bold;'>sempre-vivas</span> estão lindas no jardim.#",
+      "c) #Minha avó adorava assar <span style='color: orange;font-weight: bold;'>pão de ló</span>.#",
+      "d) *Ele desenhou uma <span style='color: orange;font-weight: bold;'>semi-reta</span> no quadro.*",
+      "e) #Todos foram nomeados <span style='color: orange;font-weight: bold;'>tenentes-coronéis</span>.#"
     ],
     correct: 3,
-    j: "Correta: alternativa D\n\nRegra 15- Não se usa hífen quando o prefixo terminar em vogal e a segunda palavra começar com as consoantes R ou S, nesses casos, remove-se o hífen e duplica-se a consoante. Exemplos: semirreta, microrregião, antissocial, antirrugas, contrassenso...\n\na) Regra 23- Substantivo + adjetivo (obra-prima).\nb) Regra 01- Espécies de animais ou plantas (sempre-vivas).\nc) Regra 16- Palavras compostas ligadas por preposição (pão de ló) não usam hífen.\ne) Regra 02- Justaposição com elementos independentes (tenentes-coronéis)."
+    j: "Regra 15- Não se usa hífen quando o prefixo terminar em vogal e a segunda palavra começar com as consoantes R ou S, nesses casos, remove-se o hífen e duplica-se a consoante.<br>Exemplos: semirreta, microrregião, antissocial, antirrugas, contrassenso...<br><br>a) Regra 23- Substantivo + adjetivo (obra-prima).<br><br>b) Regra 01- Espécies de animais ou plantas (sempre-vivas).<br><br>c) Regra 16- Palavras compostas ligadas por preposição (pão de ló) não usam hífen.<br><br>e) Regra 02- Justaposição com elementos independentes (tenentes-coronéis)."
   },
   {
-    q: "👩‍🏫 9. Na frase: O girassol da vida e o passatempo do tempo que passa, não brincam nos lagos da lua, há, respectivamente:",
+    q: "👩‍🏫 9. Na frase: <span style='color: #FFA500; font-weight: bold;'>o girassol da vida e o passatempo do tempo que passa, não brincam nos lagos da lua</span>, há, respectivamente:",
     options: [
       "a) #um elemento formado por aglutinação e outro por justaposição.#",
       "b) #um elemento formado por justaposição e outro por aglutinação.#",
@@ -12410,19 +12376,19 @@ const bancoVip4 = [
       "e) #nenhuma das alternativas#"
     ],
     correct: 2,
-    j: "Correta: alternativa C\n\nComposição justaposição: quando as duas (ou mais) palavras que se juntam não perdem nenhum fonema, mantendo a pronúncia anterior. Exemplos: passatempo (passa + tempo); girassol (gira + sol).\n \nComposição por aglutinação: quando pelo menos uma das palavra que se unem perde fonemas. Exemplos: petróleo (petra + óleo); fidalgo (filho + de + algo)."
+    j: "Composição justaposição: quando as palavras que se juntam não perdem nenhum fonema, mantendo a pronúncia anterior.<br>Exemplos: passatempo (passa + tempo); girassol (gira + sol).<br><br>Composição por aglutinação: quando pelo menos uma das palavras que se unem perde fonemas.<br>Exemplos: petróleo (petra + óleo), fidalgo (filho + de + algo)."
   },
   {
-    q: "👩‍🏫 10. O mesmo processo de formação da palavra sublinhada em - Não se precisa de 'limpa' -, ocorre em:",
+    q: "👩‍🏫 10. O mesmo processo de formação da palavra sublinhada na frase: <span style='color: #FFA500; font-weight: bold;'>não se precisa de 'limpa'</span> -, ocorre em:",
     options: [
-      "a) #no mesmo ventre crescido.#",
-      "b) #iguais em tudo e na sina.#",
-      "c) *jamais o cruzei a nado.*",
-      "d) #na minha longa descida.#",
-      "e) #todo o velho contagia.#"
+      "a) #no mesmo ventre <span style='color: orange;font-weight: bold;'>crescido</span>.#",
+      "b) #iguais em tudo e na <span style='color: orange;font-weight: bold;'>sina</span>.#",
+      "c) *jamais o cruzei a <span style='color: orange;font-weight: bold;'>nado</span>.*",
+      "d) #na minha longa <span style='color: orange;font-weight: bold;'>descida</span>.#",
+      "e) #todo o velho <span style='color: orange;font-weight: bold;'>contagia</span>.#"
     ],
     correct: 2,
-    j: "Correta: alternativa C\n\nA palavra destacada sofreu uma derivação regressiva ou deverbal (limpar → limpa). Ao tentar fazermos a reversão da derivação, a única assertiva que fica com sentido é a C (nadar → nado).\n\na) 'crescido' usa sufixo IDO para particípio.\nb) 'sina' vem do latim 'signum', não é processo morfológico regular.\nd) 'descida' não permite transformação lógica deverbal similar.\ne) 'velho' em 'o velho' é derivação imprópria (mudança de classe), não regressiva."
+    j: "A palavra destacada sofreu uma derivação regressiva ou deverbal (limpar → limpa).<br>Ao tentar fazermos a reversão da derivação, a única assertiva que fica com sentido é a C (nadar → nado).<br><br>a) <b>crescido</b>, usa sufixo IDO para particípio.<br><br>b) <b>sina</b>, vem do latim <i>signum</i>, não é processo morfológico regular.<br><br>d) <b>descida</b>, não permite transformação lógica deverbal similar.<br><br>e) <b>velho</b>, é derivação imprópria (mudança de classe), não regressiva."
   }
 
 ];
@@ -17073,6 +17039,11 @@ if (q.options && q.options.length > 0) {
             const spansInternas = b.querySelectorAll('span');
             spansInternas.forEach(s => s.style.color = 'inherit');
         }
+if (window.isVipMode && window.vipBancoAtual) {
+    const id = 'vip_banco_' + window.vipBancoAtual;
+    localStorage.setItem(id + '_historico', JSON.stringify(historico));
+    localStorage.setItem(id + '_index', currentIndex);
+}
     });
 }
 
@@ -17921,6 +17892,9 @@ function iniciarNovoBancoVip(numero) {
 
         let h = localStorage.getItem(keyHistorico);
         historico = h ? JSON.parse(h) : {};
+        
+        // 🔥 AJUSTE CIRÚRGICO: Bloqueia a troca de resposta se já houver registro no histórico
+        window.respondidas = historico; 
 
         let salvo = localStorage.getItem(keyIndex);
         currentIndex = salvo ? parseInt(salvo) : 0;
@@ -17936,6 +17910,12 @@ function iniciarNovoBancoVip(numero) {
 
         setTimeout(() => {
             render();
+            // 🔥 GARANTE O TRAVAMENTO NO RENDER
+            if (historico[currentIndex] !== undefined) {
+                const optsArea = document.getElementById('opts');
+                if (optsArea) optsArea.style.pointerEvents = 'none';
+            }
+            
             setTimeout(() => {
                 const el = document.getElementById('nome-doador-vip');
                 if (el && window.nome) el.innerText = window.nome;
@@ -18180,22 +18160,32 @@ function sairModulo4Vip() {
 */
 
 function sairVip() {
-    // 1. ANTES DE SAIR, SALVAMOS O ESTADO ATUAL
-    const storageKeyIndex = 'vip_indice_modulo4';
-    const storageKeyHistorico = 'vip_historico_modulo4'; // Nova chave para o histórico
-    
-    localStorage.setItem(storageKeyIndex, currentIndex);
-    localStorage.setItem(storageKeyHistorico, JSON.stringify(historico));
+    // 🔥 IDENTIFICA O BANCO ATUAL
+    let id;
 
-    // 2. DESLIGA O MODO VIP MAS NÃO LIMPA AS VARIÁVEIS AINDA
+    if (window.vipBancoAtual) {
+        id = 'vip_banco_' + window.vipBancoAtual;
+    } else {
+        id = 'vip_banco_1'; // fallback pro principal
+    }
+
+    const keyIndex = id + '_index';
+    const keyHistorico = id + '_historico';
+
+    // 🔥 SALVA NO BANCO CERTO
+    localStorage.setItem(keyIndex, currentIndex);
+    localStorage.setItem(keyHistorico, JSON.stringify(historico));
+
+    // 🔥 DESLIGA VIP
     window.isVipMode = false;
 
-    // 3. REMOVE O BOTÃO DA TELA
-    const btnSair = document.getElementById('btn-manual-sair');
-    if (btnSair) btnSair.style.display = "none";
+    // 🔥 REMOVE BOTÃO
+    const btnSair = document.getElementById('btn-sair-vip');
+    if (btnSair) btnSair.remove();
 
-    // 4. VOLTA PARA A SALA VIP
+    // 🔥 VOLTA PRA SALA
     go('area-apoiador');
+
     const telaVip = document.getElementById('area-apoiador');
     if (telaVip) {
         telaVip.style.setProperty("display", "flex", "important");
@@ -18514,6 +18504,13 @@ function resetVidasDisplay() {
 
 
 function render() {
+    // 🔥 AJUSTE CIRÚRGICO: Sincroniza o histórico do banco VIP atual antes de renderizar
+    if (window.isVipMode && window.vipBancoAtual) {
+        const id = 'vip_banco_' + window.vipBancoAtual;
+        const h = localStorage.getItem(id + '_historico');
+        if (h) historico = JSON.parse(h);
+    }
+
     if (window.isVipMode && quizType !== 'modulo4_vip') {
         quizType = 'simulado_vip';
     }
@@ -18531,14 +18528,17 @@ function render() {
 
     const q = currentQuestions[currentIndex];
     document.getElementById('qh').innerText = `Questão ${currentIndex + 1}/${currentQuestions.length}`;
-    document.getElementById('qt').innerText = q.q;
-    
+    document.getElementById('qt').innerHTML = q.q; 
+
     const optsArea = document.getElementById('opts');
     const fb = document.getElementById('feedback'); 
-    fb.style.display = 'none';
     
     optsArea.innerHTML = '';
-    optsArea.style.pointerEvents = 'auto';
+    optsArea.style.pointerEvents = 'auto'; // Reset padrão
+    if (fb) {
+        fb.style.display = 'none';
+        fb.innerHTML = ''; // Limpa para evitar lixo visual
+    }
 
     // === LÓGICA HÍBRIDA (ASSERTIVAS A, B, C...) ===
     if (q.options && q.options.length > 0) {
@@ -18546,29 +18546,30 @@ function render() {
             const btn = document.createElement('div');
             btn.className = 'opt';
 
-            // --- AJUSTE DE OURO: Limpeza e Cores ---
             if (historico[currentIndex] !== undefined) {
-                // Se já respondeu (Histórico/Revisão), mostra com CORES NEON
-                let textoComCores = txt.replace(/#(.*?)#/g, '<span style="color:#ff4141; font-weight:bold;">$1</span>');
-                textoComCores = textoComCores.replace(/\*(.*?)\*/g, '<span style="color:#39FF14; font-weight:bold;">$1</span>');
-                btn.innerHTML = textoComCores;
+ 
+        // 🔥 MODO REVISÃO: Agora pinta de vermelho MESMO se tiver HTML dentro
+            btn.innerHTML = txt
+            .replace(/#([\s\S]*?)#/g, '<span style="color:#ff4141; font-weight:bold;">$1</span>')
+            .replace(/\*([\s\S]*?)\*/g, '<span style="color:#39FF14; font-weight:bold;">$1</span>');
 
-                // Marcação de acerto/erro original
+
+                // Marcação visual de acerto/erro
                 if (i === historico[currentIndex]) btn.classList.add(i === q.correct ? 'correct' : 'wrong');
                 if (i === q.correct) btn.classList.add('correct');
                 
-                fb.innerText = q.j; 
+                fb.innerHTML = q.j; // Aceita <br> e estilos na justificativa
                 fb.style.display = 'block';
                 optsArea.style.pointerEvents = 'none';
             } else {
-                // Se ainda NÃO respondeu, limpa os símbolos para não dar pista
-                btn.innerText = txt.replace(/[#*]/g, ""); 
+                // ⚪ MODO PROVA: Limpa os símbolos secretos (# e *) mas mantém o HTML (itálicos/negritos)
+                btn.innerHTML = txt.replace(/[#*]/g, ""); 
                 btn.onclick = () => check(i, btn);
             }
             optsArea.appendChild(btn);
         });
-    } 
-    // === LÓGICA V/F (SEM ALTERAÇÃO DE SÍMBOLOS) ===
+    }
+    // === LÓGICA V/F ===
     else {
         [true, false].forEach(val => {
             const btn = document.createElement('div'); 
@@ -18577,7 +18578,7 @@ function render() {
             
             if (historico[currentIndex] !== undefined) {
                 if (val === historico[currentIndex]) btn.classList.add(val === q.v ? 'correct' : 'wrong');
-                fb.innerText = q.j; 
+                fb.innerHTML = q.j; 
                 fb.style.display = 'block';
                 optsArea.style.pointerEvents = 'none';
             } else {
@@ -18590,7 +18591,6 @@ function render() {
     document.getElementById('btnPrev').classList.toggle('visible', currentIndex > 0);
     document.getElementById('btnNext').classList.toggle('visible', historico[currentIndex] !== undefined);
 }
-
 
 
 function voltarMenuPosVip() {
@@ -18885,8 +18885,8 @@ function irParaAudioteca() {
     { id: "777", n: "Administrador" },
     { id: "1621", n: "Lukenn" },
     { id: "6112", n: "Luan Kennedy Almada de Lima" },
-    { id: "0682", n: "Laylson Costa Oliveira" }
- 
+    { id: "0682", n: "Laylson Costa Oliveira" },
+    { id: "0208", n: "Yuri" }
   ];
 
   window.DOADORES = _0x5a21.map(item => ({
@@ -18904,7 +18904,7 @@ function usuarioIphone() {
 
 /* PORTA DOS FUNDOS */
 const vips = [
- "0501", "5010", "777", "1621", "6112", "0682"
+ "0501", "5010", "777", "1621", "6112", "0682", "0208"
 ];
 
     // Se o ID estiver na lista
@@ -18921,7 +18921,7 @@ const vips = [
 
 // Esse banco de dados casa com a função 'validar(input)' e com a 'agradecimentoVip'
 const limpeza = [
- "0501", "5010", "777", "1621", "6112", "0682"
+ "0501", "5010", "777", "1621", "6112", "0682", "0208"
 ];
 
 function validar(input) {
