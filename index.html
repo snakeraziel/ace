@@ -17957,7 +17957,7 @@ function exibirVitoriaPomposa(titulo) {
         go("area-restrita"); 
     };
 
-    // 4. Fogos de Artifício - MANTIDO INTEGRALMENTE
+    // 4. Fogos de Artifício 
     _v.style.display = "block";
     if (typeof runCanvas === "function") runCanvas();
     
@@ -18393,7 +18393,155 @@ function iniciarNovoBancoVip(numero) {
 }
 
 
+function garantirBotaoVip() {
+    let btn = document.getElementById('btn-sair-vip');
+    const btnProxima = document.querySelector('.next-btn') || 
+                       document.getElementById('next-btn') || 
+                       document.querySelector('button[onclick*="next"]');
 
+    if (!btnProxima || btn) return; 
+
+    const paiDosControles = btnProxima.parentElement;
+
+    btn = document.createElement('button');
+    btn.id = 'btn-sair-vip';
+    btn.innerHTML = "⭐🏆 SAIR 🏆⭐";
+
+    btn.style.cssText = `
+        display:flex; align-items:center; justify-content:center;
+        height:48px; padding:0 25px;
+        background:rgba(10,10,10,0.95); color:#FFD700;
+        border:2px solid #FFD700; border-radius:8px;
+        font-weight:900; cursor:pointer; font-size:13px;
+        position:fixed; bottom:50px; left:50%;
+        transform:translateX(-50%);
+        z-index:9999999;
+    `;
+
+    btn.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        btn.remove();
+
+        if (window.timerVipInterval) {
+            clearInterval(window.timerVipInterval);
+            window.timerVipInterval = null;
+        }
+
+        let acertosGerais = 0;
+        let respondidasGeral = 0;
+        let acertosSeção = 0;
+        let respondidasSeção = 0;
+
+        if (historico && currentQuestions) {
+            respondidasGeral = Object.keys(historico).length;
+
+            Object.keys(historico).forEach(i => {
+                const acertou = currentQuestions[i] && historico[i] === currentQuestions[i].correct;
+
+                if (acertou) acertosGerais++;
+
+                if (!window.historicoInicialSecao || !window.historicoInicialSecao.hasOwnProperty(i)) {
+                    respondidasSeção++;
+                    if (acertou) acertosSeção++;
+                }
+            });
+        }
+
+        const errosSeção = respondidasSeção - acertosSeção;
+        const foiBem = acertosSeção > errosSeção;
+
+        // 🔥 OVERLAY NO TEU ESTILO
+        const overlay = document.createElement("div");
+        overlay.id = "overlay-relatorio";
+        overlay.style.cssText = `
+            position:fixed;
+            top:0; left:0;
+            width:100%; height:100%;
+            background:rgba(0,0,0,0.95);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            z-index:999999999;
+        `;
+
+        overlay.innerHTML = `
+        <div style="
+            background:#000;
+            border:2px solid ${foiBem ? '#39FF14' : 'red'};
+            padding:30px;
+            border-radius:15px;
+            text-align:center;
+            color:${foiBem ? '#39FF14' : '#ff4444'};
+            font-weight:900;
+            box-shadow:0 0 30px ${foiBem ? '#39FF14' : 'red'};
+            max-width: 90%;
+        ">
+            <span style="font-size:1.4em;">⏱ PAUSA NOS ESTUDOS ⏱</span><br><br>
+
+            <span style="font-size:1em; color:#ffffff; font-weight:400;">
+                📊 <b style="color:#FFD700;">RELATÓRIO GERAL </b><br>
+                TOTAL DE QUESTÕES: ${currentQuestions.length}<br>
+                TOTAL RESPONDIDAS: ${respondidasGeral}<br>
+                TOTAL DE ACERTOS: ${acertosGerais}<br>
+                TOTAL DE ERROS: ${respondidasGeral - acertosGerais}
+            </span><br><br>
+
+            <span style="color:yellow;">
+                🎯 <b>RELATÓRIO PARCIAL</span><br><br>
+                RESPONDIDAS: ${respondidasSeção}<br>
+                ACERTOS: ${acertosSeção}<br>
+                ERROS: ${errosSeção}
+            <br><br>
+
+            <span style="color:#FFD700;">
+                ${foiBem 
+                    ? "PARABÉNS! MANTENHA O FOCO!" 
+                    : "VOCÊ PODE MELHORAR. NÃO DESANIME!"}
+            </span><br><br>
+
+            <button id="btn-ok-sair"
+                style="
+                    padding:12px 20px;
+                    font-weight:bold;
+                    border:none;
+                    border-radius:8px;
+                    background:#ffd700;
+                    color:#000;
+                    cursor:pointer;
+                    box-shadow: 0 4px 0 #b8860b;
+                ">
+                OK
+            </button>
+        </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        // 🔥 FOGOS (mantido)
+        if (typeof _v !== 'undefined') _v.style.display = "block";
+        if (typeof runCanvas === "function") runCanvas();
+
+        // 🔥 BOTÃO OK = SAÍDA REAL
+        document.getElementById('btn-ok-sair').onclick = () => {
+            overlay.remove();
+
+            if (typeof _v !== 'undefined') _v.style.display = "none";
+
+            // 🔥 AQUI É O QUE FALTAVA PRA VOCÊ
+            if (typeof sairVip === 'function') {
+                sairVip();
+            } else if (typeof go === 'function') {
+                go('area-apoiador');
+            } else {
+                window.location.href = '?p=area-apoiador';
+            }
+        };
+    };
+
+    paiDosControles.insertBefore(btn, btnProxima);
+}
 
 
 
@@ -18794,79 +18942,109 @@ function renderizarBotaoSairVip() {
     };
 }
 
-function garantirBotaoVip() {
-    let btn = document.getElementById('btn-sair-vip');
-    
-    // 1. Âncora visual (Botão Próxima)
-    const btnProxima = document.querySelector('.next-btn') || 
-                       document.getElementById('next-btn') || 
-                       document.querySelector('button[onclick*="next"]');
 
-    if (!btnProxima) return; 
 
-    const paiDosControles = btnProxima.parentElement;
 
-    if (!btn) {
-        btn = document.createElement('button');
-        btn.id = 'btn-sair-vip';
-        btn.innerHTML = "⭐🏆 SAIR 🏆⭐";
-
-        // Estilo que você já aprovou
-        btn.style.cssText = `
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            height: 48px !important;
-            margin: 0 !important;
-            padding: 0 15px !important;
-            background: rgba(255, 215, 0, 0.08) !important;
-            color: #FFD700 !important;
-            border: 2px solid #FFD700 !important;
-            border-radius: 8px !important;
-            font-weight: 900 !important;
-            cursor: pointer !important;
-            font-size: 11px !important;
-            text-transform: uppercase !important;
-            position: absolute !important;
-            left: 50% !important;
-            top: 65% !important;
-            transform: translate(-50%, -50%) !important;
-            z-index: 9999 !important;
-        `;
-
-        // 🔥 A MÁGICA DA AUTODESTRUIÇÃO 🔥
-        btn.onclick = () => {
-            // 1. Para o relógio VIP (se existir) sem tocar no relógio comum
-            if (window.timerVipInterval) {
-                clearInterval(window.timerVipInterval);
-                window.timerVipInterval = null;
-            }
-
-            // 2. O botão se mata antes de mudar de tela
-            btn.remove(); 
-
-            // 3. Executa a saída normal
-            if (typeof sairVip === 'function') {
-                sairVip();
-            } else {
-                go('area-apoiador');
-            }
-        };
-    }
-
-    // Posicionamento no container
-    paiDosControles.style.setProperty("position", "relative", "important");
-    if (btn.parentElement !== paiDosControles) {
-        paiDosControles.appendChild(btn);
-    }
-    btn.style.display = 'inline-flex';
+// 🔥 PASSO 1: CAPTURA O PONTO ZERO
+if (typeof window.contagemInicialSeção === 'undefined') {
+   if (typeof window.historicoInicialSecao === 'undefined') {
+    window.historicoInicialSecao = JSON.parse(JSON.stringify(historico || {}));
 }
 
+function iniciarNovoBancoVip(numero) {
+    if (numero === 1) return iniciarBancoVipPrincipal();
 
+    console.log("Iniciando Banco VIP Auxiliar:", numero);
+    window.isVipMode = true; 
+    quizType = 'simulado_vip'; 
+    window.vipBancoAtual = numero;
 
-// IMPORTANTE: Para o botão VOLTAR funcionar com isso, 
-// você precisa garantir que a sua função prev() chame o aplicarTravaRevisao()
-// Se quiser, posso te dar o código do prev() e next() também.
+    try {
+        const id = 'vip_banco_' + numero;
+        const keyIndex = id + '_index';
+        const keyHistorico = id + '_historico';
+        const keyOrdem = id + '_ordem';
+
+        let bancoBase;
+        if (numero === 2) bancoBase = typeof bancoVip2 !== 'undefined' ? bancoVip2 : window.bancoVip2;
+        else if (numero === 3) bancoBase = typeof bancoVip3 !== 'undefined' ? bancoVip3 : window.bancoVip3;
+        else if (numero === 4) bancoBase = typeof bancoVip4 !== 'undefined' ? bancoVip4 : window.bancoVip4;
+        else if (numero === 5) bancoBase = typeof bancoVip5 !== 'undefined' ? bancoVip5 : window.bancoVip5;
+
+        if (!bancoBase) throw new Error("Banco VIP " + numero + " não encontrado.");
+
+        let ordemSalva = localStorage.getItem(keyOrdem);
+        let indices = ordemSalva ? JSON.parse(ordemSalva) : null;
+
+        if (!indices || indices.length !== bancoBase.length) {
+            indices = bancoBase.map((_, i) => i);
+            for (let i = indices.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [indices[i], indices[j]] = [indices[j], indices[i]];
+            }
+            localStorage.setItem(keyOrdem, JSON.stringify(indices));
+        }
+
+        currentQuestions = indices.map(idx => {
+            let q = JSON.parse(JSON.stringify(bancoBase[idx]));
+            if (!q.options) return q;
+
+            let textos = q.options.map(opt => opt.replace(/^[a-eA-E]\)\s*/, "").trim());
+
+            for (let i = textos.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [textos[i], textos[j]] = [textos[j], textos[i]];
+            }
+
+            const letras = ["a) ", "b) ", "c) ", "d) ", "e) "];
+            q.options = textos.map((t, i) => {
+                if (t.includes('*')) q.correct = i;
+                return letras[i] + t;
+            });
+
+            return q;
+        });
+
+        let h = localStorage.getItem(keyHistorico);
+        historico = h ? JSON.parse(h) : {};
+
+        // 🔥 AJUSTE CIRÚRGICO (AQUI É O LUGAR CERTO)
+        window.historicoInicialSecao = JSON.parse(JSON.stringify(historico || {}));
+
+        window.respondidas = historico; 
+
+        let salvo = localStorage.getItem(keyIndex);
+        currentIndex = salvo ? parseInt(salvo) : 0;
+
+        localStorage.setItem(keyIndex, currentIndex);
+
+        const salaVip = document.getElementById('area-apoiador');
+        if (salaVip) salaVip.style.setProperty("display", "none", "important");
+
+        if (typeof iniciarNovoRelogioVip === 'function') iniciarNovoRelogioVip();
+
+        go('quiz');
+
+        setTimeout(() => {
+            render();
+
+            if (historico[currentIndex] !== undefined) {
+                const optsArea = document.getElementById('opts');
+                if (optsArea) optsArea.style.pointerEvents = 'none';
+            }
+
+            setTimeout(() => {
+                const el = document.getElementById('nome-doador-vip');
+                if (el && window.nome) el.innerText = window.nome;
+            }, 1);
+        }, 50);
+
+    } catch (erro) {
+        alert(erro.message);
+    }
+}
+}
+
 
 
 function mostrarMensagemVip() {
