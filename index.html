@@ -18489,7 +18489,7 @@ function garantirBotaoVip() {
             </span><br><br>
 
             <span style="color:yellow;">
-                🎯 <b>RELATÓRIO PARCIAL</span><br><br>
+                🎯 <b>RELATÓRIO PARCIAL</span><br>
                 RESPONDIDAS: ${respondidasSeção}<br>
                 ACERTOS: ${acertosSeção}<br>
                 ERROS: ${errosSeção}
@@ -18572,7 +18572,7 @@ function aplicarNomeVip() {
 // MOTOR CENTRAL
 // ==========================================
 function startQuiz(modo) {
-  // Blindagem de Estado sugerida pelo parceiro
+  // 1. BLINDAGEM DE ESTADO
   window.isVipMode = (modo === 'vip' || modo === 'simulado_vip');
   quizType = window.isVipMode ? 'simulado_vip' : modo;
 
@@ -18582,8 +18582,6 @@ function startQuiz(modo) {
   acertosContadorSenha = 0;
   historico = {};
 
-  // NOVIDADE: Limite de erros para impedir aprovação indevida
-  // No modo 'total' (analista), o limite é rigoroso: 3 erros (admite apenas 2)
   window.limiteErrosPermitidos = (modo === 'vip' || modo === 'simulado_vip' || modo === 25) ? 5 : 3;
 
   const vContainer = document.getElementById('vidas-container');
@@ -18592,7 +18590,7 @@ function startQuiz(modo) {
   if (feedback) feedback.style.display = 'none';
 
   /* ==========================
-      🔥 MODO VIP (AJUSTADO)
+      🔥 LÓGICA DE BANCO DE DADOS
   ========================== */
   if (modo === 'vip' || modo === 'simulado_vip') {
     quizType = 'simulado_vip';
@@ -18605,42 +18603,20 @@ function startQuiz(modo) {
     const TOTAL_VIP = 30; 
     currentQuestions = [...megaBanco].sort(() => Math.random() - 0.5).slice(0, TOTAL_VIP);
     if (vContainer) vContainer.innerHTML = '<span class="bomba-pulsa" style="filter:drop-shadow(0 0 6px gold); font-size:1.5em;">⭐</span>';
-    if (btnExtra) {
-        btnExtra.innerText = "🏛 SALA VIP 🏛";
-        btnExtra.style.background = "#FFD700";
-        btnExtra.style.color = "#000";
-        btnExtra.onclick = () => go('area-apoiador');
-    }
     if (typeof clearProgress === 'function') clearProgress('simulado_vip');
-  }
-
-  /* ==========================
-      Bomb SOBREVIVENTE
-  ========================== */
+  } 
   else if (modo === 25) {
     const megaBanco = [...bancoOficial, ...bancoModulos, ...bancoVariados, ...bancoPortarias];
     currentQuestions = megaBanco.sort(() => 0.5 - Math.random()).slice(0, 25);
-    
-    vContainer.innerHTML = '<span class="bomba-pulsa">💣</span>';
-    
-    // 🔥 REMOÇÃO DO "LIXO": Esconde o botão motivacional completamente
-    if (btnExtra) {
-        btnExtra.style.display = "none";
-    }
-
+    if (vContainer) vContainer.innerHTML = '<span class="bomba-pulsa">💣</span>';
     if (typeof clearProgress === 'function') clearProgress(modo);
-}
-
- /* ==========================
-    📚 MODOS NORMAIS (AJUSTE ANALISTA SEM EXPULSÃO)
-========================== */
-else {
+  } 
+  else {
     let base;
     if (modo === 'total') {
         base = (typeof bancoOficial !== 'undefined') ? [...bancoOficial] : [];
-        // Desativa o sistema de vidas antigo para este modo
         window.vidasAtivas = false; 
-        window.limiteErrosPermitidos = 101; // Valor alto para o motor não expulsar por erro
+        window.limiteErrosPermitidos = 101; 
     } else if (modo === 'modulos') {
         base = (typeof bancoModulos !== 'undefined') ? [...bancoModulos] : [];
     } else if (modo === 'variados') {
@@ -18651,57 +18627,84 @@ else {
         base = (typeof bancoOficial !== 'undefined') ? [...bancoOficial] : [];
     }
 
-    currentQuestions = base
-        .sort(() => 0.5 - Math.random())
-        .slice(0, modo === 'total' ? 100 : base.length);
+    currentQuestions = base.sort(() => 0.5 - Math.random()).slice(0, modo === 'total' ? 100 : base.length);
 
     if (vContainer) {
-        // Se for analista, não mostra corações (vidas), mostra o título da prova
         if (modo === 'total') {
             vContainer.innerHTML = '<span style="font-size:1.2em; color:#FFD700; font-weight:bold; text-shadow:1px 1px #000;">PROVA ANALISTA</span>';
         } else {
             vContainer.innerHTML = '<span id="v1">❤️</span><span id="v2">❤️</span><span id="v3">❤️</span>';
+            window.vidasAtivas = true;
         }
     }
     
-    if (modo === 'total') {
-        btnExtra.innerText = "ÁREA DE ESTUDOS"; 
-        btnExtra.style.background = "#22c55e"; 
-        btnExtra.style.boxShadow = "0 0 10px #22c55e"; 
-        btnExtra.onclick = () => { go('area-restrita');};
-        
-        if (typeof clearProgress === 'function') clearProgress('total');
-      
-        // LOGICA DE FINALIZAÇÃO ANALISTA (SÓ NO FIM DAS 100)
-        window.onFinalizarQuiz = () => {
-            if (erros < 3) {
-                alert(`APROVADO! 🎉\nVocê acertou ${acertosSessao} questões.\nO cargo de Analista Socioeducador te espera!`);
-                go('area-restrita');
-            } else {
-                alert(`REPROVADO! 📚\nVocê cometeu ${erros} erros. O limite para Analista é de apenas 2 erros.`);
-                go('capa');
-            }
-        };
+    if (modo === 'total' && typeof clearProgress === 'function') clearProgress('total');
+  }
+
+  /* ==============================================
+      🎯 AJUSTE CIRÚRGICO NO BOTÃO EXTRA (RELATÓRIO)
+  ============================================== */
+  if (btnExtra) {
+    if (modo === 25) {
+        btnExtra.style.display = "none"; // Sobrevivente não tem saída amigável
     } else {
-        // Reset normal para outros modos
-        window.vidasAtivas = true; 
-        btnExtra.innerText = "ÁREA DE ESTUDOS"; 
-        btnExtra.style.background = "#22c55e"; 
-        btnExtra.style.boxShadow = "0 0 10px #22c55e"; 
-        btnExtra.onclick = () => { go('area-restrita'); };
-
-        if (typeof loadProgress === 'function') {
-            const saved = loadProgress(modo);
-            if (saved) {
-                currentIndex = Math.min(saved.index || 0, currentQuestions.length - 1);
-                acertosSessao = saved.acertosSessao || 0;
-                erros = saved.erros || 0;
-                historico = saved.historico || {};
-            }
+        btnExtra.style.display = "flex";
+        btnExtra.classList.add('visible');
+        
+        // Estética do botão baseada no modo
+        if (window.isVipMode) {
+            btnExtra.innerText = "🏛 SALA VIP 🏛";
+            btnExtra.style.background = "#FFD700";
+            btnExtra.style.color = "#000";
+        } else {
+            btnExtra.innerText = "ÁREA DE ESTUDOS"; 
+            btnExtra.style.background = "#22c55e"; 
+            btnExtra.style.color = "#fff";
         }
-    }
-}
 
+        btnExtra.onclick = () => {
+            let totalAcertos = 0;
+            let totalRespondidas = Object.keys(historico).length;
+            
+            if (historico && currentQuestions) {
+                Object.keys(historico).forEach(i => {
+                    if (currentQuestions[i] && historico[i] === currentQuestions[i].correct) totalAcertos++;
+                });
+            }
+
+            let totalErros = totalRespondidas - totalAcertos;
+            let foiBem = totalRespondidas > 0 ? (totalAcertos >= totalRespondidas / 2) : true;
+
+            const overlay = document.createElement("div");
+            overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:flex; align-items:center; justify-content:center; z-index:999999999;";
+
+            overlay.innerHTML = `
+            <div style="background:#000; border:2px solid ${foiBem ? '#39FF14' : 'red'}; padding:30px; border-radius:15px; text-align:center; color:${foiBem ? '#39FF14' : '#ff4444'}; font-weight:900; box-shadow:0 0 30px ${foiBem ? '#39FF14' : 'red'}; max-width: 90%;">
+                <span style="font-size:1.4em;">⏱ PAUSA NOS ESTUDOS ⏱</span><br><br>
+                <span style="font-size:1.1em; color:#ffffff; font-weight:400;">
+                    📊 <b style="color:#FFD700;">RELATÓRIO DE PROGRESSO</b><br>
+                    BANCO ATUAL: ${currentQuestions.length} QUESTÕES<br>
+                    VOCÊ RESPONDEU: ${totalRespondidas}<br>
+                    ACERTOS COMPUTADOS: ${totalAcertos}<br>
+                    ERROS COMPUTADOS: ${totalErros}
+                </span><br><br>
+                <span style="color:#FFD700;">${foiBem ? "EXCELENTE RITMO! CONTINUE ASSIM!" : "FOCO NOS DETALHES! A REVISÃO É A CHAVE!"}</span><br><br>
+                <button id="btn-ok-relatorio" style="padding:12px 25px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b;">OK, VOLTAR PARA ÁREA DE ESTUDOS</button>
+            </div>`;
+
+            document.body.appendChild(overlay);
+            if (foiBem && typeof runCanvas === "function") runCanvas();
+
+            document.getElementById('btn-ok-relatorio').onclick = () => {
+                overlay.remove();
+                if (window.isVipMode) go('area-apoiador');
+                else go('area-restrita');
+            };
+        };
+    }
+  }
+
+  // FINALIZAÇÃO
   if (!currentQuestions || currentQuestions.length === 0) {
     alert("Nenhuma questão disponível neste banco.");
     return;
@@ -18709,7 +18712,6 @@ else {
 
   document.getElementById('btnPrev').classList.add('visible');
   document.getElementById('btnNext').classList.add('visible');
-  document.getElementById('btnExtra').classList.add('visible');
 
   go('quiz');
   if (typeof render === 'function') render();
