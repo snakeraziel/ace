@@ -222,15 +222,8 @@ html, body {
 }
 
 /* INFORMÁTICA */
-@keyframes bounce {
-  0% { transform:translateY(0); }
-  50% { transform:translateY(-18px); }
-  100% { transform:translateY(0); }
-}
-.bounce {
-  animation:bounce 1s infinite;
-  text-shadow:0 0 15px #39FF14;
-}
+.fx44{animation:spin 5s infinite}
+@keyframes spin {to{transform:rotate(360deg)}}
 
 /* PORTUGUÊS */
 .fx9{animation:flip 1.5s infinite}
@@ -1001,8 +994,8 @@ AGENTE DE COMBATE A ENDEMIAS
             <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: 2px;">Português do Zero</span>
         </div>
 
-        <div class="bounce" style="display: flex; flex-direction: column; align-items: center; cursor:pointer; flex: 1;" onclick="antigaProvaAnalista()">
-            <div style="font-size: 30px;">👨‍💻</div>
+        <div class="fx44" style="display: flex; flex-direction: column; align-items: center; cursor:pointer; flex: 1;" onclick="antigaProvaAnalista()">
+            <div style="font-size: 30px;">🌎</div>
             <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: 2px;">Conhecimentos Gerais</span>
         </div>
         
@@ -10777,7 +10770,7 @@ const bancoVip2 = [
     "e) #Sudeste, na divisa direta com o estado de Mato Grosso do Sul.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO município de Água Boa localiza-se na mesorregião do Nordeste Mato-grossense, mais especificamente na microrregião do Canarana, inserido na importante região socioeconômica do Vale do Araguaia. A cidade é um ponto estratégico de integração logística e comercial no leste do estado."
+  j: "O município de Água Boa localiza-se na mesorregião do Nordeste Mato-grossense, mais especificamente na microrregião do Canarana, inserido na importante região socioeconômica do Vale do Araguaia. A cidade é um ponto estratégico de integração logística e comercial no leste do estado."
 },
 {
   q: "🌎 2. A economia de Água Boa é historicamente fundamentada em qual setor produtivo, que lhe confere destaque regional?",
@@ -10789,7 +10782,7 @@ const bancoVip2 = [
     "e) #Comércio de eletrônicos e serviços de tecnologia da informação.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nÁgua Boa é conhecida como um dos grandes polos do agronegócio no Mato Grosso. Sua economia é impulsionada pela alta produtividade de grãos (soja e milho) e por uma pecuária de corte altamente tecnificada, sendo referência em leilões de gado e feiras agropecuárias como a Expovale."
+  j: "Água Boa é conhecida como um dos grandes polos do agronegócio no Mato Grosso. Sua economia é impulsionada pela alta produtividade de grãos (soja e milho) e por uma pecuária de corte altamente tecnificada, sendo referência em leilões de gado e feiras agropecuárias como a Expovale."
 },
 {
   q: "🌎 3. O estado de Mato Grosso apresenta uma diversidade biológica única, sendo o único estado brasileiro a possuir três biomas em seu território. São eles:",
@@ -10801,7 +10794,7 @@ const bancoVip2 = [
     "e) #Floresta Equatorial, Caatinga e Cerrado.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nMato Grosso possui um território privilegiado geograficamente, abrigando partes da Floresta Amazônica (norte), o Cerrado (centro e leste) e o Pantanal (sul/sudoeste). Água Boa, especificamente, está situada em área de domínio do Cerrado."
+  j: "Mato Grosso possui um território privilegiado geograficamente, abrigando partes da Floresta Amazônica (norte), o Cerrado (centro e leste) e o Pantanal (sul/sudoeste). Água Boa, especificamente, está situada em área de domínio do Cerrado."
 },
 {
   q: "🌎 4. Em relação à logística de transportes, Água Boa é estrategicamente cortada por uma rodovia federal fundamental para o escoamento da safra regional. Trata-se da:",
@@ -10813,7 +10806,7 @@ const bancoVip2 = [
     "e) #BR-174 (Cuiabá-Manaus).#"
   ],
   correct: 3,
-  j: "Correta: alternativa D\n\nA BR-158 é a principal artéria rodoviária de Água Boa e do Vale do Araguaia. Ela desempenha um papel vital no transporte de grãos e gado, conectando a região aos terminais ferroviários e portos, sendo objeto de constantes debates sobre sua pavimentação total e manutenção."
+  j: "A BR-158 é a principal artéria rodoviária de Água Boa e do Vale do Araguaia. Ela desempenha um papel vital no transporte de grãos e gado, conectando a região aos terminais ferroviários e portos, sendo objeto de constantes debates sobre sua pavimentação total e manutenção."
 },
 {
   q: "🌎 5. A formação cultural e populacional de Água Boa possui uma característica marcante ligada ao processo de colonização do estado nas décadas de 70 e 80. Esse processo foi composto majoritariamente por:",
@@ -10825,7 +10818,7 @@ const bancoVip2 = [
     "e) #Trabalhadores vindos do Rio de Janeiro para o setor público.#"
   ],
   correct: 3,
-  j: "Correta: alternativa D\n\nAssim como boa parte do interior de Mato Grosso, Água Boa foi colonizada por migrantes da região Sul (especialmente gaúchos). Essa influência é visível até hoje na cultura local, na culinária (consumo de chimarrão e churrasco), nas danças folclóricas e no sotaque da população."
+  j: "Assim como boa parte do interior de Mato Grosso, Água Boa foi colonizada por migrantes da região Sul (especialmente gaúchos). Essa influência é visível até hoje na cultura local, na culinária (consumo de chimarrão e churrasco), nas danças folclóricas e no sotaque da população."
 },
 {
   q: "🌎 6. Geograficamente, o relevo predominante no território de Água Boa e em grande parte do leste mato-grossense caracteriza-se por:",
@@ -10837,7 +10830,7 @@ const bancoVip2 = [
     "e) #Dunas de areia constantes devido aos ventos do Araguaia.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nA região de Água Boa situa-se em áreas de planalto e chapadas, o que favorece mecanização agrícola em larga escala. A topografia plana ou suave ondulada é um dos fatores que permitiram ao município se tornar um gigante na produção de grãos."
+  j: "A região de Água Boa situa-se em áreas de planalto e chapadas, o que favorece mecanização agrícola em larga escala. A topografia plana ou suave ondulada é um dos fatores que permitiram ao município se tornar um gigante na produção de grãos."
 },
 {
   q: "🌎 7. Sobre o clima predominante em Mato Grosso, especialmente na região de Água Boa, assinale a alternativa correta:",
@@ -10849,7 +10842,7 @@ const bancoVip2 = [
     "e) #Clima Subtropical, com geadas constantes durante o ano todo.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO clima é o Tropical Subúmido (ou Tropical de Savana), caracterizado por um período de chuvas intensas (verão) e um período de seca rigorosa (inverno). Esse ciclo define o calendário agrícola da soja e do milho safrinha na região."
+  j: "O clima é o Tropical Subúmido (ou Tropical de Savana), caracterizado por um período de chuvas intensas (verão) e um período de seca rigorosa (inverno). Esse ciclo define o calendário agrícola da soja e do milho safrinha na região."
 },
 {
   q: "🌎 8. O município de Água Boa - MT foi oficialmente emancipado na década de 70. Sobre sua origem histórica, é correto afirmar que o núcleo urbano surgiu a partir de:",
@@ -10861,7 +10854,7 @@ const bancoVip2 = [
     "e) #Uma estação ferroviária da antiga Estrada de Ferro Noroeste.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nÁgua Boa nasceu do sonho de colonizadores vindos do Rio Grande do Sul, liderados por figuras como Norberto Marchezan. O projeto visava transformar o cerrado em terras produtivas, atraindo famílias do sul do Brasil para desbravar a região do Araguaia a partir de 1974."
+  j: "Água Boa nasceu do sonho de colonizadores vindos do Rio Grande do Sul, liderados por figuras como Norberto Marchezan. O projeto visava transformar o cerrado em terras produtivas, atraindo famílias do sul do Brasil para desbravar a região do Araguaia a partir de 1974."
 },
 {
   q: "🌎 9. Em relação à hidrografia, Água Boa está inserida em uma bacia hidrográfica de extrema relevância nacional. Trata-se da:",
@@ -10873,7 +10866,7 @@ const bancoVip2 = [
     "e) #Bacia do Rio Doce.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO município está localizado na vertente do Rio Araguaia, fazendo parte da bacia Araguaia-Tocantins. Rios como o Rio das Mortes e o Rio Sete de Setembro são fundamentais para a irrigação e o equilíbrio ambiental da microregião de Água Boa."
+  j: "O município está localizado na vertente do Rio Araguaia, fazendo parte da bacia Araguaia-Tocantins. Rios como o Rio das Mortes e o Rio Sete de Setembro são fundamentais para a irrigação e o equilíbrio ambiental da microregião de Água Boa."
 },
 {
   q: "🌎 10. No contexto político-administrativo, Mato Grosso possui 141 municípios. A capital do estado, centro das decisões políticas, é:",
@@ -10885,7 +10878,7 @@ const bancoVip2 = [
     "e) #Lucas do Rio Verde#"
   ],
   correct: 3,
-  j: "Correta: alternativa D\n\nCuiabá é a capital e o principal centro político e administrativo de Mato Grosso. Fundada em 1719 durante o ciclo do ouro, a cidade hoje centraliza a gestão de um estado que é potência mundial na produção de alimentos."
+  j: "Cuiabá é a capital e o principal centro político e administrativo de Mato Grosso. Fundada em 1719 durante o ciclo do ouro, a cidade hoje centraliza a gestão de um estado que é potência mundial na produção de alimentos."
 },
 {
   q: "🌎 11. Um dos eventos culturais e de negócios mais importantes de Água Boa, que movimenta a economia regional e celebra a produção agropecuária, é a:",
@@ -10897,7 +10890,7 @@ const bancoVip2 = [
     "e) #Festa do Peão de Barretos.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nA Expovale é o maior evento de Água Boa. Ela reúne produtores, tecnologia de ponta, shows e grandes leilões de gado, reforçando o título da cidade como um dos corações econômicos do Leste Mato-grossense."
+  j: "A Expovale é o maior evento de Água Boa. Ela reúne produtores, tecnologia de ponta, shows e grandes leilões de gado, reforçando o título da cidade como um dos corações econômicos do Leste Mato-grossense."
 },
 {
   q: "🌎 12. Sobre a vegetação predominante no município de Água Boa, assinale a alternativa que descreve corretamente suas características originais:",
@@ -10909,7 +10902,7 @@ const bancoVip2 = [
     "e) #Manguezal, devido à proximidade com o litoral.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO bioma Cerrado é o que define a paisagem natural de Água Boa. Suas características incluem solos ácidos (corrigidos pela calagem na agricultura), árvores com adaptações ao fogo e raízes profundas para buscar água durante a estiagem prolongada."
+  j: "O bioma Cerrado é o que define a paisagem natural de Água Boa. Suas características incluem solos ácidos (corrigidos pela calagem na agricultura), árvores com adaptações ao fogo e raízes profundas para buscar água durante a estiagem prolongada."
 },
 {
   q: "🌎 13. Mato Grosso é o maior produtor nacional de grãos. Além da soja e do milho, o estado lidera a produção brasileira de qual outra cultura?",
@@ -10921,7 +10914,7 @@ const bancoVip2 = [
     "e) #Trigo#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nMato Grosso é o gigante do algodão no Brasil, sendo responsável por mais de 65% da produção nacional. Essa cultura exige alta tecnologia e grandes extensões de terra, perfil que se encaixa perfeitamente no modelo agrícola praticado no estado."
+  j: "Mato Grosso é o gigante do algodão no Brasil, sendo responsável por mais de 65% da produção nacional. Essa cultura exige alta tecnologia e grandes extensões de terra, perfil que se encaixa perfeitamente no modelo agrícola praticado no estado."
 },
 {
   q: "🌎 14. O aniversário de emancipação política de Água Boa é comemorado anualmente em:",
@@ -10933,7 +10926,7 @@ const bancoVip2 = [
     "e) #15 de Novembro#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nÁgua Boa comemora sua emancipação em 09 de julho. A cidade foi criada pela Lei Estadual nº 4.164, de 26 de dezembro de 1979, mas sua instalação oficial e a data festiva principal remetem ao período da colonização ativa da década de 70."
+  j: "Água Boa comemora sua emancipação em 09 de julho. A cidade foi criada pela Lei Estadual nº 4.164, de 26 de dezembro de 1979, mas sua instalação oficial e a data festiva principal remetem ao período da colonização ativa da década de 70."
 },
 {
   q: "🌎 15. Água Boa é sede de uma importante divisão administrativa do Poder Judiciário e de órgãos de segurança pública. O município é centro de uma:",
@@ -10945,7 +10938,7 @@ const bancoVip2 = [
     "e) #Região Administrativa vinculada diretamente a Brasília.#"
   ],
   correct: 2,
-  j: "Correta: alternativa B\n\nComo polo regional do Médio Araguaia, Água Boa exerce influência administrativa e judiciária sobre cidades menores ao seu entorno. A Comarca de Água Boa é fundamental para a organização jurídica da região, consolidando o município como um centro de serviços públicos."
+  j: "Como polo regional do Médio Araguaia, Água Boa exerce influência administrativa e judiciária sobre cidades menores ao seu entorno. A Comarca de Água Boa é fundamental para a organização jurídica da região, consolidando o município como um centro de serviços públicos."
 },
 {
   q: "🌎 16. O Brasão de Armas de Mato Grosso, um dos símbolos oficiais do estado, traz em seu centro um monte que representa a riqueza mineral e a história da ocupação do território. Esse monte é o:",
@@ -10957,7 +10950,7 @@ const bancoVip2 = [
     "e) #Serra do Roncador#"
   ],
   correct: 3,
-  j: "Correta: alternativa C\n\nO Morro de Santo Antônio, localizado em Santo Antônio de Leverger, é a figura central do brasão de Mato Grosso. Ele simboliza a busca pelo ouro e os marcos geográficos utilizados pelos bandeirantes e primeiros exploradores do estado."
+  j: "O Morro de Santo Antônio, localizado em Santo Antônio de Leverger, é a figura central do brasão de Mato Grosso. Ele simboliza a busca pelo ouro e os marcos geográficos utilizados pelos bandeirantes e primeiros exploradores do estado."
 },
 {
   q: "🌎 17. Em Água Boa, a altitude média da sede municipal é um fator que influencia positivamente a mecanização agrícola. Essa altitude gira em torno de:",
@@ -10969,7 +10962,7 @@ const bancoVip2 = [
     "e) #Ao nível do mar.#"
   ],
   correct: 3,
-  j: "Correta: alternativa C\n\nÁgua Boa possui uma altitude média de aproximadamente 430 metros. Por estar em uma região de planalto suavemente ondulado, essa elevação, somada à topografia plana, é o cenário ideal para o uso de grandes máquinas colheitadeiras e semeadoras."
+  j: "Água Boa possui uma altitude média de aproximadamente 430 metros. Por estar em uma região de planalto suavemente ondulado, essa elevação, somada à topografia plana, é o cenário ideal para o uso de grandes máquinas colheitadeiras e semeadoras."
 },
 {
   q: "🌎 18. O hino de Mato Grosso e a sua bandeira exaltam as cores azul, branco, verde e uma estrela amarela. A estrela amarela no centro da bandeira representa:",
@@ -10981,7 +10974,7 @@ const bancoVip2 = [
     "e) #A produção de milho safrinha.#"
   ],
   correct: 3,
-  j: "Correta: alternativa C\n\nA bandeira de Mato Grosso, oficializada em 1890, segue o padrão republicano. A estrela amarela (Estrela de Sirius) simboliza o estado como parte da União, enquanto as cores representam o céu (azul), a paz (branco) e as florestas e campos (verde)."
+  j: "A bandeira de Mato Grosso, oficializada em 1890, segue o padrão republicano. A estrela amarela (Estrela de Sirius) simboliza o estado como parte da União, enquanto as cores representam o céu (azul), a paz (branco) e as florestas e campos (verde)."
 },
 {
   q: "🌎 19. A região onde Água Boa está inserida sofreu um grande impulso de desenvolvimento através de programas governamentais de ocupação do Centro-Oeste. O principal programa da década de 70 foi o:",
@@ -10993,7 +10986,7 @@ const bancoVip2 = [
     "e) #Projeto Rondon de Mineração.#"
   ],
   correct: 2,
-  j: "Correta: alternativa B\n\nO POLOCENTRO foi um programa federal crucial para a modernização da agricultura no Centro-Oeste brasileiro. Ele financiou infraestrutura e tecnologia para que biomas como o de Água Boa passassem de áreas de 'pastagens degradadas' para grandes centros de produção de grãos."
+  j: "O POLOCENTRO foi um programa federal crucial para a modernização da agricultura no Centro-Oeste brasileiro. Ele financiou infraestrutura e tecnologia para que biomas como o de Água Boa passassem de áreas de 'pastagens degradadas' para grandes centros de produção de grãos."
 },
 {
   q: "🌎 20. Sobre a fauna e flora de Água Boa, é comum encontrar espécies típicas do Cerrado. Assinale a alternativa que contém apenas elementos deste bioma:",
@@ -11005,7 +10998,7 @@ const bancoVip2 = [
     "e) #Baleia Jubarte e Caranguejo.#"
   ],
   correct: 3,
-  j: "Correta: alternativa C\n\nO Lobo-guará é o animal símbolo do Cerrado, e o Ipê (em suas diversas cores) é uma das árvores mais emblemáticas da região de Água Boa. O bioma é conhecido como a 'savana brasileira' devido à sua rica biodiversidade adaptada à sazonalidade climática."
+  j: "O Lobo-guará é o animal símbolo do Cerrado, e o Ipê (em suas diversas cores) é uma das árvores mais emblemáticas da região de Água Boa. O bioma é conhecido como a 'savana brasileira' devido à sua rica biodiversidade adaptada à sazonalidade climática."
 },
 {
   q: "🌎 21. De acordo com a Lei Orgânica de Água Boa, são poderes do Município, independentes e harmônicos entre si:",
@@ -11017,7 +11010,7 @@ const bancoVip2 = [
     "e) #A Câmara Municipal e o Ministério Público.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nA organização dos poderes municipais segue o padrão constitucional. Como o Município não possui Poder Judiciário próprio (que é estadual ou federal), apenas o Legislativo e o Executivo compõem os poderes municipais, conforme estabelecido na Lei Orgânica."
+  j: "A organização dos poderes municipais segue o padrão constitucional. Como o Município não possui Poder Judiciário próprio (que é estadual ou federal), apenas o Legislativo e o Executivo compõem os poderes municipais, conforme estabelecido na Lei Orgânica."
 },
 {
   q: "🌎 22. Segundo a LOM de Água Boa, a soberania popular será exercida pelo sufrágio universal e pelo voto direto e secreto, com valor igual para todos, e, nos termos da lei, mediante:",
@@ -11029,7 +11022,7 @@ const bancoVip2 = [
     "e) #Consultas Públicas e Audiências Legislativas.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA Lei Orgânica prevê os mecanismos clássicos de exercício direto da soberania popular no âmbito municipal. Plebiscito (consulta prévia), Referendo (consulta posterior) e Iniciativa Popular (apresentação de projetos de lei pelos cidadãos) são as ferramentas fundamentais de democracia direta."
+  j: "A Lei Orgânica prevê os mecanismos clássicos de exercício direto da soberania popular no âmbito municipal. Plebiscito (consulta prévia), Referendo (consulta posterior) e Iniciativa Popular (apresentação de projetos de lei pelos cidadãos) são as ferramentas fundamentais de democracia direta."
 },
 {
   q: "🌎 23. Compete ao Município de Água Boa, em comum com a União e o Estado, EXCETO:",
@@ -11041,7 +11034,7 @@ const bancoVip2 = [
     "e) #Fomentar a produção agropecuária e organizar o abastecimento alimentar.#"
   ],
   correct: 3,
-  j: "Correta: alternativa D\n\nEmitir moeda e legislar sobre direito civil e penal são competências privativas da União. O Município possui competência comum para cuidar da saúde, assistência pública, proteção ao patrimônio histórico e fomento da agropecuária (muito relevante em Água Boa)."
+  j: "Emitir moeda e legislar sobre direito civil e penal são competências privativas da União. O Município possui competência comum para cuidar da saúde, assistência pública, proteção ao patrimônio histórico e fomento da agropecuária (muito relevante em Água Boa)."
 },
 {
   q: "🌎 24. Sobre a Câmara Municipal de Água Boa, a Lei Orgânica estabelece que o mandato dos Vereadores terá a duração de:",
@@ -11053,7 +11046,7 @@ const bancoVip2 = [
     "e) #Indeterminado, enquanto durar a legislatura.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nConforme o padrão da Administração Pública brasileira, a legislatura tem duração de 4 anos. Cada ano corresponde a uma sessão legislativa, e o mandato dos vereadores eleitos para representar o povo de Água Boa acompanha esse período."
+  j: "Conforme o padrão da Administração Pública brasileira, a legislatura tem duração de 4 anos. Cada ano corresponde a uma sessão legislativa, e o mandato dos vereadores eleitos para representar o povo de Água Boa acompanha esse período."
 },
 {
   q: "🌎 25. É vedado ao Município de Água Boa, de acordo com as proibições constitucionais reproduzidas na Lei Orgânica:",
@@ -11065,7 +11058,7 @@ const bancoVip2 = [
     "e) #Realizar convênios com o Governo do Estado de Mato Grosso.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nO Município é um ente federativo laico. Assim, é proibido por lei estabelecer, subvencionar ou manter relações de dependência ou aliança com cultos religiosos ou igrejas, ressalvada a colaboração de interesse público (como em assistência social e saúde)."
+  j: "O Município é um ente federativo laico. Assim, é proibido por lei estabelecer, subvencionar ou manter relações de dependência ou aliança com cultos religiosos ou igrejas, ressalvada a colaboração de interesse público (como em assistência social e saúde)."
 },
 {
   q: "🌎 26. A Lei Orgânica de Água Boa prevê que o Prefeito e o Vice-Prefeito tomarão posse no dia:",
@@ -11077,7 +11070,7 @@ const bancoVip2 = [
     "e) #Data definida livremente pela Câmara Municipal.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA posse dos eleitos para os cargos do Poder Executivo (Prefeito e Vice) ocorre tradicionalmente no primeiro dia do ano em que se inicia o mandato, em sessão solene da Câmara Municipal."
+  j: "A posse dos eleitos para os cargos do Poder Executivo (Prefeito e Vice) ocorre tradicionalmente no primeiro dia do ano em que se inicia o mandato, em sessão solene da Câmara Municipal."
 },
 {
   q: "🌎 27. Qual é o nome do documento legal que organiza o Município, funcionando como uma espécie de 'Constituição Municipal'?",
@@ -11089,7 +11082,7 @@ const bancoVip2 = [
     "e) #Regimento Interno da Câmara.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA Lei Orgânica é o diploma legal mais importante do município. Ela define a organização política, as atribuições dos poderes, as normas de administração pública e os direitos e deveres fundamentais no âmbito local."
+  j: "A Lei Orgânica é o diploma legal mais importante do município. Ela define a organização política, as atribuições dos poderes, as normas de administração pública e os direitos e deveres fundamentais no âmbito local."
 },
 {
   q: "🌎 28. Segundo a LOM, a alienação de bens imóveis municipais depende de prévia avaliação, autorização legislativa e:",
@@ -11101,7 +11094,7 @@ const bancoVip2 = [
     "e) #Aprovação do Governador do Estado.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nPara garantir a transparência e o interesse público, a venda (alienação) de patrimônio público imóvel exige que o Município realize licitação, após ser autorizado pela Câmara e ter o valor do bem devidamente avaliado."
+  j: "Para garantir a transparência e o interesse público, a venda (alienação) de patrimônio público imóvel exige que o Município realize licitação, após ser autorizado pela Câmara e ter o valor do bem devidamente avaliado."
 },
 {
   q: "🌎 29. De acordo com a Lei Orgânica de Água Boa, são poderes do Município, independentes e harmônicos entre si:",
@@ -11113,7 +11106,7 @@ const bancoVip2 = [
     "e) #A Câmara Municipal e o Ministério Público.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nA organização dos poderes municipais segue o padrão constitucional. Como o Município não possui Poder Judiciário próprio (que é estadual ou federal), apenas o Legislativo e o Executivo compõem os poderes municipais, conforme estabelecido na Lei Orgânica."
+  j: "A organização dos poderes municipais segue o padrão constitucional. Como o Município não possui Poder Judiciário próprio (que é estadual ou federal), apenas o Legislativo e o Executivo compõem os poderes municipais, conforme estabelecido na Lei Orgânica."
 },
 {
   q: "🌎 30. Segundo a LOM de Água Boa, a soberania popular será exercida pelo sufrágio universal e pelo voto direto e secreto, com valor igual para todos, e, nos termos da lei, mediante:",
@@ -11125,7 +11118,7 @@ const bancoVip2 = [
     "e) #Consultas Públicas e Audiências Legislativas.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA Lei Orgânica prevê os mecanismos clássicos de exercício direto da soberania popular no âmbito municipal. Plebiscito (consulta prévia), Referendo (consulta posterior) e Iniciativa Popular (apresentação de projetos de lei pelos cidadãos) são as ferramentas fundamentais de democracia direta."
+  j: "A Lei Orgânica prevê os mecanismos clássicos de exercício direto da soberania popular no âmbito municipal. Plebiscito (consulta prévia), Referendo (consulta posterior) e Iniciativa Popular (apresentação de projetos de lei pelos cidadãos) são as ferramentas fundamentais de democracia direta."
 },
 {
   q: "🌎 31. Compete ao Município de Água Boa, em comum com a União e o Estado, EXCETO:",
@@ -11137,7 +11130,7 @@ const bancoVip2 = [
     "e) #Fomentar a produção agropecuária e organizar o abastecimento alimentar.#"
   ],
   correct: 3,
-  j: "Correta: alternativa D\n\nEmitir moeda e legislar sobre direito civil e penal são competências privativas da União. O Município possui competência comum para cuidar da saúde, assistência pública, proteção ao patrimônio histórico e fomento da agropecuária (muito relevante em Água Boa)."
+  j: "Emitir moeda e legislar sobre direito civil e penal são competências privativas da União. O Município possui competência comum para cuidar da saúde, assistência pública, proteção ao patrimônio histórico e fomento da agropecuária (muito relevante em Água Boa)."
 },
 {
   q: "🌎 32. Sobre a Câmara Municipal de Água Boa, a Lei Orgânica estabelece que o mandato dos Vereadores terá a duração de:",
@@ -11149,7 +11142,7 @@ const bancoVip2 = [
     "e) #Indeterminado, enquanto durar a legislatura.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nConforme o padrão da Administração Pública brasileira, a legislatura tem duração de 4 anos. Cada ano corresponde a uma sessão legislativa, e o mandato dos vereadores eleitos para representar o povo de Água Boa acompanha esse período."
+  j: "Conforme o padrão da Administração Pública brasileira, a legislatura tem duração de 4 anos. Cada ano corresponde a uma sessão legislativa, e o mandato dos vereadores eleitos para representar o povo de Água Boa acompanha esse período."
 },
 {
   q: "🌎 33. É vedado ao Município de Água Boa, de acordo com as proibições constitucionais reproduzidas na Lei Orgânica:",
@@ -11161,7 +11154,7 @@ const bancoVip2 = [
     "e) #Realizar convênios com o Governo do Estado de Mato Grosso.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nO Município é um ente federativo laico. Assim, é proibido por lei estabelecer, subvencionar ou manter relações de dependência ou aliança com cultos religiosos ou igrejas, ressalvada a colaboração de interesse público (como em assistência social e saúde)."
+  j: "O Município é um ente federativo laico. Assim, é proibido por lei estabelecer, subvencionar ou manter relações de dependência ou aliança com cultos religiosos ou igrejas, ressalvada a colaboração de interesse público (como em assistência social e saúde)."
 },
 {
   q: "🌎 34. A Lei Orgânica de Água Boa prevê que o Prefeito e o Vice-Prefeito tomarão posse no dia:",
@@ -11173,7 +11166,7 @@ const bancoVip2 = [
     "e) #Data definida livremente pela Câmara Municipal.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA posse dos eleitos para os cargos do Poder Executivo (Prefeito e Vice) ocorre tradicionalmente no primeiro dia do ano em que se inicia o mandato, em sessão solene da Câmara Municipal."
+  j: "A posse dos eleitos para os cargos do Poder Executivo (Prefeito e Vice) ocorre tradicionalmente no primeiro dia do ano em que se inicia o mandato, em sessão solene da Câmara Municipal."
 },
 {
   q: "🌎 35. Qual é o nome do documento legal que organiza o Município, funcionando como uma espécie de 'Constituição Municipal'?",
@@ -11185,7 +11178,7 @@ const bancoVip2 = [
     "e) #Regimento Interno da Câmara.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA Lei Orgânica é o diploma legal mais importante do município. Ela define a organização política, as atribuições dos poderes, as normas de administração pública e os direitos e deveres fundamentais no âmbito local."
+  j: "A Lei Orgânica é o diploma legal mais importante do município. Ela define a organização política, as atribuições dos poderes, as normas de administração pública e os direitos e deveres fundamentais no âmbito local."
 },
 {
   q: "🌎 36. Segundo a LOM, a alienação de bens imóveis municipais depende de prévia avaliação, autorização legislativa e:",
@@ -11197,7 +11190,7 @@ const bancoVip2 = [
     "e) #Aprovação do Governador do Estado.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nPara garantir a transparência e o interesse público, a venda (alienação) de patrimônio público imóvel exige que o Município realize licitação, após ser autorizado pela Câmara e ter o valor do bem devidamente avaliado."
+  j: "Para garantir a transparência e o interesse público, a venda (alienação) de patrimônio público imóvel exige que o Município realize licitação, após ser autorizado pela Câmara e ter o valor do bem devidamente avaliado."
 },
 {
   q: "🌎 37. No cenário internacional de 2026, um dos temas centrais de debate entre as grandes potências tem sido a regulamentação avançada da Inteligência Artificial Geral (AGI). Qual organização liderou o novo tratado global para a segurança e ética no desenvolvimento dessas tecnologias?",
@@ -11209,7 +11202,7 @@ const bancoVip2 = [
     "e) #Mercosul, focando apenas no comércio sul-americano.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nEm 2026, a ONU consolidou o Conselho de Segurança Digital para mediar conflitos e estabelecer normas éticas globais sobre a AGI, visando evitar disparidades tecnológicas extremas e garantir que o desenvolvimento de sistemas autônomos respeite os direitos humanos fundamentais."
+  j: "Em 2026, a ONU consolidou o Conselho de Segurança Digital para mediar conflitos e estabelecer normas éticas globais sobre a AGI, visando evitar disparidades tecnológicas extremas e garantir que o desenvolvimento de sistemas autônomos respeite os direitos humanos fundamentais."
 },
 {
   q: "🌎 38. No início de 2026, o Brasil reafirmou seu papel de liderança ambiental ao sediar um encontro preparatório para a COP-31. O foco principal das discussões brasileiras esteve voltado para:",
@@ -11221,7 +11214,7 @@ const bancoVip2 = [
     "e) #A privatização completa de todas as reservas de água doce.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO Brasil iniciou 2026 como protagonista na regulamentação do mercado internacional de créditos de carbono. A estratégia visa monetizar a preservação da floresta em pé e fortalecer a bioeconomia, transformando a proteção ambiental em um ativo econômico vital para o PIB nacional."
+  j: "O Brasil iniciou 2026 como protagonista na regulamentação do mercado internacional de créditos de carbono. A estratégia visa monetizar a preservação da floresta em pé e fortalecer a bioeconomia, transformando a proteção ambiental em um ativo econômico vital para o PIB nacional."
 },
 {
   q: "🌎 39. Recentemente em 2026, a economia brasileira apresentou novos índices sobre o sistema de pagamentos instantâneos (PIX). Qual foi a principal inovação implementada que se tornou tendência de mercado neste ano?",
@@ -11233,7 +11226,7 @@ const bancoVip2 = [
     "e) #A exigência de autorização presencial no banco para cada envio.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nEm 2026, o Banco Central consolidou as novas modalidades do PIX, permitindo transações sem necessidade de conexão imediata com a internet (Offline) e a integração total com dispositivos como anéis e relógios inteligentes, tornando o sistema ainda mais onipresente na economia popular."
+  j: "Em 2026, o Banco Central consolidou as novas modalidades do PIX, permitindo transações sem necessidade de conexão imediata com a internet (Offline) e a integração total com dispositivos como anéis e relógios inteligentes, tornando o sistema ainda mais onipresente na economia popular."
 },
 {
   q: "🌎 40. No campo da exploração espacial em 2026, uma missão internacional conjunta chamou a atenção ao enviar a primeira sonda tripulada para realizar órbitas prolongadas ao redor de Marte. Essa missão faz parte do programa:",
@@ -11245,7 +11238,7 @@ const bancoVip2 = [
     "e) #Projeto Star Wars de defesa orbital.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nO Programa Artemis, que teve grande avanço entre 2024 e 2026, busca não apenas o retorno à Lua, mas a preparação técnica para missões tripuladas a Marte. Em 2026, os testes de sustentabilidade de vida em órbita de longa duração foram o principal marco da exploração espacial."
+  j: "O Programa Artemis, que teve grande avanço entre 2024 e 2026, busca não apenas o retorno à Lua, mas a preparação técnica para missões tripuladas a Marte. Em 2026, os testes de sustentabilidade de vida em órbita de longa duração foram o principal marco da exploração espacial."
 },
 {
   q: "🌎 41. No âmbito político brasileiro em 2026, o debate público está intensamente focado em qual grande evento que ocorre no segundo semestre deste ano?",
@@ -11257,7 +11250,7 @@ const bancoVip2 = [
     "e) #A votação para a mudança da capital para o Mato Grosso.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO ano de 2026 é um ano eleitoral no Brasil. As discussões políticas giram em torno das coalizões partidárias e propostas econômicas para o próximo quadriênio, dominando os noticiários, as redes sociais e os debates em todo o território nacional."
+  j: "O ano de 2026 é um ano eleitoral no Brasil. As discussões políticas giram em torno das coalizões partidárias e propostas econômicas para o próximo quadriênio, dominando os noticiários, as redes sociais e os debates em todo o território nacional."
 },
 {
   q: "🌎 42. Em 2026, o conflito entre Rússia e Ucrânia permanece como um dos principais eixos de instabilidade na Europa. Qual tem sido o papel estratégico da OTAN (Organização do Tratado do Atlântico Norte) neste ano?",
@@ -11269,7 +11262,7 @@ const bancoVip2 = [
     "e) #Apoio militar exclusivo à Federação Russa.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nNo cenário de 2026, a OTAN mantém a estratégia de fortalecimento das capacidades defensivas ucranianas, evitando o confronto direto entre potências nucleares, enquanto foca na proteção de infraestruturas críticas contra ataques cibernéticos e drones de longo alcance."
+  j: "No cenário de 2026, a OTAN mantém a estratégia de fortalecimento das capacidades defensivas ucranianas, evitando o confronto direto entre potências nucleares, enquanto foca na proteção de infraestruturas críticas contra ataques cibernéticos e drones de longo alcance."
 },
 {
   q: "🌎 43. No Oriente Médio, as tensões regionais em 2026 continuam a exigir esforços diplomáticos intensos. Qual é o principal foco de preocupação da comunidade internacional em relação à estabilidade daquela região este ano?",
@@ -11281,7 +11274,7 @@ const bancoVip2 = [
     "e) #A proibição do uso de redes sociais em todo o território iraniano.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA geopolítica do Oriente Médio em 2026 é marcada pela fragilidade das fronteiras e pela influência de potências regionais. A segurança das rotas marítimas no Mar Vermelho e no Estreito de Ormuz é vital para evitar crises energéticas globais."
+  j: "A geopolítica do Oriente Médio em 2026 é marcada pela fragilidade das fronteiras e pela influência de potências regionais. A segurança das rotas marítimas no Mar Vermelho e no Estreito de Ormuz é vital para evitar crises energéticas globais."
 },
 {
   q: "🌎 44. Em 2026, o Conselho de Segurança da ONU tem debatido o uso de novas tecnologias em campos de batalha. Qual armamento tem sido alvo de propostas de banimento total devido ao risco ético?",
@@ -11293,7 +11286,7 @@ const bancoVip2 = [
     "e) #Equipamentos de rádio comunicação de curto alcance.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nO debate sobre a Inteligência Artificial na guerra atingiu seu ápice em 2026. A preocupação central é o uso de máquinas capazes de selecionar e atacar alvos sem intervenção humana direta, o que levanta dilemas morais e jurídicos sobre a responsabilidade por crimes de guerra."
+  j: "O debate sobre a Inteligência Artificial na guerra atingiu seu ápice em 2026. A preocupação central é o uso de máquinas capazes de selecionar e atacar alvos sem intervenção humana direta, o que levanta dilemas morais e jurídicos sobre a responsabilidade por crimes de guerra."
 },
 {
   q: "🌎 45. No continente africano, alguns países enfrentam conflitos internos e insurgências que geram grandes crises humanitárias em 2026. Qual organização regional tem liderado as missões de paz e estabilização no continente?",
@@ -11305,7 +11298,7 @@ const bancoVip2 = [
     "e) #Fórum Econômico Mundial.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nA União Africana tem buscado soluções regionalizadas para conflitos no Sahel e no Chifre da África em 2026, sob o lema de 'soluções africanas para problemas africanos', embora ainda conte com apoio logístico e financeiro de parceiros internacionais."
+  j: "A União Africana tem buscado soluções regionalizadas para conflitos no Sahel e no Chifre da África em 2026, sob o lema de 'soluções africanas para problemas africanos', embora ainda conte com apoio logístico e financeiro de parceiros internacionais."
 },
 {
   q: "🌎 46. Um novo tipo de guerra tem se intensificado em 2026, atingindo governos, empresas e hospitais ao redor do mundo sem o disparo de um único projétil. Trata-se da:",
@@ -11317,7 +11310,7 @@ const bancoVip2 = [
     "e) #Guerra Comercial focada apenas em produtos agrícolas.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA guerra híbrida e cibernética é a grande marca de 2026. Ataques de ransomware a redes elétricas e sistemas bancários são usados como ferramentas de desestabilização política e econômica, exigindo que os países invistam pesado em ciberdefesa."
+  j: "A guerra híbrida e cibernética é a grande marca de 2026. Ataques de ransomware a redes elétricas e sistemas bancários são usados como ferramentas de desestabilização política e econômica, exigindo que os países invistam pesado em ciberdefesa."
 },
 {
   q: "🌎 47. Em 2026, a Inteligência Artificial Geral (AGI) atingiu um novo patamar de integração. Qual é a principal característica que diferencia a AGI dos modelos de IA generativa de anos anteriores?",
@@ -11329,7 +11322,7 @@ const bancoVip2 = [
     "e) #A substituição completa de todos os processadores de silício por válvulas.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nA AGI (Artificial General Intelligence) representa o salto onde a máquina não apenas mimetiza padrões, mas aplica raciocínio lógico transdisciplinar, resolvendo problemas complexos sem treinamento prévio específico para aquela tarefa, aproximando-se da versatilidade cognitiva humana."
+  j: "A AGI (Artificial General Intelligence) representa o salto onde a máquina não apenas mimetiza padrões, mas aplica raciocínio lógico transdisciplinar, resolvendo problemas complexos sem treinamento prévio específico para aquela tarefa, aproximando-se da versatilidade cognitiva humana."
 },
 {
   q: "🌎 48. Sobre a ética na IA em 2026, o conceito de 'Alinhamento de IA' tornou-se prioridade global. Esse conceito refere-se a:",
@@ -11341,7 +11334,7 @@ const bancoVip2 = [
     "e) #Treinar a IA apenas para funções de arquivamento de documentos.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO problema do alinhamento busca evitar que sistemas autônomos tomem decisões eficazes para seus objetivos lógicos, mas prejudiciais aos seres humanos (ex: otimizar lucros sacrificando a segurança ambiental ou social)."
+  j: "O problema do alinhamento busca evitar que sistemas autônomos tomem decisões eficazes para seus objetivos lógicos, mas prejudiciais aos seres humanos (ex: otimizar lucros sacrificando a segurança ambiental ou social)."
 },
 {
   q: "🌎 49. No campo astronômico de 2026, o cometa 3I/ATLAS tornou-se um dos objetos mais estudados. Qual característica o torna um alvo científico tão valioso?",
@@ -11353,7 +11346,7 @@ const bancoVip2 = [
     "e) #Ser uma estrela morta que entrou em nossa órbita gravitacional.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO prefixo '3I' indica que o ATLAS é o terceiro objeto interestelar (vindo de fora do Sistema Solar) confirmado, seguindo o 'Oumuamua e o Borisov. Ele oferece pistas químicas sobre a formação de outros sistemas estelares."
+  j: "O prefixo '3I' indica que o ATLAS é o terceiro objeto interestelar (vindo de fora do Sistema Solar) confirmado, seguindo o 'Oumuamua e o Borisov. Ele oferece pistas químicas sobre a formação de outros sistemas estelares."
 },
 {
   q: "🌎 50. A passagem do cometa 3I/ATLAS em 2026 permitiu o uso de uma nova geração de telescópios espaciais. Qual foi a principal descoberta sobre sua composição?",
@@ -11365,7 +11358,7 @@ const bancoVip2 = [
     "e) #Ausência total de qualquer massa, sendo apenas uma projeção de luz.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nA detecção de moléculas orgânicas em objetos interestelares como o ATLAS reforça a teoria da panspermia ou, no mínimo, que os 'tijolos da vida' são comuns em toda a galáxia, não sendo exclusivos da Terra."
+  j: "A detecção de moléculas orgânicas em objetos interestelares como o ATLAS reforça a teoria da panspermia ou, no mínimo, que os 'tijolos da vida' são comuns em toda a galáxia, não sendo exclusivos da Terra."
 },
 {
   q: "🌎 51. Geopoliticamente, o Estreito de Ormuz é considerado um dos pontos mais sensíveis do mundo em 2026. Onde ele está localizado?",
@@ -11377,7 +11370,7 @@ const bancoVip2 = [
     "e) #Entre a China e o Japão, no Mar Amarelo.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO Estreito de Ormuz é o gargalo marítimo por onde passa cerca de 20% a 30% de todo o petróleo consumido no mundo. Qualquer instabilidade militar entre Irã e os países árabes/ocidentais ali gera impacto imediato na economia global."
+  j: "O Estreito de Ormuz é o gargalo marítimo por onde passa cerca de 20% a 30% de todo o petróleo consumido no mundo. Qualquer instabilidade militar entre Irã e os países árabes/ocidentais ali gera impacto imediato na economia global."
 },
 {
   q: "🌎 52. As ameaças de fechamento do Estreito de Ormuz em 2026 causaram pânico nos mercados de energia. Qual seria a consequência direta e imediata desse bloqueio?",
@@ -11389,7 +11382,7 @@ const bancoVip2 = [
     "e) #Redução do tráfego aéreo na América do Sul.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nDevido à dependência global do petróleo que transita por Ormuz, o fechamento do estreito interromperia o fluxo para a Ásia e Europa, causando choques de oferta que afetariam desde o preço da gasolina até a inflação de alimentos."
+  j: "Devido à dependência global do petróleo que transita por Ormuz, o fechamento do estreito interromperia o fluxo para a Ásia e Europa, causando choques de oferta que afetariam desde o preço da gasolina até a inflação de alimentos."
 },
 {
   q: "🌎 53. Em resposta às tensões em Ormuz, muitas nações em 2026 aceleraram a construção de infraestruturas alternativas. Qual alternativa tem sido a mais utilizada?",
@@ -11401,7 +11394,7 @@ const bancoVip2 = [
     "e) #A desativação de todas as refinarias do Oriente Médio.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nPara contornar o risco de bloqueio em Ormuz, países exportadores investem em oleodutos terrestres que levam o óleo diretamente para portos que dão acesso ao Mar Vermelho ou Mar Arábico, 'pulando' o estreito sensível."
+  j: "Para contornar o risco de bloqueio em Ormuz, países exportadores investem em oleodutos terrestres que levam o óleo diretamente para portos que dão acesso ao Mar Vermelho ou Mar Arábico, 'pulando' o estreito sensível."
 },
 {
   q: "🌎 54. No contexto da IA aplicada à segurança em 2026, o 'Deepfake Geopolítico' tornou-se uma arma perigosa. Isso consiste em:",
@@ -11413,7 +11406,7 @@ const bancoVip2 = [
     "e) #Apagar fotos antigas de arquivos governamentais.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nDeepfakes de alta fidelidade podem ser usados para incitar pânico ou desvalorizar moedas em minutos. Em 2026, a verificação criptográfica de vídeos oficiais tornou-se o padrão para combater essa desinformação de Estado."
+  j: "Deepfakes de alta fidelidade podem ser usados para incitar pânico ou desvalorizar moedas em minutos. Em 2026, a verificação criptográfica de vídeos oficiais tornou-se o padrão para combater essa desinformação de Estado."
 },
 {
   q: "🌎 55. A observação do 3I/ATLAS em 2026 foi coordenada por uma coalizão internacional. Qual é o principal objetivo dessa cooperação espacial (Defesa Planetária)?",
@@ -11425,7 +11418,7 @@ const bancoVip2 = [
     "e) #Mudar a cor do cometa para que ele brilhe no escuro.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nA Defesa Planetária é uma prioridade em 2026. Embora o ATLAS não apresente risco, os protocolos de rastreio e as missões de interceptação (como a DART) são testados em objetos como ele para garantir a segurança da Terra."
+  j: "A Defesa Planetária é uma prioridade em 2026. Embora o ATLAS não apresente risco, os protocolos de rastreio e as missões de interceptação (como a DART) são testados em objetos como ele para garantir a segurança da Terra."
 },
 {
   q: "🌎 56. O uso de IA na medicina em 2026 permitiu a descoberta de novos antibióticos para superbactérias. O processo utilizado pela IA para isso é conhecido como:",
@@ -11437,7 +11430,7 @@ const bancoVip2 = [
     "e) #Uso de robôs que cozinham substâncias químicas no laboratório.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA IA consegue simular trilhões de interações moleculares em dias, algo que levaria décadas em laboratórios físicos. Isso permitiu identificar compostos capazes de neutralizar bactérias resistentes aos tratamentos convencionais."
+  j: "A IA consegue simular trilhões de interações moleculares em dias, algo que levaria décadas em laboratórios físicos. Isso permitiu identificar compostos capazes de neutralizar bactérias resistentes aos tratamentos convencionais."
 },
 {
   q: "🌎 57. As tensões no Estreito de Ormuz em 2026 reacenderam o debate sobre a transição energética. Muitos países europeus usaram a crise para:",
@@ -11449,7 +11442,7 @@ const bancoVip2 = [
     "e) #Depender exclusivamente do petróleo vindo da Antártida.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA instabilidade em Ormuz prova a vulnerabilidade de depender de combustíveis fósseis de regiões instáveis. Em 2026, isso impulsionou políticas de soberania energética baseadas em fontes limpas e na retomada da energia nuclear (Fissão e testes de Fusão)."
+  j: "A instabilidade em Ormuz prova a vulnerabilidade de depender de combustíveis fósseis de regiões instáveis. Em 2026, isso impulsionou políticas de soberania energética baseadas em fontes limpas e na retomada da energia nuclear (Fissão e testes de Fusão)."
 },
 {
   q: "🌎 58. O termo 'Soberania de IA' em 2026 refere-se à capacidade de um país de:",
@@ -11461,7 +11454,7 @@ const bancoVip2 = [
     "e) #Exportar todos os seus programadores para o exterior.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nPaíses como o Brasil buscam em 2026 a 'Soberania Digital'. Isso evita que o país fique refém de algoritmos e termos de uso decididos apenas por grandes corporações estrangeiras, protegendo dados nacionais e a cultura local."
+  j: "Países como o Brasil buscam em 2026 a 'Soberania Digital'. Isso evita que o país fique refém de algoritmos e termos de uso decididos apenas por grandes corporações estrangeiras, protegendo dados nacionais e a cultura local."
 },
 {
   q: "🌎 59. Em 2026, a ciência brasileira ganhou destaque mundial com o anúncio de uma terapia inovadora para a tetraplegia. Qual é a base biotecnológica dessa 'vacina' desenvolvida pela cientista brasileira?",
@@ -11473,7 +11466,7 @@ const bancoVip2 = [
     "e) #Injeção de vitaminas do complexo B em doses cavalares.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nA cientista brasileira liderou uma pesquisa que utiliza a técnica de reprogramação celular para transformar células do próprio paciente em novos neurônios, combinada com uma 'ponte' de biomaterial que permite a reconexão da medula espinhal, devolvendo movimentos a pacientes tetraplégicos."
+  j: "A cientista brasileira liderou uma pesquisa que utiliza a técnica de reprogramação celular para transformar células do próprio paciente em novos neurônios, combinada com uma 'ponte' de biomaterial que permite a reconexão da medula espinhal, devolvendo movimentos a pacientes tetraplégicos."
 },
 {
   q: "🌎 60. A descoberta da terapia para tetraplegia em 2026 reforça a posição do Brasil em qual área estratégica da saúde global?",
@@ -11485,7 +11478,7 @@ const bancoVip2 = [
     "e) #Treinamento de animais para auxílio de pessoas com deficiência.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO sucesso da 'vacina' contra a tetraplegia coloca o Brasil na vanguarda da Medicina Regenerativa. O país passou a ser um centro de referência para tratamentos que não apenas mitigam sintomas, mas buscam a cura de lesões antes consideradas irreversíveis."
+  j: "O sucesso da 'vacina' contra a tetraplegia coloca o Brasil na vanguarda da Medicina Regenerativa. O país passou a ser um centro de referência para tratamentos que não apenas mitigam sintomas, mas buscam a cura de lesões antes consideradas irreversíveis."
 },
 {
   q: "🌎 61. Em 2026, a representatividade de gênero nas instituições brasileiras alcançou um marco histórico com a nomeação de uma mulher trans para a Comissão de Defesa dos Direitos das Mulheres. Qual o principal objetivo dessa inclusão no colegiado?",
@@ -11497,7 +11490,7 @@ const bancoVip2 = [
     "e) #Proibir a discussão sobre violência doméstica nos debates públicos.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA presença de uma mulher trans na Comissão das Mulheres em 2026 simboliza a consolidação do feminismo interseccional no Estado brasileiro. O foco é garantir que as leis de proteção, como a Lei Maria da Penha, e os direitos reprodutivos sejam aplicados de forma ampla e inclusiva."
+  j: "A presença de uma mulher trans na Comissão das Mulheres em 2026 simboliza a consolidação do feminismo interseccional no Estado brasileiro. O foco é garantir que as leis de proteção, como a Lei Maria da Penha, e os direitos reprodutivos sejam aplicados de forma ampla e inclusiva."
 },
 {
   q: "🌎 62. A nomeação de uma mulher trans para uma comissão temática de relevância nacional em 2026 está alinhada com quais diretrizes internacionais?",
@@ -11509,7 +11502,7 @@ const bancoVip2 = [
     "e) #Convenções de redução de impostos para grandes empresas.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nA diversidade nas esferas de decisão é um dos pilares do Objetivo de Desenvolvimento Sustentável (ODS) número 5 da ONU. O Brasil, ao promover essa inclusão em 2026, sinaliza o compromisso com a redução das desigualdades e a promoção dos direitos humanos para minorias."
+  j: "A diversidade nas esferas de decisão é um dos pilares do Objetivo de Desenvolvimento Sustentável (ODS) número 5 da ONU. O Brasil, ao promover essa inclusão em 2026, sinaliza o compromisso com a redução das desigualdades e a promoção dos direitos humanos para minorias."
 },
 {
   q: "🌎 63. Qual o impacto direto esperado da descoberta científica brasileira sobre a tetraplegia na economia do sistema de saúde (SUS) em 2026?",
@@ -11521,7 +11514,7 @@ const bancoVip2 = [
     "e) #Cobrança de mensalidade para quem utilizar a vacina.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nEmbora o investimento inicial na terapia regenerativa seja alto, em 2026 projeta-se que a recuperação da autonomia dos pacientes reduza drasticamente os custos do Estado com cuidados crônicos, além de reintegrar essas pessoas ao mercado de trabalho, gerando retorno social e econômico."
+  j: "Embora o investimento inicial na terapia regenerativa seja alto, em 2026 projeta-se que a recuperação da autonomia dos pacientes reduza drasticamente os custos do Estado com cuidados crônicos, além de reintegrar essas pessoas ao mercado de trabalho, gerando retorno social e econômico."
 },
 {
   q: "🌎 64. O Brasil é conhecido por sua imensa diversidade religiosa, sendo um Estado Laico. Sobre o panorama das religiões no país, assinale a alternativa que descreve corretamente o sincretismo religioso:",
@@ -11533,7 +11526,7 @@ const bancoVip2 = [
     "e) #A ausência total de crenças espirituais na população das grandes capitais.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nO sincretismo é uma marca da cultura brasileira, onde santos católicos foram associados a orixás das religiões de matriz africana (como o Candomblé e a Umbanda) para garantir a preservação das crenças desses povos durante o período colonial."
+  j: "O sincretismo é uma marca da cultura brasileira, onde santos católicos foram associados a orixás das religiões de matriz africana (como o Candomblé e a Umbanda) para garantir a preservação das crenças desses povos durante o período colonial."
 },
 {
   q: "🌎 65. As religiões de matriz africana, como o Candomblé e a Umbanda, são fundamentais na formação da identidade brasileira. Sobre elas, é correto afirmar:",
@@ -11545,7 +11538,7 @@ const bancoVip2 = [
     "e) #São praticadas exclusivamente em áreas rurais isoladas.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nEssas religiões valorizam o equilíbrio com a natureza e a reverência aos orixás e ancestrais. Sua influência se estende à culinária (acarajé), à música (samba, axé) e ao vocabulário brasileiro."
+  j: "Essas religiões valorizam o equilíbrio com a natureza e a reverência aos orixás e ancestrais. Sua influência se estende à culinária (acarajé), à música (samba, axé) e ao vocabulário brasileiro."
 },
 {
   q: "🌎 66. No contexto da literatura brasileira presente no edital, o movimento que buscava a ruptura com o passado e a valorização da identidade nacional em 1922 foi:",
@@ -11557,7 +11550,7 @@ const bancoVip2 = [
     "e) #O Parnasianismo focado na métrica perfeita.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA Semana de Arte Moderna de 1922, em São Paulo, é o marco inicial do Modernismo. Artistas como Anita Malfatti e Mário de Andrade propuseram uma arte genuinamente brasileira, rompendo com o academicismo europeu."
+  j: "A Semana de Arte Moderna de 1922, em São Paulo, é o marco inicial do Modernismo. Artistas como Anita Malfatti e Mário de Andrade propuseram uma arte genuinamente brasileira, rompendo com o academicismo europeu."
 },
 {
   q: "🌎 67. No campo das Artes e Cultura, o Barroco é um estilo que marcou o Brasil Colonial. Qual artista é a maior referência deste período no país?",
@@ -11569,7 +11562,7 @@ const bancoVip2 = [
     "e) #Vik Muniz#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nAleijadinho é o grande mestre do Barroco e Rococó no Brasil. Suas obras em Minas Gerais, como os 'Doze Profetas' e os 'Passos da Paixão', são patrimônios mundiais da humanidade."
+  j: "Aleijadinho é o grande mestre do Barroco e Rococó no Brasil. Suas obras em Minas Gerais, como os 'Doze Profetas' e os 'Passos da Paixão', são patrimônios mundiais da humanidade."
 },
 {
   q: "🌎 68. Sobre o tópico de Saúde e Nutrição, o Brasil enfrenta o desafio da 'transição nutricional'. Este termo refere-se a:",
@@ -11581,7 +11574,7 @@ const bancoVip2 = [
     "e) #A volta do consumo exclusivo de alimentos de caça e coleta.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nA transição nutricional no Brasil mostra que, embora a fome ainda seja um problema em áreas específicas, o consumo de alimentos ultraprocessados levou a um aumento alarmante de doenças crônicas como diabetes e hipertensão em todas as classes sociais."
+  j: "A transição nutricional no Brasil mostra que, embora a fome ainda seja um problema em áreas específicas, o consumo de alimentos ultraprocessados levou a um aumento alarmante de doenças crônicas como diabetes e hipertensão em todas as classes sociais."
 },
 {
   q: "🌎 69. No Esporte brasileiro, 2026 é um ano de grandes expectativas devido à realização de qual evento de escala global no segundo semestre?",
@@ -11593,7 +11586,7 @@ const bancoVip2 = [
     "e) #O Torneio Mundial de Peteca.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO ano de 2026 é ano de Copa do Mundo FIFA. O evento mobiliza a economia, o turismo e o sentimento de identidade nacional, sendo um tema recorrente em questões de atualidades e eventos contemporâneos."
+  j: "O ano de 2026 é ano de Copa do Mundo FIFA. O evento mobiliza a economia, o turismo e o sentimento de identidade nacional, sendo um tema recorrente em questões de atualidades e eventos contemporâneos."
 },
 {
   q: "🌎 70. A Constituição Federal do Brasil garante a liberdade de culto, o que significa que o país é:",
@@ -11605,7 +11598,7 @@ const bancoVip2 = [
     "e) #Dualista, dividindo o território entre duas religiões principais.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nSer um Estado Laico significa que o governo não adota, não financia e não privilegia nenhuma religião, garantindo que cidadãos de qualquer fé (ou de nenhuma) tenham seus direitos preservados igualmente."
+  j: "Ser um Estado Laico significa que o governo não adota, não financia e não privilegia nenhuma religião, garantindo que cidadãos de qualquer fé (ou de nenhuma) tenham seus direitos preservados igualmente."
 },
 {
   q: "🌎 71. Na história recente do Brasil (2025-2026), a educação tem focado na 'Alfabetização Digital'. O objetivo central dessa política é:",
@@ -11617,7 +11610,7 @@ const bancoVip2 = [
     "e) #Proibir o uso de celulares em todo o território nacional.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nA Alfabetização Digital no contexto atual vai além de saber mexer no mouse; envolve ética digital, segurança de dados e a capacidade de discernir informações reais de desinformação em massa."
+  j: "A Alfabetização Digital no contexto atual vai além de saber mexer no mouse; envolve ética digital, segurança de dados e a capacidade de discernir informações reais de desinformação em massa."
 },
 {
   q: "🌎 72. Sobre a Revolução Industrial e seus impactos na sociedade contemporânea, é correto afirmar que a chamada 'Indústria 4.0' em 2026 baseia-se em:",
@@ -11629,7 +11622,7 @@ const bancoVip2 = [
     "e) #Uso exclusivo de tração animal para o transporte de cargas.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA Indústria 4.0, ou Quarta Revolução Industrial, é o marco tecnológico atual. Ela se caracteriza pela digitalização total da manufatura, onde máquinas se comunicam entre si (IoT) e tomam decisões autônomas via IA, otimizando a produção global."
+  j: "A Indústria 4.0, ou Quarta Revolução Industrial, é o marco tecnológico atual. Ela se caracteriza pela digitalização total da manufatura, onde máquinas se comunicam entre si (IoT) e tomam decisões autônomas via IA, otimizando a produção global."
 },
 {
   q: "🌎 73. Geograficamente, o Brasil possui uma das maiores reservas de água doce do mundo. Qual é o nome do aquífero que abrange boa parte do subsolo do Centro-Oeste e Sudeste brasileiro?",
@@ -11641,7 +11634,7 @@ const bancoVip2 = [
     "e) #Aquífero Marinho de Fernando de Noronha.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nO Aquífero Guarani é um dos maiores reservatórios de água subterrânea do mundo. Ele é vital para o abastecimento e para a agricultura em estados como Mato Grosso, Goiás, São Paulo e Paraná, sendo um recurso estratégico transfronteiriço."
+  j: "O Aquífero Guarani é um dos maiores reservatórios de água subterrânea do mundo. Ele é vital para o abastecimento e para a agricultura em estados como Mato Grosso, Goiás, São Paulo e Paraná, sendo um recurso estratégico transfronteiriço."
 },
 {
   q: "🌎 74. Na História do Brasil, o período conhecido como 'Era Vargas' (1930-1945) foi responsável pela criação de importantes instituições. Qual destas ainda é fundamental para o trabalhador brasileiro?",
@@ -11653,7 +11646,7 @@ const bancoVip2 = [
     "e) #A Lei de Diretrizes e Bases da Educação.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nGetúlio Vargas é conhecido como o 'pai dos pobres' por ter consolidado os direitos trabalhistas (salário mínimo, férias, jornada de trabalho) na CLT em 1943, mudando permanentemente a relação entre capital e trabalho no Brasil."
+  j: "Getúlio Vargas é conhecido como o 'pai dos pobres' por ter consolidado os direitos trabalhistas (salário mínimo, férias, jornada de trabalho) na CLT em 1943, mudando permanentemente a relação entre capital e trabalho no Brasil."
 },
 {
   q: "🌎 75. No campo das Ciências, em 2026, a 'Edição Genética' tornou-se uma ferramenta promissora para a cura de doenças raras. Qual é o nome da técnica mais famosa utilizada para esse fim?",
@@ -11665,7 +11658,7 @@ const bancoVip2 = [
     "e) #Transplante de Memória.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nA tecnologia CRISPR funciona como uma 'tesoura molecular' que permite editar partes do DNA com extrema precisão. Em 2026, ela é a base para pesquisas de cura de doenças genéticas e melhoramento de sementes agrícolas no Mato Grosso."
+  j: "A tecnologia CRISPR funciona como uma 'tesoura molecular' que permite editar partes do DNA com extrema precisão. Em 2026, ela é a base para pesquisas de cura de doenças genéticas e melhoramento de sementes agrícolas no Mato Grosso."
 },
 {
   q: "🌎 76. Sobre a Geografia de Mato Grosso, qual é a principal característica da 'Serra do Roncador', que se estende até as proximidades da região de Água Boa?",
@@ -11677,7 +11670,7 @@ const bancoVip2 = [
     "e) #É uma ilha localizada no meio do Rio Paraguai.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA Serra do Roncador é um marco geográfico e cultural do Leste de Mato Grosso. Além de sua importância ambiental como divisor de bacias hidrográficas, atrai turistas e pesquisadores devido às lendas sobre civilizações intraterrenas e o sumiço do Coronel Fawcett."
+  j: "A Serra do Roncador é um marco geográfico e cultural do Leste de Mato Grosso. Além de sua importância ambiental como divisor de bacias hidrográficas, atrai turistas e pesquisadores devido às lendas sobre civilizações intraterrenas e o sumiço do Coronel Fawcett."
 },
 {
   q: "🌎 77. No tópico de Sociedade e Política, o conceito de 'Cidadania Digital' em 2026 envolve:",
@@ -11689,7 +11682,7 @@ const bancoVip2 = [
     "e) #O fim do voto presencial em todas as esferas.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nCidadania Digital é o conjunto de direitos e deveres do cidadão no ambiente virtual. Isso inclui desde o acesso ao Gov.br até o direito à privacidade (LGPD) e a responsabilidade pelo que se compartilha na rede."
+  j: "Cidadania Digital é o conjunto de direitos e deveres do cidadão no ambiente virtual. Isso inclui desde o acesso ao Gov.br até o direito à privacidade (LGPD) e a responsabilidade pelo que se compartilha na rede."
 },
 {
   q: "🌎 78. A arte brasileira do século XX teve um importante movimento chamado 'Antropofagia'. Qual era a sua ideia central?",
@@ -11701,7 +11694,7 @@ const bancoVip2 = [
     "e) #Proibir o uso de cores vibrantes nas artes plásticas.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nLiderado por Oswald de Andrade e Tarsila do Amaral (autora do quadro Abaporu), o Movimento Antropofágico propunha que o Brasil deveria absorver as técnicas externas, mas 'digeri-las' sob a ótica nacional, criando uma arte única."
+  j: "Liderado por Oswald de Andrade e Tarsila do Amaral (autora do quadro Abaporu), o Movimento Antropofágico propunha que o Brasil deveria absorver as técnicas externas, mas 'digeri-las' sob a ótica nacional, criando uma arte única."
 },
 {
   q: "🌎 79. Em termos de Geopolítica Ambiental em 2026, o que é o 'Efeito Estufa'?",
@@ -11713,7 +11706,7 @@ const bancoVip2 = [
     "e) #O nome de um furacão que atinge o Brasil todos os anos.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO efeito estufa é natural e necessário para a vida, mas a emissão excessiva de gases como o $CO_2$ (carbono) e o $CH_4$ (metano) pela queima de combustíveis e desmatamento está causando o aquecimento global, tema central das COPs em 2026."
+  j: "O efeito estufa é natural e necessário para a vida, mas a emissão excessiva de gases como o $CO_2$ (carbono) e o $CH_4$ (metano) pela queima de combustíveis e desmatamento está causando o aquecimento global, tema central das COPs em 2026."
 },
 {
   q: "🌎 80. Na História Geral, a 'Guerra Fria' foi um período de tensão entre quais duas superpotências?",
@@ -11725,7 +11718,7 @@ const bancoVip2 = [
     "e) #China e Índia.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA Guerra Fria (1947-1991) foi um conflito ideológico, econômico e militar indireto entre o bloco capitalista (liderado pelos EUA) e o bloco socialista (liderado pela URSS), resultando na corrida espacial e na polarização do mundo."
+  j: "A Guerra Fria (1947-1991) foi um conflito ideológico, econômico e militar indireto entre o bloco capitalista (liderado pelos EUA) e o bloco socialista (liderado pela URSS), resultando na corrida espacial e na polarização do mundo."
 },
 {
   q: "🌎 81. No contexto de Saúde e Nutrição, o termo 'Segurança Alimentar' significa:",
@@ -11737,7 +11730,7 @@ const bancoVip2 = [
     "e) #O uso de senhas eletrônicas em todas as geladeiras domésticas.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA Segurança Alimentar é um direito humano básico. Em 2026, as políticas públicas brasileiras buscam garantir que todos os cidadãos tenham acesso a uma dieta equilibrada que não comprometa outras necessidades essenciais."
+  j: "A Segurança Alimentar é um direito humano básico. Em 2026, as políticas públicas brasileiras buscam garantir que todos os cidadãos tenham acesso a uma dieta equilibrada que não comprometa outras necessidades essenciais."
 },
 {
   q: "🌎 82. Qual bioma brasileiro é considerado o 'Berço das Águas' por abrigar as nascentes de importantes bacias hidrográficas (como a do Araguaia e do Paraná)?",
@@ -11749,7 +11742,7 @@ const bancoVip2 = [
     "e) #Pantanal#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO Cerrado, predominante em Mato Grosso e Água Boa, é fundamental para o sistema hídrico do Brasil. Suas raízes profundas funcionam como esponjas que abastecem os aquíferos e rios que correm para o resto do país."
+  j: "O Cerrado, predominante em Mato Grosso e Água Boa, é fundamental para o sistema hídrico do Brasil. Suas raízes profundas funcionam como esponjas que abastecem os aquíferos e rios que correm para o resto do país."
 },
 {
   q: "🌎 83. Sobre a Literatura de Mato Grosso, destaca-se um autor que viveu em Cuiabá e é considerado um dos maiores poetas do Brasil, conhecido por suas obras que exaltam as 'coisas simples' e a natureza. Quem é ele?",
@@ -11761,7 +11754,7 @@ const bancoVip2 = [
     "e) #Guimarães Rosa#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nManoel de Barros é o grande ícone da poesia mato-grossense e brasileira. Sua escrita, focada no 'desimportante' e na comunhão com o chão e os bichos, é leitura obrigatória para entender a alma do Centro-Oeste."
+  j: "Manoel de Barros é o grande ícone da poesia mato-grossense e brasileira. Sua escrita, focada no 'desimportante' e na comunhão com o chão e os bichos, é leitura obrigatória para entender a alma do Centro-Oeste."
 },
 {
   q: "🌎 84. Em 2026, a 'Economia Circular' tornou-se um modelo de negócios sustentável. Ela se baseia em:",
@@ -11773,7 +11766,7 @@ const bancoVip2 = [
     "e) #Aumentar a produção de lixo descartável para gerar empregos.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nDiferente da economia linear (extrair, produzir, descartar), a economia circular propõe um ciclo fechado onde o resíduo de um processo vira matéria-prima para outro, essencial para a sustentabilidade do planeta."
+  j: "Diferente da economia linear (extrair, produzir, descartar), a economia circular propõe um ciclo fechado onde o resíduo de um processo vira matéria-prima para outro, essencial para a sustentabilidade do planeta."
 },
 {
   q: "🌎 85. O fenômeno climático 'El Niño', que afeta o regime de chuvas no Mato Grosso, consiste em:",
@@ -11785,7 +11778,7 @@ const bancoVip2 = [
     "e) #O congelamento das águas do Rio Paraguai.#"
   ],
   correct: 1,
-  j: "Correta: alternativa B\n\nO El Niño altera a circulação atmosférica global, provocando secas severas no Norte/Nordeste e chuvas intensas ou calor extremo no Centro-Oeste e Sul, impactando diretamente o calendário da safra em Água Boa."
+  j: "O El Niño altera a circulação atmosférica global, provocando secas severas no Norte/Nordeste e chuvas intensas ou calor extremo no Centro-Oeste e Sul, impactando diretamente o calendário da safra em Água Boa."
 },
 {
   q: "🌎 86. Sobre a história de Mato Grosso, o período conhecido como 'Ciclo do Ouro' foi responsável pela fundação de qual importante cidade no século XVIII?",
@@ -11797,7 +11790,7 @@ const bancoVip2 = [
     "e) #Primavera do Leste#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nCuiabá foi fundada em 1719 por Pascoal Moreira Cabral, após a descoberta de jazidas de ouro nas margens do Rio Coxipó. Esse evento foi o marco inicial da ocupação efetiva do território mato-grossense pela coroa portuguesa."
+  j: "Cuiabá foi fundada em 1719 por Pascoal Moreira Cabral, após a descoberta de jazidas de ouro nas margens do Rio Coxipó. Esse evento foi o marco inicial da ocupação efetiva do território mato-grossense pela coroa portuguesa."
 },
 {
   q: "🌎 87. No contexto de Meio Ambiente e Sustentabilidade, o termo 'Biodiversidade' refere-se a:",
@@ -11809,7 +11802,7 @@ const bancoVip2 = [
     "e) #A criação de animais em cativeiro para exposição.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA biodiversidade engloba a diversidade genética, de espécies e de ecossistemas. Mato Grosso, por possuir três biomas, detém uma das maiores biodiversidades do planeta, o que exige políticas rígidas de conservação."
+  j: "A biodiversidade engloba a diversidade genética, de espécies e de ecossistemas. Mato Grosso, por possuir três biomas, detém uma das maiores biodiversidades do planeta, o que exige políticas rígidas de conservação."
 },
 {
   q: "🌎 88. Na História Mundial, a queda do 'Muro de Berlim' em 1989 simbolizou:",
@@ -11821,7 +11814,7 @@ const bancoVip2 = [
     "e) #A fundação da Organização das Nações Unidas (ONU).#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA queda do muro foi o evento mais emblemático do colapso do bloco socialista na Europa Oriental, marcando a transição para uma nova ordem mundial baseada na globalização e na hegemonia do capitalismo liberal."
+  j: "A queda do muro foi o evento mais emblemático do colapso do bloco socialista na Europa Oriental, marcando a transição para uma nova ordem mundial baseada na globalização e na hegemonia do capitalismo liberal."
 },
 {
   q: "🌎 89. Sobre Nutrição e Saúde Pública, o Guia Alimentar para a População Brasileira recomenda evitar o consumo de:",
@@ -11833,7 +11826,7 @@ const bancoVip2 = [
     "e) #Proteínas de origem vegetal.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nOs ultraprocessados são ricos em gorduras, açúcares e sódio, além de aditivos químicos. O consumo excessivo desses produtos está diretamente ligado ao aumento de doenças como obesidade e câncer no Brasil."
+  j: "Os ultraprocessados são ricos em gorduras, açúcares e sódio, além de aditivos químicos. O consumo excessivo desses produtos está diretamente ligado ao aumento de doenças como obesidade e câncer no Brasil."
 },
 {
   q: "🌎 90. A Lei Orgânica de Água Boa estabelece que a administração pública deve obedecer aos princípios da LIMPE. O que significa a letra 'M' nessa sigla?",
@@ -11845,7 +11838,7 @@ const bancoVip2 = [
     "e) #Manutenção#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO princípio da Moralidade exige que o administrador público atue com honestidade, lealdade e boa-fé, não bastando que o ato seja apenas legal (dentro da lei), ele deve ser ético."
+  j: "O princípio da Moralidade exige que o administrador público atue com honestidade, lealdade e boa-fé, não bastando que o ato seja apenas legal (dentro da lei), ele deve ser ético."
 },
 {
   q: "🌎 91. Na Geografia do Brasil, a região Norte é marcada pela maior bacia hidrográfica do mundo. Trata-se da:",
@@ -11857,7 +11850,7 @@ const bancoVip2 = [
     "e) #Bacia do Rio Doce.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA Bacia Amazônica possui o maior volume de água doce do planeta. Suas águas influenciam o clima de todo o Brasil, inclusive trazendo umidade para as chuvas que sustentam o agronegócio em Mato Grosso."
+  j: "A Bacia Amazônica possui o maior volume de água doce do planeta. Suas águas influenciam o clima de todo o Brasil, inclusive trazendo umidade para as chuvas que sustentam o agronegócio em Mato Grosso."
 },
 {
   q: "🌎 92. No campo da Ciência e Tecnologia em 2026, o '5G' consolidado no interior do Brasil permite:",
@@ -11869,7 +11862,7 @@ const bancoVip2 = [
     "e) #A limpeza automática de rios poluídos via satélite.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO 5G em Água Boa possibilita que máquinas agrícolas, sensores de solo e drones enviem dados em tempo real, permitindo uma gestão de precisão que economiza insumos e aumenta a produtividade no campo."
+  j: "O 5G em Água Boa possibilita que máquinas agrícolas, sensores de solo e drones enviem dados em tempo real, permitindo uma gestão de precisão que economiza insumos e aumenta a produtividade no campo."
 },
 {
   q: "🌎 93. Na história de Mato Grosso, o Marechal Cândido Rondon é uma figura heróica por ter:",
@@ -11881,7 +11874,7 @@ const bancoVip2 = [
     "e) #Descoberto as minas de diamante em Diamantino.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nRondon foi um militar e explorador que integrou o interior do Brasil ao litoral. Seu trabalho humanista com os povos indígenas e sua dedicação às telecomunicações o tornaram o patrono das comunicações no Brasil."
+  j: "Rondon foi um militar e explorador que integrou o interior do Brasil ao litoral. Seu trabalho humanista com os povos indígenas e sua dedicação às telecomunicações o tornaram o patrono das comunicações no Brasil."
 },
 {
   q: "🌎 94. O conceito de 'Desenvolvimento Sustentável' pode ser definido como:",
@@ -11893,7 +11886,7 @@ const bancoVip2 = [
     "e) #Aumentar apenas a produção de carros movidos a gasolina.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO equilíbrio entre economia, sociedade e meio ambiente é a base do desenvolvimento sustentável, visando a perenidade dos recursos naturais e da qualidade de vida humana."
+  j: "O equilíbrio entre economia, sociedade e meio ambiente é a base do desenvolvimento sustentável, visando a perenidade dos recursos naturais e da qualidade de vida humana."
 },
 {
   q: "🌎 95. Na História do Mundo, o 'Holocausto' ocorrido durante a Segunda Guerra Mundial refere-se a:",
@@ -11905,7 +11898,7 @@ const bancoVip2 = [
     "e) #A queda do império romano no século V.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO Holocausto é um dos capítulos mais sombrios da humanidade. Seu estudo é fundamental para que sociedades democráticas combatam o preconceito, o antissemitismo e qualquer forma de totalitarismo."
+  j: "O Holocausto é um dos capítulos mais sombrios da humanidade. Seu estudo é fundamental para que sociedades democráticas combatam o preconceito, o antissemitismo e qualquer forma de totalitarismo."
 },
 {
   q: "🌎 96. Sobre a Geografia de Água Boa, o município faz divisa com outros municípios importantes. Qual destes NÃO é vizinho direto de Água Boa?",
@@ -11917,7 +11910,7 @@ const bancoVip2 = [
     "e) #Nova Nazaré#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nCuiabá está localizada a centenas de quilômetros de distância de Água Boa. Os vizinhos regionais (como Nova Xavantina e Canarana) formam o eixo produtivo do Médio Araguaia."
+  j: "Cuiabá está localizada a centenas de quilômetros de distância de Água Boa. Os vizinhos regionais (como Nova Xavantina e Canarana) formam o eixo produtivo do Médio Araguaia."
 },
 {
   q: "🌎 97. No tópico de Saúde, o que caracteriza uma 'Pandemia'?",
@@ -11929,7 +11922,7 @@ const bancoVip2 = [
     "e) #O nome dado ao processo de vacinação infantil.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nDiferente de uma epidemia (local) ou surto, a pandemia atravessa fronteiras continentais, como vimos com a COVID-19, exigindo coordenação global de saúde pública."
+  j: "Diferente de uma epidemia (local) ou surto, a pandemia atravessa fronteiras continentais, como vimos com a COVID-19, exigindo coordenação global de saúde pública."
 },
 {
   q: "🌎 98. A 'Semana de Arte Moderna de 1922' teve como uma de suas principais pintoras a autora do quadro 'Operários'. Quem foi ela?",
@@ -11941,7 +11934,7 @@ const bancoVip2 = [
     "e) #Cora Coralina#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nTarsila do Amaral retratou a diversidade do povo brasileiro e o processo de industrialização em 'Operários', sendo uma das figuras centrais do modernismo brasileiro."
+  j: "Tarsila do Amaral retratou a diversidade do povo brasileiro e o processo de industrialização em 'Operários', sendo uma das figuras centrais do modernismo brasileiro."
 },
 {
   q: "🌎 99. Em 2026, o Brasil utiliza o sistema de 'Urna Eletrônica' para suas eleições. Qual a principal vantagem desse sistema para a democracia?",
@@ -11953,7 +11946,7 @@ const bancoVip2 = [
     "e) #Imprime o voto para que o eleitor leve para casa.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nA urna eletrônica, utilizada desde 1996, eliminou os antigos erros de contagem manual e agilizou o resultado das eleições, sendo um modelo de tecnologia eleitoral reconhecido mundialmente."
+  j: "A urna eletrônica, utilizada desde 1996, eliminou os antigos erros de contagem manual e agilizou o resultado das eleições, sendo um modelo de tecnologia eleitoral reconhecido mundialmente."
 },
 {
   q: "🌎 100. Para fechar: O município de Água Boa recebeu este nome devido a uma característica natural de sua fundação. Qual era?",
@@ -11965,7 +11958,7 @@ const bancoVip2 = [
     "e) #O excesso de chuvas que inundava a região o ano todo.#"
   ],
   correct: 2,
-  j: "Correta: alternativa C\n\nO nome Água Boa surgiu da constatação dos colonizadores gaúchos sobre a pureza e o sabor da água encontrada na região, fator essencial para a fixação do núcleo urbano que se tornaria esta potência regional."
+  j: "O nome Água Boa surgiu da constatação dos colonizadores gaúchos sobre a pureza e o sabor da água encontrada na região, fator essencial para a fixação do núcleo urbano que se tornaria esta potência regional."
 }
 ];
  
@@ -18841,14 +18834,14 @@ function garantirBotaoVip() {
 
             <span style="font-size:1em; color:#ffffff; font-weight:400;">
                 📊 <b style="color:#FFD700;">RELATÓRIO GERAL </b><br>
-                TOTAL DE QUESTÕES: ${currentQuestions.length}<br>
+                TOTAL A RESPONDER: ${currentQuestions.length}<br>
                 TOTAL RESPONDIDAS: ${respondidasGeral}<br>
                 TOTAL DE ACERTOS: ${acertosGerais}<br>
                 TOTAL DE ERROS: ${respondidasGeral - acertosGerais}
             </span><br><br>
 
             <span style="color:yellow;">
-                🎯 <b>RELATÓRIO PARCIAL</span><br>
+                🎯 <b>RELATÓRIO DESTE ACESSO</span><br>
                 RESPONDIDAS: ${respondidasSeção}<br>
                 ACERTOS: ${acertosSeção}<br>
                 ERROS: ${errosSeção}
@@ -18857,7 +18850,7 @@ function garantirBotaoVip() {
             <span style="color:#FFD700;">
                 ${foiBem 
                     ? "PARABÉNS! MANTENHA O FOCO!" 
-                    : "VOCÊ PODE MELHORAR. NÃO DESANIME!"}
+                    : "PODE MELHORAR. NÃO DESANIME!"}
             </span><br><br>
 
             <button id="btn-ok-sair"
@@ -19890,7 +19883,9 @@ function irParaAudioteca() {
     { id: "1621", n: "Lukenn" },
     { id: "6112", n: "Luan Kennedy Almada de Lima" },
     { id: "0682", n: "Laylson Costa Oliveira" },
-    { id: "0208", n: "Yuri" }
+    { id: "0208", n: "Yuri" },
+    { id: "2905", n: "Clévia Romão" },
+    { id: "1801", n: "Cleide Romão" }
   ];
 
   window.DOADORES = _0x5a21.map(item => ({
@@ -19908,7 +19903,7 @@ function usuarioIphone() {
 
 /* PORTA DOS FUNDOS */
 const vips = [
- "0501", "5010", "777", "1621", "6112", "0682", "0208"
+ "0501", "5010", "777", "1621", "6112", "0682", "0208", "2905", "1801"
 ];
 
     // Se o ID estiver na lista
@@ -19925,7 +19920,7 @@ const vips = [
 
 // Esse banco de dados casa com a função 'validar(input)' e com a 'agradecimentoVip'
 const limpeza = [
- "0501", "5010", "777", "1621", "6112", "0682", "0208"
+ "0501", "5010", "777", "1621", "6112", "0682", "0208", "2905", "1801"
 ];
 
 function validar(input) {
