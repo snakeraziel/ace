@@ -993,7 +993,71 @@ button {
   filter:drop-shadow(0 0 10px gold);
 }
 
+/* FUGA DO CALANGO */
+@keyframes correrEsumir {
+    0% { transform: translateX(0) rotate(0deg); opacity: 1; }
+    15% { transform: translateX(5px) rotate(10deg); } /* Susto inicial */
+    30% { transform: translateX(-15px) rotate(-10deg); } /* Pegando tração */
+    70% { transform: translateX(-120vw) rotate(-5deg); opacity: 0; } /* Sumiu! */
+}
 
+.lagartixa-fuga {
+    animation: correrEsumir 1.3s forwards cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    pointer-events: none;
+}
+
+@keyframes descidaAranhaFaceToFace {
+    0% {
+        top: -100px;
+        /* scaleY(-1) INVERTE O EMOJI VERTICALMENTE */
+        /* scaleX(1) garante que o tamanho horizontal não mude */
+        transform: scaleX(1) scaleY(-1); 
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    40% {
+        top: 0px; /* Ponto de parada na teia */
+        transform: scaleX(1.2) scaleY(-1); /* Sutil aumento */
+        opacity: 1;
+    }
+    /* Pausa e balanço rápido na teia (efeito "freio") */
+    41% {
+        top: -2px; /* Pequeno recuo de tensão */
+        /* Pequena rotação para dar vida, mas mantendo a inversão */
+        transform: scaleX(1.25) scaleY(-1) rotate(2deg);
+    }
+    43% {
+        top: 0px;
+        transform: scaleX(1.2) scaleY(-1) rotate(-2deg);
+    }
+    /* Bote final muito rápido */
+    100% {
+        top: 600px;
+        transform: scaleX(10) scaleY(-1); /* Mantém a inversão no crescimento */
+        opacity: 0;
+    }
+}
+
+
+// Atualize o innerHTML do style dentro da sua função dueloAleatorio():
+style.innerHTML = `
+    @keyframes corridaEscorpiao {
+        /* Mantém os 90deg e avança para a direita */
+        100% { transform: rotate(90deg) translateX(110px) scale(2); opacity: 0; }
+    }
+    @keyframes corridaAranha {
+        /* Mantém os -90deg e avança para a esquerda (o translate da aranha é negativo) */
+        100% { transform: rotate(-90deg) translateX(110px) scale(2); opacity: 0; }
+    }
+    @keyframes tremerEPiscar {
+        0% { background: transparent; transform: translate(0,0); }
+        25% { background: rgba(255, 0, 0, 0.4); transform: translate(2px, -2px); }
+        50% { background: rgba(255, 0, 0, 0.7); transform: translate(-2px, 2px); }
+        100% { background: #ff0000; transform: translate(0,0); }
+    }
+`;
 
     </style>
 </head>
@@ -1234,32 +1298,64 @@ AGENTE DE COMBATE A ENDEMIAS
 -->
 
 
-<button class="menu-btn"onclick="buracoDaGia();"
-style="border: 2px solid #475569; box-shadow: 0 0 15px rgba(71, 85, 105, 0.4); font-weight: bold;">
-👨‍💻 SIMULADOS ALEATÓRIOS 👨‍💻
-</button>
+    
+<div id="btn-duelo-aleatorio" class="menu-btn" onclick="dueloAleatorio()"
+    style="position: relative; border: 2px solid #475569; box-shadow: 0 0 15px rgba(71, 85, 105, 0.4); 
+    font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; 
+    padding: 0 15px; height: 50px; width: 320px; margin: 10px auto; background: #0f172a; border-radius: 8px; transition: all 0.3s;">
+    
+    <div id="duelo-escorpiao" style="font-size: 25px; filter: drop-shadow(0 0 8px #ff0000); transform: rotate(260deg); z-index: 10001;">
+        🦂
+    </div>
+    
+    <span style="color: #fff; letter-spacing: 1px; font-size: 13px; pointer-events: none;">SIMULADOS ALEATÓRIOS</span>
+    
+    <div id="duelo-aranha" style="font-size: 25px; filter: drop-shadow(0 0 8px #ff0000); transform: rotate(-90deg); z-index: 10001;">
+        🕷️
+    </div>
+</div>
+
 
 <div style="position: relative; width: 180px; height: 100px; margin: 0 auto; z-index: 10;">
 
-    <div class="juiz" style="position: absolute; left: -80px; top: 40px; display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="iniciarBancoExtraGia(1)">
-        <div style="font-size: 60px;">🦎</div>
-        <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; white-space: nowrap;">Português</span>
+    <div id="btn-portugues-gia" class="juiz" 
+    style="position: absolute; left: -60px; top: 60px; display: flex; flex-direction: column; align-items: center; cursor:pointer; transition: all 0.3s;" 
+    onclick="fugaDaLagartixa()">
+    <div class="emoji" style="font-size: 70px;">🦎</div>
+    <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; white-space: nowrap;">Português</span>
+</div>
+
+   <div id="aranha-vigilante" style="position: fixed; top: -100px; right: 350px; font-size: 60px; z-index: 10000; pointer-events: none; transition: none;">
+    🕷️
+</div>
+
+<div id="btn-teia-gia" class="aluno" 
+    style="position: absolute; right: -150px; top: 50px; display: flex; flex-direction: column; align-items: center; cursor:pointer;" 
+    onclick="ataqueDaAranha()">
+    
+    <div id="aranha-vigilante" style="position: absolute; right: 350px; top: -50px; left: 50%; transform: translateX(-50%); font-size: 40px; z-index: 10000; pointer-events: none; opacity: 0;">
+        🕷️
     </div>
 
-    <div class="aluno" style="position: absolute; right: -150px; top: 50px; display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="iniciarBancoExtraGia(2)">
-        <div style="font-size: 70px; filter: drop-shadow(0 0 5px #a855f7);">🕸</div>
-        <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; white-space: nowrap;">Português do Zero</span>
-    </div>
+    <div class="emoji-teia" style="font-size: 80px; filter: drop-shadow(0 0 5px #a855f7); transition: transform 0.2s;">🕸</div>
+    <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; white-space: nowrap;">Português do Zero</span>
+</div>
 
-    <div class="prof" style="position: absolute; left: -120px; top: 210px; display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="iniciarBancoExtraGia(2)">
-        <div style="font-size: 15px; filter: drop-shadow(0 0 5px #22c55e);">🦠</div>
-        <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; white-space: nowrap;">Informática</span>
-    </div>
+    <div id="btn-informatica-gia" class="prof" 
+    style="position: absolute; left: -120px; top: 210px; display: flex; flex-direction: column; align-items: center; cursor:pointer; transition: transform 0.2s;" 
+    onclick="efeitoInfeccaoViral()">
+    <div class="emoji-viral" style="font-size: 10px; filter: drop-shadow(0 0 5px #22c55e); transition: all 0.3s;">🦠</div>
+    <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; white-space: nowrap;">Informática</span>
+</div>
 
-    <div class="aluno" style="position: absolute; right: -180px; top: 240px; display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="iniciarBancoExtraGia(3)">
-        <div style="font-size: 15px;">🦷</div>
-        <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; white-space: nowrap;">Extravagante</span>
-    </div>
+
+
+  <div id="btn-cobra-gia" class="alun" 
+    style="position: absolute; right: -180px; top: 240px; display: flex; flex-direction: column; align-items: center; cursor:pointer;" 
+    onclick="boteDaCobra()">
+    <div class="emoji-cobra" style="font-size: 35px; filter: drop-shadow(0 0 5px #ffeb3b);">🐍</div>
+    <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; white-space: nowrap;">Extravagante</span>
+</div>
 
 </div>
 
@@ -18855,6 +18951,13 @@ const bancoExtra2 = [
 },
 ];
 
+const bancoExtra3 = [
+{
+  q: "🦂 1. Banco Extra para Pesquisa de Opinião.",
+  v: true,
+  j: "Falso banco de dados para teste."
+},
+];
 
 
 
@@ -19399,7 +19502,7 @@ function iniciarBancoExtraGia(numero) {
             // 🔥 CONFIGURAÇÃO DO BOTÃO DE SAÍDA EXCLUSIVO GIA
             const btnExtra = document.getElementById('btnExtra');
             if (btnExtra) {
-                btnExtra.innerText = "BURACO DA GIA";
+                btnExtra.innerText = "🐸 BURACO DA GIA 🐸";
                 Object.assign(btnExtra.style, {
                     display: "flex",
                     visibility: "visible",
@@ -19407,8 +19510,8 @@ function iniciarBancoExtraGia(numero) {
             justifyContent: "center",
                     opacity: "1",
                     background: "rgba(10,10,10,0.95)",
-                    color: "#39FF14",
-                    border: "2px solid #39FF14",
+                    color: "#AF804F",
+                    border: "2px solid #AF804F",
                     borderRadius: "12px",
                     fontWeight: "900",
                     pointerEvents: "auto",
@@ -19441,6 +19544,234 @@ function iniciarBancoExtraGia(numero) {
     }
 }
 
+
+function efeitoInfeccaoViral() {
+    const el = document.getElementById('btn-informatica-gia');
+    const emoji = el.querySelector('.emoji-viral');
+    const texto = el.querySelector('span');
+
+    if (!el || !emoji || !texto) return;
+
+    // 1. INJEÇÃO DO CSS DE ANIMAÇÃO (Garanta que exista)
+    if (!document.getElementById('animacao-viral')) {
+        const style = document.createElement('style');
+        style.id = 'animacao-viral';
+        style.innerHTML = `
+            @keyframes pulsoContaminante {
+                0% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 5px #22c55e); opacity: 1; }
+                10% { transform: scale(1.1) rotate(5deg); filter: drop-shadow(0 0 10px #39FF14); }
+                30% { transform: scale(15) rotate(-10deg); filter: drop-shadow(0 0 50px #39FF14); opacity: 0.8; }
+                50% { transform: scale(40) rotate(5deg); filter: drop-shadow(0 0 100px #39FF14); opacity: 0.6; }
+                100% { transform: scale(100) rotate(0deg); filter: drop-shadow(0 0 150px #39FF14); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // 2. DISPARA O EFEITO VISUAL
+    // Trava o texto para não atrapalhar
+    texto.style.transition = 'opacity 0.2s';
+    texto.style.opacity = '0';
+
+    // Aplica a animação no emoji
+    el.style.pointerEvents = "none";
+    emoji.style.animation = "pulsoContaminante 1.2s forwards cubic-bezier(0.5, 0, 0.75, 0.2)";
+    emoji.style.zIndex = "9999"; // Para ficar por cima de tudo enquanto cresce
+
+    // 3. O DELAY CRUCIAL PARA A INFECÇÃO AGIR (Mais longo que a lagartixa)
+    setTimeout(() => {
+        iniciarBancoExtraGia(2);
+        
+        // Reseta o estilo para quando você voltar ao menu
+        setTimeout(() => {
+            emoji.style.animation = "";
+            emoji.style.zIndex = "";
+            emoji.style.opacity = "1";
+            texto.style.opacity = "1";
+            el.style.pointerEvents = "auto";
+        }, 2000); // Dá tempo do quiz carregar por trás
+    }, 2000); 
+}
+
+
+function boteDaCobra() {
+    const el = document.getElementById('btn-cobra-gia');
+    const emoji = el.querySelector('.emoji-cobra');
+
+    if (!el || !emoji) return;
+
+    // 1. INJEÇÃO DO CSS (O bote cruza a tela em direção à posição da lagartixa)
+    if (!document.getElementById('animacao-cobra')) {
+        const style = document.createElement('style');
+        style.id = 'animacao-cobra';
+        style.innerHTML = `
+            @keyframes boteVeneno {
+                0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+                15% { transform: translate(20px, 20px) scale(0.9) rotate(15deg); } /* Recuo para o bote */
+                40% { transform: translate(-300px, -150px) scale(8) rotate(-20deg); opacity: 1; } /* Atravessa a diagonal */
+                100% { transform: translate(-600px, -300px) scale(20) rotate(-40deg); opacity: 0; } /* Engole tudo */
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // 2. DISPARA O BOTE
+    el.style.pointerEvents = "none";
+    emoji.style.animation = "boteVeneno 0.9s forwards ease-in";
+    emoji.style.zIndex = "9999";
+
+    // 3. DELAY PARA O BOTE CONCLUIR
+    setTimeout(() => {
+        iniciarBancoExtraGia(3);
+        
+        // Reset
+        setTimeout(() => {
+            emoji.style.animation = "";
+            emoji.style.opacity = "1";
+            el.style.pointerEvents = "auto";
+        }, 1000);
+    }, 800);
+}
+
+
+function ataqueDaAranha() {
+    const aranha = document.getElementById('aranha-vigilante');
+    const teia = document.querySelector('#btn-teia-gia .emoji-teia');
+    const btnContainer = document.getElementById('btn-teia-gia');
+
+    if (!aranha || !teia) return;
+
+    // 1. INJEÇÃO DO CSS (Com nome corrigido e inversão de face)
+    if (!document.getElementById('animacao-aranha')) {
+        const style = document.createElement('style');
+        style.id = 'animacao-aranha';
+        style.innerHTML = `
+            @keyframes descidaAranhaFaceToFace {
+                0% { top: -60px; opacity: 0; transform: translateX(-50%) scaleX(1) scaleY(-1); }
+                30% { top: 0px; opacity: 1; transform: translateX(-50%) scaleX(1.2) scaleY(-1); } 
+                50% { top: -10px; opacity: 1; transform: translateX(-50%) scaleX(1.3) scaleY(-1) rotate(5deg); } 
+                100% { top: 500px; opacity: 0; transform: translateX(-50%) scaleX(10) scaleY(-1); } 
+            }
+            @keyframes tremerTeia {
+                0% { transform: translate(0,0); }
+                25% { transform: translate(2px, 2px); }
+                50% { transform: translate(-2px, -2px); }
+                100% { transform: translate(0,0); }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // 2. EXECUÇÃO
+    btnContainer.style.pointerEvents = "none";
+    teia.style.animation = "tremerTeia 0.1s infinite"; 
+    aranha.style.animation = "descidaAranhaFaceToFace 1.5s forwards linear";
+
+    // 3. TRANSIÇÃO PARA O BANCO
+    setTimeout(() => {
+        iniciarBancoExtraGia(2);
+        
+        // Reset silencioso após a transição
+        setTimeout(() => {
+            aranha.style.animation = "";
+            aranha.style.opacity = "0"; // Esconde para não ficar flutuando no menu depois
+            teia.style.animation = "";
+            btnContainer.style.pointerEvents = "auto";
+        }, 1000);
+
+    }, 1500); // Delay de 1.3s para vermos a descida e o susto
+} 
+
+
+function dueloAleatorio() {
+    const btn = document.getElementById('btn-duelo-aleatorio');
+    const escorpiao = document.getElementById('duelo-escorpiao');
+    const aranha = document.getElementById('duelo-aranha');
+
+    if (!btn || !escorpiao || !aranha) return;
+
+    if (!document.getElementById('animacao-duelo-sem-limites')) {
+        const style = document.createElement('style');
+        style.id = 'animacao-duelo-sem-limites';
+        style.innerHTML = `
+            @keyframes ataqueLentoEscorpiao {
+                0% { transform: rotate(260deg) translateY(0) scale(1); opacity: 1; }
+                /* Corrida mais lenta e início do crescimento no meio */
+                50% { transform: rotate(260deg) translateY(75px) scale(4); opacity: 1; }
+                /* Expansão final gigante ignorando as bordas */
+                100% { transform: rotate(260deg) translateY(150px) scale(60); opacity: 0; filter: blur(2px) drop-shadow(0 0 50px #ff0000); }
+            }
+            @keyframes ataqueLentoAranha {
+                0% { transform: rotate(-90deg) translateY(0) scale(1); opacity: 1; }
+                50% { transform: rotate(-90deg) translateY(-75px) scale(4); opacity: 1; }
+                100% { transform: rotate(-90deg) translateY(-150px) scale(60); opacity: 0; filter: blur(2px) drop-shadow(0 0 50px #ff0000); }
+            }
+            @keyframes flashBotao {
+                0% { border-color: #475569; }
+                100% { border-color: transparent; background: #7f1d1d; box-shadow: 0 0 100px #ff0000; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Início do efeito
+    btn.style.pointerEvents = "none";
+    btn.style.animation = "flashBotao 0.6s forwards";
+    
+    // Escala 60 para garantir que cubra monitores grandes
+    escorpiao.style.animation = "ataqueLentoEscorpiao 1.2s forwards cubic-bezier(0.45, 0.05, 0.55, 0.95)";
+    aranha.style.animation = "ataqueLentoAranha 1.2s forwards cubic-bezier(0.45, 0.05, 0.55, 0.95)";
+
+    setTimeout(() => {
+        if (typeof buracoDaGia === "function") {
+            buracoDaGia();
+        }
+        
+        setTimeout(() => {
+            btn.style.animation = "";
+            escorpiao.style.animation = "";
+            aranha.style.animation = "";
+            escorpiao.style.opacity = "1";
+            aranha.style.opacity = "1";
+            btn.style.pointerEvents = "auto";
+        }, 1500);
+    }, 1500); // Delay maior para acompanhar a lentidão dos bichos
+}
+
+function fugaDaLagartixa() {
+    const el = document.getElementById('btn-portugues-gia');
+    if (!el) return;
+
+    // 1. Injeta o CSS de animação dinamicamente (Garante que o navegador conheça a animação)
+    if (!document.getElementById('animacao-fuga')) {
+        const style = document.createElement('style');
+        style.id = 'animacao-fuga';
+        style.innerHTML = `
+            @keyframes disparar {
+                0% { transform: translateX(0) scale(1); opacity: 1; }
+                20% { transform: translateX(10px) scale(1.1); }
+                100% { transform: translateX(-150vw) scale(0.7); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // 2. Aplica a animação via Style diretamente (Força o início imediato)
+    el.style.animation = "disparar 0.8s forwards cubic-bezier(0.4, 0, 0.2, 1)";
+    el.style.pointerEvents = "none"; // Trava cliques extras
+
+    // 3. O Delay para ver a fuga antes de mudar de tela
+    setTimeout(() => {
+        iniciarBancoExtraGia(1);
+        
+        // Reseta o estilo para quando você voltar ao menu
+        setTimeout(() => {
+            el.style.animation = "";
+            el.style.opacity = "1";
+            el.style.pointerEvents = "auto";
+        }, 1000);
+    }, 1000); 
+}
 
 
 function buracoDaGia() {
@@ -19485,8 +19816,8 @@ function buracoDaGia() {
             minWidth: "160px",
             height: "45px",
             background: "rgba(10,10,10,0.95)",
-            color: "#fff",
-            border: "2px solid #39FF14",
+            color: "AF804F",
+            border: "2px solid #AF804F",
             borderRadius: "12px",
             fontWeight: "900",
             fontSize: "0.9em",
@@ -19590,7 +19921,7 @@ function sairSimuladoGia() {
             TOTAL DE ERROS: ${totalErros}
         </span><br><br>
         <span style="color:#FFD700;">${foiBem ? "EXCELENTE RITMO! CONTINUE ASSIM!" : "FOCO NOS DETALHES! A REVISÃO É A CHAVE!"}</span><br><br>
-        <button id="btn-ok-relatorio-gia" style="padding:12px 25px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b;">ÁREA DE ESTUDOS</button>
+        <button id="btn-ok-relatorio-gia" style="padding:12px 25px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b;">BURACO DA GIA</button>
     </div>`; 
 
     document.body.appendChild(overlay);
@@ -20245,7 +20576,7 @@ function exibirVitoriaPomposa(titulo) {
 
     // 3. Botão de Retorno - MANTIDO INTEGRALMENTE
     _t.style.display = "block";
-    _t.innerText = "ÁREA DE ESTUDOS";
+    _t.innerText = "DESEMPENHO";
     _t.onclick = function() { 
         audioVitoria.pause(); 
         audioVitoria.currentTime = 0; 
@@ -20456,7 +20787,7 @@ function antigaProvaAnalista() {
 
             const btnExtra = document.getElementById('btnExtra');
             if (btnExtra) {
-                btnExtra.innerText = "ÁREA DE ESTUDOS";
+                btnExtra.innerText = "DESEMPENHO";
                 Object.assign(btnExtra.style, {
                     display: "flex",
                     visibility: "visible",
@@ -20990,7 +21321,7 @@ function startQuiz(modo) {
       🚀 CONFIGURAÇÃO DO BOTÃO EXTRA (USANDO window.origemQuiz)
   ============================================================ */
   if (btnExtra && modo !== 25) {
-      btnExtra.innerHTML = (modo === 'total') ? "🐸 BURACO DA GIA 🐸" : "ÁREA DE ESTUDOS";
+      btnExtra.innerHTML = (modo === 'total') ? "🐸 BURACO DA GIA 🐸" : "DESEMPENHO";
       
       Object.assign(btnExtra.style, {
           display: "flex",
