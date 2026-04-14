@@ -645,6 +645,30 @@ button {
   text-align:center;
 }
 
+// AJUSTANDO O MENU AO CELULAR
+/* Contêiner Principal do Menu */
+.menu-container {
+    width: 100%;
+    max-width: 100vw; /* Garante que nunca passe da largura da tela */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden; /* Corta qualquer vazamento lateral acidental */
+    padding: 10px;
+    box-sizing: border-box; /* Garante que o padding não aumente o tamanho real */
+}
+
+/* Ajuste para o Armário/Elementos Flutuantes */
+.menu-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 450px; /* Limita o tamanho no PC para não esticar demais */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 /* FIX CIRÚRGICO */
 #container > .screen {
@@ -21056,7 +21080,7 @@ function garantirBotaoVip() {
 
     btn = document.createElement('button');
     btn.id = 'btn-sair-vip';
-    btn.innerHTML = "⭐🏆 SAIR 🏆⭐";
+    btn.innerHTML = "⭐SAIR⭐";
 
     btn.style.cssText = `
         display:flex; align-items:center; justify-content:center;
@@ -21317,68 +21341,78 @@ function startQuiz(modo) {
     return;
   }
 
-  /* ============================================================
-      🚀 CONFIGURAÇÃO DO BOTÃO EXTRA (USANDO window.origemQuiz)
-  ============================================================ */
-  if (btnExtra && modo !== 25) {
-      btnExtra.innerHTML = (modo === 'total') ? "🐸 BURACO DA GIA 🐸" : "DESEMPENHO";
-      
-      Object.assign(btnExtra.style, {
-          display: "flex",
-          visibility: "visible",
-          opacity: "1",
-         alignItems: "center",
-            justifyContent: "center",
-          background: "rgba(10,10,10,0.95)",
-          color: (modo === 'total') ? "#fff" : "#39FF14",
-          border: `2px solid #39FF14`,
-          borderRadius: "12px",
-          fontWeight: "900",
-          zIndex: "9999",
-          pointerEvents: "auto"
-      });
+/* ============================================================
+    🚀 CONFIGURAÇÃO DO BOTÃO EXTRA (LÓGICA DE VISIBILIDADE)
+============================================================ */
+if (btnExtra && modo !== 25) {
+    btnExtra.innerHTML = (modo === 'total') ? "🐸SAIR🐸" : "DESEMPENHO";
+    
+    // Garantimos que ele reapareça sempre que o quiz iniciar
+    Object.assign(btnExtra.style, {
+        display: "flex",
+        visibility: "visible",
+        alignItems: "center",
+        justifyContent: "center",
+        opacity: "1",
+        background: "rgba(10,10,10,0.95)",
+        color: (modo === 'total') ? "#fff" : "#39FF14",
+        border: `2px solid #39FF14`,
+        borderRadius: "12px",
+        fontWeight: "900",
+        zIndex: "9999",
+        pointerEvents: "auto"
+    });
 
-      btnExtra.onclick = (e) => {
-          if (e) e.preventDefault();
-          
-          let totalAcertos = 0;
-          let totalRespondidas = Object.keys(historico).length;
-          
-          Object.keys(historico).forEach(i => {
-              if (currentQuestions[i] && historico[i] === currentQuestions[i].correct) totalAcertos++;
-          });
+    btnExtra.onclick = (e) => {
+        if (e) e.preventDefault();
+        
+        // 🛑 EM VEZ DE REMOVER, APENAS OCULTAMOS
+        // Assim ele não polui o overlay e pode ser reativado depois
+        btnExtra.style.display = "none"; 
+        
+        let totalAcertos = 0;
+        let totalRespondidas = Object.keys(historico).length;
+        
+        Object.keys(historico).forEach(i => {
+            if (currentQuestions[i] && historico[i] === currentQuestions[i].correct) totalAcertos++;
+        });
 
-          let totalErros = totalRespondidas - totalAcertos;
-          let foiBem = totalRespondidas > 0 ? (totalAcertos >= totalRespondidas / 2) : true;
+        let totalErros = totalRespondidas - totalAcertos;
+        let foiBem = totalRespondidas > 0 ? (totalAcertos >= totalRespondidas / 2) : true;
 
-          const overlay = document.createElement("div");
-          overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:flex; align-items:center; justify-content:center; z-index:999999999;";
+        const overlay = document.createElement("div");
+        overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:flex; align-items:center; justify-content:center; z-index:999999999;";
 
-          overlay.innerHTML = `
-          <div style="background:#000; border:2px solid ${foiBem ? '#39FF14' : 'red'}; padding:25px; border-radius:15px; text-align:center; color:${foiBem ? '#39FF14' : '#ff4444'}; font-weight:900; box-shadow:0 0 30px ${foiBem ? '#39FF14' : 'red'}; width: 340px; max-width: 95%;">
-              <span style="font-size:1.2em; display: block; margin-bottom: 15px;">⌚PAUSA NOS ESTUDOS⌚</span>
-              <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-                  <span style="font-size:0.95em; color:#ffffff; font-weight:400; line-height: 1.6;">
-                      📊 <b style="color:#FFD700;">DESEMPENHO NESTA SESSÃO</b><br>
-                      TOTAL: ${currentQuestions.length} QUESTÕES<br>
-                        RESPONDIDAS: ${totalRespondidas}<br>
-                        ACERTOS: <span style="color:#39FF14">${totalAcertos}</span><br>
-                        ERROS: <span style="color:red">${totalErros}</span>
-                  </span>
-              </div>
-              <button id="btn-ok-relatorio" style="width: 100%; padding:15px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b;">ÁREA DE ESTUDOS</button>
-          </div>`;
+        overlay.innerHTML = `
+        <div style="background:#000; border:2px solid ${foiBem ? '#39FF14' : 'red'}; padding:25px; border-radius:15px; text-align:center; color:${foiBem ? '#39FF14' : '#ff4444'}; font-weight:900; box-shadow:0 0 30px ${foiBem ? '#39FF14' : 'red'}; width: 340px; max-width: 95%;">
+            <span style="font-size:1.2em; display: block; margin-bottom: 15px;">⌚PAUSA NOS ESTUDOS⌚</span>
+            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                <span style="font-size:0.95em; color:#ffffff; font-weight:400; line-height: 1.6;">
+                    📊 <b style="color:#FFD700;">DESEMPENHO NESTA SESSÃO</b><br>
+                    TOTAL: ${currentQuestions.length} QUESTÕES<br>
+                    RESPONDIDAS: ${totalRespondidas}<br>
+                    ACERTOS: <span style="color:#39FF14">${totalAcertos}</span><br>
+                    ERROS: <span style="color:red">${totalErros}</span>
+                </span>
+            </div>
+            <button id="btn-ok-relatorio" style="width: 100%; padding:15px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b;">ÁREA DE ESTUDOS</button>
+        </div>`;
 
-          document.body.appendChild(overlay);
-document.getElementById('btn-ok-relatorio').onclick = () => {
-              overlay.remove();
-              
-              // 🎯 GPS CORRIGIDO:
-              if (window.origemQuiz === 'area-restrita') {
-              go('area-restrita');
-              }
-          };
-    }
+        document.body.appendChild(overlay);
+
+        document.getElementById('btn-ok-relatorio').onclick = () => {
+            overlay.remove();
+            
+            // Se o usuário sair para a área restrita, o botão não precisa voltar
+            // pois o startQuiz será chamado novamente quando ele entrar em outro banco.
+            if (window.origemQuiz === 'area-restrita') {
+                go('area-restrita');
+            } else {
+                // Caso ele apenas feche o overlay e continue no mesmo banco
+                btnExtra.style.display = "flex";
+            }
+        };
+    };
 }
   go('quiz');
   setTimeout(() => {
@@ -22254,7 +22288,7 @@ function portaDosFundosVip() {
 
         const vContainer = document.getElementById('vidas-container');
         if (vContainer) {
-            vContainer.innerHTML = '<span style="font-size:1.2em; color: gold; font-weight:bold;">⭐ SAIR ⭐</span>';
+            vContainer.innerHTML = '<span style="font-size:1.2em; color: gold; font-weight:bold;">⭐ 🏆 ⭐</span>';
         }
         
         // Mata o botão "Área de Estudos"
