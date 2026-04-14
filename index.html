@@ -291,19 +291,18 @@ html, body {
     position: fixed;
     top: 0; left: 0;
     width: 100vw; height: 100vh;
-    pointer-events: none;
+    pointer-events: none; /* Deixa o site clicável por baixo */
     z-index: 9999;
     overflow: hidden;
 }
 
 .ant {
     position: absolute;
-    /* Tamanho aumentado para maior visibilidade */
-    width: 25px; 
-    height: 34px;
-    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.4));
-    /* Garante que o aumento não embace o desenho */
-    shape-rendering: geometricPrecision;
+    width: 30px; /* Aumentei um pouco para facilitar o clique no celular */
+    height: 40px;
+    pointer-events: auto !important; /* FORÇA a formiga a ser clicável */
+    cursor: crosshair;
+    z-index: 10000;
 }
 
 /* CORES */
@@ -339,17 +338,17 @@ html, body {
 /* --- DISTRIBUIÇÃO DAS FORMIGAS --- */
 /* (Tempos diferentes para elas não andarem juntas) */
 
-#f1 { top: 20%; animation: E-D 12s infinite linear; }
-#f2 { top: 40%; animation: D-E 15s infinite linear; animation-delay: 2s; }
-#f3 { left: 30%; animation: C-B 18s infinite linear; animation-delay: 4s; }
+#f1 { top: 20%; animation: E-D 15s infinite linear; }
+#f2 { top: 40%; animation: D-E 20s infinite linear; animation-delay: 0s; }
+#f3 { left: 30%; animation: C-B 25s infinite linear; animation-delay: 0s; }
 
-#f5 { top: 60%; animation: E-D 16s infinite linear; animation-delay: 5s; }
-#f6 { top: 80%; animation: D-E 13s infinite linear; animation-delay: 3s; }
-#f7 { left: 10%; animation: C-B 20s infinite linear; animation-delay: 6s; }
+#f5 { top: 60%; animation: E-D 16s infinite linear; animation-delay: 0s; }
+#f6 { top: 80%; animation: D-E 26s infinite linear; animation-delay: 0s; }
+#f7 { left: 10%; animation: C-B 36s infinite linear; animation-delay: 0s; }
 
-#f9 { top: 10%; animation: E-D 14s infinite linear; animation-delay: 9s; }
-#f10 { top: 90%; animation: D-E 17s infinite linear; animation-delay: 4s; }
-#f11 { left: 50%; animation: C-B 15s infinite linear; animation-delay: 2s; }
+#f9 { top: 10%; animation: E-D 15s infinite linear; animation-delay: 0s; }
+#f10 { top: 90%; animation: D-E 25s infinite linear; animation-delay: 0s; }
+#f11 { left: 50%; animation: C-B 30s infinite linear; animation-delay: 0s; }
 
 /* Quando a formiga morre */
 .ant.morto {
@@ -1466,13 +1465,7 @@ AGENTE DE COMBATE A ENDEMIAS
 </div>
  <div class="footer-stats" style="display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 20px; padding: 0 10px; gap: 30px;">
     
-   <div id="btn-portugues-gia" class="juiz" 
-    style="position: absolute;left: 210px;display: flex; flex-direction: column; align-items: center; cursor:pointer;" 
-    onclick="irParaAreaApoiador2()">
-    <div class="emoji" style="font-size: 25px;">🐌</div>
-    <span style="font-size: 10px; font-weight: 700; color: #cbd5e1;margin-top: 2px;">Sala Exclusiva</span>
-</div>
-
+  
     <div style="display: flex; align-items: center; gap: 20px;">
         <div style="text-align: center;">
             <div style="font-size: 10px; color: #22c55e; font-weight: 900;">ACERTOS:</div>
@@ -1484,11 +1477,7 @@ AGENTE DE COMBATE A ENDEMIAS
         </div>
     </div>
 
-    <div class="aluno" style="display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="go('area-restrita');">
-        <div style="font-size: 25px;">🧱</div>
-        <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: 2px;">Área de Estudos</span>
-    </div>
- </div>
+   </div>
  
 </div>
 
@@ -19553,7 +19542,7 @@ function iniciarBancoExtraGia(numero) {
             // 🔥 CONFIGURAÇÃO DO BOTÃO DE SAÍDA EXCLUSIVO GIA
             const btnExtra = document.getElementById('btnExtra');
             if (btnExtra) {
-                btnExtra.innerText = "🐸 BURACO DA GIA 🐸";
+                btnExtra.innerText = "🐸 SAIRIA 🐸";
                 Object.assign(btnExtra.style, {
                     display: "flex",
                     visibility: "visible",
@@ -19825,6 +19814,46 @@ function fugaDaLagartixa() {
 }
 
 
+function criarFormigasBotoes() {
+    // 1. Localiza todas as formigas que já estão no HTML (pelas classes do seu SVG)
+    const formigasSVG = document.querySelectorAll('.ant');
+
+    formigasSVG.forEach(ant => {
+        // Garantimos que ela aceite cliques, apesar do container pai
+        ant.style.pointerEvents = "auto";
+        ant.style.cursor = "crosshair";
+
+        // 2. Criamos a função de clique
+        const dispararAcao = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Efeito visual de morte (sua classe CSS)
+            ant.classList.add('morto');
+
+            // Identifica qual função chamar pela classe da formiga
+            if (ant.classList.contains('vermelha')) {
+                console.log("🐜 Vermelha: Apoiador 2");
+                if (typeof irParaAreaApoiador2 === 'function') irParaAreaApoiador2();
+            } else if (ant.classList.contains('preta')) {
+                console.log("🐜 Preta: Área Restrita");
+                if (typeof go === 'function') go('area-restrita');
+            }
+            
+            // Opcional: Remove do DOM após a animação de morte (0.5s)
+            setTimeout(() => ant.remove(), 500);
+        };
+
+        // 3. Adiciona os ouvintes de evento (PC e Celular)
+        ant.addEventListener('click', dispararAcao);
+        ant.addEventListener('touchstart', dispararAcao, {passive: false});
+    });
+}
+
+// Chama a função para ativar as formigas assim que o menu carregar
+criarFormigasBotoes();
+
+
 function buracoDaGia() {
     console.log("Buraco da Gia: Motor iniciado.");
     
@@ -19855,7 +19884,7 @@ function buracoDaGia() {
     // 3. CONFIGURAÇÃO DO BOTÃO DE SAÍDA
     const btnExtra = document.getElementById('btnExtra');
     if (btnExtra) {
-        btnExtra.innerHTML = "🐸 BURACO DA GIA 🐸";
+        btnExtra.innerHTML = "🐸 SAIR 🐸";
         
         Object.assign(btnExtra.style, {
             display: "flex",
