@@ -21070,6 +21070,7 @@ function iniciarNovoBancoVip(numero) {
 
 function garantirBotaoVip() {
     let btn = document.getElementById('btn-sair-vip');
+    // Busca os botões de controle existentes para se alinhar a eles
     const btnProxima = document.querySelector('.next-btn') || 
                        document.getElementById('next-btn') || 
                        document.querySelector('button[onclick*="next"]');
@@ -21082,22 +21083,20 @@ function garantirBotaoVip() {
     btn.id = 'btn-sair-vip';
     btn.innerHTML = "⭐SAIR⭐";
 
+    // AJUSTE: Removi position:fixed e transform:translateX
     btn.style.cssText = `
         display:flex; align-items:center; justify-content:center;
         height:48px; padding:0 25px;
         background:rgba(10,10,10,0.95); color:#FFD700;
         border:2px solid #FFD700; border-radius:8px;
         font-weight:900; cursor:pointer; font-size:13px;
-        position:fixed; bottom:50px; left:50%;
-        transform:translateX(-50%);
         z-index:9999999;
-       padding: 0 10px;
+        margin: 10px; /* Dá respiro entre os botões */
     `;
 
     btn.onclick = (e) => {
         e.preventDefault();
         e.stopPropagation();
-
         btn.remove();
 
         if (window.timerVipInterval) {
@@ -21216,6 +21215,11 @@ function garantirBotaoVip() {
         };
     };
 
+// Insere o botão VIP antes do botão de próxima, no mesmo nível hierárquico
+    paiDosControles.style.display = "flex";
+    paiDosControles.style.flexWrap = "wrap"; // Garante que no celular eles quebrem linha se não couberem
+    paiDosControles.style.justifyContent = "center";
+    paiDosControles.style.alignItems = "center";
     paiDosControles.insertBefore(btn, btnProxima);
 }
 
