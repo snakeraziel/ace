@@ -32,7 +32,7 @@ html, body {
     box-sizing: border-box !important;
 }
 
-
+// HOVER VIP BURACO DA GIA
 .estado {
   transition: all 0.4s ease;
   font-size: 28px;
@@ -52,6 +52,29 @@ html, body {
 }
 
 .estado.error {
+  filter: drop-shadow(0 0 10px #ff0000) drop-shadow(0 0 20px #ff0000);
+}
+
+// HOVER VIP ÁREA RESTRITA
+.estador {
+  transition: all 0.4s ease;
+  font-size: 28px;
+  cursor: pointer;
+  display: inline-block;
+  /* Remove qualquer cor ou filtro daqui para o Troféu brilhar normal */
+}
+
+.estador.lock {
+  /* Mantemos vazio ou apenas com um brilho bem sutil para não ficar cinza */
+  filter: none; 
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.2); 
+}
+
+.estador.open {
+  filter: drop-shadow(0 0 10px #ffd700) drop-shadow(0 0 20px #ffd700);
+}
+
+.estador.error {
   filter: drop-shadow(0 0 10px #ff0000) drop-shadow(0 0 20px #ff0000);
 }
 
@@ -1557,7 +1580,7 @@ AGENTE DE COMBATE A ENDEMIAS
             <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: -2px;">Audioteca</span>
         </div>
    
-      <div id="estadoEmoji" class="estado lock" style="display: flex; flex-direction: column; align-items: center; cursor:pointer; flex: 1;" onclick="portaDosFundosVip()">
+      <div id="estadorEmoji" class="estado lock" style="display: flex; flex-direction: column; align-items: center; cursor:pointer; flex: 1;" onclick="portaDosFundosVip()">
             <div style="font-size: 30px;">🏆</div>
             <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: -2px;">Sala Exclusiva</span>
         </div>
@@ -21073,6 +21096,9 @@ function garantirBotaoVip() {
     const btnProxima = document.querySelector('.next-btn') || 
                        document.getElementById('next-btn') || 
                        document.querySelector('button[onclick*="next"]');
+    const btnVoltar = document.querySelector('.back-btn') || 
+                      document.getElementById('back-btn') ||
+                      document.querySelector('button[onclick*="back"]');
 
     if (!btnProxima || btn) return; 
 
@@ -21082,38 +21108,57 @@ function garantirBotaoVip() {
     btn.id = 'btn-sair-vip';
     btn.innerHTML = "⭐ SAIR ⭐";
 
-    // CSS DO BOTÃO SAIR: Ocupa o espaço disponível sem sobras
+    // 🎯 O SEGREDO DO AJUSTE:
+    // Retiramos height fixo e deixamos o padding definir o contorno.
     btn.style.cssText = `
-        display:flex; align-items:center; justify-content:center;
-        height:48px; 
-        background:rgba(10,10,10,0.8); color:#FFD700;
-        border:2px solid #FFD700; border-radius:8px;
-        font-weight:900; cursor:pointer; font-size:13px;
-        flex: 1;           /* Divide o espaço igualmente com o outro botão */
-        min-width: 120px;  /* Não deixa ele ficar espremido demais */
-        margin: 0;         /* Remove margens para usar o gap do pai */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;              /* Largura segue o texto */
+        height: auto;             /* Altura segue o texto */
+        padding: 8px 15px;        /* Respiro interno justo e simétrico */
+        background: rgba(10,10,10,0.8);
+        color: #FFD700;
+        border: 2px solid #FFD700;
+        border-radius: 8px;
+        font-weight: 900;
+        font-size: 13px;
+        cursor: pointer;
+        white-space: nowrap;      /* Impede quebra de linha no botão */
+        box-sizing: border-box;
     `;
 
-    // AJUSTE NO PAI: Força os dois a ocuparem a largura total do container
+    // Ajustamos o pai para alinhar todos pela base/centro sem esticar
     Object.assign(paiDosControles.style, {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between", 
-        alignItems: "center",
-        width: "100%",      /* Garante que o pai use a largura da questão */
-        gap: "10px",        /* Espaço fixo e limpo entre os dois */
-        padding: "0 10px",  /* Pequeno respiro nas bordas da tela */
-        boxSizing: "border-box"
+        flexWrap: "nowrap",
+        justifyContent: "center",
+        alignItems: "center",     /* Garante que todos fiquem na mesma linha visual */
+        gap: "8px",
+        width: "100%",
+        margin: "15px auto"
     });
 
-    // Garante que o botão de PRÓXIMA também seja flexível
-    btnProxima.style.flex = "1";
-    btnProxima.style.minWidth = "120px";
-    btnProxima.style.margin = "0";
+    // 🛠️ COMPATIBILIDADE: Forçamos o Voltar e Próxima a não brigarem com o novo botão
+    [btnVoltar, btnProxima].forEach(b => {
+        if (b) {
+            b.style.height = "auto"; 
+            b.style.padding = "8px 15px"; 
+            b.style.display = "inline-flex";
+            b.style.alignItems = "center";
+        }
+    });
+
+    if (btnVoltar) {
+        paiDosControles.prepend(btnVoltar);
+        btnVoltar.after(btn);
+    } else {
+        paiDosControles.insertBefore(btn, btnProxima);
+    }
 
     btn.onclick = (e) => {
         e.preventDefault();
-        e.stopPropagation();
         btn.remove();
 
         if (window.timerVipInterval) {
@@ -21228,15 +21273,12 @@ function garantirBotaoVip() {
                 go('area-apoiador');
             } else {
                 window.location.href = '?p=area-apoiador';
-            }
+             }
         };
     };
 
-// Insere o botão VIP antes do botão de próxima, no mesmo nível hierárquico
-    paiDosControles.appendChild(btn);
     paiDosControles.insertBefore(btn, btnProxima);
 }
-
 
 
 function aplicarNomeVip() {
