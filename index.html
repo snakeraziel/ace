@@ -55,8 +55,9 @@ html, body {
   filter: drop-shadow(0 0 10px #ff0000) drop-shadow(0 0 20px #ff0000);
 }
 
+/*
 // HOVER VIP ÁREA RESTRITA
-.estador {
+.vip-restrito {
   transition: all 0.4s ease;
   font-size: 28px;
   cursor: pointer;
@@ -64,19 +65,20 @@ html, body {
   /* Remove qualquer cor ou filtro daqui para o Troféu brilhar normal */
 }
 
-.estador.lock {
+.vip-restrito.lock {
   /* Mantemos vazio ou apenas com um brilho bem sutil para não ficar cinza */
   filter: none; 
-  text-shadow: 0 0 5px rgba(255, 215, 0, 0.2); 
+  text-shadowrest: 0 0 5px rgba(255, 215, 0, 0.2); 
 }
 
-.estador.open {
-  filter: drop-shadow(0 0 10px #ffd700) drop-shadow(0 0 20px #ffd700);
+.vip-restrito.open {
+  filter: drop-shadowrest(0 0 10px #ffd700) drop-shadow(0 0 20px #ffd700);
 }
 
-.estador.error {
-  filter: drop-shadow(0 0 10px #ff0000) drop-shadow(0 0 20px #ff0000);
+.vip-restrito.error {
+  filter: drop-shadowrest(0 0 10px #ff0000) drop-shadow(0 0 20px #ff0000);
 }
+*/
 
 /* PAINEL DA ÁREA VIP */
 /* Container Principal */
@@ -1368,7 +1370,7 @@ AGENTE DE COMBATE A ENDEMIAS
     <div id="btn-portugues-gia" class="juiz" 
     style="position: absolute; left: -60px; top: 60px; display: flex; flex-direction: column; align-items: center; cursor:pointer; transition: all 0.3s;" 
     onclick="fugaDaLagartixa()">
-    <div class="emoji" style="font-size: 70px;">🦎</div>
+    <div class="emoji" style="font-size: 40px;">🦎</div>
     <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; white-space: nowrap;">Português</span>
 </div>
 
@@ -1384,12 +1386,12 @@ AGENTE DE COMBATE A ENDEMIAS
         🕷️
     </div>
 
-    <div class="emoji-teia" style="font-size: 80px; filter: drop-shadow(0 0 5px #a855f7); transition: transform 0.2s;">🕸</div>
+   <div class="emoji-teia" style="font-size: 50px; filter: drop-shadow(0 0 5px #a855f7); transition: transform 0.2s;">🕸</div>
     <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; white-space: nowrap;">Português do Zero</span>
 </div>
 
     <div id="btn-informatica-gia" class="prof" 
-    style="position: absolute; left: -120px; top: 210px; display: flex; flex-direction: column; align-items: center; cursor:pointer; transition: transform 0.2s;" 
+    style="position: absolute; left: 70px; top: 100px; display: flex; flex-direction: column; align-items: center; cursor:pointer; transition: transform 0.2s;" 
     onclick="efeitoInfeccaoViral()">
     <div class="emoji-viral" style="font-size: 10px; filter: drop-shadow(0 0 5px #22c55e); transition: all 0.3s;">🦠</div>
     <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; white-space: nowrap;">Informática</span>
@@ -1398,7 +1400,7 @@ AGENTE DE COMBATE A ENDEMIAS
 
 
   <div id="btn-cobra-gia" class="alun" 
-    style="position: absolute; right: -180px; top: 240px; display: flex; flex-direction: column; align-items: center; cursor:pointer;" 
+    style="position: absolute; right: -80px; top: 200px; display: flex; flex-direction: column; align-items: center; cursor:pointer;" 
     onclick="boteDaCobra()">
     <div class="emoji-cobra" style="font-size: 35px; filter: drop-shadow(0 0 5px #ffeb3b);">🐍</div>
     <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; white-space: nowrap;">Extravagante</span>
@@ -1464,10 +1466,12 @@ AGENTE DE COMBATE A ENDEMIAS
 </div>
  <div class="footer-stats" style="display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 20px; padding: 0 10px; gap: 30px;">
     
-    <div id="estadoEmoji" class="estado lock" style="display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="portaDosFundosVip()">
-        <div style="font-size: 30px;">🏆</div>
-        <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: -2px;">Sala Exclusiva</span>
-    </div>
+   <div id="btn-portugues-gia" class="juiz" 
+    style="position: absolute;left: 210px;display: flex; flex-direction: column; align-items: center; cursor:pointer;" 
+    onclick="irParaAreaApoiador2()">
+    <div class="emoji" style="font-size: 25px;">🐌</div>
+    <span style="font-size: 10px; font-weight: 700; color: #cbd5e1;margin-top: 2px;">Sala Exclusiva</span>
+</div>
 
     <div style="display: flex; align-items: center; gap: 20px;">
         <div style="text-align: center;">
@@ -1481,7 +1485,7 @@ AGENTE DE COMBATE A ENDEMIAS
     </div>
 
     <div class="aluno" style="display: flex; flex-direction: column; align-items: center; cursor:pointer;" onclick="go('area-restrita');">
-        <div style="font-size: 25px;">🚪</div>
+        <div style="font-size: 25px;">🧱</div>
         <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: 2px;">Área de Estudos</span>
     </div>
  </div>
@@ -1580,7 +1584,7 @@ AGENTE DE COMBATE A ENDEMIAS
             <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: -2px;">Audioteca</span>
         </div>
    
-      <div id="estadorEmoji" class="estado lock" style="display: flex; flex-direction: column; align-items: center; cursor:pointer; flex: 1;" onclick="portaDosFundosVip()">
+      <div id="estadoEmoji" class="estado lock" style="display: flex; flex-direction: column; align-items: center; cursor:pointer; flex: 1;" onclick="portaDosFundosVip()">
             <div style="font-size: 30px;">🏆</div>
             <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; margin-top: -2px;">Sala Exclusiva</span>
         </div>
