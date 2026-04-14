@@ -1373,21 +1373,22 @@ AGENTE DE COMBATE A ENDEMIAS
     <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; white-space: nowrap;">Português</span>
 </div>
 
-   <div id="aranha-vigilante" style="position: fixed; top: -100px; right: 350px; font-size: 60px; z-index: 10000; pointer-events: none; transition: none;">
+<div id="aranha-vigilante" style="position: fixed; top: -100px; right: 10%; font-size: 70px; z-index: 10000; pointer-events: none; transition: none;">
     🕷️
 </div>
 
 <div id="btn-teia-gia" class="aluno" 
-    style="position: absolute; right: -150px; top: 50px; display: flex; flex-direction: column; align-items: center; cursor:pointer;" 
+    style="position: absolute; right: -60px; top: 30px; display: flex; flex-direction: column; align-items: center; cursor:pointer;" 
     onclick="ataqueDaAranha()">
     
-    <div id="aranha-vigilante" style="position: absolute; right: 350px; top: -50px; left: 50%; transform: translateX(-50%); font-size: 40px; z-index: 10000; pointer-events: none; opacity: 0;">
+    <div id="aranha-vigilante-pos" style="position: absolute; right: 0; top: -50px; left: 50%; transform: translateX(-50%); font-size: 70px; z-index: 10000; pointer-events: none; opacity: 0;">
         🕷️
     </div>
 
-   <div class="emoji-teia" style="font-size: 50px; filter: drop-shadow(0 0 5px #a855f7); transition: transform 0.2s;">🕸</div>
+    <div class="emoji-teia" style="font-size: 50px; filter: drop-shadow(0 0 5px #a855f7); transition: transform 0.2s;">🕸</div>
     <span style="font-size: 10px; font-weight: 700; color: #cbd5e1; white-space: nowrap;">Português do Zero</span>
 </div>
+
 
     <div id="btn-informatica-gia" class="prof" 
     style="position: absolute; left: 70px; top: 100px; display: flex; flex-direction: column; align-items: center; cursor:pointer; transition: transform 0.2s;" 
@@ -19542,7 +19543,7 @@ function iniciarBancoExtraGia(numero) {
             // 🔥 CONFIGURAÇÃO DO BOTÃO DE SAÍDA EXCLUSIVO GIA
             const btnExtra = document.getElementById('btnExtra');
             if (btnExtra) {
-                btnExtra.innerText = "🐸 SAIRIA 🐸";
+                btnExtra.innerText = "🐸 SAIR 🐸";
                 Object.assign(btnExtra.style, {
                     display: "flex",
                     visibility: "visible",
@@ -19676,51 +19677,55 @@ function boteDaCobra() {
 
 function ataqueDaAranha() {
     const aranha = document.getElementById('aranha-vigilante');
-    const teia = document.querySelector('#btn-teia-gia .emoji-teia');
-    const btnContainer = document.getElementById('btn-teia-gia');
+    const alvo = document.getElementById('btn-teia-gia');
 
-    if (!aranha || !teia) return;
+    if (!aranha || !alvo) return;
 
-    // 1. INJEÇÃO DO CSS (Com nome corrigido e inversão de face)
-    if (!document.getElementById('animacao-aranha')) {
-        const style = document.createElement('style');
-        style.id = 'animacao-aranha';
-        style.innerHTML = `
-            @keyframes descidaAranhaFaceToFace {
-                0% { top: -60px; opacity: 0; transform: translateX(-50%) scaleX(1) scaleY(-1); }
-                30% { top: 0px; opacity: 1; transform: translateX(-50%) scaleX(1.2) scaleY(-1); } 
-                50% { top: -10px; opacity: 1; transform: translateX(-50%) scaleX(1.3) scaleY(-1) rotate(5deg); } 
-                100% { top: 500px; opacity: 0; transform: translateX(-50%) scaleX(10) scaleY(-1); } 
-            }
-            @keyframes tremerTeia {
-                0% { transform: translate(0,0); }
-                25% { transform: translate(2px, 2px); }
-                50% { transform: translate(-2px, -2px); }
-                100% { transform: translate(0,0); }
-            }
-        `;
-        document.head.appendChild(style);
+    const rectAlvo = alvo.getBoundingClientRect();
+    const centroX = rectAlvo.left + (rectAlvo.width / 2);
+    const centroY = rectAlvo.top + (rectAlvo.height / 2);
+
+    // 1. O BOTE (Descida de frente)
+    aranha.style.transition = "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)"; 
+    aranha.style.transform = "translateX(-50%) rotate(180deg)"; 
+    aranha.style.top = centroY + "px";
+    
+    if (window.innerWidth < 600) {
+        aranha.style.right = "10px"; 
+    } else {
+        aranha.style.left = centroX + "px";
+        aranha.style.right = "auto";
     }
 
-    // 2. EXECUÇÃO
-    btnContainer.style.pointerEvents = "none";
-    teia.style.animation = "tremerTeia 0.1s infinite"; 
-    aranha.style.animation = "descidaAranhaFaceToFace 1.5s forwards linear";
-
-    // 3. TRANSIÇÃO PARA O BANCO
+  // 2. O IMPACTO E A ATIVAÇÃO
     setTimeout(() => {
-        iniciarBancoExtraGia(2);
-        
-        // Reset silencioso após a transição
-        setTimeout(() => {
-            aranha.style.animation = "";
-            aranha.style.opacity = "0"; // Esconde para não ficar flutuando no menu depois
-            teia.style.animation = "";
-            btnContainer.style.pointerEvents = "auto";
-        }, 1000);
+        // Efeito visual no botão
+        alvo.style.transform = "scale(0.8)";
+        alvo.style.filter = "brightness(1.5) drop-shadow(0 0 15px #a855f7)";
 
-    }, 1500); // Delay de 1.3s para vermos a descida e o susto
-} 
+        // 🔥 GATILHO CORRETO: Inicia o Banco Extra 0 (Teia)
+        console.log("🕷️ Ataque confirmado! Abrindo Banco Extra da Teia...");
+        
+        if (typeof iniciarBancoExtraGia === 'function') {
+            iniciarBancoExtraGia(0); // Chama o banco 0 para a Teia
+        }
+
+        // 3. A VOLTA (Enquanto o banco carrega)
+        setTimeout(() => {
+            aranha.style.transition = "all 0.8s ease-in";
+            aranha.style.top = "-150px"; 
+            aranha.style.transform = "translateX(-50%) rotate(0deg)";
+            
+            setTimeout(() => {
+                aranha.style.transition = "none";
+                aranha.style.right = "10%";
+                aranha.style.left = "auto";
+                alvo.style.transform = "scale(1)";
+                alvo.style.filter = "drop-shadow(0 0 5px #a855f7)";
+            }, 100);
+        }, 1000); 
+    }, 1500);
+}
 
 
 function dueloAleatorio() {
