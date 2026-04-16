@@ -437,15 +437,17 @@ html, body {
 .drawer__panel--front { height: calc(var(--drawer-height) + 2px); width: calc(100% + 4px); top: 50%; left: 50%; transform: translate3d(-50%, -50%, 1px); background: var(--unit-four); }
 .drawer__panel--back { height: 80%; width: 100%; background: #fff; bottom: 0; transform: translate3d(0, 0, calc(var(--depth-chest) * -0.95)); display: flex; align-items: center; justify-content: center; color: #000; }
 
-/* --- MECÂNICA DE CLIQUE E PUXADOR (VERSÃO SINCRONIZADA) --- */
+/* --- MECÂNICA DE CLIQUE AMPLIADA --- */
 details {
   position: absolute;
   width: 100%;
   height: 100%;
   cursor: pointer;
-  z-index: 50; /* Prioridade total no clique */
+  z-index: 50; 
   transform-style: preserve-3d;
   transition: transform var(--transition);
+  /* Garante que o clique seja registrado em toda a área */
+  pointer-events: auto !important; 
 }
 
 summary {
@@ -458,11 +460,13 @@ summary {
   top: 0;
   left: 0;
   transform-style: preserve-3d;
+  /* Isso aqui é o segredo: ele traz a área de clique para a frente da madeira */
+  transform: translate3d(0, 0, 10px); 
 }
 
 summary::-webkit-details-marker { display: none; }
 
-/* O PUXADOR DOURADO VIP */
+/* O PUXADOR DOURADO VIP (Continua visual, mas não é o único alvo) */
 summary:after {
   content: '';
   position: absolute;
@@ -471,39 +475,37 @@ summary:after {
   width: 35px;
   height: 6px;
   background: #ffd700 !important;
-  /* Joga o puxador 8px para frente da madeira */
-  transform: translate3d(-50%, -50%, 8px) !important; 
+  /* Mantido a 8px para flutuar levemente sobre o clique do summary */
+  transform: translate3d(-50%, -50%, 2px) !important; 
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 10px rgba(255, 215, 0, 0.5);
   display: block !important;
   visibility: visible !important;
 }
 
-/* --- A MÁGICA: O PUXADOR VIAJA COM A GAVETA --- */
+/* --- A MÁGICA: O PUXADOR E A ÁREA DE CLIQUE VIAJAM COM A GAVETA --- */
 
-/* 1. Quando abrir, o puxador (summary) vai para frente 60px */
+/* Quando abrir, toda a área de clique (summary) acompanha o movimento */
 details[open] summary {
-  transform: translate3d(0, 0, 60px);
+  transform: translate3d(0, 0, 70px); /* 60px da gaveta + 10px de folga */
 }
 
-/* 2. A estrutura da gaveta (com emojis) também vai para frente 60px */
+/* A estrutura da gaveta (com emojis) vai para frente 60px */
 details[open] ~ .drawer__structure {
   transform: translate3d(0, 0, 60px) !important;
 }
 
-/* --- AJUSTES DE SEGURANÇA --- */
+/* --- AJUSTES DE SEGURANÇA MOBILE --- */
 
-/* Impede que a moldura frontal roube o clique do 'details' */
-.chest__panel--front {
+/* Garante que o painel frontal da gaveta não bloqueie o clique do summary */
+.drawer__panel--front {
   pointer-events: none !important;
+  z-index: 1;
 }
 
-/* Garante que os emojis apareçam no fundo da gaveta */
-.drawer__panel--back {
-  background: #fff;
-  color: #000;
-  font-weight: bold;
-  font-size: 16px;
+/* Mantém a moldura do armário sem interferir */
+.chest__panel--front {
+  pointer-events: none !important;
 }
 
 
@@ -1107,6 +1109,44 @@ style.innerHTML = `
     }
 `;
 
+// FAIL-STATUS MODO SOBREVIVENTE
+/*  REDUÇÃO DO CABEÇALHO 'VOCÊ FALHOU' */
+#fail-screen h1 {
+  font-size: 1.8em !important; /* Estava gigante, agora está sob controle */
+  text-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 0 0 5px rgba(255, 0, 0, 0.5); /* Mantém o brilho VIP */
+  margin-top: 10px !important; /* Sobe o título pro topo */
+  margin-bottom: 5px !important; /* Gruda no elemento de baixo */
+}
+
+/*  COMPACTAÇÃO DO CONTEÚDO (SOBE O BOOOM) */
+#fail-stats {
+  margin-top: 0 !important; /* Zera a margem superior */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start; /* Joga tudo pra cima em vez de centralizar */
+  gap: 3px; /* Espaçamento mínimo entre os textos */
+}
+
+/* Estilo do BOOOM e do resto (Sincronizado) */
+#fail-stats h1 { 
+  font-size: 1.4em !important; 
+  color: red !important; 
+  margin: 0 !important; /* Gruda */
+}
+
+#fail-stats p { 
+  font-size: 0.9em !important; 
+  margin: 0 !important; /* Gruda */
+  color: #fff;
+}
+
+#fail-stats div { 
+  font-size: 1.1em !important; 
+  margin-top: 10px !important; /* Dá um espacinho pro placar */
+  color: #fff;
+}
+
     </style>
 </head>
 <body> 
@@ -1356,7 +1396,7 @@ AGENTE DE COMBATE A ENDEMIAS
         🦂
     </div>
     
-    <span style="color: #fff; letter-spacing: 1px; font-size: 13px; pointer-events: none;">SIMULADOS ALEATÓRIOS</span>
+    <span style="color: #fff; letter-spacing: 1px; font-size: 13px; pointer-events: none;">DUELO DE TITÃS</span>
     
     <div id="duelo-aranha" style="font-size: 25px; filter: drop-shadow(0 0 8px #ff0000); transform: rotate(-90deg); z-index: 10001;">
         🕷️
@@ -1464,22 +1504,18 @@ AGENTE DE COMBATE A ENDEMIAS
         </div>
     </div>
 </div>
- <div class="footer-stats" style="display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 20px; padding: 0 10px; gap: 30px;">
-    
-  
-    <div style="display: flex; align-items: center; gap: 20px;">
-        <div style="text-align: center;">
-            <div style="font-size: 10px; color: #22c55e; font-weight: 900;">ACERTOS:</div>
-            <div id="painel-acertos" style="font-size: 20px; color: #fff; font-weight: 900;">0</div>
-        </div>
-        <div style="text-align: center;">
-            <div style="font-size: 10px; color: #ef4444; font-weight: 900;">ERROS:</div>
-            <div id="painel-erros" style="font-size: 20px; color: #fff; font-weight: 900;">0</div>
-        </div>
-    </div>
 
-   </div>
- 
+<div id="painel-gia-fixo" style="display: flex; justify-content: center; gap: 30px; margin-top: 20px; width: 100%;">
+    <div style="text-align: center;">
+        <div style="font-size: 10px; color: #22c55e; font-weight: 900;">ACERTOS:</div>
+        <div id="txt-acertos-gia" style="font-size: 20px; color: #fff; font-weight: 900;">0</div>
+    </div>
+    <div style="text-align: center;">
+        <div style="font-size: 10px; color: #ef4444; font-weight: 900;">ERROS:</div>
+        <div id="txt-erros-gia" style="font-size: 20px; color: #fff; font-weight: 900;">0</div>
+    </div>
+</div>
+
 </div>
 
 
@@ -1872,6 +1908,47 @@ window.origemQuiz = 'area-restrita';
     });
   }
 })();
+
+
+
+// Inicialização
+var giaAcertosSessao = parseInt(localStorage.getItem('gia_acertos')) || 0;
+var giaErrosSessao = parseInt(localStorage.getItem('gia_erros')) || 0;
+
+function atualizarPainelGia() {
+    console.log("Atualizando painel GIA...");
+    console.log("Acertos:", giaAcertosSessao, "Erros:", giaErrosSessao);
+
+    const pAcertos = document.getElementById('txt-acertos-gia');
+    const pErros = document.getElementById('txt-erros-gia');
+
+    console.log("Elemento acertos:", pAcertos);
+    console.log("Elemento erros:", pErros);
+
+    if (pAcertos) pAcertos.innerText = giaAcertosSessao;
+    if (pErros) pErros.innerText = giaErrosSessao;
+}
+
+
+
+function registrarRespostaGia(acertou) {
+    if (acertou) {
+        giaAcertosSessao++;
+    } else {
+        giaErrosSessao++;
+    }
+
+    // 🔥 Salva em chaves fixas
+    localStorage.setItem('gia_acertos', giaAcertosSessao);
+    localStorage.setItem('gia_erros', giaErrosSessao);
+
+    // Também salva o histórico completo
+    localStorage.setItem('gia_historico', JSON.stringify(historico));
+
+    atualizarPainelGia();
+}
+
+
 
 
 
@@ -19194,22 +19271,53 @@ function playAlarm() {
 }
 
 function go(id) {
-  // desativa todas as telas
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  // ativa só a tela pedida
-  document.getElementById(id).classList.add('active');
-  // atualiza estatísticas se os elementos existirem
-  const rec = document.getElementById('rec-analista-main');
-  if (rec) rec.innerText = localStorage.getItem('recAnalista') || 0;
-  const vit = document.getElementById('vit-25');
-  if (vit) vit.innerText = localStorage.getItem('vitoriasGerador') || 0;
-  const frac = document.getElementById('frac-25');
-  if (frac) frac.innerText = localStorage.getItem('derrotasGerador') || 0;
-// Dentro da sua function go(id) { ... }
-const giaA = document.getElementById('gia-painel-acertos');
-if (giaA) giaA.innerText = localStorage.getItem('gia_acertos') || 0;
-const giaE = document.getElementById('gia-painel-erros');
-if (giaE) giaE.innerText = localStorage.getItem('gia_erros') || 0;
+    // FAXINA DE SEGURANÇA (Adicionado para evitar vazamentos)
+    // Isso garante que modais de "ERROU!" sumam ao mudar de tela
+    if (typeof limparInterfaceGeral === 'function') {
+        limparInterfaceGeral();
+    } else {
+        // Fallback caso a função ainda não tenha sido declarada
+        const entulhos = document.querySelectorAll('[id*="modal"], [class*="modal"], [id*="overlay"], [class*="overlay"]');
+        entulhos.forEach(el => {
+            if (el.id !== 'painel-gia-fixo') el.remove();
+        });
+        const fb = document.getElementById('feedback');
+        if (fb) { fb.style.display = 'none'; fb.innerHTML = ''; }
+    }
+
+    // 1. Alternância de Telas
+    const screens = document.querySelectorAll('.screen');
+    const targetScreen = document.getElementById(id);
+    
+    if (targetScreen) {
+        screens.forEach(s => s.classList.remove('active'));
+        targetScreen.classList.add('active');
+    }
+
+    // 2. Estatísticas gerais
+    const rec = document.getElementById('rec-analista-main');
+    if (rec) rec.innerText = localStorage.getItem('recAnalista') || 0;
+
+    const vit = document.getElementById('vit-25');
+    if (vit) vit.innerText = localStorage.getItem('vitoriasGerador') || 0;
+
+    const frac = document.getElementById('frac-25');
+    if (frac) frac.innerText = localStorage.getItem('derrotasGerador') || 0;
+
+    // 3. Sincroniza variáveis com storage
+    if (typeof giaAcertosSessao !== 'undefined') {
+        giaAcertosSessao = parseInt(localStorage.getItem('gia_acertos')) || 0;
+        giaErrosSessao = parseInt(localStorage.getItem('gia_erros')) || 0;
+    }
+
+    // 4. ATUALIZAÇÃO REAL DO PAINEL
+    if (id === 'buraco-da-gia') { 
+        setTimeout(() => {
+            if (typeof atualizarPainelGia === 'function') {
+                atualizarPainelGia(); 
+            }
+        }, 50);
+    }
 }
 
 
@@ -19299,14 +19407,24 @@ function iniciarNovoRelogioVip() {
 function simuladoVipNovaEra() {
     console.log("Aura: Iniciando motor...");
     
+    // 1. LIMPEZA TOTAL DE ESTADO (Garante o início do zero)
+    if (typeof timerInterval !== 'undefined') clearInterval(timerInterval);
+    
+    // Esconde o botão de saída (caso o usuário venha do Buraco da Gia)
+    const btnExtra = document.getElementById('btnExtra');
+    if (btnExtra) btnExtra.style.setProperty("display", "none", "important");
+
     const salaVip = document.getElementById('area-apoiador');
     if (salaVip) salaVip.style.setProperty("display", "none", "important");
 
+    // 2. RESET DE VARIÁVEIS DE CONTROLE
     window.isVipMode = true;
+    window.vipBancoAtual = null; // Impede que a render() puxe histórico do localStorage
     quizType = 'simulado_vip';
     currentIndex = 0;
-    historico = {};
+    historico = {}; // Limpa o histórico da sessão atual
 
+    // 3. PREPARAÇÃO DO BANCO (30 questões aleatórias)
     const bancoGigante = [
         ...(typeof bancoOficial !== 'undefined' ? bancoOficial : []),
         ...(typeof bancoModulos !== 'undefined' ? bancoModulos : []),
@@ -19319,11 +19437,16 @@ function simuladoVipNovaEra() {
 
     currentQuestions = bancoGigante.sort(() => 0.5 - Math.random()).slice(0, 30);
 
+    // 4. INICIALIZAÇÃO DA INTERFACE
     go('quiz');
 
     setTimeout(() => {
-        render();
-        iniciarNovoRelogioVip(60); 
+        if (typeof render === 'function') render();
+        
+        // Inicia o cronômetro do simulado
+        if (typeof iniciarNovoRelogioVip === 'function') {
+            iniciarNovoRelogioVip(60); 
+        }
     }, 50);
 }
 
@@ -19543,7 +19666,7 @@ function iniciarBancoExtraGia(numero) {
             // 🔥 CONFIGURAÇÃO DO BOTÃO DE SAÍDA EXCLUSIVO GIA
             const btnExtra = document.getElementById('btnExtra');
             if (btnExtra) {
-                btnExtra.innerText = "🐸 SAIR 🐸";
+                btnExtra.innerText = "🐸SAIR";
                 Object.assign(btnExtra.style, {
                     display: "flex",
                     visibility: "visible",
@@ -19768,6 +19891,9 @@ function dueloAleatorio() {
     aranha.style.animation = "ataqueLentoAranha 1.2s forwards cubic-bezier(0.45, 0.05, 0.55, 0.95)";
 
     setTimeout(() => {
+        // LIMPEZA ANTES DE ENTRAR NO BURACO
+        limparInterfaceGeral(); 
+
         if (typeof buracoDaGia === "function") {
             buracoDaGia();
         }
@@ -19782,6 +19908,9 @@ function dueloAleatorio() {
         }, 1500);
     }, 1500); // Delay maior para acompanhar a lentidão dos bichos
 }
+
+
+
 
 function fugaDaLagartixa() {
     const el = document.getElementById('btn-portugues-gia');
@@ -19859,18 +19988,41 @@ function criarFormigasBotoes() {
 criarFormigasBotoes();
 
 
+
+function limparInterfaceGeral() {
+    const fb = document.getElementById('feedback');
+    if (fb) { fb.style.display = 'none'; fb.innerHTML = ''; }
+
+    const entulhos = document.querySelectorAll('[id*="modal"], [class*="modal"], [id*="overlay"], [class*="overlay"]');
+    entulhos.forEach(el => {
+        // 🔥 BLINDAGEM: Não remove o painel da GIA nem o efeito de sangue da bomba
+        if (el.id !== 'painel-gia-fixo' && el.id !== 'overlay-blood') { 
+            el.remove(); 
+        }
+    });
+
+    const cont = document.getElementById('container');
+    if (cont) {
+        // Remove as classes de flash, mas MANTÉM a 'tremendo' se estiver no modo 25
+        cont.classList.remove('acertou-flash', 'errou-flash');
+    }
+}
+
+
+
+
 function buracoDaGia() {
     console.log("Buraco da Gia: Motor iniciado.");
     
-    // 1. LIMPEZA E PREPARAÇÃO DO MOTOR
+    // 1. LIMPEZA E PREPARAÇÃO
     if (typeof timerInterval !== 'undefined') clearInterval(timerInterval);
+    limparInterfaceGeral(); // Faxina inicial preventiva
     
-    giaAcertosSessao = 0;
-    giaErrosSessao = 0;
-    localStorage.setItem('gia_acertos', 0);
-    localStorage.setItem('gia_erros', 0);
+    giaAcertosSessao = parseInt(localStorage.getItem('gia_acertos')) || 0;
+    giaErrosSessao = parseInt(localStorage.getItem('gia_erros')) || 0;
 
-    // 2. MONTAGEM DO BANCO
+    atualizarPainelGia();
+
     const bancoGigante = [
         ...(typeof bancoOficial !== 'undefined' ? bancoOficial : []),
         ...(typeof bancoModulos !== 'undefined' ? bancoModulos : []),
@@ -19886,10 +20038,10 @@ function buracoDaGia() {
     historico = {}; 
     currentQuestions = bancoGigante.sort(() => 0.5 - Math.random()).slice(0, 50);
 
-    // 3. CONFIGURAÇÃO DO BOTÃO DE SAÍDA
+    // 2. CONFIGURAÇÃO DO BOTÃO DE SAÍDA
     const btnExtra = document.getElementById('btnExtra');
     if (btnExtra) {
-        btnExtra.innerHTML = "🐸 SAIR 🐸";
+        btnExtra.innerHTML = "🐸SAIR";
         
         Object.assign(btnExtra.style, {
             display: "flex",
@@ -19901,7 +20053,7 @@ function buracoDaGia() {
             minWidth: "160px",
             height: "45px",
             background: "rgba(10,10,10,0.95)",
-            color: "AF804F",
+            color: "#AF804F",
             border: "2px solid #AF804F",
             borderRadius: "12px",
             fontWeight: "900",
@@ -19910,7 +20062,7 @@ function buracoDaGia() {
             textTransform: "uppercase",
             boxSizing: "border-box",
             zIndex: "9999",
-            pointerEvents: "auto" // Garante que o botão seja clicável
+            pointerEvents: "auto"
         });
 
         btnExtra.style.setProperty("display", "flex", "important");
@@ -19939,39 +20091,67 @@ function buracoDaGia() {
                 <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
                     <span style="font-size:0.95em; color:#ffffff; font-weight:400; line-height: 1.6;">
                         📊 <b style="color:#FFD700;">DESEMPENHO</b><br>
-                        BANCO: ${currentQuestions.length} QUESTÕES<br>
+                        TOTAL: ${currentQuestions.length} QUESTÕES<br>
                         RESPONDIDAS: ${totalRespondidas}<br>
                         ACERTOS: <span style="color:#39FF14">${totalAcertos}</span><br>
                         ERROS: <span style="color:red">${totalErros}</span>
                     </span>
                 </div>
-                <button id="btn-ok-relatorio" style="width: 100%; padding:15px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b; font-size: 1.1em;">BURACO DA GIA</button>
+                <button id="btn-ok-relatorio" style="width: 100%; padding:15px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b; font-size: 1.1em;">VOLTAR AO MENU</button>
             </div>`;
 
             document.body.appendChild(overlay);
+
             document.getElementById('btn-ok-relatorio').onclick = () => {
                 overlay.remove();
+                
+                // 🔥 APLICAÇÃO DA FAXINA ANTES DE VOLTAR
+                limparInterfaceGeral(); 
+                
+                btnExtra.style.setProperty("display", "none", "important");
+                btnExtra.style.visibility = "hidden";
+                
                 go('menu');
             };
         };
     }
 
-    // 4. INICIALIZAÇÃO DA INTERFACE (O que faltava para o quiz começar!)
+    // 3. INICIALIZAÇÃO DA INTERFACE
     go('quiz');
 
     setTimeout(() => {
+        const bNext = document.getElementById('btnNext');
+        const bPrev = document.getElementById('btnPrev');
+        if (bNext) bNext.style.setProperty("display", "flex", "important");
+        if (bPrev) bPrev.style.setProperty("display", "flex", "important");
+
         if (typeof render === 'function') render();
+
+        atualizarPainelGia();
+
         if (typeof startTimer === 'function') startTimer();
         
         const vContainer = document.getElementById('vidas-container');
         if (vContainer) {
             vContainer.innerHTML = '<span style="font-size:1em; color: yellow; font-weight:bold;">BURACO DA GIA</span>';
         }
+
     }, 50);
 }
 
 
 
+
+const renderOriginal = render;
+
+render = function() {
+    renderOriginal();
+
+    // 🔥 FORÇA atualização SEMPRE após render
+    if (typeof atualizarPainelGia === 'function') {
+        atualizarPainelGia();
+    }
+};
 
 
 function sairSimuladoGia() {
@@ -20022,61 +20202,43 @@ function sairSimuladoGia() {
 
 
 
-function atualizarPainelGia() {
-    const pAcertos = document.getElementById('gia-painel-acertos');
-    const pErros = document.getElementById('gia-painel-erros');
-
-    // Se o elemento existe, ele injeta o valor que está na memória
-    if (pAcertos) pAcertos.innerText = giaAcertosSessao;
-    if (pErros) pErros.innerText = giaErrosSessao;
-}
-
 function checkGia(answer, btn) {
-console.log("GIA FOI CHAMADA");
+    if (!currentQuestions || !currentQuestions[currentIndex]) return;
+
     const q = currentQuestions[currentIndex];
     const acertou = (answer === q.correct);
+
+    // 1. Grava no histórico (isso é o que o botão 'Próxima' olha)
+    historico[currentIndex] = answer;
+
+    // 🔥 AJUSTE CIRÚRGICO: Atualiza a tela para mostrar cores e o botão PRÓXIMA
+    if (typeof render === 'function') render(); 
+
+    registrarRespostaGia(acertou);
+
+    const opts = document.getElementById('opts');
+    if (opts) opts.style.pointerEvents = 'none';
+
     const cont = document.getElementById('container');
+    if (btn) btn.classList.add(acertou ? 'correct' : 'wrong');
+    if (cont) cont.classList.add(acertou ? 'acertou-flash' : 'errou-flash');
 
-    // Bloqueia cliques repetidos
-    document.getElementById('opts').style.pointerEvents = 'none';
+    setTimeout(() => { 
+        if (cont) cont.classList.remove('acertou-flash', 'errou-flash');
 
-    if (acertou) {
-        // --- LÓGICA DE ACERTO (IGUAL AO SOBREVIVENTE) ---
-        giaAcertosSessao++;
-        localStorage.setItem('gia_acertos', giaAcertosSessao);
-        
-        const pAcertos = document.getElementById('gia-painel-acertos');
-        if (pAcertos) pAcertos.innerText = giaAcertosSessao;
-
-        btn.classList.add('correct');
-        cont.classList.add('acertou-flash');
-        
-        setTimeout(() => { 
-            cont.classList.remove('acertou-flash'); 
-            next(); 
-        }, 700);
-
-    } else {
-        // --- LÓGICA DE ERRO (IGUAL AO SOBREVIVENTE) ---
-        giaErrosSessao++;
-        localStorage.setItem('gia_erros', giaErrosSessao);
-
-        const pErros = document.getElementById('gia-painel-erros');
-        if (pErros) pErros.innerText = giaErrosSessao;
-
-        btn.classList.add('wrong');
-        cont.classList.add('errou-flash');
-
-        setTimeout(() => {
-            cont.classList.remove('errou-flash');
-            if (q.j) {
-                exibirModalJustificativa(q.j);
-            } else {
-                next();
-            }
-        }, 700);
-    }
+        if (!acertou && q.j && typeof exibirModalJustificativa === 'function') {
+            exibirModalJustificativa(q.j);
+        } else if (typeof next === 'function') {
+            next();
+        }
+    }, 700);
 }
+
+
+
+
+
+
 
 
 function showQuestion() {
@@ -20131,154 +20293,120 @@ document.getElementById('btn-ok-relatorio-gia').onclick = () => {
    🚀 CHECK (O Motor que decide o que acontece)
 ===================================================== */
 function check(answer, btn) {
+    if (historico[currentIndex] !== undefined) return; 
+
     const q = currentQuestions[currentIndex];
     const acertou = (q.options && q.options.length > 0) ? (answer === q.correct) : (answer === q.v);
     const cont = document.getElementById('container');
 
- // 1. CHAMA O REGISTRO (Aqui ele já soma acertosSessao ou erros uma vez)
-if (quizType !== 25) registrarResposta(acertou, answer);
-historico[currentIndex] = answer;
-document.getElementById('opts').style.pointerEvents = 'none';
+    if (quizType !== 25) registrarResposta(acertou, answer);
+    historico[currentIndex] = answer;
+    document.getElementById('opts').style.pointerEvents = 'none';
 
-// --- REVELAÇÃO DE CORES (MAPA DE CALOR) SEM DIVISÃO EM BLOCOS ---
-if (q.options && q.options.length > 0) {
-    const todosOsBotoes = document.querySelectorAll('.opt');
-    todosOsBotoes.forEach((b, i) => {
-        let textoOriginal = q.options[i];
-        let corP_Verde = "#008000";
-        let corP_Vermelha = "#ff4141";
-        
-        // 1. FORÇAMOS O BOTÃO A TRATAR TUDO COMO TEXTO CORRIDO (INLINE)
-        b.style.display = "block"; 
-        b.style.textAlign = "left";
-        b.style.lineHeight = "1.4"; // Melhora a leitura em frases longas
-
-        // 2. O REPLACE AGORA USA SPAN INLINE (Isso evita a separação em colunas/blocos)
-        let colorido = textoOriginal
-            .replace(/#(.*?)#/g, `<span style="color:${corP_Vermelha}; font-weight:900; display:inline; margin:0; padding:0;">$1</span>`)
-            .replace(/\*(.*?)\*/g, `<span style="color:${corP_Verde}; font-weight:900; display:inline; margin:0; padding:0;">$1</span>`);
-        
-        b.innerHTML = colorido;
-
-        if (i === answer) {
-            b.style.setProperty('color', '#ffffff', 'important');
-            // Remove a cor das spans apenas no botão clicado para não chocar com o fundo (verde ou vermelho)
-            const spansInternas = b.querySelectorAll('span');
-            spansInternas.forEach(s => s.style.color = 'inherit');
-        }
-if (window.isVipMode && window.vipBancoAtual) {
-    const id = 'vip_banco_' + window.vipBancoAtual;
-    localStorage.setItem(id + '_historico', JSON.stringify(historico));
-    localStorage.setItem(id + '_index', currentIndex);
-}
-    });
-}
-
-// MODO SOBREVIVENTE - NÃO TOCAR - NÃO OLHAR - NÃO RESPIRAR PERTO
-if (acertou) {
-    acertosSessao++; 
-    
-    // --- LÓGICA DA SENHA DA AUDIOTECA ---
-    if (quizType === 25) {
-        acertosContadorSenha++;
-
-        if (acertosContadorSenha === 25) {
-        acertosContadorSenha = 0;            
-        gerarSenhaTemporaria(); 
-        finalizar(); 
-        }
-    }
-    // ------------------------------------
-
-    btn.classList.add('correct');
-    cont.classList.add('acertou-flash');
-    setTimeout(() => { 
-        cont.classList.remove('acertou-flash'); 
-        next(); 
-    }, 700);
-
-} else {
-    // SE ERROU NA BOMBA, O CONTADOR DE SENHA VOLTA PARA ZERO
-    if (quizType === 25) {
-       acertosContadorSenha = 0;
-    }
-    btn.classList.add('wrong');
-    cont.classList.add('errou-flash');
-    setTimeout(() => cont.classList.remove('errou-flash'), 700);
- 
-    if (quizType === 25) {
-        if (typeof timerInterval !== 'undefined') clearInterval(timerInterval);
-        
-        let d = (parseInt(localStorage.getItem('derrotasGerador')) || 0) + 1; 
-        localStorage.setItem('derrotasGerador', d);
-        
-        const pFrac = document.getElementById('frac-25');
-        if (pFrac) pFrac.innerText = d;
-
-        cont.classList.add('tremendo');
-        const ob = document.getElementById('overlay-blood');
-
-        if (ob) {
-            ob.className = 'blood-alert-overlay';
-            ob.innerHTML = `
-                <span style="font-size:2.5em; letter-spacing:5px;">💣SISTEMA💥 <br>COMPROMETIDO💥💥</span><br>
-                <span style="font-size:2em; font-weight:900;">💥 AUTODESTRUIÇÃO...💥</span>
-            `;
-        }
-
-        let bipes = 0;
-        const alarme = setInterval(() => {
-            if (typeof playAlarm === 'function') playAlarm();
-            bipes++;
-            if (bipes >= 8) clearInterval(alarme);
-        }, 400);
-
-       setTimeout(() => { 
-            cont.classList.remove('tremendo');
-            if (ob) { 
-                ob.className = ''; 
-                ob.style.display = 'none'; 
-            }
-
-            const failStats = document.getElementById('fail-stats');
-            if (failStats) {
-                failStats.innerHTML = `A BOMBA EXPLODIU NA SUA CARA!<br>ACERTOS: ${acertosSessao}`;
-            }
-            const btnF = document.getElementById('btn-tentar-novamente');
-
-            if (btnF) {
-                btnF.onclick = function() { go('area-restrita'); };
-                btnF.innerText = "TENTAR NOVAMENTE";
-            }
-            go('fail-screen');
-        }, 5000);
-
-} else {
-        erros++; 
-        if (typeof atualizarVidas === 'function') atualizarVidas(); 
-        
-        const feedbackEl = document.getElementById('feedback');
-        if (feedbackEl) {
-            // 1. Reset completo do elemento
-            feedbackEl.innerHTML = ""; 
-            feedbackEl.style.display = 'block';
+    if (q.options && q.options.length > 0) {
+        const todosOsBotoes = document.querySelectorAll('.opt');
+        todosOsBotoes.forEach((b, i) => {
+            let textoOriginal = q.options[i];
+            let corP_Verde = "#008000";
+            let corP_Vermelha = "#ff4141";
             
-            // 🔥 força reflow + limpa qualquer lixo visual anterior
-feedbackEl.style.display = 'none';
-feedbackEl.offsetHeight; // força o browser recalcular layout
+            b.style.display = "block"; 
+            b.style.textAlign = "left";
+            b.style.lineHeight = "1.4";
 
-feedbackEl.style.display = 'block';
-feedbackEl.innerHTML = q.j;
+            let colorido = textoOriginal
+                .replace(/#(.*?)#/g, `<span style="color:${corP_Vermelha}; font-weight:900; display:inline; margin:0; padding:0;">$1</span>`)
+                .replace(/\*(.*?)\*/g, `<span style="color:${corP_Verde}; font-weight:900; display:inline; margin:0; padding:0;">$1</span>`);
             
-            // 3. Posicionamento
-            feedbackEl.scrollTop = 0;
-        }
+            b.innerHTML = colorido;
 
+            if (i === answer) {
+                b.style.setProperty('color', '#ffffff', 'important');
+                const spansInternas = b.querySelectorAll('span');
+                spansInternas.forEach(s => s.style.color = 'inherit');
+            }
+
+            // 🔥 SALVAMENTO UNIVERSAL (Pós-GIA)
+            const saveKey = (window.isVipMode && window.vipBancoAtual) ? 
+                            `vip_banco_${window.vipBancoAtual}` : `progresso_${quizType}`;
+            localStorage.setItem(saveKey + '_historico', JSON.stringify(historico));
+            localStorage.setItem(saveKey + '_index', currentIndex);
+        });
+    }
+
+    if (acertou) {
+        registrarResposta(true, answer);
+        if (quizType === 25) {
+            acertosContadorSenha++;
+            if (acertosContadorSenha === 25) {
+                acertosContadorSenha = 0;            
+                if (typeof gerarSenhaTemporaria === 'function') gerarSenhaTemporaria(); 
+                finalizar(); 
+                return; 
+            }
+        }
+        btn.classList.add('correct');
+        if (cont) cont.classList.add('acertou-flash');
+
+        setTimeout(() => { 
+            if (cont) cont.classList.remove('acertou-flash'); 
+            currentIndex++; 
+            // Somente limpa o próximo no histórico se ele for novo
+            if (historico[currentIndex] === undefined && historico) delete historico[currentIndex]; 
+            if (typeof render === 'function') render();
+            else if (typeof next === 'function') next();
+        }, 700);
+
+    } else {
         const btnNext = document.getElementById('btnNext');
-        if (btnNext) btnNext.classList.add('visible');
-    }
-}
+        if (btnNext && quizType === 25) btnNext.classList.remove('visible');
+        if (quizType === 25) acertosContadorSenha = 0;
+        btn.classList.add('wrong');
+        cont.classList.add('errou-flash');
+        setTimeout(() => cont.classList.remove('errou-flash'), 700);
 
+        if (quizType === 25) {
+            if (typeof timerInterval !== 'undefined') clearInterval(timerInterval);
+            let d = (parseInt(localStorage.getItem('derrotasGerador')) || 0) + 1; 
+            localStorage.setItem('derrotasGerador', d);
+            const pFrac = document.getElementById('frac-25');
+            if (pFrac) pFrac.innerText = d;
+            cont.classList.add('tremendo');
+            const ob = document.getElementById('overlay-blood');
+            if (ob) {
+                ob.style.display = 'flex';
+                ob.className = 'blood-alert-overlay';
+                ob.innerHTML = `<div style="text-align:center; animation: wave 0.5s infinite;"><span style="font-size:2.5em; letter-spacing:5px;">💣SISTEMA💥 <br>COMPROMETIDO💥💥</span><br><span style="font-size:2em; font-weight:900;">💥 AUTODESTRUIÇÃO...💥</span></div>`;
+            }
+            let bipes = 0;
+            const alarme = setInterval(() => {
+                if (typeof playAlarm === 'function') playAlarm();
+                bipes++;
+                if (bipes >= 8) clearInterval(alarme);
+            }, 400);
+            setTimeout(() => { 
+                cont.classList.remove('tremendo');
+                if (ob) { ob.className = ''; ob.style.display = 'none'; }
+                const failStats = document.getElementById('fail-stats');
+                if (failStats) failStats.innerHTML = `<h1 style="color:red; font-size:1.4em; margin:0;">💥 BOOOOM! 💥</h1><p style="font-size:0.9em; margin:0;">A BOMBA EXPLODIU NA SUA CARA!</p><div style="margin-top:10px;">ACERTOS: <b>${acertosSessao}</b></div>`;
+                const btnF = document.getElementById('btn-tentar-novamente');
+                if (btnF) { btnF.onclick = function() { go('area-restrita'); }; btnF.innerText = "TENTAR NOVAMENTE"; }
+                go('fail-screen');
+            }, 5000);
+        } else {
+            registrarResposta(false, answer);
+            erros++; 
+            if (typeof atualizarVidas === 'function') atualizarVidas(); 
+            const feedbackEl = document.getElementById('feedback');
+            if (feedbackEl) { feedbackEl.style.display = 'block'; feedbackEl.innerHTML = q.j; }
+            if (btnNext) {
+                btnNext.classList.add('visible');
+                btnNext.style.setProperty("display", "flex", "important");
+                btnNext.style.setProperty("opacity", "1", "important");
+                btnNext.style.setProperty("pointer-events", "auto", "important");
+            }
+        }
+    }
 }
 
 
@@ -21342,21 +21470,23 @@ function aplicarNomeVip() {
 // MOTOR CENTRAL
 // ==========================================
 function startQuiz(modo) {
- 
-
   // 1. BLINDAGEM DE ESTADO
   window.isVipMode = (modo === 'vip' || modo === 'simulado_vip');
   quizType = window.isVipMode ? 'simulado_vip' : modo;
 
-  // 🔥 RECUPERAÇÃO DE PROGRESSO
-  const saveKey = `progresso_${quizType}`;
-  const salvo = localStorage.getItem(saveKey);
-  currentIndex = (window.isVipMode || modo === 25) ? 0 : (salvo ? parseInt(salvo) : 0);
+  // 🔥 RECUPERAÇÃO DE PROGRESSO UNIVERSAL (GIA + NORMAL)
+  const saveKey = (window.isVipMode && window.vipBancoAtual) ? 
+                  `vip_banco_${window.vipBancoAtual}` : `progresso_${quizType}`;
+  
+  const salvoH = localStorage.getItem(saveKey + '_historico');
+  const salvoI = localStorage.getItem(saveKey + '_index');
+
+  currentIndex = (modo === 25) ? 0 : (salvoI ? parseInt(salvoI) : 0);
+  historico = (modo === 25) ? {} : (salvoH ? JSON.parse(salvoH) : {});
 
   erros = 0;
   acertosSessao = 0;
   acertosContadorSenha = 0;
-  historico = {};
 
   window.limiteErrosPermitidos = (modo === 'vip' || modo === 'simulado_vip' || modo === 25) ? 5 : 3;
 
@@ -21439,13 +21569,8 @@ function startQuiz(modo) {
     return;
   }
 
-/* ============================================================
-    🚀 CONFIGURAÇÃO DO BOTÃO EXTRA (LÓGICA DE VISIBILIDADE)
-============================================================ */
-if (btnExtra && modo !== 25) {
-    btnExtra.innerHTML = (modo === 'total') ? "🐸SAIR🐸" : "DESEMPENHO";
-    
-    // Garantimos que ele reapareça sempre que o quiz iniciar
+  if (btnExtra && modo !== 25) {
+    btnExtra.innerHTML = (modo === 'total') ? "🐸SAIR" : "DESEMPENHO";
     Object.assign(btnExtra.style, {
         display: "flex",
         visibility: "visible",
@@ -21463,24 +21588,17 @@ if (btnExtra && modo !== 25) {
 
     btnExtra.onclick = (e) => {
         if (e) e.preventDefault();
-        
-        // 🛑 EM VEZ DE REMOVER, APENAS OCULTAMOS
-        // Assim ele não polui o overlay e pode ser reativado depois
         btnExtra.style.display = "none"; 
-        
         let totalAcertos = 0;
         let totalRespondidas = Object.keys(historico).length;
-        
         Object.keys(historico).forEach(i => {
             if (currentQuestions[i] && historico[i] === currentQuestions[i].correct) totalAcertos++;
         });
-
         let totalErros = totalRespondidas - totalAcertos;
         let foiBem = totalRespondidas > 0 ? (totalAcertos >= totalRespondidas / 2) : true;
 
         const overlay = document.createElement("div");
         overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:flex; align-items:center; justify-content:center; z-index:999999999;";
-
         overlay.innerHTML = `
         <div style="background:#000; border:2px solid ${foiBem ? '#39FF14' : 'red'}; padding:25px; border-radius:15px; text-align:center; color:${foiBem ? '#39FF14' : '#ff4444'}; font-weight:900; box-shadow:0 0 30px ${foiBem ? '#39FF14' : 'red'}; width: 340px; max-width: 95%;">
             <span style="font-size:1.2em; display: block; margin-bottom: 15px;">⌚PAUSA NOS ESTUDOS⌚</span>
@@ -21495,23 +21613,14 @@ if (btnExtra && modo !== 25) {
             </div>
             <button id="btn-ok-relatorio" style="width: 100%; padding:15px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b;">ÁREA DE ESTUDOS</button>
         </div>`;
-
         document.body.appendChild(overlay);
-
         document.getElementById('btn-ok-relatorio').onclick = () => {
             overlay.remove();
-            
-            // Se o usuário sair para a área restrita, o botão não precisa voltar
-            // pois o startQuiz será chamado novamente quando ele entrar em outro banco.
-            if (window.origemQuiz === 'area-restrita') {
-                go('area-restrita');
-            } else {
-                // Caso ele apenas feche o overlay e continue no mesmo banco
-                btnExtra.style.display = "flex";
-            }
+            if (window.origemQuiz === 'area-restrita') go('area-restrita');
+            else btnExtra.style.display = "flex";
         };
     };
-}
+  }
   go('quiz');
   setTimeout(() => {
       if (typeof render === 'function') render();
@@ -22042,14 +22151,15 @@ function resetVidasDisplay() {
 
 
 function render() {
-    // 🔥 AJUSTE CIRÚRGICO: Sincroniza o histórico do banco VIP atual antes de renderizar
+    // 1. Sincroniza o histórico VIP
     if (window.isVipMode && window.vipBancoAtual) {
         const id = 'vip_banco_' + window.vipBancoAtual;
         const h = localStorage.getItem(id + '_historico');
         if (h) historico = JSON.parse(h);
     }
 
-    if (window.isVipMode && quizType !== 'modulo4_vip') {
+    // 🔥 Proteção para não matar o modo GIA
+    if (window.isVipMode && quizType !== 'modulo4_vip' && quizType !== 'gia') {
         quizType = 'simulado_vip';
     }
 
@@ -22068,67 +22178,87 @@ function render() {
     document.getElementById('qh').innerText = `Questão ${currentIndex + 1}/${currentQuestions.length}`;
     document.getElementById('qt').innerHTML = q.q; 
 
-    const optsArea = document.getElementById('opts');
-    const fb = document.getElementById('feedback'); 
-    
-    optsArea.innerHTML = '';
-    optsArea.style.pointerEvents = 'auto'; // Reset padrão
-    if (fb) {
-        fb.style.display = 'none';
-        fb.innerHTML = ''; // Limpa para evitar lixo visual
-    }
+    // === DENTRO DA FUNCTION RENDER() - BLOQUEIO DE VOLTA ===
+const optsArea = document.getElementById('opts');
+optsArea.innerHTML = '';
+// Reset padrão: libera cliques, a menos que o histórico diga o contrário
+optsArea.style.pointerEvents = 'auto'; 
 
-    // === LÓGICA HÍBRIDA (ASSERTIVAS A, B, C...) ===
-    if (q.options && q.options.length > 0) {
-        q.options.forEach((txt, i) => {
-            const btn = document.createElement('div');
-            btn.className = 'opt';
+if (q.options && q.options.length > 0) {
+    q.options.forEach((txt, i) => {
+        const btnOpt = document.createElement('div');
+        btnOpt.className = 'opt';
 
-            if (historico[currentIndex] !== undefined) {
- 
-        // 🔥 MODO REVISÃO: Agora pinta de vermelho MESMO se tiver HTML dentro
-            btn.innerHTML = txt
-            .replace(/#([\s\S]*?)#/g, '<span style="color:#ff4141; font-weight:bold;">$1</span>')
-            .replace(/\*([\s\S]*?)\*/g, '<span style="color:#39FF14; font-weight:bold;">$1</span>');
+        // 🔥 VALIDAÇÃO REAL: Existe resposta salva para esta questão?
+        const jaRespondida = (historico[currentIndex] !== undefined);
 
+        if (jaRespondida) {
+            // 1. MODO LEITURA (Voltar): Restaura cores e trava tudo
+            btnOpt.innerHTML = txt
+                .replace(/#([\s\S]*?)#/g, '<span style="color:#ff4141; font-weight:bold;">$1</span>')
+                .replace(/\*([\s\S]*?)\*/g, '<span style="color:#39FF14; font-weight:bold;">$1</span>');
 
-                // Marcação visual de acerto/erro
-                if (i === historico[currentIndex]) btn.classList.add(i === q.correct ? 'correct' : 'wrong');
-                if (i === q.correct) btn.classList.add('correct');
-                
-                fb.innerHTML = q.j; // Aceita <br> e estilos na justificativa
-                fb.style.display = 'block';
-                optsArea.style.pointerEvents = 'none';
-            } else {
-                // ⚪ MODO PROVA: Limpa os símbolos secretos (# e *) mas mantém o HTML (itálicos/negritos)
-                btn.innerHTML = txt.replace(/[#*]/g, ""); 
-                btn.onclick = () => check(i, btn);
-            }
-            optsArea.appendChild(btn);
-        });
-    }
-    // === LÓGICA V/F ===
-    else {
-        [true, false].forEach(val => {
-            const btn = document.createElement('div'); 
-            btn.className = 'opt'; 
-            btn.innerText = val ? "VERDADEIRO" : "FALSO";
+            // Pinta quem foi clicado e quem é a certa
+            if (i === historico[currentIndex]) btnOpt.classList.add(i === q.correct ? 'correct' : 'wrong');
+            if (i === q.correct) btnOpt.classList.add('correct');
             
-            if (historico[currentIndex] !== undefined) {
-                if (val === historico[currentIndex]) btn.classList.add(val === q.v ? 'correct' : 'wrong');
-                fb.innerHTML = q.j; 
-                fb.style.display = 'block';
-                optsArea.style.pointerEvents = 'none';
-            } else {
-                btn.onclick = () => check(val, btn);
-            }
-            optsArea.appendChild(btn);
-        });
+            // Trava o clique individual e o da área toda
+            btnOpt.style.pointerEvents = 'none';
+            optsArea.style.pointerEvents = 'none';
+        } else {
+            // 2. MODO INTERATIVO (Nova): Limpa o texto e habilita clique
+            btnOpt.innerHTML = txt.replace(/[#*]/g, ""); 
+            btnOpt.onclick = () => {
+                if (quizType === 'gia') checkGia(i, btnOpt);
+                else check(i, btnOpt);
+            };
+        }
+        optsArea.appendChild(btnOpt);
+    });
+}
+
+// === DENTRO DA FUNCTION RENDER() - MODO LIMPEZA HARDCORE ===
+const bPrev = document.getElementById('btnPrev');
+const bNext = document.getElementById('btnNext');
+
+// 1. REGRA SOBREVIVENTE: BOTÕES PROIBIDOS
+if (quizType === 25) {
+    if (bPrev) bPrev.style.setProperty("display", "none", "important");
+    if (bNext) bNext.style.setProperty("display", "none", "important");
+} 
+// 2. REGRA PARA OS OUTROS MODOS (SIMULADOS/BANCOS)
+else {
+    // Lógica do Voltar
+    if (bPrev) {
+        bPrev.style.setProperty("display", "flex", "important");
+        if (currentIndex > 0) {
+            bPrev.classList.add('visible');
+            bPrev.style.opacity = "1";
+            bPrev.style.pointerEvents = "auto";
+            bPrev.onclick = () => { currentIndex--; render(); };
+        } else {
+            bPrev.classList.remove('visible');
+            bPrev.style.opacity = "0";
+        }
     }
 
-    document.getElementById('btnPrev').classList.toggle('visible', currentIndex > 0);
-    document.getElementById('btnNext').classList.toggle('visible', historico[currentIndex] !== undefined);
+    // Lógica do Próxima
+    if (bNext) {
+        bNext.style.setProperty("display", "flex", "important");
+        if (historico[currentIndex] !== undefined) {
+            bNext.classList.add('visible');
+            bNext.style.opacity = "1";
+            bNext.style.pointerEvents = "auto";
+            bNext.onclick = () => { if (typeof next === 'function') next(); else { currentIndex++; render(); } };
+        } else {
+            bNext.classList.remove('visible');
+            bNext.style.opacity = "0";
+            bNext.style.pointerEvents = "none";
+        }
+    }
 }
+}
+
 
 
 function voltarMenuPosVip() {
@@ -24616,30 +24746,43 @@ atualizarNevoaSalaSecreta();
 
 
 function go(tela) {
+    limparInterfaceGeral();
+
+    // Se estiver saindo do quiz ou entrando em um novo, limpa o pointerEvents
+    const optsArea = document.getElementById('opts');
+    if (optsArea) optsArea.style.pointerEvents = 'auto';
+
 
     if (tela === 'area-restrita') {
-        aplicarEfeitoCortina();
-
-        // 🔥 GARANTE QUE O PAINEL SEMPRE SINCRONIZE
+        if (typeof aplicarEfeitoCortina === 'function') aplicarEfeitoCortina();
         setTimeout(() => {
-            atualizarPainelSobrevivente();
-            setTimeout(iniciarRelogioVisitante, 100);
+            if (typeof atualizarPainelSobrevivente === 'function') atualizarPainelSobrevivente();
+            setTimeout(() => { if (typeof iniciarRelogioVisitante === 'function') iniciarRelogioVisitante(); }, 100);
         }, 50);
     }
 
+    // 2. Troca de Tela
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const target = document.getElementById(tela);
     if (target) target.classList.add('active');
 
-    // 🔥 AJUSTE CIRÚRGICO DA GIA (NÃO INTERFERE EM NADA)
-    if (tela === 'quiz') {
-        setTimeout(() => {
-            if (typeof atualizarPainelGia === 'function') {
-                atualizarPainelGia();
-            }
-        }, 50);
+    // 3. Ajuste da GIA — garante atualização do painel
+    if (tela === 'quiz' || tela === 'buraco-da-gia') {
+        requestAnimationFrame(() => {
+            atualizarPainelGia();
+        });
     }
+
+    // 4. Outras estatísticas (mantidas)
+    const rec = document.getElementById('rec-analista-main');
+    if (rec) rec.innerText = localStorage.getItem('recAnalista') || 0;
+    const vit = document.getElementById('vit-25');
+    if (vit) vit.innerText = localStorage.getItem('vitoriasGerador') || 0;
+    const frac = document.getElementById('frac-25');
+    if (frac) frac.innerText = localStorage.getItem('derrotasGerador') || 0;
 }
+
+
 
 
 
