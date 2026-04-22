@@ -1175,47 +1175,59 @@ style.innerHTML = `
   color: #fff;
 }
 
-// BOAS VINDAS
-body {
-  margin:0;
-  background:#000;
-  font-family:Arial;
+
+// mene, mene, tequel, parsin
+#overlay-trapaca {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    animation: glitchBg 0.3s infinite;
 }
 
-.tour {
-  position:relative;
-  width:100%;
-  height:100vh;
+#overlay-trapaca .box {
+    color: red;
+    font-weight: 900;
 }
 
-.bg {
-  width:100%;
-  height:100%;
-  object-fit:cover;
+.titulo {
+    font-size: 2rem;
+    margin-bottom: 10px;
 }
 
-.highlight {
-  position:absolute;
-  border:3px solid #39FF14;
-  box-shadow:0 0 15px #39FF14;
-  border-radius:10px;
+.sub {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: white;
 }
 
-.cursor {
-  position:absolute;
-  width:40px;
-  height:40px;
-  background:url('cursor.png') no-repeat center/contain;
+.verso {
+    font-size: 1.5rem;
+    margin: 10px 0;
 }
 
-.texto {
-  position:absolute;
-  bottom:10%;
-  left:5%;
-  color:#39FF14;
-  font-weight:900;
-  font-size:1.5em;
-  max-width:60%;
+.verso2 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.contador {
+    font-size: 3rem;
+    color: #ff0000;
+    text-shadow: 0 0 15px red;
+}
+
+@keyframes glitchBg {
+    0% { background: black; }
+    50% { background: #1a0000; }
+    100% { background: black; }
 }
 
 
@@ -1244,7 +1256,7 @@ body {
   <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; border: 2px dashed var(--yellow); min-width: 280px;">
       <p style="color:var(--limon); margin:0; font-weight:800; font-size: 0.9em;">CHAVE DE ACESSO EXCLUSIVA:</p>
       <div class="senha-gerada" style="font-size: 4em; font-weight: 900; color: #fff; letter-spacing: 8px; margin: 10px 0;">00000</div>
-      <p style="color:#ccc; font-size:0.75em; margin:0;">Válida por 3 horas. Anote-a antes de sair!</p>
+      <p style="color:#ccc; font-size:0.75em; margin:0;">Válida por 2 horas. Anote-a antes de sair!</p>
   </div>
 
   <button class="menu-btn" style="margin-top: 30px; background: var(--success); color: #000; font-weight: 900;" onclick="fecharSlideVitoria()">
@@ -1367,20 +1379,6 @@ AGENTE DE COMBATE A ENDEMIAS
    
     <span id="scanner-btn" onclick="iniciarScanner()" style="cursor:pointer; transition: all 0.3s ease; filter: drop-shadow(0 0 5px #fff); display: inline-block;">📱</span>
 </h2>
--->
-
-<!--
-// TOUR DE 1º ACESSO
-<div class="tour">
-  <img src="SEU_PRINT_REAL.png" class="bg">
-
-  <div class="highlight" id="hl"></div>
-  <div class="cursor" id="cursor"></div>
-
-  <div class="texto" id="texto"></div>
-
-  <button onclick="proximo()">PRÓXIMO</button>
-</div>
 -->
 
     <button class="menu-btn" onclick="entrarComoVisitante2()">👥 ENTRE COMO VISITANTE 👥</button> 
@@ -2044,41 +2042,8 @@ function registrarRespostaGia(acertou) {
 }
 
 
-/*
-// TOUR DE 1º ACESSO
-let etapa = 0;
 
-const steps = [
-  {
-    texto: "Aqui começa o treinamento",
-    highlight: {top: "60%", left: "20%", w: "200px", h: "80px"},
-    cursor: {top: "70%", left: "25%"}
-  },
-  {
-    texto: "Clique aqui para iniciar",
-    highlight: {top: "50%", left: "50%", w: "180px", h: "70px"},
-    cursor: {top: "55%", left: "55%"}
-  }
-];
 
-function proximo() {
-  const s = steps[etapa];
-
-  document.getElementById('texto').innerText = s.texto;
-
-  const hl = document.getElementById('hl');
-  hl.style.top = s.highlight.top;
-  hl.style.left = s.highlight.left;
-  hl.style.width = s.highlight.w;
-  hl.style.height = s.highlight.h;
-
-  const c = document.getElementById('cursor');
-  c.style.top = s.cursor.top;
-  c.style.left = s.cursor.left;
-
-  etapa++;
-}
-*/
 
 /*
 function iniciarScanner() {
@@ -3196,10 +3161,10 @@ const bancoVip5 = [
 {
   q: "👻2. Conforme as noções básicas sobre zoonoses e as ações de vigilância, prevenção e controle de doenças de relevância para a saúde pública, assinale corretamente:",
   options: [
-    "a) *As zoonoses monitoradas por programas nacionais de vigilância e controle do Ministério da Saúde incluem doenças como peste, leptospirose, febre maculosa brasileira, hantavirose, doença de Chagas, febre amarela, chikungunya e febre do Nilo Ocidental*.",
-    "b) #As zoonoses de relevância regional ou local caracterizam-se por apresentar alto potencial de disseminação nacional, sendo monitoradas exclusivamente por programas nacionais do Ministério da Saúde.#",
-    "c) #Doenças como dengue e malária não podem integrar as atribuições da vigilância de zoonoses, pois acometem exclusivamente a espécie humana.#",
-    "d) #As zoonoses emergentes referem-se apenas a doenças erradicadas que reaparecem após curto período de ausência, #sem impacto# significativo na saúde pública#."
+    "a) As zoonoses monitoradas por programas nacionais de vigilância e controle do Ministério da Saúde incluem doenças como *peste, leptospirose, febre maculosa brasileira, hantavirose, doença de Chagas, febre amarela, chikungunya e febre do Nilo Ocidental*.",
+    "b) As zoonoses de relevância regional ou local caracterizam-se por apresentar alto potencial de disseminação #nacional#, sendo monitoradas #exclusivamente# por programas #nacionais# do Ministério da Saúde.",
+    "c) Doenças como dengue e malária #não podem integrar# as atribuições da vigilância de zoonoses, pois acometem #exclusivamente# a espécie humana.",
+    "d) As zoonoses emergentes referem-se #apenas# a doenças #erradicadas# que reaparecem após #curto período# de ausência, #sem impacto# significativo na saúde pública."
   ],
   correct: 0,
   j: "A alternativa 'A' lista corretamente as zoonoses sob vigilância nacional. A 'C' está incorreta porque, embora a doença em si seja humana, a vigilância de zoonoses controla os vetores (insetos) dessas doenças."
@@ -3229,10 +3194,10 @@ const bancoVip5 = [
 {
   q: "👻5. Acerca dos sinais, sintomas, diagnóstico, prevenção e ações de educação em saúde relacionadas à Leishmaniose Tegumentar (LT), assinale CORRETAMENTE:",
   options: [
-    "a) As lesões cutâneas da Leishmaniose Tegumentar são, em geral, #dolorosas#, com fundo #necrótico# e #ausência# de bordas elevadas.",
-    "b) O diagnóstico da Leishmaniose Tegumentar deve ser *confirmado por métodos parasitológicos*, sendo fundamental para o *correto diagnóstico diferencial* e para o direcionamento das medidas de controle do agravo.",
-    "c) A prevenção da Leishmaniose Tegumentar baseia-se #exclusivamente# no uso de #medicamentos profiláticos# disponibilizados pelo Sistema Único de Saúde (SUS).",
-    "d) As ações de educação em saúde relacionadas à Leishmaniose Tegumentar devem ser realizadas #apenas em situações de surtos#, #não sendo necessárias# em ações rotineiras de vigilância."
+    "a) #As lesões cutâneas da Leishmaniose Tegumentar são, em geral, dolorosas, com fundo necrótico e ausência de bordas elevadas.#",
+    "b) *O diagnóstico da Leishmaniose Tegumentar deve ser confirmado por métodos parasitológicos, sendo fundamental para o correto diagnóstico diferencial e para o direcionamento das medidas de controle do agravo.*",
+    "c) #A prevenção da Leishmaniose Tegumentar baseia-se exclusivamente no uso de medicamentos profiláticos disponibilizados pelo Sistema Único de Saúde (SUS).#",
+    "d) #As ações de educação em saúde relacionadas à Leishmaniose Tegumentar devem ser realizadas apenas em situações de surtos, não sendo necessárias em ações rotineiras de vigilância.#"
   ],
   correct: 1,
   j: "As lesões de LT são classicamente indolores. O padrão-ouro do diagnóstico é o exame parasitológico para identificar o protozoário."
@@ -3240,10 +3205,10 @@ const bancoVip5 = [
 {
   q: "👻6. Considerando as atribuições do ACE, as características epidemiológicas da Leishmaniose Visceral (LV) e as informações gerais sobre leishmanioses, é correto afirmar que:",
   options: [
-    "a) A Leishmaniose Visceral apresenta manifestações #exclusivamente cutâneas#, com lesões #ulceradas semelhantes# às da Leishmaniose Tegumentar, sendo essa característica fundamental para o diagnóstico diferencial em campo.",
-    "b) Na Leishmaniose Visceral, os animais domésticos, especialmente os cães, são considerados #hospedeiros acidentais#, #não desempenhando papel relevante# no ciclo de transmissão da doença.",
-    "c) A transmissão da Leishmaniose Visceral ocorre principalmente por #contato direto com secreções# de animais infectados, razão pela qual as ações do ACE concentram-se no #isolamento# dos casos humanos.",
-    "d) A Leishmaniose Visceral é transmitida pela *picada de fêmeas de flebotomíneos infectadas* e caracteriza-se como uma zoonose de *elevada relevância*, exigindo do ACE atuação integrada em *vigilância entomológica, manejo ambiental e educação*."
+    "a) #A Leishmaniose Visceral apresenta manifestações exclusivamente cutâneas, com lesões ulceradas semelhantes às da Leishmaniose Tegumentar, sendo essa característica fundamental para o diagnóstico diferencial em campo.#",
+    "b) #Na Leishmaniose Visceral, os animais domésticos, especialmente os cães, são considerados hospedeiros acidentais, não desempenhando papel relevante no ciclo de transmissão da doença.#",
+    "c) #A transmissão da Leishmaniose Visceral ocorre principalmente por contato direto com secreções de animais infectados, razão pela qual as ações do ACE concentram-se no isolamento dos casos humanos.#",
+    "d) *A Leishmaniose Visceral é transmitida pela picada de fêmeas de flebotomíneos infectadas e caracteriza-se como uma zoonose de elevada relevância, exigindo do ACE atuação integrada em vigilância entomológica, manejo ambiental e educação.*"
   ],
   correct: 3,
   j: "Diferente da LT, na Visceral (LVC) o cão é o reservatório principal. A transmissão exige o vetor (mosquito-palha) e não ocorre por contato direto."
@@ -3287,7 +3252,7 @@ const bancoVip5 = [
     "a) A transmissão da esquistossomose ocorre #principalmente pela ingestão# de água contaminada com #ovos# do Schistosoma mansoni, eliminados pelo homem infectado.",
     "b) O homem adquire a esquistossomose #exclusivamente por meio da picada# do caramujo infectado, que atua como #hospedeiro definitivo# do parasito.",
     "c) As #cercárias são eliminadas pelo homem# infectado através das fezes e penetram no caramujo, onde completam seu ciclo evolutivo.",
-    "d) *A transmissão da esquistossomose ocorre quando o indivíduo suscetível entra em contato com águas superficiais contaminadas, nas quais caramujos infectados liberam cercárias capazes de penetrar ativamente pela pele e/ou mucosas*."
+    "d) A transmissão da esquistossomose ocorre quando o *indivíduo suscetível entra em contato com águas superficiais contaminadas*, nas quais *caramujos infectados liberam cercárias* capazes de *penetrar ativamente pela pele e/ou mucosas*."
   ],
   correct: 3,
   j: "A transmissão ocorre pelo contato cutâneo (pele) com águas contendo cercárias, que são liberadas pelo caramujo (hospedeiro intermediário). O homem elimina ovos nas fezes, não cercárias, e a ingestão de ovos não causa a doença."
@@ -3372,7 +3337,7 @@ const bancoExtra = [
   },
 
   {
-    q: "🕸 7. Estas revistas que eles ___ , ___ artigos curtos e manchetes que todos ___ .",
+    q: "🕸 7. Complete corretamente:<br><br>Estas revistas que eles ___ , ___ artigos curtos e manchetes que todos ___ .",
     options: [
       "a) #leem - tem - veem#",
       "b) #leem - tem - vêm#",
@@ -3440,10 +3405,10 @@ const bancoExtra1 = [
   {
     q: "🦎 2. Sobre o encontro vocálico conhecido como hiato, é correto afirmar que:",
     options: [
-      "a) #pode ser classificado em crescente ou decrescente#, dependendo da posição da vogal na sílaba.",
-      "b) #é o encontro de uma vogal e uma semivogal# em uma mesma sílaba.",
+      "a) #pode ser classificado em crescente ou decrescente, dependendo da posição da vogal na sílaba.#",
+      "b) #é o encontro de uma vogal e uma semivogal em uma mesma sílaba.#",
       "c) *é o encontro de duas vogais em sílabas vizinhas.*",
-      "d) #é o encontro entre uma vogal e uma semivogal# em sílabas vizinhas.",
+      "d) #é o encontro entre uma vogal e uma semivogal em sílabas vizinhas.#",
       "e) #devem ser acentuados o <span style='color:orange;font-weight:bold'>i</span> ou o <span style='color:orange;font-weight:bold'>u</span> tônico dos hiatos, quando forem a sua segunda vogal, desde que estejam sozinhos na sílaba.#"
     ],
     correct: 2,
@@ -4771,8 +4736,6 @@ const vContainer = document.getElementById('vidas-container');
 
 
 
-
-
 function configurarSaidaRestrita() {
 
 
@@ -5325,7 +5288,7 @@ function mostrarMensagem(texto, tipo) {
 function gerarSenhaTemporaria() {
     // Gera os 5 números
     const senha = Math.floor(10000 + Math.random() * 90000);
-    const expira = Date.now() + (3 * 60 * 60 * 1000);
+    const expira = Date.now() + (2 * 60 * 60 * 1000);
 
     // Salva na variável global para o script saber que existe uma senha ativa
     senhaAdminTemp = String(senha);
@@ -5338,7 +5301,7 @@ function gerarSenhaTemporaria() {
     mostrarSlideSenha(senhaAdminTemp);
     
     // Alerta sonoro/visual para o aluno
-    alert("🔥 SOBREVIVENTE! 🔥\nSua chave de acesso à Audioteca foi gerada!\n(Válida por 3 horas)");
+    alert("🔥 LENDÁRIO SOBREVIVENTE! 🔥\nSua chave de acesso à Audioteca foi gerada!\n(Válida por 2 horas)\nDegustação VIP conquistada!\n(Válida por 30 minutos)\nDesde agora, dirija-se à Sala Exclusiva!");
 }
 
 // MOSTRAR O SLIDE 
@@ -6355,7 +6318,6 @@ function iniciarRelogioVisitante() {
         const agora = Date.now();
         const restante = expira - agora;
 
-        // 🔥 AQUI ESTÁ A MUDANÇA: Buscamos pela CLASSE (com o ponto na frente)
         const todosOsRelogios = document.querySelectorAll(".relogio-visitante");
 
         // Se não houver nenhum relógio na tela, não faz nada
@@ -6397,8 +6359,219 @@ function iniciarRelogioVisitante() {
 }
 
 
+// VIGILANTE IMPLACÁVEL
+setInterval(() => {
+    const agora = Date.now();
+    const expiraVip = localStorage.getItem('vip_free_expire');
+    const expiraElite = localStorage.getItem('dissipadorDesafioElite');
+    let deveExpulsar = false;
+
+    if (expiraVip && agora >= parseInt(expiraVip)) {
+        localStorage.removeItem('vip_free_expire');
+        deveExpulsar = true;
+    }
+    
+    if (expiraElite && agora >= parseInt(expiraElite)) {
+        localStorage.removeItem('dissipadorDesafioElite');
+        deveExpulsar = true;
+    }
+
+    if (deveExpulsar) {
+        if (document.getElementById('overlay-expulsao-vip-fim')) return;
+
+        // Limpa os relógios para silenciar o sistema
+        if (typeof window.timerInterval !== 'undefined') clearInterval(window.timerInterval);
+        if (typeof window.relogioInterval !== 'undefined') clearInterval(window.relogioInterval);
+        if (typeof window.timerElite !== 'undefined') clearInterval(window.timerElite);
+        if (typeof window.timerSobrevivente !== 'undefined') clearInterval(window.timerSobrevivente);
+
+        const overlay = document.createElement("div");
+        overlay.id = "overlay-expulsao-vip-fim"; 
+        overlay.innerHTML = `
+          <div style="
+            background:#000;
+            border:2px solid red;
+            padding:30px;
+            border-radius:15px;
+            text-align:center;
+            color:#ff4444;
+            font-weight:900;
+            box-shadow:0 0 30px red;
+            max-width: 90%;
+          ">
+            <span style="font-size:1.4em;">⏱️ SUA DEGUSTAÇÃO VIP ACABOU ⏱️</span><br><br>
+            <span style="font-size:0.9em; color:#ffffff; font-weight:400;">
+              🎶<b style="color:blue;">Audioteca</b> e 💣<b style="color:red;">Modo Sobrevivente</b> disponíveis.<br>
+               A <b style="color:green;">Área de Estudos</b> retorna plena em 12h.<br>
+               <b style="color:yellow;">Desafio Elite</b> desbloqueado! Desvende seu mistério.<br>
+               Dúvidas, elogios ou reclamações: <b style="color:red;">88 994354250</b>.
+            </span><br><br>
+            <button onclick="window.location.reload()" 
+              style="
+                padding:12px 20px;
+                font-weight:bold;
+                border:none;
+                border-radius:8px;
+                background:#ffd700;
+                color:#000;
+                cursor:pointer;
+                box-shadow: 0 4px 0 #b8860b;
+              ">
+              ENTENDI
+            </button>
+          </div>
+        `;
+
+        Object.assign(overlay.style, {
+          position: "fixed", inset: "0", background: "rgba(0,0,0,0.98)",
+          display: "flex", justifyContent: "center", alignItems: "center",
+          zIndex: "999999999", pointerEvents: "auto" 
+        });
+
+        document.body.appendChild(overlay);
+    }
+}, 1000);
+
+//anti-trapaça
+window._antiTrapacaAtivo = false;
+window._punicaoAtiva = false;
 
 
+function iniciarMonitorAntiTrapaca() {
+    if (!window._antiTrapacaAtivo) return;
+
+    let ultimoTick = Date.now();
+
+    window._intervaloAntiTrapaca = setInterval(() => {
+        const agora = Date.now();
+        const diferenca = agora - ultimoTick;
+
+        // 🧠 tolerância: 1.5s (normal seria ~1000ms)
+        if (diferenca > 1500) {
+            console.log("🚨 Suspeita de troca de aba detectada");
+            executarPunicaoTrapaca();
+        }
+
+        ultimoTick = agora;
+    }, 1000);
+}
+
+function pararMonitorAntiTrapaca() {
+    if (window._intervaloAntiTrapaca) {
+        clearInterval(window._intervaloAntiTrapaca);
+        window._intervaloAntiTrapaca = null;
+    }
+}
+
+
+function executarPunicaoTrapaca() {
+    // 🔒 PRIMEIRA BARREIRA: só roda se você ativou manualmente
+    if (!window._antiTrapacaAtivo) return;
+
+    // 🔒 SEGUNDA BARREIRA: só elite ou sobrevivente
+    if (!(window.quizType == 25 || window.quizType === 'elite')) return;
+
+    // 🔒 ANTI-LOOP
+    if (window._punicaoAtiva) return;
+    window._punicaoAtiva = true;
+
+    // ⛔ PARA TUDO
+    if (typeof window.timerElite !== 'undefined') clearInterval(window.timerElite);
+    if (typeof window.timerSobrevivente !== 'undefined') clearInterval(window.timerSobrevivente);
+
+    // 🔥 OVERLAY
+    const overlay = document.createElement('div');
+    overlay.id = 'overlay-trapaca';
+
+    overlay.style.cssText = `
+        position:fixed;
+        top:0; left:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.95);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        z-index:999999999;
+        color:white;
+        text-align:center;
+        font-family:sans-serif;
+    `;
+
+    overlay.innerHTML = `
+        <div>
+            <div style="font-size:1.8rem; font-weight:900; color:red;">
+                🚨 FALHA CRÍTICA DETECTADA 🚨
+            </div>
+
+            <div style="margin:10px 0; font-weight:900;">
+                O DESAFIO SERÁ CANCELADO!
+            </div>
+
+            <div style="font-size:1.5rem; font-weight:900; color:red;">
+                ✋ MENE, MENE, TEQUEL, PARSIM...
+            </div>
+
+            <div style="margin-top:10px;">
+                <i>Pesado foste na balança e achado em falta!</i>
+            </div>
+
+            <div id="contadorTrapaca" style="font-size:2rem; margin-top:20px;">3</div>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    iniciarContagemPunicao();
+}
+
+
+function iniciarContagemPunicao() {
+    let tempo = 3;
+    const el = document.getElementById('contadorTrapaca');
+
+    const intervalo = setInterval(() => {
+        tempo--;
+        if (el) el.innerText = tempo;
+
+        if (tempo <= 0) {
+            clearInterval(intervalo);
+
+            // 🔥 DESLIGA ANTI-TRAPAÇA ANTES DE RECARREGAR
+            window._antiTrapacaAtivo = false;
+
+            location.reload();
+        }
+    }, 1000);
+}
+
+
+
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) executarPunicaoTrapaca();
+});
+
+window.addEventListener("blur", () => {
+    executarPunicaoTrapaca();
+});
+
+
+function desativarAntiTrapaca() {
+    window._antiTrapacaAtivo = false;
+    window._punicaoAtiva = false;
+    pararMonitorAntiTrapaca();
+}
+
+setTimeout(() => {
+    const goOriginal = window.go;
+
+    window.go = function(destino) {
+        if (window._antiTrapacaAtivo) {
+            desativarAntiTrapaca();
+        }
+        return goOriginal(destino);
+    };
+}, 0);
 
 function revelarPontosCriticos() {
     const alternativas = document.querySelectorAll('.option-item'); // Ajuste para sua classe de CSS
@@ -6439,45 +6612,90 @@ function ativarCortinaFumaca() {
 }
 
 
+// Prêmio do Sobrevivente (25 Acertos)
+function concederVipTemporario() {
+    const agora = Date.now();
+    const trintaMinutos = 30 * 60 * 1000;
+    localStorage.setItem('vip_free_expire', agora + trintaMinutos);
+    
+    if (typeof gerarSenhaTemporaria === 'function') gerarSenhaTemporaria();
+    console.log("VIP Sobrevivente liberado por 30 minutos!");
+}
+
+// Prêmio da Elite (1 ou 0 erros)
+function concederAcessoElite() {
+    const agora = Date.now();
+    const trintaMinutos = 30 * 60 * 1000;
+    
+    localStorage.setItem('dissipadorDesafioElite', agora + trintaMinutos);
+    console.log("VIP Elite liberado por 30 minutos!");
+}
+
+
+
+function verificarAcessoAutomatico() {
+    const agora = Date.now();
+    const expiraVip = localStorage.getItem('vip_free_expire');
+    const expiraElite = localStorage.getItem('dissipadorDesafioElite'); // 🔥 Nome atualizado
+    let acessoLiberado = false;
+
+    if (expiraVip) {
+        if (agora < parseInt(expiraVip)) {
+            acessoLiberado = true;
+        } else {
+            localStorage.removeItem('vip_free_expire');
+        }
+    }
+    
+    if (expiraElite) {
+        if (agora < parseInt(expiraElite)) {
+            acessoLiberado = true;
+        } else {
+            localStorage.removeItem('dissipadorDesafioElite');
+        }
+    }
+    
+    return acessoLiberado;
+}
+
+
+
 
 /* INÍCIO DO UNIVERSO FREE */
 
 function startQuiz(modo) {
-    // 🔥 1. BLINDAGEM DE ESTADO E LIMPEZA DE LIXO (DANDO PAZ À SUA ALMA)
+    // 🔥 1. BLINDAGEM DE LIXO E TIMERS ANTIGOS (Recuperado)
     if (typeof window.timerInterval !== 'undefined') clearInterval(window.timerInterval);
     if (typeof window.relogioInterval !== 'undefined') clearInterval(window.relogioInterval);
     if (typeof window.timerElite !== 'undefined') clearInterval(window.timerElite);
     if (typeof window.timerSobrevivente !== 'undefined') clearInterval(window.timerSobrevivente);
-
-    // Oculta o botão de Desempenho da Sala Free para não vazar
     const btnPausaFree = document.getElementById('btn-pausar-free');
     if (btnPausaFree) btnPausaFree.style.display = 'none';
 
+    // 2. BLINDAGEM DE ESTADO
     window.isVipMode = (modo === 'vip' || modo === 'simulado_vip');
     quizType = window.isVipMode ? 'simulado_vip' : modo;
 
+    // RECUPERAÇÃO DE PROGRESSO BLINDADA
     const saveKey = `progresso_${quizType}`;
+    
     const salvoIndex = localStorage.getItem(saveKey + '_index');
-    const salvoHist = localStorage.getItem(saveKey + '_historico');
+    currentIndex = (window.isVipMode || modo === 25) ? 0 : (salvoIndex ? parseInt(salvoIndex) : 0);
 
-    // Sobrevivente (25), VIP e Elite (Total) sempre começam do zero
-    currentIndex = (window.isVipMode || modo === 25 || modo === 'total') ? 0 : (salvoIndex ? parseInt(salvoIndex) : 0);
-    historico = (window.isVipMode || modo === 25 || modo === 'total') ? {} : (salvoHist ? JSON.parse(salvoHist) : {});
+    const salvoHist = localStorage.getItem(saveKey + '_historico');
+    historico = (window.isVipMode || modo === 25) ? {} : (salvoHist ? JSON.parse(salvoHist) : {});
 
     erros = 0;
     acertosSessao = 0;
     acertosContadorSenha = 0;
 
-    window.limiteErrosPermitidos = (modo === 'vip' || modo === 'simulado_vip' || modo === 25) ? 5 : (modo === 'total' ? 101 : 3);
+    window.limiteErrosPermitidos = (modo === 'vip' || modo === 'simulado_vip' || modo === 25) ? 5 : 3;
 
     const vContainer = document.getElementById('vidas-container');
     const btnExtra = document.getElementById('btnExtra');
     const feedback = document.getElementById('feedback');
     if (feedback) feedback.style.display = 'none';
 
-    /* ============================================================
-        🔥 2. MONTAGEM DOS BANCOS (ISOLAMENTO POR UNIVERSO)
-    ============================================================ */
     const extras = [
         ...(typeof bancoExtra !== 'undefined' ? bancoExtra : []),
         ...(typeof bancoExtra1 !== 'undefined' ? bancoExtra1 : []),
@@ -6485,236 +6703,145 @@ function startQuiz(modo) {
         ...(typeof bancoExtra3 !== 'undefined' ? bancoExtra3 : [])
     ];
 
-    let baseDoQuiz = [];
-
+    /* ==========================
+         MONTAGEM DOS BANCOS
+    ========================== */
     if (modo === 'vip' || modo === 'simulado_vip' || modo === 25) {
-        baseDoQuiz = [
+        const megaBanco = [
             ...(typeof bancoOficial !== 'undefined' ? bancoOficial : []),
             ...(typeof bancoModulos !== 'undefined' ? bancoModulos : []),
             ...(typeof bancoVariados !== 'undefined' ? bancoVariados : []),
             ...(typeof bancoPortarias !== 'undefined' ? bancoPortarias : []),
             ...extras
         ];
-    } else {
-        if (modo === 'total') {
-            ['bancoOficial', 'bancoModulos', 'bancoVariados', 'bancoPortarias'].forEach(b => {
-                if (window[b]) baseDoQuiz = baseDoQuiz.concat(window[b]);
-            });
-            baseDoQuiz = baseDoQuiz.concat(extras);
-            window.vidasAtivas = false;
-        } else if (modo === 'modulos') {
-            baseDoQuiz = [...(typeof bancoModulos !== 'undefined' ? bancoModulos : []), ...extras];
-        } else if (modo === 'variados') {
-            baseDoQuiz = [...(typeof bancoVariados !== 'undefined' ? bancoVariados : []), ...extras];
-        } else if (modo === 'portarias') {
-            baseDoQuiz = [...(typeof bancoPortarias !== 'undefined' ? bancoPortarias : []), ...extras];
+
+      if (modo === 25) {
+    pararMonitorAntiTrapaca();
+
+    window._antiTrapacaAtivo = true;
+    iniciarMonitorAntiTrapaca();
+
+
+            currentQuestions = [...megaBanco].sort(() => 0.5 - Math.random()).slice(0, 25);
+            if (vContainer) vContainer.innerHTML = '<span class="bomba-pulsa">💣</span>';
+            if (btnExtra) btnExtra.style.display = "none";
+            
+            // 🔥 GATILHO DO TEMPO DE 30 MINUTOS (Recuperado)
+            if (typeof startTimerSobrevivente === 'function') startTimerSobrevivente();
+            
         } else {
-            baseDoQuiz = [...(typeof bancoOficial !== 'undefined' ? bancoOficial : []), ...extras];
+            currentQuestions = [...megaBanco].sort(() => Math.random() - 0.5).slice(0, 30);
+            if (vContainer) vContainer.innerHTML = '<span class="bomba-pulsa" style="filter:drop-shadow(0 0 6px gold); font-size:1.5em;">⭐</span>';
         }
     }
-
-    const baseLimpa = baseDoQuiz.filter(q => q && q.q && (Array.isArray(q.options) || q.v !== undefined));
-    const unica = [...new Map(baseLimpa.map(q => [q.q, q])).values()];
-    let questoesCopiadas = JSON.parse(JSON.stringify(unica));
-    questoesCopiadas.sort(() => 0.5 - Math.random());
-
-    /* ============================================================
-        🚀 3. CONFIGURAÇÃO DE UI E GATILHOS (INCLUINDO ITEM 3)
-    ============================================================ */
-    if (modo === 25) {
-        currentQuestions = questoesCopiadas.slice(0, 25);
-        if (vContainer) vContainer.innerHTML = '<span class="bomba-pulsa">💣</span>';
-        if (btnExtra) btnExtra.style.display = "none";
-        
-        // 🔥 ITEM 3: GATILHO DO SOBREVIVENTE
-        startTimerSobrevivente(); 
-        
-        if (typeof clearProgress === 'function') clearProgress(modo);
-    } 
-    else if (modo === 'vip' || modo === 'simulado_vip') {
-        currentQuestions = questoesCopiadas.slice(0, 30);
-        if (vContainer) vContainer.innerHTML = '<span class="bomba-pulsa" style="filter:drop-shadow(0 0 6px gold); font-size:1.5em;">⭐</span>';
-        if (btnExtra) {
-            btnExtra.innerText = "🏛 SALA VIP 🏛";
-            btnExtra.style.background = "#FFD700";
-            btnExtra.style.color = "#000";
-            btnExtra.style.display = "flex";
-            btnExtra.onclick = () => go('area-apoiador');
-        }
-    } 
     else {
-        // MODO ELITE / TOTAL E OUTROS
-        currentQuestions = questoesCopiadas.slice(0, modo === 'total' ? 50 : questoesCopiadas.length);
+        let base = [];
+        if (modo === 'total') {
+            ['bancoOficial', 'bancoModulos', 'bancoVariados', 'bancoPortarias'].forEach(b => {
+                if (window[b]) base = base.concat(window[b]);
+            });
+            base = base.concat(extras);
+            window.vidasAtivas = false;
+        } else if (modo === 'modulos') {
+            base = [...(typeof bancoModulos !== 'undefined' ? bancoModulos : []), ...extras];
+        } else if (modo === 'variados') {
+            base = [...(typeof bancoVariados !== 'undefined' ? bancoVariados : []), ...extras];
+        } else if (modo === 'portarias') {
+            base = [...(typeof bancoPortarias !== 'undefined' ? bancoPortarias : []), ...extras];
+        } else {
+            base = [...(typeof bancoOficial !== 'undefined' ? bancoOficial : []), ...extras];
+        }
+
+        const baseLimpa = base.filter(q => q && q.q && Array.isArray(q.options));
+        const unica = [...new Map(baseLimpa.map(q => [q.q, q])).values()];
+        const embaralhado = [...unica].sort(() => Math.random() - 0.5);
+        currentQuestions = embaralhado.slice(0, modo === 'total' ? 50 : unica.length);
+
         if (vContainer) {
             vContainer.innerHTML = (modo === 'total') ? 
                 '<span style="color:#FFD700; font-weight:bold;">BURACO DA GIA</span>' : 
                 '<span style="font-weight:bold;">ÁREA DE ESTUDOS</span>';
         }
-        
-        if (btnExtra) {
-            btnExtra.innerHTML = (modo === 'total') ? "🐸 SAIR" : "DESEMPENHO";
-            Object.assign(btnExtra.style, {
-                display: "flex", visibility: "visible", alignItems: "center", justifyContent: "center",
-                opacity: "1", background: "rgba(10,10,10,0.95)", color: (modo === 'total') ? "#fff" : "#39FF14",
-                border: `2px solid #39FF14`, borderRadius: "12px", fontWeight: "900", zIndex: "9999", pointerEvents: "auto"
-            });
-            btnExtra.onclick = sairProvaAnalista; // Chama sua função de overlay padrão
-        }
-
-        // Se for Elite (Total), inicia o timer específico da Elite
-        if (modo === 'total' && typeof startTimerElite === 'function') startTimerElite();
     }
 
-    /* ============================================================
-        🎯 4. RASTREADOR SUPREMO (RECONSTRÓI GABARITO POR ASTERISCO)
-    ============================================================ */
-    currentQuestions.forEach(q => {
-        if (q.options && Array.isArray(q.options)) {
-            let textos = q.options.map(opt => String(opt).replace(/^[a-eA-E]\)\s*/, "").trim());
-            for (let i = textos.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [textos[i], textos[j]] = [textos[j], textos[i]];
-            }
-            q.correct = textos.findIndex(opt => opt.includes('*'));
-            const letras = ["a) ", "b) ", "c) ", "d) ", "e) "];
-            q.options = textos.map((t, i) => (textos.length > 2) ? letras[i] + t : t);
-        }
-    });
+  // O RASTREADOR: Embaralha e define o novo q.correct pelo asterisco
+  currentQuestions.forEach(q => {
+      if (q.options && Array.isArray(q.options)) {
+          let textos = q.options.map(opt => String(opt).replace(/^[a-eA-E]\)\s*/, "").trim());
+
+          for (let i = textos.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [textos[i], textos[j]] = [textos[j], textos[i]];
+          }
+
+          q.correct = textos.findIndex(opt => opt.includes('*'));
+
+          const letras = ["a) ", "b) ", "c) ", "d) ", "e) "];
+          q.options = textos.map((t, i) => letras[i] + t);
+      }
+  });
 
     if (!currentQuestions || currentQuestions.length === 0) {
         alert("Nenhuma questão disponível.");
         return;
     }
 
-    document.getElementById('btnPrev').classList.add('visible');
-    document.getElementById('btnNext').classList.add('visible');
+    if (btnExtra && modo !== 25) {
+        btnExtra.innerHTML = (modo === 'total') ? "🐸SAIR" : "DESEMPENHO";
+        
+        Object.assign(btnExtra.style, {
+            display: "flex", visibility: "visible", alignItems: "center", justifyContent: "center",
+            opacity: "1", background: "rgba(10,10,10,0.95)", color: (modo === 'total') ? "#fff" : "#39FF14",
+            border: `2px solid #39FF14`, borderRadius: "12px", fontWeight: "900", zIndex: "9999", pointerEvents: "auto"
+        });
 
+        btnExtra.onclick = (e) => {
+            if (e) e.preventDefault();
+            btnExtra.style.display = "none"; 
+            
+            let totalAcertos = 0;
+            let totalRespondidas = Object.keys(historico).length;
+            Object.keys(historico).forEach(i => {
+                if (currentQuestions[i] && historico[i] === currentQuestions[i].correct) totalAcertos++;
+            });
+
+            let totalErros = totalRespondidas - totalAcertos;
+            let foiBem = totalRespondidas > 0 ? (totalAcertos >= totalRespondidas / 2) : true;
+
+            const overlay = document.createElement("div");
+            overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:flex; align-items:center; justify-content:center; z-index:999999999;";
+
+            overlay.innerHTML = `
+            <div style="background:#000; border:2px solid ${foiBem ? '#39FF14' : 'red'}; padding:25px; border-radius:15px; text-align:center; color:${foiBem ? '#39FF14' : '#ff4444'}; font-weight:900; box-shadow:0 0 30px ${foiBem ? '#39FF14' : 'red'}; width: 340px; max-width: 95%;">
+                <span style="font-size:1.2em; display: block; margin-bottom: 15px;">⌚PAUSA NOS ESTUDOS⌚</span>
+                <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <span style="font-size:0.95em; color:#ffffff; font-weight:400; line-height: 1.6;">
+                        📊 <b style="color:#FFD700;">DESEMPENHO NESTA SESSÃO</b><br>
+                        TOTAL: ${currentQuestions.length} QUESTÕES<br>
+                        RESPONDIDAS: ${totalRespondidas}<br>
+                        ACERTOS: <span style="color:#39FF14">${totalAcertos}</span><br>
+                        ERROS: <span style="color:red">${totalErros}</span>
+                    </span>
+                </div>
+                <button id="btn-ok-relatorio" style="width: 100%; padding:15px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b;">ÁREA DE ESTUDOS</button>
+            </div>`;
+
+            document.body.appendChild(overlay);
+
+            document.getElementById('btn-ok-relatorio').onclick = () => {
+                overlay.remove();
+                if (window.origemQuiz === 'area-restrita') go('area-restrita');
+                else btnExtra.style.display = "flex";
+            };
+        };
+    }
     go('quiz');
     setTimeout(() => {
         if (typeof render === 'function') render();
-        // startTimer original apenas se não for elite/sobrevivente
-        if (modo !== 'total' && modo !== 25 && typeof startTimer === 'function') startTimer();
+        // Evita que o startTimer padrão sobrescreva o timer de 30 mins do Sobrevivente
+        if (modo !== 25 && typeof startTimer === 'function') startTimer();
     }, 50);
 }
-
-
-
-var timerSobrevivente;
-
-function startTimerSobrevivente() {
-    // Limpa qualquer resíduo de timer anterior para evitar "ghost timer"
-    if (typeof timerSobrevivente !== 'undefined') clearInterval(timerSobrevivente);
-
-    const timerDisplay = document.getElementById('timer');
-    if (timerDisplay) {
-        timerDisplay.style.display = 'block';
-        timerDisplay.style.color = '#39FF14'; // Verde neon inicial
-    }
-
-    window.tempoRestanteSobrevivente = 1801; // 30 minutos
-
-    window.timerSobrevivente = setInterval(() => {
-        window.tempoRestanteSobrevivente--;
-        
-        let min = Math.floor(window.tempoRestanteSobrevivente / 60).toString().padStart(2, '0');
-        let seg = (window.tempoRestanteSobrevivente % 60).toString().padStart(2, '0');
-        
-        if (timerDisplay) {
-            timerDisplay.innerText = `${min}:${seg}`;
-            // Alerta de perigo: falta 2 minutos (cor da bomba)
-            if (window.tempoRestanteSobrevivente <= 120) {
-                timerDisplay.style.color = '#ff4444';
-            }
-        }
-        
-        if (window.tempoRestanteSobrevivente <= 0) {
-            clearInterval(window.timerSobrevivente);
-            explodirBombaTempo(); // CHAMADA DA EXPLOSÃO
-        }
-    }, 1000);
-}
-
-
-function explodirBombaTempo() {
-    const cont = document.getElementById('container');
-    const ob = document.getElementById('overlay-blood');
-
-    // Inicia os tremores
-    if (cont) cont.classList.add('tremendo');
-
-    // Ativa o overlay de perigo crítico
-    if (ob) {
-        ob.style.display = 'flex';
-        ob.className = 'blood-alert-overlay';
-        ob.innerHTML = `
-            <div style="text-align:center; animation: wave 0.5s infinite;">
-                <span style="font-size:2.5em; letter-spacing:5px;">💣 TEMPO ESGOTADO 💥</span><br>
-                <span style="font-size:2em; font-weight:900;">💥 AUTODESTRUIÇÃO...💥</span>
-            </div>`;
-    }
-
-    // Sequência de 8 bipes de alarme
-    let bipes = 0;
-    const alarme = setInterval(() => {
-        if (typeof playAlarm === 'function') playAlarm();
-        bipes++;
-        if (bipes >= 8) clearInterval(alarme);
-    }, 400);
-
-    // Finalização após 5 segundos (idêntico ao erro por questões)
-    setTimeout(() => { 
-        if (cont) cont.classList.remove('tremendo');
-        if (ob) { ob.className = ''; ob.style.display = 'none'; }
-        
-        const failStats = document.getElementById('fail-stats');
-        if (failStats) {
-            failStats.innerHTML = `
-                <h1 style="color:red; font-size:1.4em; margin:0;">💥 BOOOOM! 💥</h1>
-                <p style="font-size:0.9em; margin:0;">O TEMPO ACABOU E A BOMBA EXPLODIU!</p>
-                <div style="margin-top:10px;">ACERTOS: <b>${acertosSessao}</b></div>`;
-        }
-
-        const btnF = document.getElementById('btn-tentar-novamente');
-        if (btnF) { 
-            btnF.onclick = function() { go('area-restrita'); }; 
-            btnF.innerText = "TENTAR NOVAMENTE"; 
-        }
-
-        go('fail-screen');
-    }, 5000);
-}
-
-function concederVipTemporario() {
-    const agora = Date.now();
-    const duasHoras = 2 * 60 * 60 * 1000; // 2h em milissegundos
-    const expira em = agora + duasHoras;
-
-    // Salva o timestamp de expiração
-    localStorage.setItem('vip_free_expire', expiraem);
-    
-    // Aproveita e já gera a senha da audioteca com o mesmo tempo se precisar
-    if (typeof gerarSenhaTemporaria === 'function') {
-        gerarSenhaTemporaria(); // Sua lógica original de senha
-    }
-
-    console.log("Acesso VIP Temporário concedido até: " + new Date(expiraem).toLocaleTimeString());
-}
-
-
-function temAcessoVipAtivo() {
-    const expira = localStorage.getItem('vip_free_expire');
-    if (!expira) return false;
-
-    const agora = Date.now();
-    if (agora < parseInt(expira)) {
-        return true; // Passe ainda é válido
-    } else {
-        localStorage.removeItem('vip_free_expire'); // Limpa o lixo expirado
-        return false;
-    }
-}
-
-
 
 function limparSessaoAnterior() {
     // 1. Limpeza do Lixo do Relógio (Mata os intervalos anteriores)
@@ -7258,12 +7385,13 @@ function render() {
     }
 }
 
+
 function check(answer, btn) {
     if (historico[currentIndex] !== undefined) return; 
 
     const q = currentQuestions[currentIndex];
     
-    // 💉 TRADUTOR UNIVERSAL + O RASTREADOR SUPREMO INJETADO
+    //  TRADUTOR UNIVERSAL + O RASTREADOR SUPREMO INJETADO
     let gabarito = q.correct !== undefined ? q.correct : q.v;
     if (q.options && q.options.length > 0) {
         const indexAsterisco = q.options.findIndex(opt => opt.includes('*'));
@@ -7305,24 +7433,29 @@ function check(answer, btn) {
         });
     }
 
-    // 🔥 SALVAMENTO UNIVERSAL (Puro, sem checar se é VIP)
+    // SALVAMENTO UNIVERSAL (Puro, sem checar se é VIP)
     const saveKey = `progresso_${quizType}`;
     localStorage.setItem(saveKey + '_historico', JSON.stringify(historico));
     localStorage.setItem(saveKey + '_index', currentIndex);
 
     if (acertou) {
         if (quizType !== 25) registrarResposta(true, answer);
-        acertosSessao++; // 🔥 AQUI ESTÁ! O SOBREVIVENTE AGORA CONTA PONTOS!
+        acertosSessao++; 
 
-        if (quizType === 25) {
-            acertosContadorSenha++;
-            if (acertosContadorSenha === 25) {
-                acertosContadorSenha = 0;            
-                if (typeof gerarSenhaTemporaria === 'function') gerarSenhaTemporaria(); 
-                finalizar(); 
-                return; 
-            }
-        }
+       
+if (quizType === 25) {
+    acertosContadorSenha++;
+    if (acertosContadorSenha === 25) {
+        acertosContadorSenha = 0;            
+        
+        concederVipTemporario(); 
+        
+        if (typeof gerarSenhaTemporaria === 'function') gerarSenhaTemporaria(); 
+        finalizar(); 
+        return; 
+    }
+}
+
         btn.classList.add('correct');
         if (cont) cont.classList.add('acertou-flash');
 
@@ -7415,9 +7548,244 @@ function check(answer, btn) {
 /* FIM DO UNIVERSO FREE
 ######################################################### */
 
+var timerSobrevivente;
+
+function startTimerSobrevivente() {
+    // Limpa qualquer resíduo de timer anterior para evitar "ghost timer"
+    if (typeof timerSobrevivente !== 'undefined') clearInterval(timerSobrevivente);
+
+    const timerDisplay = document.getElementById('timer');
+    if (timerDisplay) {
+        timerDisplay.style.display = 'block';
+        timerDisplay.style.color = '#39FF14'; // Verde neon inicial
+    }
+
+    window.tempoRestanteSobrevivente = 1801; // 30 minutos
+
+    window.timerSobrevivente = setInterval(() => {
+        window.tempoRestanteSobrevivente--;
+        
+        let min = Math.floor(window.tempoRestanteSobrevivente / 60).toString().padStart(2, '0');
+        let seg = (window.tempoRestanteSobrevivente % 60).toString().padStart(2, '0');
+        
+        if (timerDisplay) {
+            timerDisplay.innerText = `${min}:${seg}`;
+            // Alerta de perigo: falta 2 minutos (cor da bomba)
+            if (window.tempoRestanteSobrevivente <= 120) {
+                timerDisplay.style.color = '#ff4444';
+            }
+        }
+        
+        if (window.tempoRestanteSobrevivente <= 0) {
+            clearInterval(window.timerSobrevivente);
+            explodirBombaTempo(); // CHAMADA DA EXPLOSÃO
+        }
+    }, 1000);
+}
+
+
+function explodirBombaTempo() {
+    const cont = document.getElementById('container');
+    const ob = document.getElementById('overlay-blood');
+
+    // Inicia os tremores
+    if (cont) cont.classList.add('tremendo');
+
+    // Ativa o overlay de perigo crítico
+    if (ob) {
+        ob.style.display = 'flex';
+        ob.className = 'blood-alert-overlay';
+        ob.innerHTML = `
+            <div style="text-align:center; animation: wave 0.5s infinite;">
+                <span style="font-size:2.5em; letter-spacing:5px;">💣 TEMPO ESGOTADO 💥</span><br>
+                <span style="font-size:2em; font-weight:900;">💥 AUTODESTRUIÇÃO...💥</span>
+            </div>`;
+    }
+
+    // Sequência de 8 bipes de alarme
+    let bipes = 0;
+    const alarme = setInterval(() => {
+        if (typeof playAlarm === 'function') playAlarm();
+        bipes++;
+        if (bipes >= 8) clearInterval(alarme);
+    }, 400);
+
+    // Finalização após 5 segundos (idêntico ao erro por questões)
+    setTimeout(() => { 
+        if (cont) cont.classList.remove('tremendo');
+        if (ob) { ob.className = ''; ob.style.display = 'none'; }
+        
+        const failStats = document.getElementById('fail-stats');
+        if (failStats) {
+            failStats.innerHTML = `
+                <h1 style="color:red; font-size:1.4em; margin:0;">💥 BOOOOM! 💥</h1>
+                <p style="font-size:0.9em; margin:0;">O TEMPO ACABOU E A BOMBA EXPLODIU!</p>
+                <div style="margin-top:10px;">ACERTOS: <b>${acertosSessao}</b></div>`;
+        }
+
+        const btnF = document.getElementById('btn-tentar-novamente');
+        if (btnF) { 
+            btnF.onclick = function() { go('area-restrita'); }; 
+            btnF.innerText = "TENTAR NOVAMENTE"; 
+        }
+
+        go('fail-screen');
+    }, 5000);
+}
+
+
 
 
 /* INÍCIO DO UNIVERSO VIP */
+
+function verificarAcessoAutomatico() {
+    const agora = Date.now();
+    const expiraVip = localStorage.getItem('vip_free_expire');
+    const expiraElite = localStorage.getItem('dissipadorDesafioElite'); // 🔥 Nome atualizado
+    let acessoLiberado = false;
+
+    if (expiraVip) {
+        if (agora < parseInt(expiraVip)) {
+            acessoLiberado = true;
+        } else {
+            localStorage.removeItem('vip_free_expire');
+        }
+    }
+    
+    if (expiraElite) {
+        if (agora < parseInt(expiraElite)) {
+            acessoLiberado = true;
+        } else {
+            localStorage.removeItem('dissipadorDesafioElite');
+        }
+    }
+    
+    return acessoLiberado;
+}
+
+
+
+function portaDosFundosVip() {
+    const el = document.getElementById('estadoEmoji');
+    
+    // CHECAGEM DE PASSE VIP
+    if (verificarAcessoAutomatico()) {
+        window.liberado = true; // Proteção Strict Mode
+        
+        if (el) {
+            el.innerText = "🚪";
+            el.className = "estado open";
+        }
+        const nomeDoadorElemento = document.getElementById('nome-doador-vip');
+        if (nomeDoadorElemento) nomeDoadorElemento.textContent = "LENDÁRIO SOBREVIVENTE FODÁSTICO";
+        
+        executarEntradaVip(el); 
+        return; 
+    }
+
+    // LÓGICA PADRÃO (Senha)
+    const idDigitado = prompt("SALA EXCLUSIVA - DIGITE SUA ID EXCLUSIVA:");
+    if (!idDigitado) return;
+
+    window.liberado = false; // Proteção Strict Mode
+    const usuarioEncontrado = DOADORES.find(u => u.id == idDigitado);
+
+    if (!usuarioEncontrado) {
+        if (el) {
+            el.innerText = "☠️";
+            el.className = "estado error";
+            setTimeout(() => {
+                el.innerText = "🏆"; 
+                el.className = "estado lock";
+                if(typeof mostrarMensagem === 'function') mostrarMensagem(`<h1 style="color:red; font-weight:900;">🤚 ACESSO RESTRITO ✋<br>DÚVIDAS? 88 99435 4250</h1>`, 'erro');
+            }, 1200);
+        }
+        return; 
+    }
+
+    window.liberado = true;
+    if (el) {
+        el.innerText = "🚪";
+        el.className = "estado open";
+    }
+    const nomeDoadorElemento = document.getElementById('nome-doador-vip');
+    if (nomeDoadorElemento) nomeDoadorElemento.textContent = usuarioEncontrado.nome;
+
+    executarEntradaVip(el);
+}
+
+
+function executarEntradaVip(el) {
+    setTimeout(() => {
+        if(typeof go === 'function') go('area-apoiador');
+        if(typeof prepararContextoSalaVip === 'function') prepararContextoSalaVip(); 
+        
+        const telaVip = document.getElementById('area-apoiador');
+        if (telaVip) {
+            telaVip.style.setProperty("display", "flex", "important");
+            telaVip.style.background = "#000";
+        }
+        const vContainer = document.getElementById('vidas-container');
+        if (vContainer) vContainer.innerHTML = '<span style="font-size:1.2em; color: gold; font-weight:bold;">⭐ 🏆 ⭐</span>';
+        
+        const botoes = document.querySelectorAll('button, a');
+        botoes.forEach(btn => {
+            const texto = btn.innerText || "";
+            if (texto.includes('ÁREA DE ESTUDOS') || texto.includes('AREA DE ESTUDO')) {
+                btn.style.setProperty("display", "none", "important");
+            }
+        });
+        setTimeout(() => {
+            if(el) { el.innerText = "🏆"; el.className = "estado lock"; }
+        }, 1000);
+    }, 1200);
+}
+
+
+function irParaAreaApoiador2() {
+    // CHECAGEM DE PASSE VIP
+    if (verificarAcessoAutomatico()) {
+        window.liberado = true;
+        
+const nomeDoadorElemento = document.getElementById('nome-doador-vip');
+        if (nomeDoadorElemento) nomeDoadorElemento.textContent = "LENDÁRIO SOBREVIVENTE FODÁSTICO";
+        entrarNaTelaVip();
+        return;
+    }
+
+    // LÓGICA PADRÃO (Senha)
+    const idDigitado = prompt("DIGITE SUA SENHA EXCLUSIVA:");
+    if (!idDigitado) return;
+
+    const usuarioEncontrado = DOADORES.find(u => u.id == idDigitado);
+    if (!usuarioEncontrado) {
+        if(typeof mostrarMensagem === 'function') mostrarMensagem(`<h1 style="color:red; font-weight:900;">🤚 ACESSO RESTRITO ✋<br>DÚVIDAS? 88 99435 4250</h1>`, 'erro');
+        return;
+    }
+
+    window.liberado = true;
+    const nomeDoadorElemento = document.getElementById('nome-doador-vip');
+    if (nomeDoadorElemento) nomeDoadorElemento.textContent = usuarioEncontrado.nome;
+
+    entrarNaTelaVip();
+}
+
+
+function entrarNaTelaVip() {
+    if(typeof go === 'function') go('area-apoiador');
+    setTimeout(() => {
+        if(typeof prepararContextoSalaVip === 'function') prepararContextoSalaVip();
+        const telaVip = document.getElementById('area-apoiador');
+        if (telaVip) {
+            telaVip.style.setProperty("display", "flex", "important");
+            telaVip.style.background = "#000";
+        }
+        const vContainer = document.getElementById('vidas-container');
+        if (vContainer) {
+            vContainer.innerHTML = '<span style="font-size:1.2em; color: gold; font-weight:bold;">SALA EXCLUSIVA</span>';
+        }
+    }, 0);
+}
 
 function abrirEstudosPelaSalaVip() {
     // 🔥 NOVIDADE: Marca como VIP para o relógio ignorar
@@ -7451,7 +7819,7 @@ function abrirEstudosPelaSalaVip() {
         if (!expira || agora >= expira) {
             // Tempo esgotado ou burlado: Expulsa imediatamente
             localStorage.clear(); 
-            window.location.reload(); // Ou go('capa') se preferir
+            window.location.reload();
         } else {
             // Tempo ainda válido: Retoma o relógio de onde parou
             iniciarVigilanciaVisitante();
@@ -7565,122 +7933,8 @@ const limpeza = [
 
 
 
-function portaDosFundosVip() {
-    const idDigitado = prompt("SALA EXCLUSIVA - DIGITE SUA ID EXCLUSIVA:");
-    if (!idDigitado) return;
-
-    const el = document.getElementById('estadoEmoji');
-    liberado = false;
-
-    // BUSCA EXCLUSIVA NO BANCO DE DOADORES
-    const usuarioEncontrado = DOADORES.find(u => u.id == idDigitado);
-
-    if (!usuarioEncontrado) {
-        if (el) {
-            el.innerText = "☠️";
-            el.className = "estado error";
-            setTimeout(() => {
-                el.innerText = "🏆"; 
-                el.className = "estado lock";
-                mostrarMensagem(`<h1 style="color:red; font-weight:900;">🤚 ACESSO RESTRITO ✋<br>DÚVIDAS? 88 99435 4250</h1>`, 'erro');
-            }, 1200);
-        }
-        return; 
-    }
-
-    // --- SUCESSO: O USUÁRIO VÊ A PORTA ABRIR ---
-    liberado = true;
-    if (el) {
-        el.innerText = "🚪";
-        el.className = "estado open";
-    }
-
-    const nomeDoadorElemento = document.getElementById('nome-doador-vip');
-    if (nomeDoadorElemento) {
-        nomeDoadorElemento.textContent = usuarioEncontrado.nome;
-    }
-
-    // DELAY DE 1.2 SEGUNDOS PARA "VER" A PORTA ANTES DE ENTRAR
-    setTimeout(() => {
-        go('area-apoiador');
-
-        prepararContextoSalaVip(); 
-
-        const telaVip = document.getElementById('area-apoiador');
-        if (telaVip) {
-            telaVip.style.setProperty("display", "flex", "important");
-            telaVip.style.background = "#000";
-        }
-
-        const vContainer = document.getElementById('vidas-container');
-        if (vContainer) {
-            vContainer.innerHTML = '<span style="font-size:1.2em; color: gold; font-weight:bold;">⭐ 🏆 ⭐</span>';
-        }
-        
-        // Mata o botão "Área de Estudos"
-        const botoes = document.querySelectorAll('button, a');
-        botoes.forEach(btn => {
-            const texto = btn.innerText || "";
-            if (texto.includes('ÁREA DE ESTUDOS') || texto.includes('AREA DE ESTUDO')) {
-                btn.style.setProperty("display", "none", "important");
-            }
-        });
-
-        // Reseta o ícone do troféu lá no fundo para a próxima vez
-        setTimeout(() => {
-            if(el) { el.innerText = "🏆"; el.className = "estado lock"; }
-        }, 1000);
-
-    }, 1200); // <--- O tempo de "respiro" da porta
-}
 
 
-function irParaAreaApoiador2() {
-    const idDigitado = prompt("DIGITE SUA SENHA EXCLUSIVA:");
-    if (!idDigitado) return;
-
-    // Filtro restrito: Busca apenas no banco de DOADORES
-    const usuarioEncontrado = DOADORES.find(u => u.id == idDigitado);
-
-    if (!usuarioEncontrado) {
-        mostrarMensagem(
-            `<h1 style="color:red; font-weight:900;">🤚 ACESSO RESTRITO ✋<br>DÚVIDAS? 88 99435 4250</h1>`,
-            'erro'
-        );
-        return;
-    }
-
-    // Liberação
-    liberado = true;
-
-    // Nome no painel
-    const nomeDoadorElemento = document.getElementById('nome-doador-vip');
-    if (nomeDoadorElemento) {
-        nomeDoadorElemento.textContent = usuarioEncontrado.nome;
-    }
-
-    //  PRIMEIRO ENTRA NA TELA
-    go('area-apoiador');
-
-    //  SÓ DEPOIS PREPARA O CONTEXTO VIP
-    setTimeout(() => {
-        prepararContextoSalaVip();
-
-        const telaVip = document.getElementById('area-apoiador');
-        if (telaVip) {
-            telaVip.style.setProperty("display", "flex", "important");
-            telaVip.style.background = "#000";
-        }
-
-        const vContainer = document.getElementById('vidas-container');
-        if (vContainer) {
-            vContainer.innerHTML =
-                '<span style="font-size:1.2em; color: gold; font-weight:bold;">SALA EXCLUSIVA</span>';
-        }
-    }, 0);
-
-    console.log("Acesso VIP concedido via Painel:", usuarioEncontrado.nome);
-}
 
 function prepararContextoSalaVip() {
     // Estado VIP absoluto
@@ -8753,7 +9007,8 @@ function renderVip() {
 
 
 
-/* INÍCIO DO UNIVERSO GIA */
+/* INÍCIO DO UNIVERSO GIA
+######################################################### */
 function renderGia() {
     if (!currentQuestions || currentQuestions.length === 0) return;
 
@@ -9533,10 +9788,13 @@ var timerElite;
 var errosElite = 0; // Variável exclusiva que NINGUÉM mais toca
 
 function iniciarDesafioElite() {
-    // Reset de segurança (NÃO mexe na fumaça)
-    localStorage.removeItem("vencedorDesafioElite");
+    //  1. Reset de segurança (Limpando os crachás antigos para um novo jogo limpo)
+    localStorage.removeItem("vencedorElite");
+    localStorage.removeItem("nevoaDissipada");
+    localStorage.removeItem("nevoaLeve");
     localStorage.removeItem("dissipadorDesafioElite");
-    if (timerElite) clearInterval(timerElite);
+    
+    if (typeof timerElite !== 'undefined') clearInterval(timerElite);
     
     window.quizType = 'desafio_elite'; 
     
@@ -9553,7 +9811,8 @@ function iniciarDesafioElite() {
         ...getBanco('bancoExtra3')
     ];
 
-    const pool = giga.sort(() => Math.random() - 0.5).slice(0, 50).map(q => {
+    //  2. CORREÇÃO: Sorteio cravado em 30 questões
+    const pool = giga.sort(() => Math.random() - 0.5).slice(0, 30).map(q => {
         let nQ = JSON.parse(JSON.stringify(q));
         if (nQ.options) {
             const txtCerto = nQ.options[nQ.correct];
@@ -9566,18 +9825,21 @@ function iniciarDesafioElite() {
         return nQ;
     });
 
-    // 🔥 ESTADO LIMPO (ESSENCIAL)
+    //  3. ESTADO LIMPO (Cravado em 3 vidas)
     window.currentQuestions = pool;
     window.currentIndex = 0;
     window.erros = 0;
     window.errosElite = 0;
+    window.limiteErrosPermitidos = 3; 
     window.historico = {};
     historico = {};
 
-    // NÃO usa nextElite aqui
-    startQuizElite(50);
+    //  4. CORREÇÃO: Chamando o start do Elite com 30
+    if (typeof startQuizElite === 'function') {
+        startQuizElite(30);
+    }
 
-    // 🔥 render no tempo certo (sem quebrar fumaça)
+    // Render no tempo certo (sem quebrar fumaça)
     setTimeout(() => {
         if (typeof renderElite === 'function') renderElite();
         if (typeof atualizarDisplayVidasElite === 'function') atualizarDisplayVidasElite();
@@ -9587,8 +9849,13 @@ function iniciarDesafioElite() {
 
 
 
+
+
 function simuladoElite() {
     console.log("Aura: Iniciando Desafio Elite...");
+    
+    // 🔥 ATIVA ANTI-TRAPAÇA AQUI (ANTES DE QUALQUER COISA)
+    if (typeof ativarAntiTrapaca === 'function') ativarAntiTrapaca();
     
     // 1. RESET DE MEMÓRIA E ESTADO
     localStorage.removeItem('quiz_progress');
@@ -9596,13 +9863,22 @@ function simuladoElite() {
     currentIndex = 0;
     historico = {};
     window.historico = {};
-    errosElite = 0; 
-    window.limiteErrosPermitidos = 5;
+    window.errosElite = 0; 
+    errosElite = 0;
+    
+    //  CORREÇÃO: Limite de erros cravado em 3 (para os 3 corações)
+    window.limiteErrosPermitidos = 3;
 
-    window.isVipMode = false;
-    quizType = 'elite'; 
+    window.isVipMode = false; 
+quizType = 'elite';
 
-    // 2. MONTAGEM DO BANCO DE 40
+// 🔒 garante que não tem monitor antigo rodando
+pararMonitorAntiTrapaca();
+
+window._antiTrapacaAtivo = true;
+iniciarMonitorAntiTrapaca();
+
+    // 2. MONTAGEM DO BANCO DE 30 QUESTÕES
     const bancoGigante = [
         ...(typeof bancoOficial !== 'undefined' ? bancoOficial : []),
         ...(typeof bancoModulos !== 'undefined' ? bancoModulos : []),
@@ -9613,15 +9889,17 @@ function simuladoElite() {
         ...(typeof bancoExtra2 !== 'undefined' ? bancoExtra2 : []),
         ...(typeof bancoExtra3 !== 'undefined' ? bancoExtra3 : [])
     ];
-    currentQuestions = bancoGigante.sort(() => 0.5 - Math.random()).slice(0, 40);
+    
+    //  CORREÇÃO: Reduzido de 50 para 30 questões
+    currentQuestions = bancoGigante.sort(() => 0.5 - Math.random()).slice(0, 30);
 
     go('quiz');
 
     setTimeout(() => {
-        prepararQuestaoElite(); // A função de limpeza que já temos
+        prepararQuestaoElite(); 
         
-        // 🔥 GATILHO DO RELÓGIO ELITE
-        startTimerElite(); 
+        // GATILHO DO RELÓGIO ELITE
+        if (typeof startTimerElite === 'function') startTimerElite(); 
 
     }, 60);
 }
@@ -9629,43 +9907,57 @@ function simuladoElite() {
 
 
 function prepararQuestaoElite() {
-    // 1. GARANTE QUE O BANCO EXISTE
     if (!currentQuestions || currentQuestions.length === 0) return;
     const q = currentQuestions[currentIndex];
-    
-    // 2. EMBARALHAMENTO (LETRA FIXA, TEXTO DOIDO)
-    let opcoesComIndice = q.options.map((txt, i) => {
-        let textoLimpo = txt.replace(/^[a-eA-E][\s\)\.\-]+\s*/, "");
-        return { texto: textoLimpo, originalIndex: i };
-    });
 
-    opcoesComIndice.sort(() => Math.random() - 0.5);
+    // 🔥 CORREÇÃO 1: Se for V/F e não tiver options, cria agora
+    if (!q.options || q.options.length === 0) {
+        q.options = ["VERDADEIRO", "FALSO"];
+        q.correct = q.v ? 0 : 1; 
+    }
 
-    const novoTextoOpcoes = [];
-    let novoIndiceCorreto = -1;
-    const letrasPadrao = ['a)', 'b)', 'c)', 'd)', 'e)']; 
+    // 2. EMBARALHAMENTO (Só embaralha se tiver mais de 2 opções, para não bagunçar V/F)
+    if (q.options.length > 2) {
+        let opcoesComIndice = q.options.map((txt, i) => {
+            let textoLimpo = txt.replace(/^[a-eA-E][\s\)\.\-]+\s*/, "");
+            return { texto: textoLimpo, originalIndex: i };
+        });
 
-    opcoesComIndice.forEach((item, novoIdx) => {
-        novoTextoOpcoes.push(`${letrasPadrao[novoIdx]} ${item.texto}`);
-        if (item.originalIndex === q.correct) novoIndiceCorreto = novoIdx;
-    });
+        opcoesComIndice.sort(() => Math.random() - 0.5);
 
-    q.options = novoTextoOpcoes;
-    q.correct = novoIndiceCorreto;
+        const novoTextoOpcoes = [];
+        let novoIndiceCorreto = -1;
+        const letrasPadrao = ['a)', 'b)', 'c)', 'd)', 'e)']; 
+
+        opcoesComIndice.forEach((item, novoIdx) => {
+            novoTextoOpcoes.push(`${letrasPadrao[novoIdx]} ${item.texto}`);
+            if (item.originalIndex === q.correct) novoIndiceCorreto = novoIdx;
+        });
+
+        q.options = novoTextoOpcoes;
+        q.correct = novoIndiceCorreto;
+    }
 
     // 3. RENDERIZAÇÃO
     render(); 
 
-    // 4. RESET DE INTERFACE (VIDAS E BOTÕES)
+    // 4. RESET DE INTERFACE
     if (typeof atualizarDisplayVidasElite === 'function') atualizarDisplayVidasElite();
 
+    // 🔥 CORREÇÃO 2: Limpa os botões antigos antes de aplicar o novo clique
     const botoes = document.querySelectorAll('.opt');
     botoes.forEach((btn, idx) => {
         btn.classList.remove('correct', 'wrong', 'active');
         btn.style.color = ""; 
         btn.style.backgroundColor = "";
-        // FORÇA O CLIQUE ELITE (Onde se perde vida)
-        btn.onclick = () => checkElite(idx, btn);
+        
+        // Só ativa o clique se a opção existir para essa questão
+        if (q.options[idx]) {
+            btn.style.display = "block"; 
+            btn.onclick = () => checkElite(idx, btn);
+        } else {
+            btn.style.display = "none"; // Esconde botões que sobraram da questão anterior
+        }
     });
 
     const optsDiv = document.getElementById('opts');
@@ -9682,49 +9974,44 @@ function checkElite(answer, btn) {
 
     const q = currentQuestions[currentIndex];
     const acertou = (answer === q.correct);
-    const cont = document.getElementById('container'); // O flash atua aqui
+    const cont = document.getElementById('container'); 
     const optsDiv = document.getElementById('opts');
 
     historico[currentIndex] = answer;
     if (optsDiv) optsDiv.style.pointerEvents = 'none';
 
-    // Heatmap visual nos botões
+    // 🔥 CORREÇÃO 3: Heatmap Blindado
     document.querySelectorAll('.opt').forEach((b, i) => {
         let txt = q.options[i];
-        b.innerHTML = txt.replace(/#(.*?)#/g, `<span style="color:#ff4141; font-weight:900;">$1</span>`)
-                        .replace(/\*(.*?)\*/g, `<span style="color:#008000; font-weight:900;">$1</span>`);
-        if (i === answer) b.style.color = '#ffffff';
+        if (txt) { // Só tenta formatar se o texto existir!
+            b.innerHTML = txt.replace(/#(.*?)#/g, `<span style="color:#ff4141; font-weight:900;">$1</span>`)
+                            .replace(/\*(.*?)\*/g, `<span style="color:#008000; font-weight:900;">$1</span>`);
+            if (i === answer) b.style.color = '#ffffff';
+        }
     });
 
     if (acertou) {
         btn.classList.add('correct');
-        
-        // 🔥 EFEITO DE ACERTO: Garante que o flash ocorra no container principal
         if (cont) {
-            cont.classList.remove('errou-flash'); // Limpa rastro de erro anterior
+            cont.classList.remove('errou-flash'); 
             cont.classList.add('acertou-flash');
         }
-        
         setTimeout(() => { 
             if (cont) cont.classList.remove('acertou-flash'); 
             nextElite(); 
         }, 700);
     } else {
-        errosElite++; 
+        // 🔥 CORREÇÃO 4: Garante que errosElite seja contado mesmo se o sistema piscar
+        window.errosElite = (window.errosElite || 0) + 1; 
+        errosElite = window.errosElite;
+
         btn.classList.add('wrong');
-        
-        // 🔥 EFEITO DE ERRO: Flash vermelho intenso independente da vida
         if (cont) {
-            cont.classList.remove('acertou-flash'); // Limpa rastro de acerto
+            cont.classList.remove('acertou-flash');
             cont.classList.add('errou-flash');
-            
-            // Remove o flash após 500ms para poder disparar de novo na próxima
-            setTimeout(() => {
-                cont.classList.remove('errou-flash');
-            }, 500);
+            setTimeout(() => { cont.classList.remove('errou-flash'); }, 500);
         }
         
-        // Atualiza os corações (Amarelo, Vermelho ou Quebrado)
         atualizarDisplayVidasElite(); 
         
         const fb = document.getElementById('feedback');
@@ -9749,27 +10036,32 @@ function nextElite() {
         if (btnNext) btnNext.classList.remove('visible');
         prepararQuestaoElite();
     } else {
-        // 🔥 CALIBRAGEM DAS VITÓRIAS (Baseado na sua regra de corações)
-        
-        if (errosElite <= 1) { 
-            // 0 ou 1 erro: Sobrou pelo menos um 💛
-            nevoaCompletamenteDissipada(); 
-        } 
-        else if (errosElite === 2) { 
-            // 2 erros: Está exatamente no ❤
-            nevoaQuaseDissipada(); 
-        } 
-        else if (errosElite === 3 || errosElite === 4) { 
-            // 3 ou 4 erros: Está nos 💔
-            nevoaLevementeDissipada(); 
-        } 
-        else {
-            // 5 erros ou mais: Expulsão (caso o motor chegue aqui)
-            exibirOverlayExpulsao();
-        }
+        // Chegou na última questão, chama o juiz final
+        finalizarElite();
     }
 }
 
+function finalizarElite() {
+    if (typeof timerElite !== 'undefined') clearInterval(timerElite);
+
+    // CALIBRAGEM DAS VITÓRIAS (Baseado nos 3 corações)
+    if (errosElite === 0) { 
+        // 0 erros: Sobrou o 💛
+        nevoaCompletamenteDissipada(); 
+    } 
+    else if (errosElite === 1) { 
+        // 1 erro: Sobrou o ❤
+        nevoaQuaseDissipada(); 
+    } 
+    else if (errosElite === 2) { 
+        // 2 erros: Sobrou o 💔
+        nevoaLevementeDissipada(); 
+    } 
+    else {
+        // 3 erros (Redundância caso o motor passe direto)
+        if (typeof exibirOverlayExpulsao === 'function') exibirOverlayExpulsao();
+    }
+}
 
 
 function atualizarDisplayVidasElite() {
@@ -9777,44 +10069,22 @@ function atualizarDisplayVidasElite() {
     if (!vCont) return;
 
     let html = "";
-    // Usamos errosElite aqui para garantir que nada de fora interfira
+    // O aluno começa com 💛 ❤️ 💔. Cada erro apaga um.
     html += (errosElite >= 1) ? "🖤" : "💛";
-    html += (errosElite >= 2) ? "🖤" : "💛";
-    html += (errosElite >= 3) ? "🖤" : "❤️";
-    html += (errosElite >= 4) ? "🖤" : "💔";
-    html += (errosElite >= 5) ? "🖤" : "💔";
+    html += (errosElite >= 2) ? "🖤" : "❤️";
+    html += (errosElite >= 3) ? "🖤" : "💔";
 
     vCont.innerHTML = `<div style="font-size:1.2em; letter-spacing:4px;">${html}</div>`;
 
-    if (errosElite >= 5) { 
-        clearInterval(timerElite);
-        exibirOverlayExpulsao();
+    // Se bater 3 erros, a expulsão é imediata
+    if (errosElite >= 3) { 
+        if (typeof timerElite !== 'undefined') clearInterval(timerElite);
+        if (typeof exibirOverlayExpulsao === 'function') exibirOverlayExpulsao();
     }
-  }
-
-
-
-
-function finalizarElite() {
-    clearInterval(timerElite);
-    const agora = Date.now();
-
-    if (erros === 0) {
-        localStorage.setItem("vencedorDesafioElite", agora + (2 * 60 * 60 * 1000));
-        alert("🎖️ ELITE IMPECÁVEL! 2 horas de VIP.");
-    } else if (erros <= 2) {
-        localStorage.setItem("vencedorDesafioElite", agora + (1 * 60 * 60 * 1000));
-        alert("💛 ELITE RESISTENTE! 1 hora de VIP.");
-    } else {
-        // Ajuste no salvamento do dissipador para ser reconhecido pelo sistema
-        localStorage.removeItem("expiracaoCortina");
-        localStorage.setItem("dissipadorDesafioElite", "ativo"); 
-        alert("💔 NO LIMITE! Fumaça dissipada.");
-    }
-
-    if (typeof aplicarEfeitoCortina === 'function') aplicarEfeitoCortina();
-    go('area-restrita');
 }
+
+
+
 
 
 
@@ -9832,7 +10102,7 @@ function startTimerElite() {
         timerDisplay.style.color = ''; // Reset de cor caso venha de um erro anterior
     }
 
-    window.tempoRestante = 1800; // 30 minutos
+    window.tempoRestante = 1801; // 30 minutos
 
     window.timerElite = setInterval(() => {
         window.tempoRestante--;
@@ -9912,11 +10182,14 @@ function exibirOverlayExpulsao() {
 }
 
 
-// CONCLUSÃO 1: ROXA (💔 NO LIMITE)
+// CONCLUSÃO 1: 💔 NO LIMITE (Overlay Roxo)
 function nevoaLevementeDissipada() {
     if (document.getElementById('overlay-expulsao')) return;
-    localStorage.setItem("nevoaLeve", "ativo");
-    clearInterval(window.timerElite);
+    if (typeof timerElite !== 'undefined') clearInterval(timerElite);
+
+    // ENTREGA O PRÊMIO NO BOLSO: 1 Hora
+    const agora = Date.now();
+    localStorage.setItem("nevoaLeve", agora + (1 * 60 * 60 * 1000));
 
     const overlay = document.createElement("div");
     overlay.id = "overlay-expulsao"; 
@@ -9925,21 +10198,24 @@ function nevoaLevementeDissipada() {
           <span style="font-size:1.4em;">🌫 A NÉVOA FICOU MAIS LEVE 🌫</span><br><br>
           <span style="font-size:0.9em; color:#ffffff; font-weight:400;">
             🙌🌫 Você sente calafrios, mas <b style="color:#4d4dff;">consegue</b> suportar...🌫🌫<br>
-            Sua intuição lhe diz que você tem <b style="color:#ff4141;">60 minutos.</b>🌫🌫<br><br>
+            A visibilidade melhorou, mas <b style="color:#ff4141;">não o suficiente.</b>🌫🌫<br><br>
             <span style="font-size:2.5em;">🌫🌫</span> Então você se pergunta:<span style="font-size:2.5em;">🌫🌫</span><br>
             <b style="color:yellow;"><i>"E se eu me esforçar mais?"</i></b>
           </span><br><br>
-          <button onclick="window.location.reload()" style="padding:12px 20px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b; text-transform: uppercase;">EU VOLTAREI</button>
+          <button onclick="document.getElementById('overlay-expulsao').remove(); go('area-restrita');" style="padding:12px 20px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b; text-transform: uppercase;">NÃO DESISTIREI!</button>
         </div>`;
     aplicarEstiloOverlay(overlay);
     document.body.appendChild(overlay);
 }
 
-// CONCLUSÃO 2: VERDE (❤ QUASE LÁ)
+// CONCLUSÃO 2: ❤ QUASE LÁ (Overlay Verde)
 function nevoaQuaseDissipada() {
     if (document.getElementById('overlay-expulsao')) return;
-    localStorage.setItem("nevoaDissipada", "ativo");
-    clearInterval(window.timerElite);
+    if (typeof timerElite !== 'undefined') clearInterval(timerElite);
+
+    // ENTREGA O PRÊMIO NO BOLSO: 1 Hora
+    const agora = Date.now();
+    localStorage.setItem("nevoaDissipada", agora + (1 * 60 * 60 * 1000));
 
     const overlay = document.createElement("div");
     overlay.id = "overlay-expulsao"; 
@@ -9952,17 +10228,19 @@ function nevoaQuaseDissipada() {
             <span style="font-size:2.5em;">🌫🌫</span> Então você se pergunta:<span style="font-size:2.5em;">🌫🌫</span><br>
             <b style="color:yellow;"><i>"E se eu me esforçar mais?"</i></b>
           </span><br><br>
-          <button onclick="window.location.reload()" style="padding:12px 20px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b; text-transform: uppercase;">EU VOLTAREI!</button>
+          <button onclick="document.getElementById('overlay-expulsao').remove(); go('area-restrita');" style="padding:12px 20px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b; text-transform: uppercase;">NÃO DESISTIREI!</button>
         </div>`;
     aplicarEstiloOverlay(overlay);
     document.body.appendChild(overlay);
 }
 
-// CONCLUSÃO 3: DOURADA (💛 IMPECÁVEL / RESISTENTE)
+// CONCLUSÃO 3: 💛 IMPECÁVEL (Overlay Dourado)
 function nevoaCompletamenteDissipada() {
     if (document.getElementById('overlay-expulsao')) return;
+    if (typeof timerElite !== 'undefined') clearInterval(timerElite);
+
+    // ENTREGA O PRÊMIO SUPREMO: Tag vitalícia (Até ele usar a passagem)
     localStorage.setItem("vencedorElite", "ativo");
-    clearInterval(window.timerElite);
 
     const overlay = document.createElement("div");
     overlay.id = "overlay-expulsao"; 
@@ -9973,9 +10251,9 @@ function nevoaCompletamenteDissipada() {
             🌈 Sem a névoa, você olha melhor a área ao seu redor. ☀<br>
             Você encontra uma <b style="color:#ff4141;">passagem secreta.</b>🕳<br><br>
             <span style="font-size:2.5em;">🕳</span> Uma frase à entrada lhe chama atenção:<span style="font-size:2.5em;">🕳</span><br>
-            <b style="color:yellow;"><i>"Acesso à Sala Exclusiva por 2h"</i></b>
+            <b style="color:yellow;"><i>"Acesso à Sala Exclusiva por 30 Minutos"</i></b>
           </span><br><br>
-          <button onclick="go('area-apoiador'); setTimeout(()=>location.reload(), 100)" style="padding:12px 20px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b; text-transform: uppercase;">EU SOU FODA!</button>
+          <button onclick="document.getElementById('overlay-expulsao').remove(); go('area-restrita');" style="padding:12px 20px; font-weight:bold; border:none; border-radius:8px; background:#ffd700; color:#000; cursor:pointer; box-shadow: 0 4px 0 #b8860b; text-transform: uppercase;">EU SOU ACE!</button>
         </div>`;
     aplicarEstiloOverlay(overlay);
     document.body.appendChild(overlay);
@@ -9992,60 +10270,21 @@ function aplicarEstiloOverlay(el) {
 
 
 
-function atualizarNevoaSalaSecreta() {
-    const elemento = document.getElementById('gatilho-senha-elite');
-    if (!elemento) return;
-
-    // --- LEITURA DO INVENTÁRIO (Chaves Exatas) ---
-    const itemDourado = localStorage.getItem("vencedorElite");    // Chave: vencedorElite
-    const itemVerde   = localStorage.getItem("nevoaDissipada");   // Chave: nevoaDissipada
-    const itemRoxo    = localStorage.getItem("nevoaLeve");        // Chave: nevoaLeve
-
-    // --- REAÇÃO AOS ITENS ---
-    
-    if (itemDourado !== null) {
-        // Possui o item de Elite (💛)
-        elemento.style.filter = "none";
-        elemento.style.color = "#ffd700"; 
-        elemento.style.textShadow = "0 0 15px #ffd700";
-        elemento.innerHTML = `SALA EXCLUSIVA REVELADA <span style="font-size:3em;">🔓</span>`;
-        elemento.onclick = () => go('area-apoiador'); 
-    } 
-    else if (itemVerde !== null) {
-        // Possui o item Dissipador (❤)
-        elemento.style.filter = "blur(2px)";
-        elemento.onclick = () => alert("Sua visão está quase clara. A névoa cedeu espaço.");
-    } 
-    else if (itemRoxo !== null) {
-        // Possui o item Leve (💔)
-        elemento.style.filter = "blur(4px)";
-        elemento.onclick = () => alert("A névoa ainda atrapalha, mas você já sente o caminho.");
-    } 
-    else {
-        // Inventário Vazio (Início)
-        elemento.style.filter = "blur(10px)";
-        elemento.onclick = () => alert("A névoa está densa. Tente dissipá-la no Desafio Elite.");
-    }
-}
-
-
 function aplicarEfeitoCortina() {
     const agora = Date.now();
     const expiraFumaca = Number(localStorage.getItem("expiracaoCortina"));
-    const expiraVipTemp = Number(localStorage.getItem("expiracaoVipTemporario"));
-    const expiraElite = Number(localStorage.getItem("vencedorDesafioElite")); 
+    const expiraVipTemp = Number(localStorage.getItem("vip_free_expire")); // VIP Sobrevivente
+    const expiraElite = Number(localStorage.getItem("dissipadorDesafioElite")); // VIP Elite (30 min)
     const btnElite = document.getElementById('btn-desafio-elite');
 
-    const itemDourado = localStorage.getItem("vencedorElite") !== null; 
+    // Verifica se algum dos dois VIPs está ativo
+    const temVipAtivo = (expiraVipTemp && agora < expiraVipTemp) || (expiraElite && agora < expiraElite);
 
-    if (expiraElite && agora < expiraElite) {
-        if (!expiraVipTemp || expiraVipTemp !== expiraElite) {
-            localStorage.setItem("expiracaoVipTemporario", expiraElite);
-        }
-    }
-
-    if (expiraVipTemp && agora < expiraVipTemp) {
-        localStorage.removeItem("expiracaoCortina");
+    // ========================================================
+    // ESTADO 1: VIP ATIVO (Passou pela porta ou Venceu Sobrevivente)
+    // ========================================================
+    if (temVipAtivo) {
+        localStorage.removeItem("expiracaoCortina"); // Fumaça morre na hora
         if (btnElite) btnElite.style.setProperty('display', 'none', 'important');
         
         document.querySelectorAll('.btn-restrito-acao').forEach(btn => {
@@ -10059,11 +10298,13 @@ function aplicarEfeitoCortina() {
         return; 
     }
 
-    if (expiraVipTemp && agora >= expiraVipTemp) {
-        localStorage.removeItem("expiracaoVipTemporario");
-        localStorage.removeItem("vencedorDesafioElite");
-    }
+    // Lixeiro automático se o tempo VIP já passou
+    if (expiraVipTemp && agora >= expiraVipTemp) localStorage.removeItem("vip_free_expire");
+    if (expiraElite && agora >= expiraElite) localStorage.removeItem("dissipadorDesafioElite");
 
+    // ========================================================
+    // ESTADO 2: FUMAÇA ATIVA (O Segurança olha o Bolso)
+    // ========================================================
     if (expiraFumaca && agora < expiraFumaca) {
         if (btnElite) {
             btnElite.style.setProperty('display', 'block', 'important');
@@ -10071,32 +10312,46 @@ function aplicarEfeitoCortina() {
             btnElite.style.pointerEvents = 'auto';
         }
 
+        // --- O BOLSO DO ALUNO (Itens de 1 hora) ---
+        const temDourado = localStorage.getItem("vencedorElite") !== null; 
+        const temVerde = localStorage.getItem("nevoaDissipada") !== null;   // ❤ Quase Lá
+        const temRoxo = localStorage.getItem("nevoaLeve") !== null;         // 💔 No Limite
+
+        // FILTRO DE BOTÕES INTELIGENTE
         document.querySelectorAll('.btn-restrito-acao').forEach(btn => {
             const txt = btn.innerText.toLowerCase();
             
-            // 🔥 PRIORIDADE MÁXIMA: Se for o menu de navegação, NUNCA esconde
-            const ehMenuNavegacao = txt.includes('outros', 'assuntos', 'buraco');
-
-            if (ehMenuNavegacao) {
+            // PRIORIDADE 1: Menus de navegação e botões seguros nunca somem
+            const ehSeguro = txt.includes('outros') || txt.includes('assuntos') || txt.includes('buraco') || 
+                             btn.outerHTML.includes('25') || btn.outerHTML.includes('iniciarDesafioElite') || 
+                             btn.outerHTML.includes('sobrevivente');
+                             
+            if (ehSeguro) {
                 btn.style.setProperty('display', 'block', 'important');
-                return; // Pula o resto da verificação para este botão
+                return; 
             }
 
-            // Alvos de bloqueio
-           const alvosParaEsconder = ['humanos', 'fundamentais', 'questões', 'zero', 'simulados', 'conhecimento', 'leis'];
+            let deveMostrar = false;
+
+            // PRIORIDADE 2: Liberações Estratégicas (O Bolso)
+            if (temDourado) deveMostrar = true; // Dourado libera tudo
+            
+            // Roxo e Verde liberam CG
+            if (txt.includes('conhecimento') && (temVerde || temRoxo)) deveMostrar = true;
+            
+            // Apenas Verde libera Informática
+            if ((txt.includes('informática') || txt.includes('informatica')) && temVerde) deveMostrar = true;
+
+            // PRIORIDADE 3: Bloqueio do restante
+            const alvosParaEsconder = ['humanos', 'fundamentais', 'questões', 'zero', 'simulados', 'leis', 'conhecimento', 'informática'];
             const eAlvo = alvosParaEsconder.some(palavra => txt.includes(palavra));
 
-            if (eAlvo) {
-                // Só mostra se for Elite (Dourado)
-                btn.style.setProperty('display', itemDourado ? 'block' : 'none', 'important'); 
+            if (eAlvo && !deveMostrar) {
+                btn.style.setProperty('display', 'none', 'important');
+            } else if (deveMostrar) {
+                btn.style.setProperty('display', 'block', 'important');
             } else {
-                // Mantém botões de "salvação"
-                const html = btn.outerHTML;
-                if (html.includes('25') || html.includes('iniciarDesafioElite') || html.includes('sobrevivente') || html.includes('buraco')) {
-                    btn.style.setProperty('display', 'block', 'important');
-                } else {
-                    btn.style.setProperty('display', 'none', 'important');
-                }
+                btn.style.setProperty('display', 'none', 'important'); // Padrão bloqueia o que sobrar
             }
         });
         
@@ -10106,85 +10361,97 @@ function aplicarEfeitoCortina() {
             itens[1].style.setProperty('display', 'none', 'important');
         }
 
-        // ... dentro da REGRA 3, onde o h2 é definido:
+        // CONSTRUÇÃO DO PORTAL E NÉVOA
+        const h2 = document.querySelector('#area-restrita h2');
+        if (h2) {
+            h2.innerHTML = `A NÉVOA ESTÁ MUITO DENSA!<br>
+            <div style="text-align:center; line-height:1.6;">
+                <span style='color:#ffd700; font-size:0.8em;'>
+                    TENTE <span id="admin-reset" style="cursor:pointer;">DISSIPÁ-LA</span> NO DESAFIO ELITE.
+                </span><br>
+                <span style='color:#ffff; font-size:0.7em;'>CRÍTICAS? SUGESTÕES? 88 994354250</span>
+                <div style="text-align:center; padding:0px;">
+                    <div id="gatilho-senha-elite" style="cursor:pointer; display:inline-block; transition: all 0.5s ease; filter: blur(10px);">
+                        <div style="font-size:50px; color:#000000; filter: drop-shadow(0 0 10px gold); animation: pulse 1s infinite alternate;margin-top:-10px;">🕳</div>
+                        <div style="color:gray; font-weight:bold; font-size:15px;margin-top:0px; ">PASSAGEM SECRETA</div>
+                    </div>
+                </div>
+            </div>
+            <style>
+                @keyframes pulse {
+                    from { filter: drop-shadow(0 0 5px gold); transform: scale(1); }
+                    to { filter: drop-shadow(0 0 20px yellow); transform: scale(1.1); }
+                }
+            </style>`;
 
-const h2 = document.querySelector('#area-restrita h2');
-if (h2) {
-// ... dentro da aplicarEfeitoCortina
-h2.innerHTML = `A NÉVOA ESTÁ MUITO DENSA!<br>
-<div style="text-align:center; line-height:1.6;">
-    <span style='color:#ffd700; font-size:0.8em;'>
-        TENTE <span id="admin-reset" style="">DISSIPÁ-LA</span> NO DESAFIO ELITE.
-    </span><br>
-    <span style='color:#ffff; font-size:0.7em;'>CRÍTICAS? SUGESTÕES? 88 994354250</span>
-    <div style="text-align:center; padding:0px;">
-        <div id="gatilho-senha-elite" style="cursor:pointer; display:inline-block; transition: all 0.5s ease; filter: blur(10px);">
-            <div style="font-size:50px; color:#000000; filter: drop-shadow(0 0 10px gold); animation: pulse 1s infinite alternate;margin-top:-10px;">🕳</div>
-            <div style="color:gray; font-weight:bold; font-size:15px;margin-top:0px; ">PASSAGEM SECRETA</div>
-        </div>
-    </div>
-</div>
-
-    <style>
-        @keyframes pulse {
-            from { filter: drop-shadow(0 0 5px gold); transform: scale(1); }
-            to { filter: drop-shadow(0 0 20px yellow); transform: scale(1.1); }
-        }
-    </style>`;
-atualizarNevoaSalaSecreta();
-
-    // --- LÓGICA DO ADMINISTRADOR (RESET) ---
-    document.getElementById('admin-reset').onclick = function() {
-        const senha = prompt("ACESSO RESTRITO - SENHA DO ADMINISTRADOR:");
-        if (senha === "0501") {
-            alert("⚙️ MODO ADMIN: Limpando todos os rastros e voltando à capa...");
-            
-            // Remove a fumaça
-            localStorage.removeItem("expiracaoCortina");
-            
-            // Remove os 3 itens do Desafio Elite
-            localStorage.removeItem("vencedorElite");
-            localStorage.removeItem("nevoaDissipada");
-            localStorage.removeItem("nevoaLeve");
-            
-            // Remove o item adicional ace1
-            localStorage.removeItem("ace1");
-            
-            // Limpa as expirações do desafio antigo
-            localStorage.removeItem("vencedorDesafioElite");
-            localStorage.removeItem("expiracaoVipTemporario");
-            
-            // Joga para a capa
-            go('capa');
-        } else if (senha !== null) {
-            alert("❌ Senha incorreta. Como você chegou aqui?");
-        }
-    };
-
-    // --- LÓGICA DO PORTAL (CONFERE ITEM DOURADO) ---
-    const portal = document.getElementById('gatilho-senha-elite');
-    if (portal) {
-        portal.onclick = function() {
-            if (localStorage.getItem("vencedorElite") !== null) {
-                alert("✅ NÉVOA COMPLETAMENTE DISSIPADA!\nSem a névoa, você consegue ver claramente uma passagem secreta...");
-                    go('area-apoiador');
-                } else {
-                    alert("❌ Uma densa névoa domina o lugar. Você encontra algo suspeito,\nmas não tem ideia do que seja...");
+            // LÓGICA DE INTERAÇÃO COM A PASSAGEM SECRETA
+            const portal = document.getElementById('gatilho-senha-elite');
+            if (portal) {
+                if (temDourado) {
+                    portal.style.filter = "none";
+                    portal.style.color = "#ffd700"; 
+                    portal.style.textShadow = "0 0 15px #ffd700";
+                    portal.innerHTML = `<div style="font-size:40px; margin-top:-10px;">🔓</div><div style="color:#ffd700; font-weight:bold; font-size:15px;">SALA REVELADA</div>`;
+                    
+                    // O PULO DO GATO: Ao clicar, ele atravessa a porta, ganha os 30 min VIP e a fumaça some.
+                    portal.onclick = function() {
+                        const trintaMin = 30 * 60 * 1000;
+                        localStorage.setItem('dissipadorDesafioElite', Date.now() + trintaMin); 
+                        localStorage.removeItem('vencedorElite'); // Consome o crachá
+                        localStorage.removeItem('expiracaoCortina'); // Quebra a fumaça
+                        
+                        alert("✅ NÉVOA COMPLETAMENTE DISSIPADA!\nSem a névoa, você consegue ver uma passagem secreta...\nNa entrada está escrito em letras garrafais:\nParabéns! Todos os acessos liberados por 30 minutos!");
+                        if(typeof go === 'function') go('area-apoiador');
+                    };
+                } 
+                else if (temVerde) {
+                    portal.style.filter = "blur(2px)";
+                    portal.onclick = () => alert("Sua visão está quase clara. A névoa cedeu espaço.");
+                } 
+                else if (temRoxo) {
+                    portal.style.filter = "blur(4px)";
+                    portal.onclick = () => alert("A névoa dissipou um pouco, mas ainda atrapalha o caminho.");
+                } 
+                else {
+                    portal.style.filter = "blur(10px)";
+                    portal.onclick = () => alert("❌ Uma densa névoa domina o lugar. Você encontra algo suspeito,\nmas não tem ideia do que seja...");
+                }
             }
-        };
-    }
-}
-    
-    } else {
-        if (btnElite) btnElite.style.display = 'none';
-        localStorage.removeItem("expiracaoCortina");
-    }
-}
 
+            // --- LÓGICA DO ADMINISTRADOR (RESET 0501) ---
+            document.getElementById('admin-reset').onclick = function() {
+                const senha = prompt("ACESSO RESTRITO - SENHA DO ADMINISTRADOR:");
+                if (senha === "0501") {
+                    alert("⚙️ MODO ADMIN: Limpando todos os rastros e voltando à capa...");
+                    localStorage.removeItem("expiracaoCortina");
+                    localStorage.removeItem("dissipadorDesafioElite");
+                    localStorage.removeItem("vip_free_expire");
+                    localStorage.removeItem("vencedorElite");
+                    localStorage.removeItem("nevoaDissipada");
+                    localStorage.removeItem("nevoaLeve");
+                  
+                   // Força o recarregamento total da página
+                   location.reload();
+
+                } else if (senha !== null) {
+                    alert("❌ Senha incorreta. Como você chegou aqui?");
+                }
+            };
+        }
+    } else {
+        // ========================================================
+        // ESTADO 3: NORMAL (Sem Fumaça, sem VIP)
+        // ========================================================
+        if (btnElite) btnElite.style.display = 'none';
+        localStorage.removeItem("expiracaoCortina"); // Limpa residuo
+    }
+}
 
 
 /* FIM DO UNIVERSO ELITE
 ################################################# */
+
+
 
 
 function limparInterfaceGeral() {
