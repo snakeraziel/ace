@@ -57,6 +57,11 @@
         <p>A PLATAFORMA DE AGENTE DE COMBATE A ENDEMIAS COM 2 MIL QUESTÕES ENCONTRA-SE SOB CONTRATO DE EXCLUSIVIDADE ATÉ 30/09/26</p>
         <p>RETORNE DIA 01/10/26</p>
         <div class="icones">⚠️</div>
+
+<div style="text-align: center; flex: 2; min-width: 120px;"> 
+    <span style="color: orange; font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Acessos ao Sistema</span><br>
+    <span style="color: #39FF14; font-size: 1.4em; font-weight: 900; font-family: monospace; text-shadow: 0 0 10px rgba(57, 255, 20, 0.4); display: inline-block; margin-top: 5px;" id="contador-global-ace">...</span>
+</div>
     </div>
 
     <script>
@@ -68,4 +73,93 @@
     </script>
 
 </body>
+<script>
+// ===================================
+// CONTADOR GLOBAL DE ACESSOS — ACE
+// ===================================
+async function registrarVisitanteGlobalACE() {
+
+    // Procura o contador no DOM
+    const elContador = document.getElementById('contador-global-ace');
+
+    // Se a tela ACE ainda não foi criada no DOM,
+    // tenta novamente depois de 500 ms.
+    if (!elContador) {
+        setTimeout(registrarVisitanteGlobalACE, 500);
+        return;
+    }
+
+    const databaseURL =
+        "https://projeto-aura-gcm-default-rtdb.firebaseio.com";
+
+    const path =
+        "/status_plataforma/acessosACE.json";
+
+    const url =
+        `${databaseURL}${path}`;
+
+    try {
+
+        // ======================
+        // 1. BUSCA O VALOR ATUAL
+        // =======================
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(
+                "Erro ao consultar Firebase: HTTP " + response.status
+            );
+        }
+
+        const current = await response.json();
+
+        // ===============
+        // 2. INCREMENTA
+        // ===============
+        const novoValor =
+            (typeof current === "number" ? current : 0) + 1;
+
+        // =====================
+        // 3. GRAVA NO FIREBASE
+        // =====================
+        const updateResponse = await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(novoValor)
+        });
+
+        if (!updateResponse.ok) {
+            throw new Error(
+                "Erro ao gravar Firebase: HTTP " +
+                updateResponse.status
+            );
+        }
+        // ========================
+        // 4. MOSTRA NO CONTADOR
+        // ========================
+        elContador.innerText =
+            novoValor.toLocaleString("pt-BR");
+
+        console.log(
+            "ACE — acesso registrado:",
+            novoValor
+        );
+
+    } catch (error) {
+
+        console.error(
+            "ACE REST Error:",
+            error
+        );
+
+        elContador.innerText = "OFFLINE";
+    }
+}
+// =====================
+// 5. INICIA O CONTADOR
+// =====================
+registrarVisitanteGlobalACE();
+</script>
 </html>
